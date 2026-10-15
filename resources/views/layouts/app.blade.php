@@ -16,9 +16,15 @@
     
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/surebound.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}">
     @yield('head')
+
+    <!-- Marketing Pixels & Social Meta Tags (Google, Meta/FB, LinkedIn, Twitter, TikTok) -->
+    @include('partials.marketing-head')
 </head>
 <body>
+    <!-- Marketing Body Tags & Fallbacks (GTM, Meta, LinkedIn noscript) -->
+    @include('partials.marketing-body')
 
     <!-- ==========================================
          TOP UTILITY BAR
@@ -467,6 +473,7 @@
         }
     </script>
 
+    <script src="{{ asset('js/surebound-modal.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

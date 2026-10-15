@@ -11,15 +11,18 @@
 
 <div class="user-layout">
     
+    <!-- MOBILE SIDEBAR BACKDROP OVERLAY -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeUserSidebar()"></div>
+
     <!-- LEFT SIDEBAR -->
-    <aside class="user-sidebar">
+    <aside class="user-sidebar" id="userSidebar">
         <div class="sidebar-logo">
-            <svg viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 32px; width: auto;">
-                <path d="M19.4 1.2a1.8 1.8 0 0 1 1.2 0L37.2 7c.5.3.8.8.8 1.3v15c0 10.7-7 20.6-17.1 24.3a2.5 2.5 0 0 1-1.8 0C9 43.9 2 34 2 23.3v-15c0-.5.3-1 .8-1.3L19.4 1.2Z" fill="#1D4ED8"/>
-                <path d="M14 16.5h7c2 0 3.5 1.5 3.5 3.5s-1.5 3.5-3.5 3.5h-5.5v5h-1.5v-12Zm1.5 1.5v4h5.5c1.1 0 2-.9 2-2s-.9-2-2-2h-5.5Z" fill="#fff"/>
-                <path d="M21 21.5h4c2 0 3.5 1.5 3.5 3.5s-1.5 3.5-3.5 3.5h-5.5v-7h1.5v5.5h4c1.1 0 2-.9 2-2s-.9-2-2-2Z" fill="#fff"/>
-            </svg>
-            SUREBOUND
+            <a href="/dashboard" class="sidebar-logo-brand" aria-label="Surebound Dashboard">
+                <img src="/images/logo-white.png" alt="Surebound" class="sidebar-brand-img">
+            </a>
+            <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" onclick="closeUserSidebar()" aria-label="Close navigation menu">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
         </div>
         
         <nav class="sidebar-nav">
@@ -58,12 +61,17 @@
         </nav>
         
         <div class="sidebar-promo">
-            <svg viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 28px; width: auto; margin-bottom: 12px;">
-                <path d="M19.4 1.2a1.8 1.8 0 0 1 1.2 0L37.2 7c.5.3.8.8.8 1.3v15c0 10.7-7 20.6-17.1 24.3a2.5 2.5 0 0 1-1.8 0C9 43.9 2 34 2 23.3v-15c0-.5.3-1 .8-1.3L19.4 1.2Z" fill="#3B82F6"/>
-            </svg>
+            <div class="promo-icon-wrap">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+            </div>
             <h4>Your Protection<br>Our Priority</h4>
             <p>Stay covered, stay confident. We're here for you.</p>
-            <a href="#" class="promo-btn">Get Support &rarr;</a>
+            <a href="/dashboard/support" class="promo-btn">
+                <span>Get Support</span>
+                <span>&rarr;</span>
+            </a>
         </div>
     </aside>
 
@@ -72,9 +80,14 @@
         
         <!-- HEADER -->
         <header class="user-header">
-            <div class="header-search">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" placeholder="Search policies, claims, or anything...">
+            <div class="header-left-group">
+                <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" onclick="toggleUserSidebar()" aria-label="Open navigation menu">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+                <div class="header-search">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" placeholder="Search policies, claims, or anything...">
+                </div>
             </div>
             
             <div class="header-actions">
@@ -155,8 +168,10 @@
                             <div class="coverage-icon">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                             </div>
-                            <h4>Health Insurance</h4>
-                            <p>Stay healthy, live better.</p>
+                            <div class="coverage-info">
+                                <h4>Health Insurance</h4>
+                                <p>Stay healthy, live better.</p>
+                            </div>
                             <div class="coverage-arrow">&rarr;</div>
                         </div>
                         
@@ -164,8 +179,10 @@
                             <div class="coverage-icon">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                             </div>
-                            <h4>Life Insurance</h4>
-                            <p>Protect what matters most.</p>
+                            <div class="coverage-info">
+                                <h4>Life Insurance</h4>
+                                <p>Protect what matters most.</p>
+                            </div>
                             <div class="coverage-arrow">&rarr;</div>
                         </div>
                         
@@ -173,8 +190,10 @@
                             <div class="coverage-icon">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                             </div>
-                            <h4>Auto Insurance</h4>
-                            <p>Drive with confidence.</p>
+                            <div class="coverage-info">
+                                <h4>Auto Insurance</h4>
+                                <p>Drive with confidence.</p>
+                            </div>
                             <div class="coverage-arrow">&rarr;</div>
                         </div>
                         
@@ -182,8 +201,10 @@
                             <div class="coverage-icon">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                             </div>
-                            <h4>Home Insurance</h4>
-                            <p>Secure your home.</p>
+                            <div class="coverage-info">
+                                <h4>Home Insurance</h4>
+                                <p>Secure your home.</p>
+                            </div>
                             <div class="coverage-arrow">&rarr;</div>
                         </div>
                         
@@ -191,8 +212,10 @@
                             <div class="coverage-icon">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                             </div>
-                            <h4>Business Insurance</h4>
-                            <p>Grow with confidence.</p>
+                            <div class="coverage-info">
+                                <h4>Business Insurance</h4>
+                                <p>Grow with confidence.</p>
+                            </div>
                             <div class="coverage-arrow">&rarr;</div>
                         </div>
                     </div>
@@ -209,7 +232,8 @@
                     </div>
                     
                     <div class="table-card">
-                        <table class="policies-table">
+                        <div class="table-responsive">
+                            <table class="policies-table">
                             <thead>
                                 <tr>
                                     <th>Policy No.</th>
@@ -263,6 +287,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
 
@@ -278,36 +303,38 @@
                             </h3>
                             <a href="#" class="view-all" style="font-size:0.75rem;">View All &rarr;</a>
                         </div>
-                        <table class="mini-table">
-                            <thead>
-                                <tr>
-                                    <th>Claim No.</th>
-                                    <th>Type</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>CL-2024-003</td>
-                                    <td>Health</td>
-                                    <td>Oct 12, 2024</td>
-                                    <td><span class="status-badge pending" style="background:#eff6ff; color:#2563eb;">In Progress</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CL-2024-002</td>
-                                    <td>Auto</td>
-                                    <td>Aug 03, 2024</td>
-                                    <td><span class="status-badge active">Approved</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CL-2024-001</td>
-                                    <td>Life</td>
-                                    <td>Jun 18, 2024</td>
-                                    <td><span class="status-badge closed">Closed</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="mini-table-responsive">
+                            <table class="mini-table">
+                                <thead>
+                                    <tr>
+                                        <th>Claim No.</th>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CL-2024-003</td>
+                                        <td>Health</td>
+                                        <td>Oct 12, 2024</td>
+                                        <td><span class="status-badge pending" style="background:#eff6ff; color:#2563eb;">In Progress</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CL-2024-002</td>
+                                        <td>Auto</td>
+                                        <td>Aug 03, 2024</td>
+                                        <td><span class="status-badge active">Approved</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CL-2024-001</td>
+                                        <td>Life</td>
+                                        <td>Jun 18, 2024</td>
+                                        <td><span class="status-badge closed">Closed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <!-- Recent Activity -->
@@ -472,11 +499,13 @@
                         Need Help?
                     </h3>
                     <p>Our support team is available 24/7 to assist you.</p>
-                    <button class="btn-primary">Chat Now</button>
-                    <button class="btn-call">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        Call +880 9612 345678
-                    </button>
+                    <div class="support-card-buttons">
+                        <button class="btn-primary">Chat Now</button>
+                        <button class="btn-call">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            Call +880 9612 345678
+                        </button>
+                    </div>
                 </div>
                 
             </aside>
@@ -485,5 +514,33 @@
         </main>
 </div>
 
+<script>
+    function toggleUserSidebar() {
+        const sidebar = document.getElementById('userSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (!sidebar) return;
+        const isOpen = sidebar.classList.toggle('open');
+        if (backdrop) {
+            backdrop.classList.toggle('show', isOpen);
+        }
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    function closeUserSidebar() {
+        const sidebar = document.getElementById('userSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (sidebar) sidebar.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeUserSidebar();
+    });
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 992) closeUserSidebar();
+    });
+</script>
 </body>
 </html>

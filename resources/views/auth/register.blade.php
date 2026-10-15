@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}">
     
     <style>
         /* Brand Guidelines 2026: Minion Variable Concept Bold */
@@ -962,7 +963,7 @@
                 <div class="checkbox-container">
                     <label class="checkbox-label">
                         <input type="checkbox" name="terms" id="terms" required checked>
-                        <span>I accept Surebound's <a href="javascript:void(0)" onclick="alert('Surebound Terms: All accounts subject to standard policy verification and state licensing regulations.')">Terms of Service</a> and <a href="javascript:void(0)" onclick="alert('Surebound Privacy: We protect policyholder records with end-to-end encryption.')">Privacy Policy</a>.</span>
+                        <span>I accept Surebound's <a href="javascript:void(0)" onclick="SureboundModal.alert({ title: 'Terms of Service', message: 'All policyholder accounts are subject to standard underwriting verification, compliance standards, and state insurance commission regulations.', type: 'info', buttonText: 'Understood' })">Terms of Service</a> and <a href="javascript:void(0)" onclick="SureboundModal.alert({ title: 'Privacy & Security Policy', message: 'We protect all policyholder records, identity documents, and claims data with enterprise 256-bit encryption.', type: 'info', buttonText: 'Understood' })">Privacy Policy</a>.</span>
                     </label>
                     <label class="checkbox-label">
                         <input type="checkbox" name="communications" id="communications" checked>
@@ -1224,14 +1225,24 @@
             const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailPattern.test(emailVal)) {
                 e.preventDefault();
-                alert('Please enter a valid email address (e.g. name@example.com).');
+                SureboundModal.alert({
+                    title: 'Invalid Email Address',
+                    message: 'Please enter a valid email address (e.g. name@example.com) to establish your account.',
+                    type: 'warning',
+                    buttonText: 'Got It'
+                });
                 emailInput.focus();
                 return;
             }
 
             if (isEmailAvailable === false && lastCheckedEmail === emailVal.toLowerCase()) {
                 e.preventDefault();
-                alert('This email is already registered in our database. Please sign in or use a different email.');
+                SureboundModal.alert({
+                    title: 'Account Already Exists',
+                    message: 'This email address is already registered in our system. Please sign in or use a different email.',
+                    type: 'warning',
+                    buttonText: 'Got It'
+                });
                 emailInput.focus();
                 return;
             }
@@ -1241,7 +1252,12 @@
             const confirm = document.getElementById('password_confirmation').value;
             if (pwd !== confirm) {
                 e.preventDefault();
-                alert('Please ensure your passwords match.');
+                SureboundModal.alert({
+                    title: 'Passwords Do Not Match',
+                    message: 'Please ensure both password fields match exactly before proceeding.',
+                    type: 'danger',
+                    buttonText: 'Try Again'
+                });
                 return;
             }
 
@@ -1250,21 +1266,41 @@
             const mathVal = parseInt(mathInput.value.trim(), 10);
             if (isNaN(mathVal) || mathVal !== mathExpected) {
                 e.preventDefault();
-                alert('Please solve the security math calculation correctly to proceed.');
+                SureboundModal.alert({
+                    title: 'Security Verification Required',
+                    message: 'Please solve the security calculation correctly to verify you are a human applicant.',
+                    type: 'warning',
+                    buttonText: 'Got It'
+                });
                 mathInput.focus();
                 return;
             }
 
-            if (window.location.protocol === 'file:' || !window.location.port || window.location.pathname.endsWith('.html')) {
+            // Only intercept for offline static preview files (.html or file://)
+            if (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) {
                 e.preventDefault();
                 const btn = document.getElementById('submitBtn');
                 btn.innerHTML = '<span>Creating account...</span>';
                 setTimeout(() => {
-                    alert('Registration successful! Redirecting to your dashboard...');
-                    window.location.href = '/dashboard';
+                    SureboundModal.alert({
+                        title: 'Registration Successful',
+                        message: 'Your policyholder portal account has been provisioned! Redirecting to your dashboard...',
+                        type: 'success',
+                        buttonText: 'Proceed'
+                    }).then(() => {
+                        window.location.href = '/dashboard';
+                    });
                 }, 400);
+                return;
             }
+
+            // Normal server-side Laravel submission: show loading feedback
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<span>Creating account...</span>';
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none';
         }
     </script>
+    <script src="{{ asset('js/surebound-modal.js') }}"></script>
 </body>
 </html>

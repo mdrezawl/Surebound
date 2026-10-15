@@ -66,7 +66,7 @@
 
                 <div style="background: var(--bg-secondary); padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
                     <h3 style="font-size: 26px; font-weight: 700; margin-bottom: 24px; color: var(--text-dark);">Send us a message</h3>
-                    <form onsubmit="event.preventDefault(); alert('Thank you for contacting us. We will get back to you shortly.'); this.reset();">
+                    <form onsubmit="event.preventDefault(); SureboundModal.alert({ title: 'Message Sent Successfully', message: 'Thank you for contacting Surebound! A dedicated insurance advisor will respond to your message shortly.', type: 'success', icon: 'shield-check', buttonText: 'Close' }); this.reset();">
                         <div style="margin-bottom: 16px;">
                             <label style="display: block; font-size: 16px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">Full Name</label>
                             <input type="text" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--bg-primary); color: var(--text-dark);">

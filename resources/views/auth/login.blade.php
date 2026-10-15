@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}">
     
     <style>
         /* Brand Guidelines 2026: Minion Variable Concept Bold */
@@ -560,7 +561,7 @@
                         <input type="checkbox" name="remember" id="remember" checked>
                         <span>Keep me signed in</span>
                     </label>
-                    <a href="javascript:void(0)" onclick="alert('Password reset instructions will be sent to your registered email.')" class="forgot-link">Forgot password?</a>
+                    <a href="javascript:void(0)" onclick="SureboundModal.alert({ title: 'Password Reset Assistance', message: 'Password reset instructions will be delivered to your registered policyholder email address within a few moments.', type: 'info', buttonText: 'Close' })" class="forgot-link">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="btn-submit" id="submitBtn">
@@ -603,18 +604,26 @@
             }
         }
 
-        // Static fallback for static hosts (Vercel, Hostinger static export)
+        // Form submission handler
         function handleLoginSubmit(e) {
-            // If running on static host where /login isn't a POST endpoint, gracefully handle redirect
-            if (window.location.protocol === 'file:' || !window.location.port || window.location.pathname.endsWith('.html')) {
+            // Only intercept for offline static preview files (.html or file://)
+            if (window.location.protocol === 'file:' || window.location.pathname.endsWith('.html')) {
                 e.preventDefault();
                 const btn = document.getElementById('submitBtn');
                 btn.innerHTML = '<span>Signing in...</span>';
                 setTimeout(() => {
                     window.location.href = '/dashboard';
                 }, 400);
+                return;
             }
+
+            // Normal server-side Laravel submission: show loading feedback
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<span>Signing in...</span>';
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none';
         }
     </script>
+    <script src="{{ asset('js/surebound-modal.js') }}"></script>
 </body>
 </html>

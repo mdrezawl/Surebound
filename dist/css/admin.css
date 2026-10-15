@@ -1133,10 +1133,64 @@ button, input, select, textarea {
     color: #ffffff;
 }
 
-.status-pill.declined, .status-pill.expired {
+.status-pill.declined, .status-pill.expired, .status-pill.rejected {
     background: #fff1f2;
     color: #e11d48;
     border: 1px solid #fecdd3;
+}
+
+.status-pill.submitted {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+}
+
+.status-pill.approved {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+.status-pill.paid {
+    background: #10b981;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
+}
+
+.priority-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.priority-pill.urgent {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
+
+.priority-pill.high {
+    background: #fff7ed;
+    color: #ea580c;
+    border: 1px solid #fed7aa;
+}
+
+.priority-pill.normal {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+.priority-pill.low {
+    background: #f8fafc;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
 }
 
 .status-pill.pending {
@@ -1180,6 +1234,28 @@ button, input, select, textarea {
 .user-role-select:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+.user-edit-btn {
+    height: 28px;
+    padding: 0 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.user-edit-btn:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #2563eb;
 }
 
 .user-delete-btn {
@@ -1535,4 +1611,688 @@ button, input, select, textarea {
     .form-group.full {
         grid-column: span 1;
     }
+}
+
+/* ==========================================================================
+   MARKETING HUB & SIDEBAR SUBMENU ENHANCEMENTS
+   ========================================================================== */
+.sidebar-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-left: 36px;
+    margin: 4px 0 10px;
+}
+
+.sidebar-sublink {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 12px;
+    border-radius: var(--radius-md);
+    color: #94a3b8;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.sidebar-sublink .sublink-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: all var(--transition-fast);
+}
+
+.sidebar-sublink:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-sublink:hover .sublink-dot {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.sidebar-sublink.active {
+    color: #ffffff;
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.2);
+    font-weight: 600;
+}
+
+.sidebar-sublink.active .sublink-dot {
+    opacity: 1;
+    box-shadow: 0 0 8px currentColor;
+    transform: scale(1.2);
+}
+
+/* ==========================================================================
+   MARKETING, TRACKING & PIXELS HUB STYLES
+   ========================================================================== */
+
+/* Universal Badges & Status Indicators */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-transform: none;
+    box-sizing: border-box;
+}
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.badge-success {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.badge-success .badge-dot {
+    background-color: #10b981;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+.badge-neutral {
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
+}
+
+.badge-neutral .badge-dot {
+    background-color: #94a3b8;
+}
+
+.badge-info {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.badge-warning {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
+}
+
+.badge-danger {
+    background: #fff1f2;
+    color: #be123c;
+    border: 1px solid #fecdd3;
+}
+
+/* Marketing Sub-Tabs Pill Navigation (Crisp Glassmorphism Light Bar) */
+.marketing-pill-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px;
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    margin-bottom: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    position: sticky;
+    top: 70px;
+    z-index: 20;
+    box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+}
+
+.marketing-pill-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.marketing-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all var(--transition-fast);
+}
+
+.marketing-pill-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-surface-secondary);
+}
+
+.marketing-pill-btn.active {
+    color: #065f46;
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(16, 185, 129, 0.12);
+}
+
+.marketing-pill-btn .pill-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+}
+
+.marketing-section-pane {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.marketing-section-pane.hidden-pane {
+    display: none !important;
+}
+
+/* Overview Top Status Cards */
+.marketing-status-card {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all var(--transition-fast);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+.marketing-status-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-hover);
+    box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.08);
+}
+
+.marketing-status-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--card-accent, #10b981);
+}
+
+.marketing-status-card.accent-google { --card-accent: #4285F4; }
+.marketing-status-card.accent-meta { --card-accent: #1877F2; }
+.marketing-status-card.accent-linkedin { --card-accent: #0A66C2; }
+.marketing-status-card.accent-twitter { --card-accent: #0f172a; }
+.marketing-status-card.accent-tiktok { --card-accent: #fe2c55; }
+
+.marketing-status-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.marketing-platform-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.marketing-platform-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.marketing-platform-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.marketing-status-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-radius: var(--radius-md);
+    border: 1px solid #f1f5f9;
+    margin-bottom: 14px;
+    font-size: 0.8125rem;
+}
+
+.marketing-spec-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.marketing-spec-label {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.marketing-spec-value {
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.marketing-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.btn-card-setup {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-card-setup:hover {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.btn-card-ping {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: #f8fafc;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-card-ping:hover {
+    background: #f1f5f9;
+    color: var(--text-primary);
+}
+
+/* Quick Launch Cards */
+.marketing-quick-card {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+    position: relative;
+}
+
+.marketing-quick-card:hover {
+    border-color: #10b981;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -6px rgba(16, 185, 129, 0.12), 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.marketing-quick-card-sub {
+    color: #2563eb;
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+.marketing-quick-card-desc {
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    margin: 10px 0 16px;
+    flex: 1;
+}
+
+.marketing-quick-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.marketing-quick-card-cta {
+    font-size: 0.8125rem;
+    color: #059669;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: transform var(--transition-fast);
+}
+
+.marketing-quick-card:hover .marketing-quick-card-cta {
+    transform: translateX(3px);
+}
+
+/* Form Controls for Marketing Settings */
+.marketing-input,
+.marketing-select {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    box-sizing: border-box;
+}
+
+.marketing-input.font-mono {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+}
+
+.marketing-input:focus,
+.marketing-select:focus {
+    outline: none;
+    border-color: var(--sb-emerald-500);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    background: #ffffff;
+}
+
+.marketing-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    resize: vertical;
+    transition: all var(--transition-fast);
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.marketing-textarea:focus {
+    outline: none;
+    border-color: var(--sb-emerald-500);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.marketing-code-textarea {
+    width: 100%;
+    height: 160px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    padding: 14px;
+    background: #0f172a;
+    color: #38bdf8;
+    border: 1px solid #1e293b;
+    border-radius: var(--radius-md);
+    resize: vertical;
+    tab-size: 2;
+    box-sizing: border-box;
+}
+
+.marketing-code-textarea:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+/* ==========================================================================
+   PREMIUM INVOICES ACTIONS & SIGNATURE PAD STYLES
+   ========================================================================== */
+.inv-actions-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.inv-action-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 32px;
+    padding: 0 11px;
+    border-radius: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    border: 1px solid transparent;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.inv-action-pill svg {
+    flex-shrink: 0;
+}
+
+/* View Button */
+.inv-action-view {
+    background: #ffffff;
+    color: #1e293b;
+    border-color: #cbd5e1;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.inv-action-view:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: #0f172a;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* PDF Button */
+.inv-action-pdf {
+    background: #eff6ff;
+    color: #2563eb;
+    border-color: #bfdbfe;
+}
+
+.inv-action-pdf:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
+}
+
+/* Pay Now Button */
+.inv-action-pay {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    border-color: #059669;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+}
+
+.inv-action-pay:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+}
+
+/* Email Icon Button */
+.inv-action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.inv-action-icon:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+    color: #0f172a;
+    transform: translateY(-1px);
+}
+
+/* Status Dropdown Wrap */
+.inv-status-select-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.inv-status-select {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 32px;
+    padding: 0 26px 0 10px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #334155;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.inv-status-select:hover {
+    border-color: #94a3b8;
+    background: #f8fafc;
+}
+
+.inv-status-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.inv-status-select-wrap svg {
+    position: absolute;
+    right: 8px;
+    pointer-events: none;
+    color: #64748b;
+    width: 13px;
+    height: 13px;
+}
+
+/* Signature Section & Controls */
+.sig-mode-pills {
+    display: flex;
+    gap: 4px;
+    background: #f1f5f9;
+    padding: 3px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.sig-pill {
+    padding: 5px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.sig-pill.active {
+    background: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sig-dropzone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sig-dropzone:hover {
+    border-color: #2563eb;
+    background: #f8fafc;
+}
+
+#invoicesTable th:last-child,
+#invoicesTable td:last-child {
+    white-space: nowrap !important;
+    text-align: right;
+    min-width: 270px;
+    width: 270px;
 }

@@ -2,23 +2,21 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\SetupController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Setup Wizard Routes
+| Setup Wizard Routes (Auto-Purged After Installation)
 |--------------------------------------------------------------------------
 */
-Route::get('/setup', [SetupController::class, 'welcome'])->name('setup.welcome');
-Route::get('/setup/database', [SetupController::class, 'database'])->name('setup.database');
-Route::post('/setup/database', [SetupController::class, 'saveDatabase'])->name('setup.database.save');
-Route::get('/setup/migrations', [SetupController::class, 'migrations'])->name('setup.migrations');
-Route::post('/setup/migrations', [SetupController::class, 'runMigrations'])->name('setup.migrations.run');
-Route::get('/setup/admin', [SetupController::class, 'admin'])->name('setup.admin');
-Route::post('/setup/admin', [SetupController::class, 'saveAdmin'])->name('setup.admin.save');
-Route::get('/setup/complete', [SetupController::class, 'complete'])->name('setup.complete');
+if (file_exists(base_path('routes/setup.php')) && file_exists(app_path('Http/Controllers/SetupController.php'))) {
+    require base_path('routes/setup.php');
+} else {
+    Route::any('/setup/{any?}', function () {
+        return redirect()->route('login');
+    })->where('any', '.*');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +65,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboard/policies', [UserController::class, 'policies'])->name('user.policies');
+    Route::get('/dashboard/policies/{id}', [UserController::class, 'policyDetail'])->name('user.policies.show');
+    Route::get('/dashboard/policies/{id}/id-card', [UserController::class, 'downloadIdCard'])->name('user.policies.id-card');
     Route::get('/dashboard/quote', [UserController::class, 'quote'])->name('user.quote');
     Route::get('/dashboard/claims', [UserController::class, 'claims'])->name('user.claims');
     Route::get('/dashboard/documents', [UserController::class, 'documents'])->name('user.documents');
@@ -76,7 +76,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/dashboard/claims', [UserController::class, 'submitClaim'])->name('user.claims.store');
     Route::post('/dashboard/quotes', [UserController::class, 'requestQuote'])->name('user.quotes.store');
+    Route::post('/dashboard/quote/{id}/accept', [UserController::class, 'acceptQuote'])->name('user.quotes.accept');
+    Route::post('/dashboard/documents/certificate', [UserController::class, 'requestCertificate'])->name('user.documents.certificate');
+    Route::get('/dashboard/documents/certificate/{id}', [UserController::class, 'viewCertificate'])->name('user.documents.view-certificate');
     Route::post('/dashboard/invoices/{id}/pay', [UserController::class, 'payInvoice'])->name('user.invoices.pay');
+    Route::post('/dashboard/support/ticket', [UserController::class, 'submitSupportTicket'])->name('user.support.ticket');
+    Route::post('/dashboard/settings/profile', [UserController::class, 'updateProfile'])->name('user.settings.profile');
+    Route::post('/dashboard/settings/password', [UserController::class, 'updatePassword'])->name('user.settings.password');
+    Route::post('/dashboard/settings/preferences', [UserController::class, 'updatePreferences'])->name('user.settings.preferences');
 });
 
 // Agent & Underwriter Admin Portal (Requires Authentication + Admin/Agent Role)
@@ -112,12 +119,45 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/api/claims/test', [AdminController::class, 'testClaimsApiConnection'])->name('admin.api.claims.test');
     Route::post('/admin/api/payments', [AdminController::class, 'savePaymentApiConfig'])->name('admin.api.payments.update');
 
+    // Marketing, Tracking & Pixels (Google, Meta/FB, LinkedIn, Twitter, TikTok, Social Meta)
+    Route::post('/admin/marketing', [AdminController::class, 'saveMarketingSettings'])->name('admin.marketing.update');
+    Route::post('/admin/marketing/test', [AdminController::class, 'testMarketingPixel'])->name('admin.marketing.test');
+
     // Invoices Management System
     Route::post('/admin/invoices', [AdminController::class, 'storeInvoice'])->name('admin.invoices.store');
+    Route::get('/admin/invoices/{id}/pdf', [AdminController::class, 'printInvoice'])->name('admin.invoices.pdf');
+    Route::get('/admin/invoices/{id}/print', [AdminController::class, 'printInvoice'])->name('admin.invoices.print');
     Route::post('/admin/invoices/{id}/pay', [AdminController::class, 'processInvoicePayment'])->name('admin.invoices.pay');
     Route::patch('/admin/invoices/{id}/status', [AdminController::class, 'updateInvoiceStatus'])->name('admin.invoices.status');
+    Route::post('/admin/invoices/agency-signature', [AdminController::class, 'saveAgencySignature'])->name('admin.invoices.agency-signature');
+    Route::post('/admin/settings/signature', [AdminController::class, 'saveAgencySignature'])->name('admin.settings.signature');
+
+    // Policy Management System (Full Underwriter Admin Control)
+    Route::post('/admin/policies', [AdminController::class, 'storePolicy'])->name('admin.policies.store');
+    Route::get('/admin/policies/{id}', [AdminController::class, 'getPolicy'])->name('admin.policies.show');
+    Route::put('/admin/policies/{id}', [AdminController::class, 'updatePolicy'])->name('admin.policies.update');
+    Route::patch('/admin/policies/{id}/status', [AdminController::class, 'updatePolicyStatus'])->name('admin.policies.status');
+    Route::delete('/admin/policies/{id}', [AdminController::class, 'deletePolicy'])->name('admin.policies.delete');
+
+    // Claims Intake & FNOL Management System (Admin Control)
+    Route::post('/admin/claims-center', [AdminController::class, 'storeClaimRecord'])->name('admin.claims-center.store');
+    Route::get('/admin/claims-center/{id}', [AdminController::class, 'getClaimRecord'])->name('admin.claims-center.show');
+    Route::put('/admin/claims-center/{id}', [AdminController::class, 'updateClaimRecord'])->name('admin.claims-center.update');
+    Route::patch('/admin/claims-center/{id}/status', [AdminController::class, 'updateClaimRecordStatus'])->name('admin.claims-center.status');
+    Route::delete('/admin/claims-center/{id}', [AdminController::class, 'deleteClaimRecord'])->name('admin.claims-center.delete');
 
     // User & Account Management System
+    Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+    Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
     Route::patch('/admin/users/{id}/role', [AdminController::class, 'updateUserRole'])->name('admin.users.role');
     Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+
+    // Customer Support Tickets & Concierge (Admin Control)
+    Route::post('/admin/support/content', [AdminController::class, 'updateSupportContent'])->name('admin.support.content.update');
+    Route::get('/admin/support-tickets/{id}', [AdminController::class, 'getSupportTicket'])->name('admin.support-tickets.show');
+    Route::patch('/admin/support-tickets/{id}/status', [AdminController::class, 'updateSupportTicketStatus'])->name('admin.support-tickets.status');
+    Route::delete('/admin/support-tickets/{id}', [AdminController::class, 'deleteSupportTicket'])->name('admin.support-tickets.delete');
+
+    // Live Database Auto-Migration & System Cache Refresh (Admin Control)
+    Route::get('/admin/system/migrate', [AdminController::class, 'runLiveMigrations'])->name('admin.system.migrate');
 });

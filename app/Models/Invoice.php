@@ -28,6 +28,9 @@ class Invoice extends Model
         'paid_at',
         'line_items',
         'notes',
+        'signatory_name',
+        'signatory_title',
+        'signature_image',
     ];
 
     protected $casts = [

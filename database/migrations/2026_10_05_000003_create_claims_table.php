@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('claimant_name');
             $table->text('incident_description');
             $table->string('estimated_loss')->default('$1,000');
-            $table->string('assigned_adjuster')->default('Sarah Jenkins');
+            $table->string('assigned_adjuster')->default('Unassigned');
             $table->string('priority')->default('Normal'); // High, Normal, Low
             $table->string('status')->default('reviewing'); // reviewing, approved, paid, declined
             $table->timestamps();

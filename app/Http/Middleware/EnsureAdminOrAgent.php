@@ -22,6 +22,13 @@ class EnsureAdminOrAgent
 
         // If the logged-in user is a regular customer/user, deny admin panel access
         if (Auth::user()->role === 'user') {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Access restricted: The Administrative Agency Portal is reserved for authorized agents and underwriters.',
+                ], 403);
+            }
+
             return redirect()->route('dashboard')
                 ->with('error', 'Access restricted: The Administrative Agency Portal is reserved for authorized agents and underwriters.');
         }

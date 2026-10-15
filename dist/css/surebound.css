@@ -6,11 +6,11 @@
 @font-face {
   font-family: 'Minion Variable Concept';
   src: local('Minion Variable Concept Bold'),
-       local('Minion Variable Concept'),
-       local('MinionVariableConcept-Bold'),
-       local('MinionPro-Bold'),
-       url('../fonts/minion/MinionPro-Bold.otf') format('opentype'),
-       url('../fonts/minion/MinionPro-Bold.ttf') format('truetype');
+    local('Minion Variable Concept'),
+    local('MinionVariableConcept-Bold'),
+    local('MinionPro-Bold'),
+    url('../fonts/minion/MinionPro-Bold.otf') format('opentype'),
+    url('../fonts/minion/MinionPro-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -19,9 +19,9 @@
 @font-face {
   font-family: 'Minion Variable Concept';
   src: local('Minion Variable Concept'),
-       local('MinionVariableConcept-Regular'),
-       local('MinionPro-Regular'),
-       url('../fonts/minion/MinionPro-Regular.otf') format('opentype');
+    local('MinionVariableConcept-Regular'),
+    local('MinionPro-Regular'),
+    url('../fonts/minion/MinionPro-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -30,9 +30,9 @@
 @font-face {
   font-family: 'Minion Pro';
   src: local('Minion Pro Bold'),
-       local('MinionPro-Bold'),
-       url('../fonts/minion/MinionPro-Bold.otf') format('opentype'),
-       url('../fonts/minion/MinionPro-Bold.ttf') format('truetype');
+    local('MinionPro-Bold'),
+    url('../fonts/minion/MinionPro-Bold.otf') format('opentype'),
+    url('../fonts/minion/MinionPro-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -41,8 +41,8 @@
 @font-face {
   font-family: 'Minion Pro';
   src: local('Minion Pro Regular'),
-       local('MinionPro-Regular'),
-       url('../fonts/minion/MinionPro-Regular.otf') format('opentype');
+    local('MinionPro-Regular'),
+    url('../fonts/minion/MinionPro-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -63,34 +63,39 @@
   --color-text-body: #475569;
   --color-text-muted: #64748b;
   --color-text-light: #94a3b8;
-  
+
   /* Brand Guidelines 2026 Typography */
   --font-headline: 'Minion Variable Concept', 'Minion Pro', Georgia, 'Times New Roman', serif;
   --font-serif: 'Minion Variable Concept', 'Minion Pro', Georgia, 'Times New Roman', serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  
+
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-pill: 9999px;
-  
+
   --shadow-sm: 0 1px 3px rgba(11, 26, 72, 0.05);
   --shadow-card: 0 4px 18px rgba(11, 26, 72, 0.06);
   --shadow-hover: 0 12px 30px rgba(18, 85, 219, 0.12);
   --shadow-float: 0 20px 40px rgba(11, 26, 72, 0.12);
-  
+
   --container-max: 90%;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 html {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -103,12 +108,21 @@ body {
   line-height: 1.6;
   font-size: 17px;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  min-width: 0;
+  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Brand Guidelines 2026: Headlines typeset with Optical kerning, tracking 0, sentence case */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-headline);
   font-weight: 700;
   letter-spacing: 0;
@@ -118,7 +132,14 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: none;
 }
 
-p, span, li, label, input, select, textarea, button {
+p,
+span,
+li,
+label,
+input,
+select,
+textarea,
+button {
   font-family: var(--font-sans);
 }
 
@@ -259,12 +280,12 @@ button {
   transition: transform 0.2s ease;
 }
 
-.nav-dropdown:hover > .nav-link {
+.nav-dropdown:hover>.nav-link {
   color: var(--color-primary);
   background-color: var(--color-sky-light);
 }
 
-.nav-dropdown:hover > .nav-link svg {
+.nav-dropdown:hover>.nav-link svg {
   transform: rotate(180deg);
 }
 
@@ -309,7 +330,7 @@ button {
 
 /* Active Navigation & Page States */
 .nav-link.active,
-.nav-dropdown.active > .nav-link {
+.nav-dropdown.active>.nav-link {
   color: var(--color-primary) !important;
   background-color: var(--color-sky-light) !important;
   font-weight: 700 !important;
@@ -360,9 +381,9 @@ button {
   gap: 6px;
   background-color: var(--color-primary);
   color: #ffffff;
-  padding: 8px 18px;
+  padding: 11px 24px;
   border-radius: var(--radius-pill);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.2px;
   box-shadow: 0 3px 12px rgba(18, 85, 219, 0.28);
@@ -532,9 +553,9 @@ button {
   gap: 6px;
   background-color: #195acd;
   color: #ffffff;
-  padding: 10px 20px;
+  padding: 11px 24px;
   border-radius: var(--radius-pill);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   box-shadow: 0 8px 24px rgba(25, 90, 205, 0.38);
   transition: all 0.25s ease;
@@ -554,9 +575,9 @@ button {
   background-color: #ffffff;
   color: #195acd;
   border: 1.5px solid #195acd;
-  padding: 9px 19px;
+  padding: 9.5px 22.5px;
   border-radius: var(--radius-pill);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   transition: all 0.25s ease;
 }
@@ -590,8 +611,15 @@ button {
 }
 
 @keyframes floatSubtle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 .hero-card-icon {
@@ -619,7 +647,8 @@ button {
   gap: 1px;
 }
 
-.hero-card-label, .hero-card-sub {
+.hero-card-label,
+.hero-card-sub {
   font-size: 11px;
   font-weight: 700;
   color: var(--color-navy);
@@ -940,9 +969,9 @@ button {
   gap: 9px;
   background-color: var(--color-primary);
   color: #ffffff;
-  padding: 13px 30px;
+  padding: 11px 24px;
   border-radius: var(--radius-pill);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
   box-shadow: 0 4px 16px rgba(18, 85, 219, 0.28);
   transition: all 0.25s ease;
@@ -1211,7 +1240,7 @@ button {
 .cta-banner-section {
   position: relative;
   background-color: #0441c2;
-  background-image: 
+  background-image:
     linear-gradient(180deg, rgba(3, 73, 214, 0.28) 0%, rgba(1, 31, 77, 0.65) 100%),
     url('../images/cta-mountain-bg.jpg');
   background-size: cover;
@@ -1261,10 +1290,10 @@ button {
   gap: 7px;
   background-color: #ffffff;
   color: var(--color-navy);
-  padding: 10px 22px;
+  padding: 11px 24px;
   border-radius: var(--radius-pill);
-  font-size: 15.5px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
   transition: all 0.25s ease;
 }
@@ -1287,9 +1316,9 @@ button {
   background-color: transparent;
   color: #ffffff;
   border: 1.5px solid rgba(255, 255, 255, 0.65);
-  padding: 9px 20px;
+  padding: 9.5px 22.5px;
   border-radius: var(--radius-pill);
-  font-size: 15.5px;
+  font-size: 15px;
   font-weight: 600;
   transition: all 0.25s ease;
 }
@@ -1526,9 +1555,9 @@ button {
   width: 100%;
   background-color: var(--color-primary);
   color: #ffffff;
-  padding: 13px;
+  padding: 11px;
   border-radius: var(--radius-pill);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   margin-top: 8px;
   transition: background 0.2s ease;
@@ -1555,28 +1584,35 @@ button {
   .hero-photo-bleed {
     width: 62%;
   }
+
   .hero-content-col {
     max-width: 480px;
   }
+
   .resources-layout {
     grid-template-columns: 1fr;
     gap: 22px;
   }
+
   .resources-desc {
     max-width: 100%;
   }
+
   .resources-top-link {
     justify-content: flex-start;
     margin-bottom: 16px;
   }
+
   .articles-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
+
   .footer-main-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 36px;
   }
+
   .footer-brand-col {
     grid-column: span 2;
     border-right: none !important;
@@ -1596,14 +1632,17 @@ button {
     padding: 7px 0;
     background-color: #012e71;
   }
+
   .top-bar .container {
     justify-content: center;
   }
+
   .top-bar-links {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 12px; /* Slight increase since we have scroll */
+    gap: 12px;
+    /* Slight increase since we have scroll */
     font-size: 11px;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -1615,19 +1654,23 @@ button {
     width: 100%;
     max-width: 100%;
   }
+
   .top-bar-links::-webkit-scrollbar {
     display: none;
   }
+
   .top-bar-link {
     gap: 4px;
     color: #ffffff;
     white-space: nowrap;
     font-weight: 500;
   }
+
   .top-bar-link svg {
     width: 11px;
     height: 11px;
   }
+
   .top-bar-divider {
     height: 9px;
     background-color: rgba(255, 255, 255, 0.25);
@@ -1639,15 +1682,19 @@ button {
     padding-bottom: 10px;
     position: relative;
   }
+
   .brand-logo-img {
     height: 28px;
   }
+
   .btn-header-quote {
     display: none !important;
   }
+
   .mobile-toggle {
     display: flex;
   }
+
   .main-nav {
     display: flex;
     position: absolute;
@@ -1667,6 +1714,7 @@ button {
     border-top: 1px solid #eef2f6;
     z-index: 999;
   }
+
   .main-nav.is-open {
     max-height: 85vh;
     overflow-y: auto;
@@ -1674,10 +1722,12 @@ button {
     visibility: visible;
     padding: 12px 5% 20px;
   }
+
   .nav-dropdown {
     width: 100%;
     border-bottom: 1px solid #f1f5f9;
   }
+
   .nav-link {
     width: 100%;
     justify-content: space-between;
@@ -1685,6 +1735,7 @@ button {
     font-size: 16.5px;
     font-weight: 600;
   }
+
   .dropdown-flyout {
     position: static;
     opacity: 1;
@@ -1698,12 +1749,15 @@ button {
     margin-bottom: 10px;
     display: none;
   }
+
   .nav-dropdown.active-mobile .dropdown-flyout {
     display: block;
   }
+
   .nav-dropdown.active-mobile .nav-link svg {
     transform: rotate(180deg);
   }
+
   .dropdown-flyout a {
     padding: 8px 18px;
     font-size: 15px;
@@ -1717,29 +1771,36 @@ button {
     background-color: #f0f7fd;
     overflow: hidden;
   }
+
   .hero-container {
     position: relative;
     display: flex;
     flex-direction: row;
-    align-items: center; /* Center align vertically */
+    align-items: center;
+    /* Center align vertically */
     justify-content: flex-start;
-    min-height: 280px; /* Give it enough height to look good */
-    padding: 24px 0 24px; 
+    min-height: 280px;
+    /* Give it enough height to look good */
+    padding: 24px 0 24px;
     width: 94%;
     max-width: 94%;
     text-align: left;
     margin: 0 auto;
     z-index: 5;
   }
+
   .hero-content {
-    width: 100%; /* Expanded to allow side-by-side buttons */
-    max-width: 280px; /* Constrain text so it doesn't overlap faces */
+    width: 100%;
+    /* Expanded to allow side-by-side buttons */
+    max-width: 280px;
+    /* Constrain text so it doesn't overlap faces */
     z-index: 5;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-top: 0;
   }
+
   .hero-eyebrow {
     font-size: 10.5px;
     letter-spacing: 0.2px;
@@ -1749,6 +1810,7 @@ button {
     line-height: 1.35;
     text-align: left;
   }
+
   .hero-title {
     font-family: var(--font-serif);
     font-size: clamp(23px, 6vw, 28px);
@@ -1757,26 +1819,30 @@ button {
     color: var(--color-navy);
     text-align: left;
   }
+
   .hero-subtitle {
     font-size: 12px;
     line-height: 1.4;
     margin-bottom: 16px;
     color: #3b4759;
     font-weight: 500;
-    max-width: 100%;
+    max-width: 65%;
     text-align: left;
   }
+
   .hero-buttons {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap; /* Force buttons to be side-by-side */
+    flex-wrap: nowrap;
+    /* Force buttons to be side-by-side */
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
     width: auto;
   }
+
   .btn-primary-hero {
-    padding: 8px 12px;
+    padding: 8px 14px;
     font-size: 12px;
     gap: 6px;
     border-radius: var(--radius-pill);
@@ -1785,12 +1851,14 @@ button {
     width: auto;
     justify-content: center;
   }
+
   .btn-primary-hero svg {
     width: 12px;
     height: 12px;
   }
+
   .btn-outline-hero {
-    padding: 8px 12px;
+    padding: 8px 14px;
     font-size: 12px;
     gap: 6px;
     border-radius: var(--radius-pill);
@@ -1802,6 +1870,7 @@ button {
     justify-content: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   }
+
   .btn-outline-hero svg {
     width: 12px;
     height: 12px;
@@ -1810,12 +1879,14 @@ button {
   /* Make the image act as a background pushed to the right */
   .hero-photo-bleed {
     position: absolute;
-    top: 0;
+    top: 7.5%;
     right: 0;
-    bottom: 0;
+    bottom: auto;
     left: auto;
-    width: 40%; /* 40% as requested */
-    height: 100%;
+    width: 55%;
+    /* Reduced width so it doesn't touch the text on the left */
+    height: 85%;
+    /* Reduced height forces object-fit: cover to zoom out proportionally */
     z-index: 1;
     margin-top: 0;
     border-radius: 0;
@@ -1824,41 +1895,37 @@ button {
     -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 15%);
     mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 15%);
   }
+
   .hero-photo-img {
     position: absolute;
     top: 0;
     right: 0;
     left: auto;
     height: 100%;
-    width: 180%; /* Expand width so cover zooms out, fitting all 3 people */
+    width: 100%;
     max-width: none;
     object-fit: cover;
-    object-position: 85% center; /* Focus on the right side where family is */
+    object-position: 55% center;
     display: block;
   }
+
   .hero-photo-fade-right {
     display: none !important;
   }
+
   .hero-photo-tint {
-    display: none !important;
+    display: block !important;
+    background: rgba(255, 255, 255, 0.35);
   }
 
   .hero-card-positioner {
-    position: absolute;
-    right: 0;
-    bottom: 15px;
-    top: auto;
-    z-index: 6;
-    margin: 0;
-    transform: none;
-    width: auto;
-    max-width: none;
-    animation: none !important;
-    display: block !important;
+    display: none !important;
   }
+
   .hero-floating-card {
     padding: 10px 14px;
-    border-radius: 8px; /* Box instead of pill */
+    border-radius: 8px;
+    /* Box instead of pill */
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 4px 16px rgba(11, 26, 72, 0.12);
     display: flex;
@@ -1867,6 +1934,7 @@ button {
     border: 1px solid rgba(226, 232, 240, 0.9);
     animation: none !important;
   }
+
   .hero-card-icon {
     width: 24px;
     height: 24px;
@@ -1878,13 +1946,14 @@ button {
     justify-content: center;
     flex-shrink: 0;
   }
+
   .hero-card-icon svg {
     width: 14px;
     height: 14px;
     stroke-width: 2.2;
     color: var(--color-primary);
   }
-  
+
   .hero-card-text {
     font-size: 11px;
     font-weight: 700;
@@ -1896,7 +1965,7 @@ button {
     align-items: flex-start;
     gap: 1px;
   }
-  
+
   .hero-card-sub,
   .hero-card-label {
     display: block;
@@ -1904,13 +1973,13 @@ button {
     font-weight: 700;
     color: var(--color-navy);
   }
-  
+
   .hero-card-arrow {
     display: flex;
     align-items: center;
     margin-left: 2px;
   }
-  
+
   .hero-card-arrow svg {
     width: 12px;
     height: 12px;
@@ -1923,6 +1992,7 @@ button {
     font-size: clamp(22px, 6vw, 26px);
     margin-bottom: 10px;
   }
+
   .section-subtitle {
     font-size: 14px;
     margin-bottom: 24px;
@@ -1932,23 +2002,60 @@ button {
   .coverage-section {
     padding: 40px 0 30px;
   }
+
   .coverage-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 12px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
+
+  .coverage-cards-grid::-webkit-scrollbar {
+    display: none;
+  }
+
   .coverage-card {
     padding: 16px 12px;
+    scroll-snap-align: start;
+    min-width: calc(50% - 8px);
+    flex: 0 0 calc(50% - 8px);
   }
+
+  .coverage-pagination-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .coverage-pagination-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #cbd5e1;
+    transition: all 0.3s ease;
+  }
+
+  .coverage-pagination-dots .dot.active {
+    background-color: var(--color-primary);
+    width: 20px;
+    border-radius: 4px;
+  }
+
   .coverage-card-icon {
     width: 36px;
     height: 36px;
     margin-bottom: 12px;
   }
+
   .coverage-card-title {
     font-size: 14px;
     margin-bottom: 6px;
   }
+
   .coverage-card-desc {
     font-size: 12px;
     margin-bottom: 12px;
@@ -1960,18 +2067,22 @@ button {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px 16px;
   }
+
   .value-item {
     border-right: none !important;
     padding-bottom: 0;
     border-bottom: none;
     text-align: center;
   }
+
   .value-item-icon {
     margin: 0 auto 12px;
   }
+
   .value-item-title {
     font-size: 14px;
   }
+
   .value-item-desc {
     font-size: 11px;
     line-height: 1.4;
@@ -1983,6 +2094,7 @@ button {
     grid-template-columns: 1fr;
     gap: 24px;
   }
+
   .simpler-image-frame {
     aspect-ratio: 16 / 9;
   }
@@ -1993,6 +2105,7 @@ button {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px 12px;
   }
+
   .why-card {
     border-right: none !important;
     padding-bottom: 0;
@@ -2000,13 +2113,16 @@ button {
     text-align: center;
     padding: 10px;
   }
+
   .why-icon {
     margin: 0 auto 12px;
   }
+
   .why-title {
     font-size: 13px;
     margin-bottom: 6px;
   }
+
   .why-desc {
     font-size: 11px;
     line-height: 1.4;
@@ -2018,62 +2134,102 @@ button {
     flex-direction: column;
     gap: 16px;
   }
+
   .resources-top-link {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 8px;
   }
+
   .resources-top-link a {
     font-size: 12px;
   }
+
   .articles-grid {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    gap: 12px;
+    gap: 16px;
     padding-bottom: 12px;
     /* Hide scrollbar for clean look */
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .articles-grid::-webkit-scrollbar {
     display: none;
   }
+
   .article-card {
-    scroll-snap-align: start;
-    min-width: 240px;
-    flex: 0 0 auto;
+    scroll-snap-align: center;
+    min-width: 100%;
+    flex: 0 0 100%;
   }
 
-  /* CTA Banner - Row layout */
+  .articles-pagination-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .articles-pagination-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #cbd5e1;
+    transition: all 0.3s ease;
+  }
+
+  .articles-pagination-dots .dot.active {
+    background-color: var(--color-primary);
+    width: 20px;
+    border-radius: 4px;
+  }
+
+  /* CTA Banner - Column layout for mobile */
   .cta-banner-section .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    text-align: left;
-    gap: 16px;
-    padding: 24px 20px;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+    padding: 40px 20px;
   }
+
   .cta-text-wrap {
-    max-width: 65%;
+    max-width: 100%;
   }
+
   .cta-text-wrap h2 {
-    font-size: 18px;
-    margin-bottom: 4px;
+    font-size: 24px;
+    margin-bottom: 12px;
+    line-height: 1.3;
   }
+
   .cta-text-wrap p {
-    font-size: 11px;
+    font-size: 14px;
+    line-height: 1.5;
   }
+
   .cta-button-group {
     display: flex;
     flex-direction: column;
-    width: auto;
-    flex-shrink: 0;
+    width: 100%;
+    align-items: stretch;
+    gap: 12px;
   }
-  .btn-cta-white {
-    padding: 10px 16px;
+
+  .cta-button-group a {
+    justify-content: center;
+  }
+
+  .btn-cta-white,
+  .btn-cta-transparent,
+  .btn-learn-more {
+    padding: 8px 14px;
     font-size: 12px;
     width: auto;
   }
@@ -2084,21 +2240,25 @@ button {
     grid-template-columns: 1fr;
     gap: 24px;
   }
+
   /* On very small mobile, we might keep it 1 col, but let's do a 2-col layout for the links */
   .footer-nav-col {
     display: inline-block;
     vertical-align: top;
   }
+
   .footer-brand-col {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
     padding-bottom: 24px !important;
     margin-bottom: 8px;
   }
+
   .footer-bottom-bar {
     flex-direction: column;
     gap: 16px;
     text-align: center;
   }
+
   .footer-bottom-links {
     flex-direction: row;
     flex-wrap: wrap;
@@ -2108,10 +2268,48 @@ button {
 
   /* Quote Modal */
   .modal-box {
-    width: 94%;
-    padding: 22px 18px;
-    max-height: 90vh;
+    width: 92%;
+    padding: 32px 24px 24px;
+    max-height: 88vh;
     overflow-y: auto;
+  }
+
+  .modal-header h3 {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .modal-header p {
+    font-size: 14.5px;
+    margin-bottom: 20px;
+  }
+
+  .modal-form-group {
+    margin-bottom: 14px;
+  }
+
+  .modal-form-group label {
+    font-size: 14px;
+  }
+
+  .modal-form-group input,
+  .modal-form-group select {
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  .btn-submit-modal {
+    font-size: 15px;
+    padding: 10px;
+    margin-top: 8px;
+  }
+
+  .modal-close-btn {
+    top: 14px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
   }
 }
 
@@ -2252,7 +2450,8 @@ button {
 
 .brand-quote-mark {
   font-family: var(--font-sans);
-  font-size: 38px; /* Brand Guidelines: Quote Mark Inter 36 */
+  font-size: 38px;
+  /* Brand Guidelines: Quote Mark Inter 36 */
   line-height: 1;
   font-weight: 700;
   color: var(--color-primary);
@@ -2262,10 +2461,13 @@ button {
 
 .brand-quote-text {
   font-family: var(--font-sans);
-  font-feature-settings: "ss02" 1; /* Brand Guidelines: Inter Style Set 2 */
-  font-size: 20px; /* Brand Guidelines: Inter 18/21 */
+  font-feature-settings: "ss02" 1;
+  /* Brand Guidelines: Inter Style Set 2 */
+  font-size: 20px;
+  /* Brand Guidelines: Inter 18/21 */
   line-height: 1.45;
-  letter-spacing: 0; /* Optical tracking set to 0 */
+  letter-spacing: 0;
+  /* Optical tracking set to 0 */
   font-weight: 500;
   color: var(--color-navy);
   margin-bottom: 22px;
@@ -2321,11 +2523,10 @@ button {
   .brand-pull-quote-card {
     padding: 30px 24px;
   }
+
   .brand-quote-text {
     font-size: 18px;
     line-height: 1.45;
   }
 
-  }
 }
-

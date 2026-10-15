@@ -6,20 +6,24 @@
     <title>User Dashboard - Surebound</title>
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/user-panel.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}">
 </head>
 <body>
 
 <div class="user-layout">
     
+    <!-- MOBILE SIDEBAR BACKDROP OVERLAY -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeUserSidebar()"></div>
+
     <!-- LEFT SIDEBAR -->
-    <aside class="user-sidebar">
+    <aside class="user-sidebar" id="userSidebar">
         <div class="sidebar-logo">
-            <svg viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 32px; width: auto;">
-                <path d="M19.4 1.2a1.8 1.8 0 0 1 1.2 0L37.2 7c.5.3.8.8.8 1.3v15c0 10.7-7 20.6-17.1 24.3a2.5 2.5 0 0 1-1.8 0C9 43.9 2 34 2 23.3v-15c0-.5.3-1 .8-1.3L19.4 1.2Z" fill="#1D4ED8"/>
-                <path d="M14 16.5h7c2 0 3.5 1.5 3.5 3.5s-1.5 3.5-3.5 3.5h-5.5v5h-1.5v-12Zm1.5 1.5v4h5.5c1.1 0 2-.9 2-2s-.9-2-2-2h-5.5Z" fill="#fff"/>
-                <path d="M21 21.5h4c2 0 3.5 1.5 3.5 3.5s-1.5 3.5-3.5 3.5h-5.5v-7h1.5v5.5h4c1.1 0 2-.9 2-2s-.9-2-2-2Z" fill="#fff"/>
-            </svg>
-            SUREBOUND
+            <a href="{{ route('dashboard') }}" class="sidebar-logo-brand" aria-label="Surebound Dashboard">
+                <img src="{{ asset('images/logo-white.png') }}" alt="Surebound" class="sidebar-brand-img">
+            </a>
+            <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" onclick="closeUserSidebar()" aria-label="Close navigation menu">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
         </div>
         
         <nav class="sidebar-nav">
@@ -58,12 +62,17 @@
         </nav>
         
         <div class="sidebar-promo">
-            <svg viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 28px; width: auto; margin-bottom: 12px;">
-                <path d="M19.4 1.2a1.8 1.8 0 0 1 1.2 0L37.2 7c.5.3.8.8.8 1.3v15c0 10.7-7 20.6-17.1 24.3a2.5 2.5 0 0 1-1.8 0C9 43.9 2 34 2 23.3v-15c0-.5.3-1 .8-1.3L19.4 1.2Z" fill="#3B82F6"/>
-            </svg>
+            <div class="promo-icon-wrap">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+            </div>
             <h4>Your Protection<br>Our Priority</h4>
             <p>Stay covered, stay confident. We're here for you.</p>
-            <a href="#" class="promo-btn">Get Support &rarr;</a>
+            <a href="{{ route('user.support') }}" class="promo-btn">
+                <span>Get Support</span>
+                <span>&rarr;</span>
+            </a>
         </div>
     </aside>
 
@@ -72,9 +81,14 @@
         
         <!-- HEADER -->
         <header class="user-header">
-            <div class="header-search">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" placeholder="Search policies, claims, or anything...">
+            <div class="header-left-group">
+                <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" onclick="toggleUserSidebar()" aria-label="Open navigation menu">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+                <div class="header-search">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" placeholder="Search policies, claims, or anything...">
+                </div>
             </div>
             
             <div class="header-actions">
@@ -116,7 +130,51 @@
 </div>
 
 <script>
+    function toggleUserSidebar() {
+        const sidebar = document.getElementById('userSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (!sidebar) return;
+        const isOpen = sidebar.classList.toggle('open');
+        if (backdrop) {
+            backdrop.classList.toggle('show', isOpen);
+        }
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    function closeUserSidebar() {
+        const sidebar = document.getElementById('userSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (sidebar) sidebar.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    // Close sidebar on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeUserSidebar();
+        }
+    });
+
+    // Close sidebar if window resized to desktop size (> 992px)
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 992) {
+            closeUserSidebar();
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
+        // Close sidebar on mobile when a navigation link is clicked
+        const navLinks = document.querySelectorAll('.sidebar-nav .nav-item');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 992) {
+                    closeUserSidebar();
+                }
+            });
+        });
+
+        // Profile Dropdown Toggle
         const profileBtn = document.getElementById('profileDropdownBtn');
         const dropdownMenu = document.getElementById('profileDropdownMenu');
 
@@ -134,5 +192,6 @@
         }
     });
 </script>
+    <script src="{{ asset('js/surebound-modal.js') }}"></script>
 </body>
 </html>

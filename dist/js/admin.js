@@ -9,200 +9,9 @@
     // --------------------------------------------------------------------------
     // DEFAULT SEED DATA (Used if localStorage is empty)
     // --------------------------------------------------------------------------
-    const DEFAULT_QUOTES = [
-        {
-            id: 'Q-10492',
-            name: 'Sarah Jenkins',
-            email: 'sarah.j@example.com',
-            phone: '(206) 555-0142',
-            type: 'auto',
-            typeLabel: 'Auto Insurance',
-            coverage: '$250,000 / $500,000',
-            premium: '$1,450 / yr',
-            location: 'Seattle, WA 98101',
-            status: 'quoted',
-            date: 'Today, 10:45 AM',
-            notes: '2024 Honda CR-V Hybrid. Clean driving record. Looking for comprehensive and collision coverage.'
-        },
-        {
-            id: 'Q-10491',
-            name: 'Michael Chang',
-            email: 'm.chang@example.com',
-            phone: '(503) 555-0189',
-            type: 'home',
-            typeLabel: 'Homeowners',
-            coverage: '$650,000 Dwelling',
-            premium: '$2,180 / yr',
-            location: 'Portland, OR 97201',
-            status: 'new',
-            date: 'Today, 09:15 AM',
-            notes: 'Single family residence, built 2018. New roof in 2022. Bundling with auto potential.'
-        },
-        {
-            id: 'Q-10490',
-            name: 'Emma Watson',
-            email: 'emma.w@example.com',
-            phone: '(415) 555-0211',
-            type: 'life',
-            typeLabel: 'Term Life',
-            coverage: '$1,000,000 (20-Yr)',
-            premium: '$840 / yr',
-            location: 'San Francisco, CA 94102',
-            status: 'reviewing',
-            date: 'Yesterday',
-            notes: 'Non-smoker, 34 years old. Requesting preferred plus rating underwriting review.'
-        },
-        {
-            id: 'Q-10489',
-            name: 'Apex Logistics LLC',
-            email: 'fleet@apexlogistics.io',
-            phone: '(425) 555-0399',
-            type: 'business',
-            typeLabel: 'Commercial Liability',
-            coverage: '$2,000,000 Aggregate',
-            premium: '$5,800 / yr',
-            location: 'Bellevue, WA 98004',
-            status: 'converted',
-            date: 'Oct 3, 2026',
-            notes: 'Fleet of 8 cargo vans and warehouse liability. Policy bound and active.'
-        },
-        {
-            id: 'Q-10488',
-            name: 'David Miller',
-            email: 'dmiller@example.com',
-            phone: '(509) 555-0724',
-            type: 'auto',
-            typeLabel: 'Auto Comprehensive',
-            coverage: '$100,000 / $300,000',
-            premium: '$920 / yr',
-            location: 'Spokane, WA 99201',
-            status: 'declined',
-            date: 'Oct 2, 2026',
-            notes: 'Multiple moving violations in past 18 months, outside target risk tier.'
-        },
-        {
-            id: 'Q-10487',
-            name: 'Jessica Alba',
-            email: 'jessica.a@example.com',
-            phone: '(253) 555-0633',
-            type: 'home',
-            typeLabel: 'Home & Flood',
-            coverage: '$820,000 Dwelling',
-            premium: '$3,400 / yr',
-            location: 'Tacoma, WA 98402',
-            status: 'new',
-            date: 'Oct 1, 2026',
-            notes: 'Coastal property requires private flood endorsement. Fast quotation needed.'
-        },
-        {
-            id: 'Q-10486',
-            name: 'Cascade Roasters Co.',
-            email: 'admin@cascaderoasters.com',
-            phone: '(206) 555-0915',
-            type: 'business',
-            typeLabel: 'Business BOP',
-            coverage: '$1,500,000',
-            premium: '$4,600 / yr',
-            location: 'Seattle, WA 98103',
-            status: 'reviewing',
-            date: 'Sep 29, 2026',
-            notes: 'Coffee roasting facility and retail cafe storefront.'
-        }
-    ];
-
-    const DEFAULT_POLICIES = [
-        {
-            id: 'SB-POL-98412',
-            holder: 'Jonathan Harris',
-            type: 'home',
-            typeLabel: 'Homeowners Deluxe',
-            coverage: '$750,000',
-            premium: '$2,250 / yr',
-            effective: 'Nov 12, 2025',
-            renewal: 'Nov 12, 2026',
-            status: 'active'
-        },
-        {
-            id: 'SB-POL-84920',
-            holder: 'Samantha Ray',
-            type: 'auto',
-            typeLabel: 'Auto Total Shield',
-            coverage: '$150,000 / $300,000',
-            premium: '$1,180 / yr',
-            effective: 'Jan 15, 2026',
-            renewal: 'Jan 15, 2027',
-            status: 'active'
-        },
-        {
-            id: 'SB-POL-73104',
-            holder: 'Marcus Sterling',
-            type: 'life',
-            typeLabel: 'Term Life 20-Yr',
-            coverage: '$1,000,000',
-            premium: '$960 / yr',
-            effective: 'Mar 01, 2026',
-            renewal: 'Mar 01, 2027',
-            status: 'active'
-        },
-        {
-            id: 'SB-POL-62019',
-            holder: 'TechWave Studios',
-            type: 'business',
-            typeLabel: 'Commercial Package',
-            coverage: '$2,500,000',
-            premium: '$6,200 / yr',
-            effective: 'Dec 05, 2025',
-            renewal: 'Dec 05, 2026',
-            status: 'active'
-        },
-        {
-            id: 'SB-POL-51928',
-            holder: 'Linda Croft',
-            type: 'auto',
-            typeLabel: 'Standard Auto',
-            coverage: '$75,000 / $150,000',
-            premium: '$850 / yr',
-            effective: 'Oct 20, 2025',
-            renewal: 'Oct 20, 2026',
-            status: 'pending'
-        }
-    ];
-
-    const DEFAULT_CLAIMS = [
-        {
-            id: 'CLM-2026-081',
-            holder: 'Jonathan Harris',
-            policyId: 'SB-POL-98412',
-            incident: 'Severe hailstorm roof damage & exterior guttering',
-            estimate: '$8,400',
-            adjuster: 'David Miller',
-            priority: 'High',
-            status: 'reviewing',
-            date: 'Oct 03, 2026'
-        },
-        {
-            id: 'CLM-2026-064',
-            holder: 'Samantha Ray',
-            policyId: 'SB-POL-84920',
-            incident: 'Low-speed parking lot scrape & bumper crack',
-            estimate: '$1,250',
-            adjuster: 'Sarah Jenkins',
-            priority: 'Normal',
-            status: 'approved',
-            date: 'Sep 28, 2026'
-        },
-        {
-            id: 'CLM-2026-052',
-            holder: 'TechWave Studios',
-            policyId: 'SB-POL-62019',
-            incident: 'Server room water pipe leakage & equipment repair',
-            estimate: '$14,200',
-            adjuster: 'Alex Vance',
-            priority: 'High',
-            status: 'paid',
-            date: 'Sep 15, 2026'
-        }
-    ];
+    const DEFAULT_QUOTES = [];
+    const DEFAULT_POLICIES = [];
+    const DEFAULT_CLAIMS = [];
 
     // --------------------------------------------------------------------------
     // STORAGE & DATABASE SYNC HELPERS (Strict MySQL Database Grounding)
@@ -266,7 +75,7 @@
                 policyId: c.policy_number,
                 incident: c.incident_description,
                 estimate: c.estimated_loss || '$1,000',
-                adjuster: c.assigned_adjuster || 'Sarah Jenkins',
+                adjuster: c.assigned_adjuster || 'Unassigned',
                 priority: c.priority || 'Normal',
                 status: c.status || 'reviewing',
                 date: c.created_at ? new Date(c.created_at).toLocaleDateString() : 'Recent'
@@ -417,24 +226,34 @@
         quotesTableBody.querySelectorAll('.delete-quote').forEach(btn => {
             btn.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
-                if (confirm(`Are you sure you want to remove quote request ${id}?`)) {
-                    let quotes = getQuotes();
-                    const target = quotes.find(q => q.id === id);
-                    quotes = quotes.filter(q => q.id !== id);
-                    saveQuotes(quotes);
-                    renderQuotes();
-                    showNotification(`Quote ${id} has been removed.`);
+                SureboundModal.confirm({
+                    title: 'Remove Quote Inquiry',
+                    badge: '#' + id,
+                    message: `Are you sure you want to permanently remove quote request ${id}? This action cannot be reversed.`,
+                    confirmText: 'Remove Quote',
+                    cancelText: 'Cancel',
+                    type: 'danger',
+                    icon: 'trash'
+                }).then(confirmed => {
+                    if (confirmed) {
+                        let quotes = getQuotes();
+                        const target = quotes.find(q => q.id === id);
+                        quotes = quotes.filter(q => q.id !== id);
+                        saveQuotes(quotes);
+                        renderQuotes();
+                        showNotification(`Quote ${id} has been removed.`);
 
-                    if (window.__CSRF_TOKEN__ && target && target.dbId) {
-                        fetch(`/admin/quotes/${target.dbId}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': window.__CSRF_TOKEN__,
-                                'Accept': 'application/json'
-                            }
-                        }).catch(err => console.error('Database delete error:', err));
+                        if (window.__CSRF_TOKEN__ && target && target.dbId) {
+                            fetch(`/admin/quotes/${target.dbId}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'X-CSRF-TOKEN': window.__CSRF_TOKEN__,
+                                    'Accept': 'application/json'
+                                }
+                            }).catch(err => console.error('Database sync error:', err));
+                        }
                     }
-                }
+                });
             });
         });
 
@@ -475,7 +294,7 @@
     }
 
     function renderClaims() {
-        if (!claimsTableBody) return;
+        if (!claimsTableBody || document.getElementById('serverClaimsTable')) return;
         const claims = getClaims();
         if (claims.length === 0) {
             claimsTableBody.innerHTML = `
@@ -722,29 +541,99 @@
     }
 
     // --------------------------------------------------------------------------
-    // NAVIGATION TABS & SIDEBAR
+    // NAVIGATION TABS & SIDEBAR (Persistent State Across Page Reloads)
     // --------------------------------------------------------------------------
     function initTabs() {
         const navLinks = document.querySelectorAll('.sidebar-link[data-tab]');
+        const subLinks = document.querySelectorAll('.sidebar-sublink[data-tab]');
         const panes = document.querySelectorAll('.tab-pane');
         const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
+
+        function updateTabUrlAndStorage(targetTab, subtab) {
+            let hashName = targetTab;
+            if (targetTab === 'marketing') {
+                hashName = subtab && subtab !== 'overview' ? ('marketing-' + subtab) : 'marketing';
+            }
+            try {
+                localStorage.setItem('sb_admin_active_tab', targetTab);
+                if (targetTab === 'marketing' && subtab) {
+                    localStorage.setItem('sb_admin_marketing_subtab', subtab);
+                }
+            } catch (e) {}
+
+            if (window.location.hash !== ('#' + hashName)) {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, null, '#' + hashName);
+                } else {
+                    window.location.hash = hashName;
+                }
+            }
+        }
+
+        function activateTab(targetTab, shouldPersist = true, subtab = null) {
+            if (!targetTab) return;
+
+            // Map aliases (e.g. billing -> invoices)
+            if (targetTab === 'billing' || targetTab === 'invoice') {
+                targetTab = 'invoices';
+            }
+
+            // Verify tab pane exists or fallback
+            let targetPane = document.getElementById('tab-' + targetTab);
+            if (!targetPane) {
+                targetTab = 'overview';
+                targetPane = document.getElementById('tab-overview');
+            }
+
+            // Update sidebar links
+            navLinks.forEach(l => {
+                if (l.getAttribute('data-tab') === targetTab) {
+                    l.classList.add('active');
+                    if (breadcrumbCurrent) {
+                        const label = l.querySelector('span:not(.nav-badge)')?.textContent?.trim() || 'Overview';
+                        breadcrumbCurrent.textContent = label;
+                    }
+                } else {
+                    l.classList.remove('active');
+                }
+            });
+
+            // Update tab panes
+            panes.forEach(pane => {
+                if (pane.id === 'tab-' + targetTab) {
+                    pane.classList.add('active');
+                } else {
+                    pane.classList.remove('active');
+                }
+            });
+
+            // Clean up early initial tab style once full script is active
+            const earlyStyle = document.getElementById('earlyTabStyle');
+            if (earlyStyle) {
+                earlyStyle.remove();
+            }
+
+            // Expand marketing group if marketing active
+            const mktGroup = document.getElementById('sidebarGroupMarketing');
+            if (mktGroup) {
+                if (targetTab === 'marketing') {
+                    mktGroup.classList.add('open');
+                }
+            }
+
+            if (shouldPersist) {
+                updateTabUrlAndStorage(targetTab, subtab);
+            }
+        }
 
         navLinks.forEach(link => {
             link.addEventListener('click', function () {
                 const targetTab = this.getAttribute('data-tab');
-                navLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
+                const subtab = this.getAttribute('data-subtab') || 'overview';
+                activateTab(targetTab, true, subtab);
 
-                panes.forEach(pane => {
-                    pane.classList.remove('active');
-                    if (pane.id === 'tab-' + targetTab) {
-                        pane.classList.add('active');
-                    }
-                });
-
-                if (breadcrumbCurrent) {
-                    const label = this.querySelector('span:not(.nav-badge)')?.textContent || 'Overview';
-                    breadcrumbCurrent.textContent = label;
+                if (targetTab === 'marketing' && typeof window.switchMarketingSubTab === 'function') {
+                    window.switchMarketingSubTab(subtab, false);
                 }
 
                 // Close mobile sidebar if open
@@ -752,6 +641,78 @@
                 if (sidebar) sidebar.classList.remove('open');
             });
         });
+
+        subLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetTab = this.getAttribute('data-tab');
+                const subtab = this.getAttribute('data-subtab') || 'overview';
+
+                activateTab(targetTab, true, subtab);
+
+                if (targetTab === 'marketing' && typeof window.switchMarketingSubTab === 'function') {
+                    window.switchMarketingSubTab(subtab, false);
+                }
+
+                const sidebar = document.getElementById('adminSidebar');
+                if (sidebar) sidebar.classList.remove('open');
+            });
+        });
+
+        // Resolve active tab from URL Hash OR localStorage on load/reload
+        function resolveActiveTab() {
+            let rawHash = (window.location.hash || '').trim();
+            if (rawHash.startsWith('#')) rawHash = rawHash.substring(1);
+
+            if (rawHash) {
+                if (rawHash === 'marketing' || rawHash.startsWith('marketing-')) {
+                    const sub = rawHash.startsWith('marketing-') ? rawHash.replace('marketing-', '') : 'overview';
+                    return { tab: 'marketing', subtab: sub };
+                }
+
+                let clean = rawHash.startsWith('tab-') ? rawHash.replace('tab-', '') : rawHash;
+                if (clean === 'billing' || clean === 'invoice') clean = 'invoices';
+
+                if (document.getElementById('tab-' + clean) || document.querySelector(`.sidebar-link[data-tab="${clean}"]`)) {
+                    return { tab: clean, subtab: null };
+                }
+            }
+
+            // Fallback to localStorage so browser reload (F5) always stays on the user's active page
+            try {
+                const storedTab = localStorage.getItem('sb_admin_active_tab');
+                if (storedTab) {
+                    if (storedTab === 'marketing') {
+                        const storedSub = localStorage.getItem('sb_admin_marketing_subtab') || 'overview';
+                        return { tab: 'marketing', subtab: storedSub };
+                    }
+                    let cleanStored = storedTab === 'billing' ? 'invoices' : storedTab;
+                    if (document.getElementById('tab-' + cleanStored) || document.querySelector(`.sidebar-link[data-tab="${cleanStored}"]`)) {
+                        return { tab: cleanStored, subtab: null };
+                    }
+                }
+            } catch (e) {}
+
+            return { tab: 'overview', subtab: null };
+        }
+
+        function restoreActiveTab(syncUrl = true) {
+            const { tab, subtab } = resolveActiveTab();
+            activateTab(tab, syncUrl, subtab);
+            if (tab === 'marketing' && typeof window.switchMarketingSubTab === 'function') {
+                window.switchMarketingSubTab(subtab || 'overview', false);
+            }
+        }
+
+        window.addEventListener('hashchange', function () {
+            restoreActiveTab(false);
+        });
+
+        // Run immediately on page load / reload
+        restoreActiveTab(true);
+        setTimeout(function () {
+            restoreActiveTab(true);
+        }, 60);
     }
 
     function initFilterButtons() {

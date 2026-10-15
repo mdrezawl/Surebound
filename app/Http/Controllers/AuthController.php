@@ -15,10 +15,14 @@ class AuthController extends Controller
      */
     public function showLogin()
     {
-        if (Auth::check()) {
-            return Auth::user()->role === 'user'
-                ? redirect()->route('dashboard')
-                : redirect()->route('admin.dashboard');
+        try {
+            if (Auth::check()) {
+                return Auth::user()->role === 'user'
+                    ? redirect()->route('dashboard')
+                    : redirect()->route('admin.dashboard');
+            }
+        } catch (\Throwable $e) {
+            // Silently allow rendering login page even if DB is not initialized yet
         }
 
         return view('auth.login');
@@ -36,17 +40,23 @@ class AuthController extends Controller
 
         $remember = $request->boolean('remember');
 
-        if (Auth::attempt($credentials, $remember)) {
-            $request->session()->regenerate();
-            $user = Auth::user();
+        try {
+            if (Auth::attempt($credentials, $remember)) {
+                $request->session()->regenerate();
+                $user = Auth::user();
 
-            if ($user->role === 'user') {
-                return redirect()->intended(route('dashboard'))
+                if ($user->role === 'user') {
+                    return redirect()->intended(route('dashboard'))
+                        ->with('success', 'Welcome back, '.$user->name.'!');
+                }
+
+                return redirect()->intended(route('admin.dashboard'))
                     ->with('success', 'Welcome back, '.$user->name.'!');
             }
-
-            return redirect()->intended(route('admin.dashboard'))
-                ->with('success', 'Welcome back, '.$user->name.'!');
+        } catch (\Throwable $e) {
+            return back()->withErrors([
+                'email' => 'Database connection error: '.$e->getMessage().' (Please check .env DB credentials or visit /setup to configure database)',
+            ])->onlyInput('email');
         }
 
         return back()->withErrors([
@@ -59,10 +69,14 @@ class AuthController extends Controller
      */
     public function showRegister()
     {
-        if (Auth::check()) {
-            return Auth::user()->role === 'user'
-                ? redirect()->route('dashboard')
-                : redirect()->route('admin.dashboard');
+        try {
+            if (Auth::check()) {
+                return Auth::user()->role === 'user'
+                    ? redirect()->route('dashboard')
+                    : redirect()->route('admin.dashboard');
+            }
+        } catch (\Throwable $e) {
+            // Silently allow rendering register page even if DB is not initialized yet
         }
 
         return view('auth.register');

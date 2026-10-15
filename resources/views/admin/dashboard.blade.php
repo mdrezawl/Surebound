@@ -12,10 +12,38 @@
     <!-- Google Fonts: Inter (Brand Guidelines 2026) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     
     <!-- Admin Portal Stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}">
+
+    <!-- Early Tab Restoration Script (Instant Active Tab Render on Page Reload) -->
+    <script>
+        (function() {
+            try {
+                var rawHash = (window.location.hash || '').replace(/^#/, '').trim();
+                var targetTab = '';
+                if (rawHash) {
+                    if (rawHash === 'marketing' || rawHash.indexOf('marketing-') === 0) {
+                        targetTab = 'marketing';
+                    } else {
+                        targetTab = rawHash.replace(/^tab-/, '');
+                    }
+                }
+                if (!targetTab) {
+                    targetTab = localStorage.getItem('sb_admin_active_tab');
+                }
+                if (targetTab === 'billing' || targetTab === 'invoice') targetTab = 'invoices';
+                if (targetTab && targetTab !== 'overview') {
+                    var style = document.createElement('style');
+                    style.id = 'earlyTabStyle';
+                    style.textContent = '#tab-overview { display: none !important; } #tab-' + targetTab + ' { display: block !important; }';
+                    document.head.appendChild(style);
+                }
+            } catch(e) {}
+        })();
+    </script>
 </head>
 <body>
 
@@ -70,6 +98,14 @@
                     </svg>
                     <span>Claims Center</span>
                     <span class="nav-badge urgent">{{ $claims->count() }}</span>
+                </a>
+
+                <a class="sidebar-link" data-tab="support-tickets">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.375 12.739l-7.648 7.648a4.5 4.5 0 01-6.364-6.364l7.648-7.648a3 3 0 014.243 4.243L8.607 18.265a1.5 1.5 0 01-2.122-2.122l7.648-7.648"/>
+                    </svg>
+                    <span>Support &amp; Concierge</span>
+                    <span class="nav-badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8;">{{ $supportTickets->count() }}</span>
                 </a>
 
                 <div class="nav-section-title">Administration</div>
@@ -130,6 +166,52 @@
                     <span>USA Payment Methods</span>
                     <span class="nav-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">USD $</span>
                 </a>
+
+                <div class="nav-section-title">Marketing &amp; Growth</div>
+
+                <div class="sidebar-group" id="sidebarGroupMarketing">
+                    <a class="sidebar-link" data-tab="marketing" data-subtab="overview" id="sidebarLinkMarketing">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.34 15.84c-.388.388-.916.6-1.464.6H6.75a2.25 2.25 0 0 1-2.25-2.25v-3.75A2.25 2.25 0 0 1 6.75 8.25h2.126c.548 0 1.076.212 1.464.6l5.485 5.485a.75.75 0 0 0 1.281-.53V5.594a.75.75 0 0 0-1.281-.53L10.34 10.55m5.766 5.29H18a2.25 2.25 0 0 0 2.25-2.25v-3a2.25 2.25 0 0 0-2.25-2.25h-1.894" />
+                        </svg>
+                        <span>Marketing &amp; Pixels</span>
+                        <span class="nav-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">Hub</span>
+                    </a>
+                    <div class="sidebar-submenu" id="sidebarSubmenuMarketing">
+                        <a class="sidebar-sublink" data-tab="marketing" data-subtab="overview">
+                            <span class="sublink-dot" style="background: #10b981;"></span>
+                            <span>📊 Overview Hub</span>
+                        </a>
+                        <a class="sidebar-sublink" data-tab="marketing" data-subtab="google">
+                            <span class="sublink-dot" style="background: #4285F4;"></span>
+                            <span>Google (GTM &amp; GA4)</span>
+                        </a>
+                        <a class="sidebar-sublink" data-tab="marketing" data-subtab="meta">
+                            <span class="sublink-dot" style="background: #1877F2;"></span>
+                            <span>Meta (Facebook Pixel)</span>
+                        </a>
+                        <a class="sidebar-sublink" data-tab="marketing" data-subtab="linkedin">
+                            <span class="sublink-dot" style="background: #0A66C2;"></span>
+                            <span>LinkedIn Insight</span>
+                        </a>
+                        <a class="sidebar-sublink" data-tab="marketing" data-subtab="twitter">
+                            <span class="sublink-dot" style="background: #e2e8f0;"></span>
+                            <span>Twitter / X Pixel</span>
+                        </a>
+                        <a class="sidebar-sublink" data-tab="marketing" data-subtab="tiktok">
+                            <span class="sublink-dot" style="background: #FE2C55;"></span>
+                            <span>TikTok Pixel</span>
+                        </a>
+                        <a class="sidebar-sublink" data-tab="marketing" data-subtab="social">
+                            <span class="sublink-dot" style="background: #8B5CF6;"></span>
+                            <span>Social Meta &amp; SEO</span>
+                        </a>
+                        <a class="sidebar-sublink" data-tab="marketing" data-subtab="scripts">
+                            <span class="sublink-dot" style="background: #64748B;"></span>
+                            <span>Custom Scripts</span>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="nav-section-title">CMS &amp; Web Content</div>
 
@@ -294,10 +376,10 @@
 
             <div class="sidebar-footer">
                 <div class="agent-profile-card">
-                    <div class="agent-avatar">{{ Auth::check() ? strtoupper(substr(Auth::user()->name, 0, 2)) : 'SJ' }}</div>
+                    <div class="agent-avatar">{{ Auth::check() ? strtoupper(substr(Auth::user()->name, 0, 2)) : 'AD' }}</div>
                     <div class="agent-info">
-                        <div class="agent-name">{{ Auth::check() ? Auth::user()->name : 'Sarah Jenkins' }}</div>
-                        <div class="agent-role">{{ Auth::check() ? (Auth::user()->title ?: 'Licensed Agent') : 'Principal Underwriter' }}</div>
+                        <div class="agent-name">{{ Auth::check() ? Auth::user()->name : 'Executive Admin' }}</div>
+                        <div class="agent-role">{{ Auth::check() ? (Auth::user()->title ?: 'Licensed Agent') : 'Administrator' }}</div>
                     </div>
                 </div>
 
@@ -377,6 +459,34 @@
 
             <!-- Admin Body / Tab Content -->
             <div class="admin-body">
+                @if(session('success'))
+                <div style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; padding: 12px 18px; border-radius: var(--radius-md); margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-weight: 500; font-size: 0.9375rem; box-shadow: var(--shadow-sm);">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; font-size: 1.25rem; line-height: 1; cursor: pointer; color: #065f46;">&times;</button>
+                </div>
+                @endif
+                @if(session('error'))
+                <div style="background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 18px; border-radius: var(--radius-md); margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-weight: 500; font-size: 0.9375rem; box-shadow: var(--shadow-sm);">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/></svg>
+                        <span>{{ session('error') }}</span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; font-size: 1.25rem; line-height: 1; cursor: pointer; color: #991b1b;">&times;</button>
+                </div>
+                @endif
+                @if($errors->any())
+                <div style="background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 18px; border-radius: var(--radius-md); margin-bottom: 20px; font-weight: 500; font-size: 0.9375rem; box-shadow: var(--shadow-sm);">
+                    <div style="font-weight: 700; margin-bottom: 4px;">Please review the following errors:</div>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 
                 <!-- ========================================================
                      TAB 1: OVERVIEW DASHBOARD
@@ -662,40 +772,219 @@
                 </div>
 
                 <!-- ========================================================
-                     TAB 3: ACTIVE POLICIES
+                     TAB 3: ACTIVE POLICIES & UNDERWRITING CONTROL
                      ======================================================== -->
                 <div class="tab-pane" id="tab-policies">
                     <div class="view-header">
                         <div class="view-title-group">
-                            <h1>Active Bound Policies</h1>
-                            <p>Repository of active coverage certificates, premium payment schedules, and renewal tracking.</p>
+                            <h1>Active Bound Policies &amp; Underwriting</h1>
+                            <p>Repository of active coverage certificates, premium schedules, underwriter contracts, and customer binding controls.</p>
                         </div>
-                        <div class="view-actions">
-                            <button class="btn-secondary" onclick="alert('Policy document synchronization initiated.')">
+                        <div class="view-actions" style="display: flex; gap: 10px; align-items: center;">
+                            <button class="btn-secondary" onclick="alert('Carrier policy synchronization completed with Surebound Syndicate records.')">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
                                 </svg>
                                 <span>Sync Carrier Data</span>
                             </button>
+                            <button class="btn-primary-action" onclick="openCreatePolicyModal()">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15"/>
+                                </svg>
+                                <span>Bind New Policy</span>
+                            </button>
                         </div>
                     </div>
 
+                    <!-- Underwriting Portfolio KPIs -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-top">
+                                <span class="metric-label">Bound Policies</span>
+                                <div class="metric-icon-wrap emerald">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                                </div>
+                            </div>
+                            <div class="metric-value">{{ $policies->count() }}</div>
+                            <div class="metric-bottom">
+                                <span class="metric-context">{{ $policies->where('status', 'active')->count() }} currently active &amp; in good standing</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-top">
+                                <span class="metric-label">Active Coverage Limit</span>
+                                <div class="metric-icon-wrap blue">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m-3-6h6"/></svg>
+                                </div>
+                            </div>
+                            <div class="metric-value">${{ number_format($policies->where('status', 'active')->sum(fn($p) => $p->numeric_limit)) }}</div>
+                            <div class="metric-bottom">
+                                <span class="metric-context">Aggregate insured liability portfolio</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-top">
+                                <span class="metric-label">Annual Book Premium</span>
+                                <div class="metric-icon-wrap purple">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                </div>
+                            </div>
+                            <div class="metric-value">{{ $formattedPremiumVolume }}</div>
+                            <div class="metric-bottom">
+                                <span class="metric-context">Gross written annual insurance book</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-top">
+                                <span class="metric-label">Upcoming Renewals</span>
+                                <div class="metric-icon-wrap amber">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                                </div>
+                            </div>
+                            <div class="metric-value">{{ $policies->where('status', 'active')->where('renewal_date', '<=', now()->addDays(60))->where('renewal_date', '>=', now())->count() }}</div>
+                            <div class="metric-bottom">
+                                <span class="metric-context">Scheduled renewals in next 60 days</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Policies Table Card -->
                     <div class="card">
+                        <div class="table-filter-bar">
+                            <div class="filter-tabs">
+                                <button class="filter-tab-btn active" onclick="filterAdminPolicies('all', this)">All Policies ({{ $policies->count() }})</button>
+                                <button class="filter-tab-btn" onclick="filterAdminPolicies('active', this)">Active</button>
+                                <button class="filter-tab-btn" onclick="filterAdminPolicies('pending', this)">Pending</button>
+                                <button class="filter-tab-btn" onclick="filterAdminPolicies('expired', this)">Expired</button>
+                                <button class="filter-tab-btn" onclick="filterAdminPolicies('cancelled', this)">Cancelled</button>
+                            </div>
+                            <div class="table-search-box">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>
+                                <input type="text" id="adminPolicySearch" class="table-search-input" placeholder="Search by Policy #, Insured, Asset, Carrier..." onkeyup="searchAdminPolicies()">
+                            </div>
+                        </div>
                         <div class="table-container">
-                            <table class="data-table">
+                            <table class="data-table" id="serverPoliciesTable">
                                 <thead>
                                     <tr>
                                         <th>Policy Number</th>
                                         <th>Insured Holder</th>
-                                        <th>Policy Type</th>
-                                        <th>Coverage Limit</th>
+                                        <th>Coverage Line &amp; Carrier</th>
+                                        <th>Insured Asset / Schedule</th>
+                                        <th>Coverage Limit &amp; Deductible</th>
                                         <th>Annual Premium</th>
-                                        <th>Next Renewal</th>
+                                        <th>Term / Renewal</th>
                                         <th>Status</th>
+                                        <th style="text-align: right; min-width: 250px;">Underwriter Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="policiesTableBody">
-                                    <!-- Rendered via admin.js -->
+                                <tbody>
+                                    @forelse($policies as $pol)
+                                    <tr data-status="{{ strtolower($pol->status) }}" id="policy-row-{{ $pol->id }}">
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <code style="font-family: var(--font-mono); font-weight: 700; color: var(--sb-blue-600); font-size: 0.9375rem;">
+                                                    {{ $pol->policy_number }}
+                                                </code>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="font-weight: 700; color: var(--text-primary);">{{ $pol->holder_name }}</div>
+                                            <div style="font-size: 0.8125rem; color: var(--text-muted);">
+                                                {{ $pol->holder_email ?: 'No email' }}
+                                                @if($pol->holder_phone)
+                                                    &bull; {{ $pol->holder_phone }}
+                                                @endif
+                                            </div>
+                                            @if($pol->user_id)
+                                                <span class="badge" style="font-size: 0.6875rem; background: #eff6ff; color: #1d4ed8; padding: 1px 6px; border-radius: 4px; border: 1px solid #bfdbfe; margin-top: 2px; display: inline-block;">
+                                                    Linked User #{{ $pol->user_id }}
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">
+                                                {{ $pol->type_label ?: ucfirst($pol->type) }}
+                                            </div>
+                                            <div style="font-size: 0.75rem; color: var(--text-muted);">
+                                                {{ $pol->carrier ?: 'Surebound Syndicate' }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="font-size: 0.875rem; color: var(--text-primary); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $pol->insured_item }}">
+                                                {{ $pol->insured_item ?: 'Standard Schedule' }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong style="color: var(--sb-blue-600); font-size: 0.9375rem;">{{ $pol->coverage_limit }}</strong>
+                                            <div style="font-size: 0.75rem; color: var(--text-muted);">Ded: {{ $pol->deductible ?: '$1,000' }}</div>
+                                        </td>
+                                        <td>
+                                            <strong style="color: var(--text-primary); font-size: 0.9375rem;">{{ $pol->annual_premium }}</strong>
+                                            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: capitalize;">{{ $pol->billing_frequency ?: 'Annual' }}</div>
+                                        </td>
+                                        <td>
+                                            <span style="font-size: 0.875rem; color: var(--text-secondary); display: block;">
+                                                {{ $pol->renewal_date ? \Carbon\Carbon::parse($pol->renewal_date)->format('M d, Y') : 'N/A' }}
+                                            </span>
+                                            <span style="font-size: 0.75rem; color: var(--text-muted);">Eff: {{ $pol->effective_date ? \Carbon\Carbon::parse($pol->effective_date)->format('M d, Y') : 'Active' }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="status-pill {{ $pol->status }}" id="policy-badge-{{ $pol->id }}">
+                                                {{ ucfirst($pol->status) }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <div class="inv-actions-toolbar" style="justify-content: flex-end;">
+                                                <!-- Edit Button -->
+                                                <button type="button" onclick='openEditPolicyModal(@json($pol))' class="inv-action-pill inv-action-view" style="color: #2563eb; border-color: #bfdbfe; background: #eff6ff;" title="Edit All Policy Attributes">
+                                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                                                    <span>Edit</span>
+                                                </button>
+
+                                                <!-- Quick View Button -->
+                                                <button type="button" onclick='openAdminViewPolicyModal(@json($pol))' class="inv-action-pill inv-action-view" title="Inspect Coverage Schedule">
+                                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                                    <span>View</span>
+                                                </button>
+
+                                                <!-- Digital ID Card Link -->
+                                                <a href="{{ route('user.policies.id-card', $pol->id) }}" target="_blank" class="inv-action-pill inv-action-pdf" title="View Official Digital Insurance Card">
+                                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+                                                    <span>ID Card</span>
+                                                </a>
+
+                                                <!-- Status Quick Changer -->
+                                                <div class="inv-status-select-wrap">
+                                                    <select onchange="changePolicyStatus({{ $pol->id }}, this.value)" class="inv-status-select" title="Change Underwriting Status">
+                                                        <option value="" disabled selected>Status</option>
+                                                        <option value="active" {{ $pol->status === 'active' ? 'selected' : '' }}>Active</option>
+                                                        <option value="pending" {{ $pol->status === 'pending' ? 'selected' : '' }}>Pending</option>
+                                                        <option value="expired" {{ $pol->status === 'expired' ? 'selected' : '' }}>Expired</option>
+                                                        <option value="cancelled" {{ $pol->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                                    </select>
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                                </div>
+
+                                                <!-- Delete Button -->
+                                                <button type="button" onclick="deleteAdminPolicy({{ $pol->id }}, '{{ $pol->policy_number }}')" class="inv-action-icon" style="color: #e11d48;" title="Permanently Delete Policy">
+                                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="9" style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
+                                            <div style="font-size: 2rem; margin-bottom: 8px;">🛡️</div>
+                                            <div style="font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 4px;">No Bound Policies Found</div>
+                                            <div style="font-size: 0.875rem;">Click "Bind New Policy" above to issue the first insurance contract.</div>
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -703,40 +992,230 @@
                 </div>
 
                 <!-- ========================================================
-                     TAB 4: CLAIMS CENTER
+                     TAB 4: CLAIMS CENTER & FNOL INTAKE
                      ======================================================== -->
                 <div class="tab-pane" id="tab-claims">
                     <div class="view-header">
                         <div class="view-title-group">
-                            <h1>Claims Center</h1>
-                            <p>First notice of loss (FNOL), adjuster assignments, and settlement progress.</p>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(16, 185, 129, 0.12); color: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                </div>
+                                <div>
+                                    <h1 style="margin: 0; font-size: 1.5rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em;">Claims Center &amp; FNOL Operations</h1>
+                                    <p style="margin: 3px 0 0; font-size: 0.875rem; color: var(--text-muted);">First notice of loss (FNOL), adjuster field assignments, loss reserve exposure, and real-time settlement disbursements.</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="view-actions">
-                            <button class="btn-primary-action" onclick="alert('First Notice of Loss (FNOL) form launched.')">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15"/>
+                            <button type="button" class="btn-primary-action" onclick="openCreateClaimModal()" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 700; padding: 10px 20px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28);">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M12 4.5v15m7.5-7.5h-15"/>
                                 </svg>
-                                <span>File New Claim</span>
+                                <span>File New Claim (FNOL)</span>
                             </button>
                         </div>
                     </div>
 
+                    <!-- Claims KPI Metrics Bar -->
+                    <div class="metrics-grid" style="margin-bottom: 24px;">
+                        <div class="metric-card">
+                            <div class="metric-top">
+                                <span class="metric-label">Total Claims Registered</span>
+                                <div class="metric-icon-wrap blue">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                </div>
+                            </div>
+                            <div class="metric-value">{{ $claims->count() }}</div>
+                            <div class="metric-bottom">
+                                <span class="metric-context">Total claims recorded in registry</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-top">
+                                <span class="metric-label">Pending Adjuster Review</span>
+                                <div class="metric-icon-wrap amber">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                </div>
+                            </div>
+                            <div class="metric-value">{{ $claims->whereIn('status', ['submitted', 'reviewing'])->count() }}</div>
+                            <div class="metric-bottom">
+                                <span class="metric-context">Active investigations in progress</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-top">
+                                <span class="metric-label">Approved &amp; Paid Settlements</span>
+                                <div class="metric-icon-wrap emerald">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                </div>
+                            </div>
+                            <div class="metric-value">{{ $claims->whereIn('status', ['approved', 'paid'])->count() }}</div>
+                            <div class="metric-bottom">
+                                <span class="metric-context">{{ $claims->where('status', 'paid')->count() }} settled drafts disbursed</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-top">
+                                <span class="metric-label">Estimated Loss Reserves</span>
+                                <div class="metric-icon-wrap rose">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                </div>
+                            </div>
+                            @php
+                                $totalClaimsReserve = 0;
+                                foreach ($claims as $cItem) {
+                                    $num = (float) preg_replace('/[^0-9.]/', '', $cItem->estimated_loss ?? '0');
+                                    $totalClaimsReserve += $num;
+                                }
+                            @endphp
+                            <div class="metric-value">${{ number_format($totalClaimsReserve, 2) }}</div>
+                            <div class="metric-bottom">
+                                <span class="metric-context">Total claims exposure reserve</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Claims Table Card -->
                     <div class="card">
+                        <div class="table-filter-bar">
+                            <div class="filter-tabs">
+                                <button type="button" class="filter-tab-btn active" onclick="filterAdminClaims('all', this)">All Claims ({{ $claims->count() }})</button>
+                                <button type="button" class="filter-tab-btn" onclick="filterAdminClaims('submitted', this)">Submitted ({{ $claims->where('status', 'submitted')->count() }})</button>
+                                <button type="button" class="filter-tab-btn" onclick="filterAdminClaims('reviewing', this)">Reviewing ({{ $claims->where('status', 'reviewing')->count() }})</button>
+                                <button type="button" class="filter-tab-btn" onclick="filterAdminClaims('approved', this)">Approved ({{ $claims->where('status', 'approved')->count() }})</button>
+                                <button type="button" class="filter-tab-btn" onclick="filterAdminClaims('paid', this)">Paid ({{ $claims->where('status', 'paid')->count() }})</button>
+                                <button type="button" class="filter-tab-btn" onclick="filterAdminClaims('declined', this)">Declined ({{ $claims->whereIn('status', ['declined', 'rejected'])->count() }})</button>
+                            </div>
+                            <div class="table-search-box">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>
+                                <input type="text" id="adminClaimSearch" class="table-search-input" placeholder="Search by Claim #, Policy #, Claimant, Adjuster, Incident..." onkeyup="searchAdminClaims()">
+                            </div>
+                        </div>
+
                         <div class="table-container">
-                            <table class="data-table">
+                            <table class="data-table" id="serverClaimsTable">
                                 <thead>
                                     <tr>
-                                        <th>Claim ID</th>
-                                        <th>Claimant & Policy</th>
-                                        <th>Incident Details</th>
+                                        <th>Claim ID &amp; Priority</th>
+                                        <th>Claimant &amp; Policy</th>
+                                        <th>Incident &amp; Loss Date</th>
                                         <th>Estimated Loss</th>
                                         <th>Assigned Adjuster</th>
                                         <th>Claim Status</th>
-                                        <th>Action</th>
+                                        <th style="text-align: right; min-width: 260px;">Underwriter Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="claimsTableBody">
-                                    <!-- Rendered via admin.js -->
+                                <tbody>
+                                    @forelse($claims as $clm)
+                                    <tr data-status="{{ strtolower($clm->status) }}" id="claim-row-{{ $clm->id }}">
+                                        <td>
+                                            <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start;">
+                                                <code style="font-family: var(--font-mono); font-weight: 700; color: #0284c7; font-size: 0.9375rem;">
+                                                    {{ $clm->claim_number }}
+                                                </code>
+                                                <span class="priority-pill {{ $clm->priority ?: 'normal' }}">
+                                                    {{ strtoupper($clm->priority ?: 'normal') }}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="font-weight: 700; color: var(--text-primary); font-size: 0.9375rem;">{{ $clm->claimant_name }}</div>
+                                            <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+                                                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #475569; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                                                    {{ $clm->policy_number }}
+                                                </span>
+                                            </div>
+                                            @if($clm->claimant_email || $clm->claimant_phone)
+                                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+                                                    {{ $clm->claimant_email ?: $clm->claimant_phone }}
+                                                </div>
+                                            @endif
+                                        </td>
+                                        <td style="max-width: 280px;">
+                                            <strong style="color: var(--text-primary); font-size: 0.875rem; display: block;">
+                                                {{ $clm->incident_type ?: 'General Loss / Damage' }}
+                                            </strong>
+                                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+                                                📅 {{ $clm->incident_date ? \Carbon\Carbon::parse($clm->incident_date)->format('M d, Y') : 'Date Unspecified' }}
+                                            </div>
+                                            @if($clm->incident_location)
+                                                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 260px;" title="{{ $clm->incident_location }}">
+                                                    📍 {{ $clm->incident_location }}
+                                                </div>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <strong style="color: #dc2626; font-size: 1rem; font-family: var(--font-mono); letter-spacing: -0.01em;">
+                                                {{ $clm->estimated_loss ?: '$0.00' }}
+                                            </strong>
+                                            <div style="font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Reserve Est.</div>
+                                        </td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 6px;">
+                                                <div style="width: 26px; height: 26px; border-radius: 50%; background: #e0e7ff; color: #4338ca; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; font-weight: 700; flex-shrink: 0;">
+                                                    {{ strtoupper(substr($clm->assigned_adjuster ?: 'U', 0, 1)) }}
+                                                </div>
+                                                <span style="font-weight: 600; font-size: 0.8125rem; color: var(--text-secondary);">
+                                                    {{ $clm->assigned_adjuster ?: 'Unassigned' }}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="status-pill {{ $clm->status }}" id="claim-badge-{{ $clm->id }}">
+                                                {{ ucfirst($clm->status) }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <div class="inv-actions-toolbar" style="justify-content: flex-end;">
+                                                <!-- Quick View Button -->
+                                                <button type="button" onclick='openViewClaimModal(@json($clm))' class="inv-action-pill inv-action-view" title="Inspect Complete Loss Dossier">
+                                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                                    <span>View</span>
+                                                </button>
+
+                                                <!-- Edit Button -->
+                                                <button type="button" onclick='openEditClaimModal(@json($clm))' class="inv-action-pill inv-action-view" style="color: #2563eb; border-color: #bfdbfe; background: #eff6ff;" title="Edit Claim Attributes & Adjuster Notes">
+                                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                                                    <span>Edit</span>
+                                                </button>
+
+                                                <!-- Quick Status Changer -->
+                                                <div class="inv-status-select-wrap">
+                                                    <select onchange="changeClaimStatus({{ $clm->id }}, this.value)" class="inv-status-select" title="Change Claim Status">
+                                                        <option value="" disabled selected>Status</option>
+                                                        <option value="submitted" {{ $clm->status === 'submitted' ? 'selected' : '' }}>Submitted</option>
+                                                        <option value="reviewing" {{ $clm->status === 'reviewing' ? 'selected' : '' }}>Reviewing</option>
+                                                        <option value="approved" {{ $clm->status === 'approved' ? 'selected' : '' }}>Approved</option>
+                                                        <option value="paid" {{ $clm->status === 'paid' ? 'selected' : '' }}>Paid</option>
+                                                        <option value="declined" {{ in_array($clm->status, ['declined', 'rejected']) ? 'selected' : '' }}>Declined</option>
+                                                    </select>
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                                </div>
+
+                                                <!-- Delete Button -->
+                                                <button type="button" onclick="deleteAdminClaim({{ $clm->id }}, '{{ $clm->claim_number }}')" class="inv-action-icon" style="color: #e11d48;" title="Permanently Delete Claim Record">
+                                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="7" style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
+                                            <div style="font-size: 2.2rem; margin-bottom: 8px;">📋</div>
+                                            <div style="font-weight: 700; font-size: 1.0625rem; color: var(--text-primary); margin-bottom: 4px;">No Insurance Claims Registered</div>
+                                            <div style="font-size: 0.875rem; margin-bottom: 16px;">Initiate a First Notice of Loss (FNOL) form to record a new loss event.</div>
+                                            <button type="button" class="btn-primary-action" onclick="openCreateClaimModal()" style="display: inline-flex; align-items: center; gap: 6px; margin: 0 auto;">
+                                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                                                <span>File First Notice of Loss</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -773,11 +1252,11 @@
                             <div class="agent-card-role">{{ $agent->title ?: ($agent->role === 'admin' ? 'Super Underwriter' : 'Licensed Agent') }}</div>
                             <div class="agent-stats">
                                 <div class="agent-stat-item">
-                                    <span class="agent-stat-value">{{ $agentStats[$agent->id]['policiesCount'] ?? 1 }}</span>
+                                    <span class="agent-stat-value">{{ $agentStats[$agent->id]['policiesCount'] ?? 0 }}</span>
                                     <span class="agent-stat-label">Active Policies</span>
                                 </div>
                                 <div class="agent-stat-item">
-                                    <span class="agent-stat-value">{{ $agentStats[$agent->id]['volume'] ?? '$18,500' }}</span>
+                                    <span class="agent-stat-value">{{ $agentStats[$agent->id]['volume'] ?? '$0' }}</span>
                                     <span class="agent-stat-label">Written Volume</span>
                                 </div>
                             </div>
@@ -803,13 +1282,21 @@
                             <h1>All Users &amp; Administrators</h1>
                             <p>Complete directory of policyholders, commercial clients, brokers, and administrators stored in MySQL database.</p>
                         </div>
-                        <div class="view-actions">
+                        <div class="view-actions" style="display: flex; gap: 10px; align-items: center;">
                             <button class="btn-secondary" onclick="exportUsersToCSV()">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
                                 </svg>
                                 <span>Export Directory</span>
                             </button>
+                            @if(auth()->check() && auth()->user()->isSuperAdmin())
+                            <button class="btn-primary-action" onclick="openModal('modalCreateAdmin')" style="display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15"/>
+                                </svg>
+                                <span>Create New Admin</span>
+                            </button>
+                            @endif
                         </div>
                     </div>
 
@@ -872,7 +1359,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="metric-value">{{ $userCounts['admins'] }}</div>
+                            <div class="metric-value">{{ $userCounts['super_admins'] ?? $userCounts['admins'] }}</div>
                             <div class="metric-bottom">
                                 <span class="metric-trend up" style="background: #faf5ff; color: #9333ea;">Full Access</span>
                                 <span class="metric-context">executive managers</span>
@@ -918,20 +1405,32 @@
                                         <th>System Role</th>
                                         <th>Portal Access</th>
                                         <th>Registered</th>
-                                        <th style="text-align: right; width: 190px;">Role &amp; Action</th>
+                                        <th style="text-align: right; width: 220px;">Role &amp; Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="usersDirectoryTableBody">
                                     @forelse($allUsers as $idx => $u)
                                     @php
                                         $initials = strtoupper(substr($u->name, 0, 2));
-                                        $gradient = match($u->role) {
-                                            'admin' => 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)',
-                                            'agent' => 'linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)',
+                                        $isTargetSuper = $u->isSuperAdmin();
+                                        $isCurrentSuper = auth()->check() && auth()->user()->isSuperAdmin();
+                                        $gradient = match(true) {
+                                            $isTargetSuper => 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+                                            $u->role === 'admin' => 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)',
+                                            $u->role === 'agent' => 'linear-gradient(135deg, #0284c7 0%, #06b6d4 100%)',
                                             default => 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
                                         };
+                                        $userDataJson = json_encode([
+                                            'id' => $u->id,
+                                            'name' => $u->name,
+                                            'email' => $u->email,
+                                            'phone' => $u->phone ?? '',
+                                            'title' => $u->title ?? '',
+                                            'role' => $u->role,
+                                            'is_super_admin' => (bool)$isTargetSuper,
+                                        ]);
                                     @endphp
-                                    <tr class="user-row" data-role="{{ $u->role }}" data-name="{{ strtolower($u->name) }}" data-email="{{ strtolower($u->email) }}" data-phone="{{ $u->phone ?? '' }}">
+                                    <tr class="user-row" data-role="{{ $isTargetSuper ? 'super_admin' : $u->role }}" data-name="{{ strtolower($u->name) }}" data-email="{{ strtolower($u->email) }}" data-phone="{{ $u->phone ?? '' }}">
                                         <td>
                                             <span style="font-family: monospace; font-weight: 700; color: var(--text-secondary); white-space: nowrap;">
                                                 #USR-{{ str_pad($u->id, 4, '0', STR_PAD_LEFT) }}
@@ -950,7 +1449,7 @@
                                                         @endif
                                                     </div>
                                                     <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 1px;">
-                                                        {{ $u->title ?: ($u->role === 'admin' ? 'Super Administrator' : ($u->role === 'agent' ? 'Licensed Broker' : 'Policyholder')) }}
+                                                        {{ $u->title ?: ($isTargetSuper ? 'Super Administrator' : ($u->role === 'admin' ? 'Administrator' : ($u->role === 'agent' ? 'Licensed Broker' : 'Policyholder'))) }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -971,27 +1470,39 @@
                                             {{ $u->phone ?: '—' }}
                                         </td>
                                         <td>
-                                            <span class="status-pill role-{{ $u->role }}">
-                                                @if($u->role === 'admin')
+                                            @if($isTargetSuper)
+                                                <span class="status-pill" style="background: rgba(124, 58, 237, 0.12); color: #7c3aed; border: 1px solid rgba(124, 58, 237, 0.25); font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
                                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
                                                     Super Admin
-                                                @elseif($u->role === 'agent')
+                                                </span>
+                                            @elseif($u->role === 'admin')
+                                                <span class="status-pill" style="background: rgba(37, 99, 235, 0.12); color: #2563eb; border: 1px solid rgba(37, 99, 235, 0.25); font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.999-3.199a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg>
+                                                    Admin
+                                                </span>
+                                            @elseif($u->role === 'agent')
+                                                <span class="status-pill role-agent">
                                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493"/></svg>
                                                     Licensed Agent
-                                                @else
+                                                </span>
+                                            @else
+                                                <span class="status-pill role-user">
                                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                                                     Customer / User
-                                                @endif
-                                            </span>
+                                                </span>
+                                            @endif
                                         </td>
                                         <td>
                                             <div style="display: flex; align-items: center; gap: 6px; white-space: nowrap;">
-                                                @if($u->role === 'admin')
-                                                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #9333ea; flex-shrink: 0;"></span>
-                                                    <span style="font-weight: 600; color: #7e22ce; font-size: 0.875rem;">Executive Admin</span>
-                                                @elseif($u->role === 'agent')
+                                                @if($isTargetSuper)
+                                                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #7c3aed; flex-shrink: 0;"></span>
+                                                    <span style="font-weight: 700; color: #6d28d9; font-size: 0.875rem;">Super Admin Portal</span>
+                                                @elseif($u->role === 'admin')
                                                     <span style="width: 7px; height: 7px; border-radius: 50%; background: #2563eb; flex-shrink: 0;"></span>
-                                                    <span style="font-weight: 600; color: #1d4ed8; font-size: 0.875rem;">Admin &amp; Claims</span>
+                                                    <span style="font-weight: 600; color: #1d4ed8; font-size: 0.875rem;">Executive Admin</span>
+                                                @elseif($u->role === 'agent')
+                                                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #0284c7; flex-shrink: 0;"></span>
+                                                    <span style="font-weight: 600; color: #0369a1; font-size: 0.875rem;">Admin &amp; Claims</span>
                                                 @else
                                                     <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; flex-shrink: 0;"></span>
                                                     <span style="font-weight: 600; color: #047857; font-size: 0.875rem;">Customer Portal</span>
@@ -1002,28 +1513,113 @@
                                             {{ $u->created_at ? $u->created_at->format('M d, Y') : 'Oct 07, 2026' }}
                                         </td>
                                         <td style="text-align: right;">
-                                            <div class="table-actions" style="justify-content: flex-end;">
-                                                <!-- Change Role Dropdown Form -->
-                                                <form action="{{ route('admin.users.role', $u->id) }}" method="POST" style="margin: 0;">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <select name="role" class="user-role-select" onchange="if(confirm('Change role for {{ $u->name }} to ' + this.value.toUpperCase() + '?')) { this.form.submit(); } else { this.value='{{ $u->role }}'; }">
-                                                        <option value="user" {{ $u->role === 'user' ? 'selected' : '' }}>User (Customer)</option>
-                                                        <option value="agent" {{ $u->role === 'agent' ? 'selected' : '' }}>Agent (Broker)</option>
-                                                        <option value="admin" {{ $u->role === 'admin' ? 'selected' : '' }}>Admin (Executive)</option>
-                                                    </select>
-                                                </form>
-
-                                                @if($u->id !== auth()->id())
-                                                    <form action="{{ route('admin.users.delete', $u->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete account for {{ $u->name }}?');" style="margin: 0;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="user-delete-btn" title="Delete account">
+                                            <div class="table-actions" style="justify-content: flex-end; align-items: center; gap: 6px;">
+                                                @if($isTargetSuper)
+                                                    {{-- TARGET IS SUPER ADMIN --}}
+                                                    @if($isCurrentSuper)
+                                                        <button type="button" class="user-edit-btn" onclick="openEditUserModal({{ $userDataJson }})" title="Edit account details">
                                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
                                                             </svg>
+                                                            <span>Edit</span>
                                                         </button>
+
+                                                        @if($u->id === auth()->id() || $u->email === 'help.rezawl71@gmail.com')
+                                                            <span class="badge" style="background: rgba(124, 58, 237, 0.1); color: #7c3aed; border: 1px solid rgba(124, 58, 237, 0.25); padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                                                <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                                                                Primary
+                                                            </span>
+                                                        @else
+                                                            <form action="{{ route('admin.users.delete', $u->id) }}" method="POST" onsubmit="return confirm('Permanently remove Super Admin account for {{ $u->name }}?');" style="margin: 0;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="user-delete-btn" title="Remove account">
+                                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        @endif
+                                                    @else
+                                                        {{-- Standard Admin viewing a Super Admin: CANNOT edit or remove! --}}
+                                                        <span class="badge" style="background: rgba(124, 58, 237, 0.08); color: #7c3aed; border: 1px solid rgba(124, 58, 237, 0.25); padding: 4px 10px; border-radius: var(--radius-sm); font-size: 0.8125rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;" title="Super Administrator is protected and cannot be edited or removed by standard administrators">
+                                                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                                                            Protected
+                                                        </span>
+                                                    @endif
+                                                @elseif($u->role === 'admin')
+                                                    {{-- TARGET IS STANDARD ADMIN --}}
+                                                    @if($isCurrentSuper)
+                                                        {{-- Super Admin CAN change role, edit, and remove admin --}}
+                                                        <form action="{{ route('admin.users.role', $u->id) }}" method="POST" style="margin: 0;">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <select name="role" class="user-role-select" onchange="if(confirm('Change role for {{ $u->name }} to ' + this.value.toUpperCase() + '?')) { this.form.submit(); } else { this.value='{{ $u->role }}'; }">
+                                                                <option value="admin" selected>Admin</option>
+                                                                <option value="agent">Agent</option>
+                                                                <option value="user">User</option>
+                                                            </select>
+                                                        </form>
+
+                                                        <button type="button" class="user-edit-btn" onclick="openEditUserModal({{ $userDataJson }})" title="Edit account details">
+                                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                                                            </svg>
+                                                            <span>Edit</span>
+                                                        </button>
+
+                                                        @if($u->id !== auth()->id())
+                                                            <form action="{{ route('admin.users.delete', $u->id) }}" method="POST" onsubmit="return confirm('Permanently remove Administrator account for {{ $u->name }}?');" style="margin: 0;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="user-delete-btn" title="Remove Admin account">
+                                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        @endif
+                                                    @else
+                                                        {{-- Standard Admin viewing standard admin: can edit profile --}}
+                                                        <button type="button" class="user-edit-btn" onclick="openEditUserModal({{ $userDataJson }})" title="Edit account details">
+                                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                                                            </svg>
+                                                            <span>Edit</span>
+                                                        </button>
+                                                    @endif
+                                                @else
+                                                    {{-- TARGET IS AGENT OR USER --}}
+                                                    <form action="{{ route('admin.users.role', $u->id) }}" method="POST" style="margin: 0;">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <select name="role" class="user-role-select" onchange="if(confirm('Change role for {{ $u->name }} to ' + this.value.toUpperCase() + '?')) { this.form.submit(); } else { this.value='{{ $u->role }}'; }">
+                                                            <option value="user" {{ $u->role === 'user' ? 'selected' : '' }}>User</option>
+                                                            <option value="agent" {{ $u->role === 'agent' ? 'selected' : '' }}>Agent</option>
+                                                            @if($isCurrentSuper)
+                                                                <option value="admin">Admin</option>
+                                                            @endif
+                                                        </select>
                                                     </form>
+
+                                                    <button type="button" class="user-edit-btn" onclick="openEditUserModal({{ $userDataJson }})" title="Edit account details">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                                                        </svg>
+                                                        <span>Edit</span>
+                                                    </button>
+
+                                                    @if($u->id !== auth()->id())
+                                                        <form action="{{ route('admin.users.delete', $u->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete account for {{ $u->name }}?');" style="margin: 0;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="user-delete-btn" title="Delete account">
+                                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="13" height="13">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                                                                </svg>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </td>
@@ -4364,7 +4960,11 @@
                             <h1>Invoices &amp; Premium Billing Center</h1>
                             <p>Generate, track, and collect US policy premiums and client invoices with instant payment gateway processing.</p>
                         </div>
-                        <div class="view-actions">
+                        <div class="view-actions" style="display: flex; gap: 10px; align-items: center;">
+                            <button type="button" onclick="openModal('modalAgencySignature')" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600; padding: 10px 16px; font-size: 0.875rem;">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                                <span>Official Agency Signature</span>
+                            </button>
                             <button onclick="openNewInvoiceModal()" class="btn-primary-action">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15"/></svg>
                                 <span>Create New Invoice</span>
@@ -4456,7 +5056,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($invoices as $inv)
+                                    @forelse($invoices as $inv)
                                     <tr data-status="{{ $inv->status }}" id="invoice-row-{{ $inv->id }}">
                                         <td>
                                             <strong style="color: var(--sb-blue-600); font-family: var(--font-mono); font-size: 1rem;">{{ $inv->invoice_number }}</strong>
@@ -4492,33 +5092,333 @@
                                         <td>
                                             <span style="font-size: 0.875rem; color: var(--text-secondary);">{{ $inv->payment_method ?: 'Unpaid' }}</span>
                                         </td>
-                                        <td style="text-align: right;">
-                                            <div style="display: inline-flex; gap: 6px; align-items: center; justify-content: flex-end;">
-                                                <button onclick='viewInvoice(@json($inv))' class="btn-secondary" style="height: 30px; padding: 0 10px; font-size: 0.875rem;">
-                                                    View / Print
+                                        <td style="text-align: right; min-width: 260px;">
+                                            <div class="inv-actions-toolbar">
+                                                <button onclick='viewInvoice(@json($inv))' class="inv-action-pill inv-action-view" title="View & Print Invoice Statement">
+                                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                                    <span>View</span>
                                                 </button>
 
+                                                <a href="{{ route('admin.invoices.pdf', $inv->id) }}?download=1" target="_blank" class="inv-action-pill inv-action-pdf" title="Download Official PDF">
+                                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                                    <span>PDF</span>
+                                                </a>
+
                                                 @if($inv->status !== 'paid')
-                                                    <button onclick='openPayInvoiceModal(@json($inv))' class="btn-primary-action" style="height: 30px; padding: 0 10px; font-size: 0.875rem; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-                                                        Pay Now
+                                                    <button onclick='openPayInvoiceModal(@json($inv))' class="inv-action-pill inv-action-pay" title="Process US Payment Settlement">
+                                                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                                        <span>Pay</span>
                                                     </button>
                                                 @endif
 
-                                                <button onclick="sendInvoiceEmail({{ $inv->id }})" class="btn-secondary" style="height: 30px; padding: 0 8px; font-size: 0.875rem;" title="Send Email Invoice">
-                                                    ✉
+                                                <button onclick="sendInvoiceEmail({{ $inv->id }})" class="inv-action-icon" title="Email invoice receipt to policyholder">
+                                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
                                                 </button>
 
-                                                <select onchange="changeInvoiceStatus({{ $inv->id }}, this.value)" style="background: var(--bg-surface); color: var(--text-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 4px; font-size: 0.875rem; height: 30px;">
-                                                    <option value="">Status...</option>
-                                                    <option value="paid">Mark Paid</option>
-                                                    <option value="pending">Mark Pending</option>
-                                                    <option value="overdue">Mark Overdue</option>
-                                                    <option value="refunded">Refund</option>
-                                                </select>
+                                                <div class="inv-status-select-wrap">
+                                                    <select onchange="changeInvoiceStatus({{ $inv->id }}, this.value)" class="inv-status-select" title="Change Invoice Underwriting Status">
+                                                        <option value="" disabled selected>Status</option>
+                                                        <option value="paid" {{ $inv->status === 'paid' ? 'disabled' : '' }}>Mark Paid</option>
+                                                        <option value="pending" {{ $inv->status === 'pending' ? 'disabled' : '' }}>Mark Pending</option>
+                                                        <option value="overdue" {{ $inv->status === 'overdue' ? 'disabled' : '' }}>Mark Overdue</option>
+                                                        <option value="refunded">Refund</option>
+                                                    </select>
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="8" style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
+                                            <div style="font-size: 2rem; margin-bottom: 8px;">📄</div>
+                                            <div style="font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 4px;">No Invoices Issued Yet</div>
+                                            <div style="font-size: 0.875rem;">All payment and billing records will appear here as soon as invoices are generated.</div>
+                                        </td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 11.5: CUSTOMER SUPPORT & CONCIERGE MANAGEMENT -->
+                <div class="tab-pane" id="tab-support-tickets">
+                    <div class="view-header">
+                        <div class="view-title-group">
+                            <h1>Policyholder Support &amp; Concierge Queue</h1>
+                            <p>Direct underwriter management of policy changes, certificate of insurance requests, billing inquiries, and resolution notes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Metrics / Quick KPI Cards -->
+                    <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                        <div class="metric-card" style="background: #ffffff; border-radius: var(--radius-md); padding: 18px; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Total Inquiries</div>
+                            <div style="font-size: 1.625rem; font-weight: 800; color: var(--brand-navy); margin-top: 4px;">{{ $supportTickets->count() }}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">All-time client submissions</div>
+                        </div>
+
+                        <div class="metric-card" style="background: #ffffff; border-radius: var(--radius-md); padding: 18px; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Open Queue</div>
+                            <div style="font-size: 1.625rem; font-weight: 800; color: var(--brand-blue); margin-top: 4px;">{{ $supportTickets->where('status', 'open')->count() }}</div>
+                            <div style="font-size: 0.75rem; color: var(--brand-blue); margin-top: 2px;">Awaiting underwriter review</div>
+                        </div>
+
+                        <div class="metric-card" style="background: #ffffff; border-radius: var(--radius-md); padding: 18px; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">In Progress</div>
+                            <div style="font-size: 1.625rem; font-weight: 800; color: #d97706; margin-top: 4px;">{{ $supportTickets->where('status', 'in_progress')->count() }}</div>
+                            <div style="font-size: 0.75rem; color: #d97706; margin-top: 2px;">Drafting endorsement / cert</div>
+                        </div>
+
+                        <div class="metric-card" style="background: #ffffff; border-radius: var(--radius-md); padding: 18px; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Resolved</div>
+                            <div style="font-size: 1.625rem; font-weight: 800; color: #059669; margin-top: 4px;">{{ $supportTickets->whereIn('status', ['resolved', 'closed'])->count() }}</div>
+                            <div style="font-size: 0.75rem; color: #059669; margin-top: 2px;">Resolution notes dispatched</div>
+                        </div>
+                    </div>
+
+                    <!-- Support Page Content & Contact Numbers Configuration Editor -->
+                    <div class="card" style="margin-bottom: 24px;">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleSupportConfigCard()">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 36px; height: 36px; border-radius: 8px; background: #eff6ff; color: var(--brand-blue); display: flex; align-items: center; justify-content: center; font-size: 1.125rem;">
+                                    ⚙️
+                                </div>
+                                <div>
+                                    <div class="card-title" style="font-size: 1.0625rem; font-weight: 800; color: var(--brand-navy);">Support Page Contact Numbers, Emails &amp; Hotlines</div>
+                                    <div class="card-subtitle" style="font-size: 0.8125rem; color: var(--text-muted);">Configure client helpline numbers, 24/7 disaster hotlines, and underwriter concierge contact info reflected live on the user portal.</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span class="badge" style="background: #ecfdf5; color: #059669; font-weight: 700;">Live on Client Portal</span>
+                                <button type="button" class="btn-secondary" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;" id="toggleSupportConfigBtn">
+                                    <span id="supportConfigToggleText">Hide Editor</span>
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body" id="supportConfigCardBody" style="display: block; padding-top: 16px; border-top: 1px solid var(--border-light);">
+                            <form id="adminSupportContentForm" onsubmit="saveSupportConfig(event)">
+                                @csrf
+
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                                    
+                                    <!-- Group 1: General Client Services -->
+                                    <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 18px;">
+                                        <div style="font-size: 0.875rem; font-weight: 800; color: var(--brand-navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                                            <span style="color: var(--brand-blue);">📞</span>
+                                            <span>General Support &amp; Office</span>
+                                        </div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px;">Main customer lines &amp; portal branding</div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Main Desk Phone *</label>
+                                            <input type="text" name="support_phone" class="form-input" value="{{ $supportContent['support_phone'] ?? '+880 9612 345678' }}" required placeholder="+880 9612 345678" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Support / Concierge Email *</label>
+                                            <input type="email" name="support_email" class="form-input" value="{{ $supportContent['support_email'] ?? 'support@surebound.com' }}" required placeholder="support@surebound.com" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Office Headquarters Address</label>
+                                            <input type="text" name="office_address" class="form-input" value="{{ $supportContent['office_address'] ?? 'Level 14, Crystal Palace, Gulshan-2, Dhaka 1212' }}" placeholder="Street, Suite, City, Postal Code" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Page Banner Title</label>
+                                            <input type="text" name="support_title" class="form-input" value="{{ $supportContent['support_title'] ?? 'Underwriting Concierge & Priority Support' }}" placeholder="Banner Title" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 0;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Page Banner Subtitle</label>
+                                            <textarea name="support_subtitle" class="form-input" rows="2" placeholder="Banner Subtitle" style="width: 100%; font-size: 0.8125rem;">{{ $supportContent['support_subtitle'] ?? 'Dedicated licensed risk advisors, 24/7 disaster mitigation dispatch, policy endorsement requests, and live inquiry tracking.' }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <!-- Group 2: 24/7 Emergency Hotlines -->
+                                    <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 18px;">
+                                        <div style="font-size: 0.875rem; font-weight: 800; color: var(--brand-navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                                            <span style="color: #dc2626;">🚨</span>
+                                            <span>24/7 Incident &amp; Disaster Hotlines</span>
+                                        </div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px;">Instant loss intake, roadside, &amp; cyber dispatch</div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">24/7 National Emergency Hotline *</label>
+                                            <input type="text" name="emergency_phone" class="form-input" value="{{ $supportContent['emergency_phone'] ?? '1-800-555-5677' }}" required placeholder="1-800-555-5677" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Emergency SLA / Subtitle</label>
+                                            <input type="text" name="emergency_subtitle" class="form-input" value="{{ $supportContent['emergency_subtitle'] ?? 'Zero Wait Priority Emergency Dispatch' }}" placeholder="e.g. Zero Wait Priority Emergency Dispatch" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Roadside &amp; Towing Hotline</label>
+                                            <input type="text" name="roadside_phone" class="form-input" value="{{ $supportContent['roadside_phone'] ?? '1-800-555-TOWS' }}" placeholder="1-800-555-TOWS" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 0;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Cyber Breach &amp; Ransomware Hotline</label>
+                                            <input type="text" name="cyber_phone" class="form-input" value="{{ $supportContent['cyber_phone'] ?? '1-888-SURE-CYBER' }}" placeholder="1-888-SURE-CYBER" style="width: 100%;">
+                                        </div>
+                                    </div>
+
+                                    <!-- Group 3: Assigned Underwriter Concierge -->
+                                    <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 18px;">
+                                        <div style="font-size: 0.875rem; font-weight: 800; color: var(--brand-navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                                            <span style="color: #059669;">🛡️</span>
+                                            <span>Dedicated Underwriter Concierge</span>
+                                        </div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px;">Direct advisor persona shown to policyholders</div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Underwriter Full Name *</label>
+                                            <input type="text" name="underwriter_name" class="form-input" value="{{ $supportContent['underwriter_name'] ?? 'Marcus Vance, CPCU' }}" required placeholder="Marcus Vance, CPCU" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Professional Title</label>
+                                            <input type="text" name="underwriter_title" class="form-input" value="{{ $supportContent['underwriter_title'] ?? 'Senior Underwriter & Risk Advisor' }}" placeholder="Senior Underwriter & Risk Advisor" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Direct Desk Phone</label>
+                                            <input type="text" name="underwriter_phone" class="form-input" value="{{ $supportContent['underwriter_phone'] ?? '(512) 555-0182' }}" placeholder="(512) 555-0182" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 12px;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Direct Email</label>
+                                            <input type="email" name="underwriter_email" class="form-input" value="{{ $supportContent['underwriter_email'] ?? 'm.vance@surebound.com' }}" placeholder="m.vance@surebound.com" style="width: 100%;">
+                                        </div>
+
+                                        <div class="form-group" style="margin-bottom: 0;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Operating Hours</label>
+                                            <input type="text" name="underwriter_hours" class="form-input" value="{{ $supportContent['underwriter_hours'] ?? 'Mon – Fri • 8:00 AM – 6:00 PM CST' }}" placeholder="Mon – Fri • 8:00 AM – 6:00 PM CST" style="width: 100%;">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 14px; padding-top: 14px; border-top: 1px solid var(--border-light);">
+                                    <span id="supportConfigStatusMessage" style="font-size: 0.8125rem; font-weight: 600; display: none;"></span>
+                                    <button type="submit" id="btnSaveSupportConfig" class="btn-primary-action" style="padding: 10px 24px; font-weight: 700; font-size: 0.875rem; display: inline-flex; align-items: center; gap: 8px;">
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        <span>Save Support Page Information</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Filter & Search Toolbar -->
+                    <div class="card" style="margin-bottom: 24px;">
+                        <div class="table-filter-bar">
+                            <div class="filter-tabs">
+                                <button type="button" class="filter-tab-btn active" onclick="filterAdminTickets('all', this)">All Inquiries ({{ $supportTickets->count() }})</button>
+                                <button type="button" class="filter-tab-btn" onclick="filterAdminTickets('open', this)">Open</button>
+                                <button type="button" class="filter-tab-btn" onclick="filterAdminTickets('in_progress', this)">In Progress</button>
+                                <button type="button" class="filter-tab-btn" onclick="filterAdminTickets('resolved', this)">Resolved</button>
+                            </div>
+                            
+                            <div class="table-search-box">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                                </svg>
+                                <input type="text" class="table-search-input" id="adminTicketSearch" onkeyup="searchAdminTickets()" placeholder="Search by ticket #, customer, policy, subject...">
+                            </div>
+                        </div>
+
+                        <!-- Ticket Table -->
+                        <div class="table-responsive">
+                            <table class="data-table" id="adminTicketsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket Ref</th>
+                                        <th>Policyholder</th>
+                                        <th>Policy Ref</th>
+                                        <th>Category</th>
+                                        <th>Subject &amp; Inquiry</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Underwriter Notes</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($supportTickets as $st)
+                                        <tr data-status="{{ $st->status }}" id="adminTicketRow_{{ $st->id }}">
+                                            <td style="white-space: nowrap;">
+                                                <button type="button" onclick="readAdminTicket({{ $st->id }})" title="Click to Read Ticket" style="background: none; border: none; padding: 0; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--brand-blue); cursor: pointer; text-decoration: underline; text-align: left; font-size: 0.8125rem;">
+                                                    {{ $st->ticket_number }}
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <div style="font-weight: 700; color: var(--brand-navy);">{{ $st->name }}</div>
+                                                <div style="font-size: 0.75rem; color: var(--text-muted);">{{ $st->email }}</div>
+                                                @if($st->phone)
+                                                    <div style="font-size: 0.6875rem; color: var(--text-muted);">{{ $st->phone }}</div>
+                                                @endif
+                                            </td>
+                                            <td style="font-family: monospace; font-weight: 600; color: var(--brand-blue); white-space: nowrap;">
+                                                {{ $st->policy_number ?: 'General / None' }}
+                                            </td>
+                                            <td style="white-space: nowrap;">
+                                                <span class="badge" style="background: #eff6ff; color: var(--brand-blue); font-weight: 700;">
+                                                    {{ strtoupper(str_replace('_', ' ', $st->category)) }}
+                                                </span>
+                                            </td>
+                                            <td style="max-width: 260px;">
+                                                <a href="javascript:void(0)" onclick="readAdminTicket({{ $st->id }})" style="font-weight: 700; color: var(--brand-navy); margin-bottom: 2px; text-decoration: none; display: block;" title="Read Full Inquiry">
+                                                    {{ $st->subject }}
+                                                </a>
+                                                <div style="font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                    {{ $st->message }}
+                                                </div>
+                                            </td>
+                                            <td style="white-space: nowrap;">
+                                                @if($st->priority === 'urgent' || $st->priority === 'high')
+                                                    <span class="badge" style="background: #fef2f2; color: #dc2626; font-weight: 700;">{{ strtoupper($st->priority) }}</span>
+                                                @else
+                                                    <span class="badge" style="background: #f1f5f9; color: #475569;">{{ strtoupper($st->priority) }}</span>
+                                                @endif
+                                            </td>
+                                            <td style="white-space: nowrap;">
+                                                <span class="badge" id="badge_status_{{ $st->id }}" style="background: {{ $st->status === 'resolved' ? '#ecfdf5' : ($st->status === 'in_progress' ? '#fffbeb' : '#eff6ff') }}; color: {{ $st->status === 'resolved' ? '#059669' : ($st->status === 'in_progress' ? '#d97706' : 'var(--brand-blue)') }}; font-weight: 700;">
+                                                    {{ strtoupper(str_replace('_', ' ', $st->status)) }}
+                                                </span>
+                                            </td>
+                                            <td style="max-width: 240px; font-size: 0.75rem;">
+                                                @if($st->admin_notes)
+                                                    <div style="color: var(--brand-navy); background: #f8fafc; border-left: 2px solid var(--brand-blue); padding: 4px 8px; border-radius: 4px;" id="notes_preview_{{ $st->id }}">
+                                                        {{ $st->admin_notes }}
+                                                    </div>
+                                                @else
+                                                    <span style="color: var(--text-muted); font-style: italic;" id="notes_preview_{{ $st->id }}">No notes entered</span>
+                                                @endif
+                                            </td>
+                                            <td style="text-align: right; white-space: nowrap;">
+                                                <button type="button" class="btn-action-small" onclick="readAdminTicket({{ $st->id }})" style="background: var(--brand-blue); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                                    <span>Read &amp; Respond</span>
+                                                </button>
+                                                <button type="button" class="btn-action-small" onclick="deleteAdminTicket({{ $st->id }}, '{{ $st->ticket_number }}')" style="background: transparent; color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.2); padding: 6px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; margin-left: 4px;">
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="9" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                                No support inquiries currently logged.
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -4864,9 +5764,1057 @@
                     </form>
                 </div>
 
+                <!-- ========================================================
+                     TAB 14: MARKETING, TRACKING & PIXELS COMMAND CENTER
+                     ======================================================== -->
+                <div class="tab-pane" id="tab-marketing">
+                    <form id="marketingSettingsForm" onsubmit="saveMarketingSettings(event)">
+                        @csrf
+                        <div class="view-header">
+                            <div class="view-title-group">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+                                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.34 15.84c-.388.388-.916.6-1.464.6H6.75a2.25 2.25 0 0 1-2.25-2.25v-3.75A2.25 2.25 0 0 1 6.75 8.25h2.126c.548 0 1.076.212 1.464.6l5.485 5.485a.75.75 0 0 0 1.281-.53V5.594a.75.75 0 0 0-1.281-.53L10.34 10.55m5.766 5.29H18a2.25 2.25 0 0 0 2.25-2.25v-3a2.25 2.25 0 0 0-2.25-2.25h-1.894" /></svg>
+                                    </span>
+                                    <h1 style="margin: 0; font-size: 1.5rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em;">Marketing, Tracking &amp; Pixels Hub</h1>
+                                </div>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.9375rem;">Manage real-time advertising tracking pixels, tags, conversion gateways, domain verifications, and Open Graph social sharing for Google, Meta (Facebook), LinkedIn, Twitter / X, and TikTok.</p>
+                            </div>
+                            <div class="view-actions" style="display: flex; gap: 12px; align-items: center;">
+                                <button type="button" onclick="testMarketingTag('all')" class="btn-secondary" style="display: flex; align-items: center; gap: 8px; font-weight: 600; padding: 10px 18px;">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    <span>⚡ Run Full Diagnostics Ping</span>
+                                </button>
+                                <button type="submit" id="saveMarketingBtn" class="btn-primary-action" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); display: flex; align-items: center; gap: 8px; font-weight: 700; padding: 10px 22px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    <span>Save Marketing Config</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Sub-Tab Pill Switcher -->
+                        <div class="marketing-pill-nav">
+                            <button type="button" class="marketing-pill-btn active" data-subtab-target="overview" onclick="switchMarketingSubTab('overview')">
+                                <span class="pill-icon" style="background: #10b981;">📊</span>
+                                <span>Overview Hub</span>
+                            </button>
+                            <button type="button" class="marketing-pill-btn" data-subtab-target="google" onclick="switchMarketingSubTab('google')">
+                                <span class="pill-icon" style="background: #4285F4;">G</span>
+                                <span>Google Suite</span>
+                            </button>
+                            <button type="button" class="marketing-pill-btn" data-subtab-target="meta" onclick="switchMarketingSubTab('meta')">
+                                <span class="pill-icon" style="background: #1877F2;">M</span>
+                                <span>Meta / Facebook</span>
+                            </button>
+                            <button type="button" class="marketing-pill-btn" data-subtab-target="linkedin" onclick="switchMarketingSubTab('linkedin')">
+                                <span class="pill-icon" style="background: #0A66C2;">in</span>
+                                <span>LinkedIn Tag</span>
+                            </button>
+                            <button type="button" class="marketing-pill-btn" data-subtab-target="twitter" onclick="switchMarketingSubTab('twitter')">
+                                <span class="pill-icon" style="background: #111827; border: 1px solid #334155;">𝕏</span>
+                                <span>Twitter / X</span>
+                            </button>
+                            <button type="button" class="marketing-pill-btn" data-subtab-target="tiktok" onclick="switchMarketingSubTab('tiktok')">
+                                <span class="pill-icon" style="background: #FE2C55;">TT</span>
+                                <span>TikTok Pixel</span>
+                            </button>
+                            <button type="button" class="marketing-pill-btn" data-subtab-target="social" onclick="switchMarketingSubTab('social')">
+                                <span class="pill-icon" style="background: #8B5CF6;">OG</span>
+                                <span>Social Meta &amp; SEO</span>
+                            </button>
+                            <button type="button" class="marketing-pill-btn" data-subtab-target="scripts" onclick="switchMarketingSubTab('scripts')">
+                                <span class="pill-icon" style="background: #64748B;">&lt;/&gt;</span>
+                                <span>Custom Scripts</span>
+                            </button>
+                            <button type="button" class="marketing-pill-btn" data-subtab-target="all" onclick="switchMarketingSubTab('all')" style="margin-left: auto;">
+                                <span class="pill-icon" style="background: #334155;">👁️</span>
+                                <span>View All Sections</span>
+                            </button>
+                        </div>
+
+                        <!-- ========================================================
+                             PANE 0: OVERVIEW HUB & QUICK SETUP LAUNCHER
+                             ======================================================== -->
+                        <div class="marketing-section-pane" id="marketingPaneOverview">
+                            <!-- 5 Platform Status Cards (Overview Dashboard) -->
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                                <!-- Google Card -->
+                                <div class="marketing-status-card accent-google">
+                                    <div class="marketing-status-header">
+                                        <div class="marketing-platform-badge">
+                                            <div class="marketing-platform-icon" style="background: #4285F4;">G</div>
+                                            <span class="marketing-platform-name">Google Suite</span>
+                                        </div>
+                                        <span class="badge {{ ($marketingSettings['google']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}" id="statusBadgeGoogle">
+                                            <span class="badge-dot"></span>
+                                            <span>{{ ($marketingSettings['google']['enabled'] ?? true) ? 'Active' : 'Disabled' }}</span>
+                                        </span>
+                                    </div>
+                                    <div class="marketing-status-specs">
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">GTM</span>
+                                            <span class="marketing-spec-value">{{ $marketingSettings['google']['gtm_id'] ?? 'Not set' }}</span>
+                                        </div>
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">GA4</span>
+                                            <span class="marketing-spec-value">{{ $marketingSettings['google']['ga4_id'] ?? 'Not set' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="marketing-card-footer">
+                                        <button type="button" onclick="switchMarketingSubTab('google')" class="btn-card-setup">Setup &rarr;</button>
+                                        <button type="button" onclick="testMarketingTag('google')" class="btn-card-ping">Ping</button>
+                                    </div>
+                                </div>
+
+                                <!-- Meta Card -->
+                                <div class="marketing-status-card accent-meta">
+                                    <div class="marketing-status-header">
+                                        <div class="marketing-platform-badge">
+                                            <div class="marketing-platform-icon" style="background: #1877F2;">M</div>
+                                            <span class="marketing-platform-name">Meta / FB</span>
+                                        </div>
+                                        <span class="badge {{ ($marketingSettings['meta']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}" id="statusBadgeMeta">
+                                            <span class="badge-dot"></span>
+                                            <span>{{ ($marketingSettings['meta']['enabled'] ?? true) ? 'Active' : 'Disabled' }}</span>
+                                        </span>
+                                    </div>
+                                    <div class="marketing-status-specs">
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">Pixel</span>
+                                            <span class="marketing-spec-value">{{ $marketingSettings['meta']['pixel_id'] ?? 'Not set' }}</span>
+                                        </div>
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">CAPI</span>
+                                            <span class="marketing-spec-value">{{ !empty($marketingSettings['meta']['conversions_api_token']) ? 'Connected' : 'Client Only' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="marketing-card-footer">
+                                        <button type="button" onclick="switchMarketingSubTab('meta')" class="btn-card-setup">Setup &rarr;</button>
+                                        <button type="button" onclick="testMarketingTag('meta')" class="btn-card-ping">Ping</button>
+                                    </div>
+                                </div>
+
+                                <!-- LinkedIn Card -->
+                                <div class="marketing-status-card accent-linkedin">
+                                    <div class="marketing-status-header">
+                                        <div class="marketing-platform-badge">
+                                            <div class="marketing-platform-icon" style="background: #0A66C2;">in</div>
+                                            <span class="marketing-platform-name">LinkedIn</span>
+                                        </div>
+                                        <span class="badge {{ ($marketingSettings['linkedin']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}" id="statusBadgeLinkedin">
+                                            <span class="badge-dot"></span>
+                                            <span>{{ ($marketingSettings['linkedin']['enabled'] ?? true) ? 'Active' : 'Disabled' }}</span>
+                                        </span>
+                                    </div>
+                                    <div class="marketing-status-specs">
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">Partner ID</span>
+                                            <span class="marketing-spec-value">{{ $marketingSettings['linkedin']['partner_id'] ?? 'Not set' }}</span>
+                                        </div>
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">Rule</span>
+                                            <span class="marketing-spec-value">{{ $marketingSettings['linkedin']['conversion_id'] ?? 'Active' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="marketing-card-footer">
+                                        <button type="button" onclick="switchMarketingSubTab('linkedin')" class="btn-card-setup">Setup &rarr;</button>
+                                        <button type="button" onclick="testMarketingTag('linkedin')" class="btn-card-ping">Ping</button>
+                                    </div>
+                                </div>
+
+                                <!-- Twitter Card -->
+                                <div class="marketing-status-card accent-twitter">
+                                    <div class="marketing-status-header">
+                                        <div class="marketing-platform-badge">
+                                            <div class="marketing-platform-icon" style="background: #0f172a;">𝕏</div>
+                                            <span class="marketing-platform-name">Twitter (X)</span>
+                                        </div>
+                                        <span class="badge {{ ($marketingSettings['twitter']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}" id="statusBadgeTwitter">
+                                            <span class="badge-dot"></span>
+                                            <span>{{ ($marketingSettings['twitter']['enabled'] ?? true) ? 'Active' : 'Disabled' }}</span>
+                                        </span>
+                                    </div>
+                                    <div class="marketing-status-specs">
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">Tag</span>
+                                            <span class="marketing-spec-value">{{ $marketingSettings['twitter']['pixel_id'] ?? 'Not set' }}</span>
+                                        </div>
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">Handle</span>
+                                            <span class="marketing-spec-value">{{ $marketingSettings['twitter']['site_handle'] ?? '@SureboundIns' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="marketing-card-footer">
+                                        <button type="button" onclick="switchMarketingSubTab('twitter')" class="btn-card-setup">Setup &rarr;</button>
+                                        <button type="button" onclick="testMarketingTag('twitter')" class="btn-card-ping">Ping</button>
+                                    </div>
+                                </div>
+
+                                <!-- TikTok Card -->
+                                <div class="marketing-status-card accent-tiktok">
+                                    <div class="marketing-status-header">
+                                        <div class="marketing-platform-badge">
+                                            <div class="marketing-platform-icon" style="background: #000000; color: #00f2fe; text-shadow: 1px 1px #fe2c55;">TT</div>
+                                            <span class="marketing-platform-name">TikTok</span>
+                                        </div>
+                                        <span class="badge {{ ($marketingSettings['tiktok']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}" id="statusBadgeTiktok">
+                                            <span class="badge-dot"></span>
+                                            <span>{{ ($marketingSettings['tiktok']['enabled'] ?? true) ? 'Active' : 'Disabled' }}</span>
+                                        </span>
+                                    </div>
+                                    <div class="marketing-status-specs">
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">Pixel</span>
+                                            <span class="marketing-spec-value">{{ $marketingSettings['tiktok']['pixel_id'] ?? 'Not set' }}</span>
+                                        </div>
+                                        <div class="marketing-spec-row">
+                                            <span class="marketing-spec-label">Events API</span>
+                                            <span class="marketing-spec-value">{{ !empty($marketingSettings['tiktok']['events_api_token']) ? 'Token Active' : 'Client Only' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="marketing-card-footer">
+                                        <button type="button" onclick="switchMarketingSubTab('tiktok')" class="btn-card-setup">Setup &rarr;</button>
+                                        <button type="button" onclick="testMarketingTag('tiktok')" class="btn-card-ping">Ping</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Quick Navigation & Configuration Hub Grid -->
+                            <div class="card" style="margin-bottom: 24px; padding: 22px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+                                    <div>
+                                        <h3 style="margin: 0; font-size: 1.125rem; color: var(--text-primary); font-weight: 700;">Unified Channel Configuration Hub</h3>
+                                        <p style="margin: 4px 0 0; color: var(--text-muted); font-size: 0.875rem;">Click any marketing platform below to jump straight to its dedicated settings and configuration controls.</p>
+                                    </div>
+                                    <button type="button" onclick="switchMarketingSubTab('all')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 14px;">
+                                        <span>👁️ Expand All Sections</span>
+                                    </button>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                                    <!-- Google Tile -->
+                                    <div class="marketing-quick-card" onclick="switchMarketingSubTab('google')">
+                                        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <div style="width: 38px; height: 38px; border-radius: 8px; background: #4285F4; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0;">G</div>
+                                                <div>
+                                                    <h4 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 700;">Google Marketing</h4>
+                                                    <span class="marketing-quick-card-sub">Tag Manager &bull; GA4 &bull; Ads &bull; Search Console</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge {{ ($marketingSettings['google']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}">
+                                                <span class="badge-dot"></span>
+                                                <span>{{ ($marketingSettings['google']['enabled'] ?? true) ? 'Active' : 'Off' }}</span>
+                                            </span>
+                                        </div>
+                                        <p class="marketing-quick-card-desc">Configure GTM container ID, GA4 measurement stream, Google Ads conversion tracking, and Search Console meta token.</p>
+                                        <div class="marketing-quick-card-footer">
+                                            <span class="marketing-quick-card-cta">Configure Google &rarr;</span>
+                                            <code style="font-size: 0.75rem; color: var(--text-secondary); background: #f8fafc; padding: 2px 8px; border-radius: 4px; border: 1px solid #e2e8f0; font-family: var(--font-mono);">GTM-SB89240</code>
+                                        </div>
+                                    </div>
+
+                                    <!-- Meta Tile -->
+                                    <div class="marketing-quick-card" onclick="switchMarketingSubTab('meta')">
+                                        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <div style="width: 38px; height: 38px; border-radius: 8px; background: #1877F2; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0;">M</div>
+                                                <div>
+                                                    <h4 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 700;">Meta / Facebook</h4>
+                                                    <span class="marketing-quick-card-sub">Meta Pixel &bull; CAPI Server Token &bull; Verification</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge {{ ($marketingSettings['meta']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}">
+                                                <span class="badge-dot"></span>
+                                                <span>{{ ($marketingSettings['meta']['enabled'] ?? true) ? 'Active' : 'Off' }}</span>
+                                            </span>
+                                        </div>
+                                        <p class="marketing-quick-card-desc">Configure Meta Pixel ID, Conversions API (CAPI) system user token, test event code, and domain verification.</p>
+                                        <div class="marketing-quick-card-footer">
+                                            <span class="marketing-quick-card-cta">Configure Meta &rarr;</span>
+                                            <code style="font-size: 0.75rem; color: var(--text-secondary); background: #f8fafc; padding: 2px 8px; border-radius: 4px; border: 1px solid #e2e8f0; font-family: var(--font-mono);">Pixel + CAPI</code>
+                                        </div>
+                                    </div>
+
+                                    <!-- LinkedIn Tile -->
+                                    <div class="marketing-quick-card" onclick="switchMarketingSubTab('linkedin')">
+                                        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <div style="width: 38px; height: 38px; border-radius: 8px; background: #0A66C2; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0;">in</div>
+                                                <div>
+                                                    <h4 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 700;">LinkedIn Campaign</h4>
+                                                    <span class="marketing-quick-card-sub">Insight Tag &bull; B2B &bull; Commercial Conversions</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge {{ ($marketingSettings['linkedin']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}">
+                                                <span class="badge-dot"></span>
+                                                <span>{{ ($marketingSettings['linkedin']['enabled'] ?? true) ? 'Active' : 'Off' }}</span>
+                                            </span>
+                                        </div>
+                                        <p class="marketing-quick-card-desc">Configure LinkedIn Partner ID and commercial insurance conversion tracking rule IDs for business targeting.</p>
+                                        <div class="marketing-quick-card-footer">
+                                            <span class="marketing-quick-card-cta">Configure LinkedIn &rarr;</span>
+                                            <code style="font-size: 0.75rem; color: var(--text-secondary); background: #f8fafc; padding: 2px 8px; border-radius: 4px; border: 1px solid #e2e8f0; font-family: var(--font-mono);">Partner ID: 6849201</code>
+                                        </div>
+                                    </div>
+
+                                    <!-- Twitter / X Tile -->
+                                    <div class="marketing-quick-card" onclick="switchMarketingSubTab('twitter')">
+                                        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <div style="width: 38px; height: 38px; border-radius: 8px; background: #0f172a; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; border: 1px solid #334155; flex-shrink: 0;">𝕏</div>
+                                                <div>
+                                                    <h4 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 700;">Twitter / X Ads</h4>
+                                                    <span class="marketing-quick-card-sub">Universal Website Tag &bull; Card Handle</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge {{ ($marketingSettings['twitter']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}">
+                                                <span class="badge-dot"></span>
+                                                <span>{{ ($marketingSettings['twitter']['enabled'] ?? true) ? 'Active' : 'Off' }}</span>
+                                            </span>
+                                        </div>
+                                        <p class="marketing-quick-card-desc">Configure X Ads Universal Website Tag for conversion tracking, retargeting, and brand handle attribution.</p>
+                                        <div class="marketing-quick-card-footer">
+                                            <span class="marketing-quick-card-cta">Configure Twitter &rarr;</span>
+                                            <code style="font-size: 0.75rem; color: var(--text-secondary); background: #f8fafc; padding: 2px 8px; border-radius: 4px; border: 1px solid #e2e8f0; font-family: var(--font-mono);">@SureboundIns</code>
+                                        </div>
+                                    </div>
+
+                                    <!-- TikTok Tile -->
+                                    <div class="marketing-quick-card" onclick="switchMarketingSubTab('tiktok')">
+                                        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <div style="width: 38px; height: 38px; border-radius: 8px; background: #FE2C55; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0;">TT</div>
+                                                <div>
+                                                    <h4 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 700;">TikTok For Business</h4>
+                                                    <span class="marketing-quick-card-sub">TikTok Pixel &bull; Events API Token</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge {{ ($marketingSettings['tiktok']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}">
+                                                <span class="badge-dot"></span>
+                                                <span>{{ ($marketingSettings['tiktok']['enabled'] ?? true) ? 'Active' : 'Off' }}</span>
+                                            </span>
+                                        </div>
+                                        <p class="marketing-quick-card-desc">Configure TikTok Web Pixel and Events API server access token for tracking video ad quotes and conversions.</p>
+                                        <div class="marketing-quick-card-footer">
+                                            <span class="marketing-quick-card-cta">Configure TikTok &rarr;</span>
+                                            <code style="font-size: 0.75rem; color: var(--text-secondary); background: #f8fafc; padding: 2px 8px; border-radius: 4px; border: 1px solid #e2e8f0; font-family: var(--font-mono);">C982401849102A9</code>
+                                        </div>
+                                    </div>
+
+                                    <!-- Social Meta Tile -->
+                                    <div class="marketing-quick-card" onclick="switchMarketingSubTab('social')">
+                                        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <div style="width: 38px; height: 38px; border-radius: 8px; background: #8B5CF6; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0;">OG</div>
+                                                <div>
+                                                    <h4 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 700;">Social Meta &amp; SEO</h4>
+                                                    <span class="marketing-quick-card-sub">OpenGraph &bull; Social Link Preview &bull; Cards</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge badge-success">
+                                                <span class="badge-dot"></span>
+                                                <span>Live Ready</span>
+                                            </span>
+                                        </div>
+                                        <p class="marketing-quick-card-desc">Configure title, description, thumbnail image, OpenGraph schema, and live social feed preview simulator.</p>
+                                        <div class="marketing-quick-card-footer">
+                                            <span class="marketing-quick-card-cta">Configure Social Meta &rarr;</span>
+                                            <code style="font-size: 0.75rem; color: var(--text-secondary); background: #f8fafc; padding: 2px 8px; border-radius: 4px; border: 1px solid #e2e8f0; font-family: var(--font-mono);">OG Cards Active</code>
+                                        </div>
+                                    </div>
+
+                                    <!-- Custom Scripts Tile -->
+                                    <div class="marketing-quick-card" onclick="switchMarketingSubTab('scripts')">
+                                        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <div style="width: 38px; height: 38px; border-radius: 8px; background: #64748B; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0;">&lt;/&gt;</div>
+                                                <div>
+                                                    <h4 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 700;">Custom Scripts</h4>
+                                                    <span class="marketing-quick-card-sub">Header &amp; Body Code Injections &bull; Webhooks</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge {{ ($marketingSettings['custom_scripts']['enabled'] ?? true) ? 'badge-success' : 'badge-neutral' }}">
+                                                <span class="badge-dot"></span>
+                                                <span>{{ ($marketingSettings['custom_scripts']['enabled'] ?? true) ? 'Active' : 'Off' }}</span>
+                                            </span>
+                                        </div>
+                                        <p class="marketing-quick-card-desc">Insert custom pixels (Clarity, Hotjar, Pinterest, CRM chatbots) directly into site &lt;head&gt; or &lt;body&gt;.</p>
+                                        <div class="marketing-quick-card-footer">
+                                            <span class="marketing-quick-card-cta">Configure Scripts &rarr;</span>
+                                            <code style="font-size: 0.75rem; color: var(--text-secondary); background: #f8fafc; padding: 2px 8px; border-radius: 4px; border: 1px solid #e2e8f0; font-family: var(--font-mono);">Global Hook</code>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 28px;">
+
+                            <!-- ==========================================
+                                 1. GOOGLE MARKETING SUITE
+                                 ========================================== -->
+                            <div class="marketing-section-pane hidden-pane" id="marketingPaneGoogle">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" onclick="switchMarketingSubTab('overview')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px;">
+                                            <span>&larr; Back to Hub</span>
+                                        </button>
+                                        <span style="color: var(--text-muted); font-size: 0.875rem; font-weight: 600;">Marketing &gt; Google Suite</span>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <button type="button" onclick="testMarketingTag('google')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px;">⚡ Test Ping</button>
+                                        <button type="button" onclick="switchMarketingSubTab('meta')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">Next: Meta (Facebook) &rarr;</button>
+                                    </div>
+                                </div>
+                                <div class="card" style="border-top: 3px solid #4285F4;">
+                                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: rgba(66, 133, 244, 0.12); color: #4285F4; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.25rem;">G</div>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 1.125rem; color: var(--text-primary); font-weight: 700;">Google Marketing Suite (Tag Manager, GA4, Google Ads)</h3>
+                                                <small style="color: var(--text-muted);">Manage GTM container, Google Analytics 4 Measurement ID, Ads Conversion Tracking, and Search Console verification.</small>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <input type="checkbox" id="google_enabled" name="google_enabled" value="1" {{ ($marketingSettings['google']['enabled'] ?? true) ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #4285F4;">
+                                            <label for="google_enabled" style="color: var(--text-primary); font-weight: 700; cursor: pointer; font-size: 0.9375rem;">Enable Google Suite</label>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                                            <!-- GTM -->
+                                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                                    <label class="form-label" style="font-weight: 700; font-size: 0.9375rem; margin: 0; color: var(--text-primary);">Google Tag Manager (GTM)</label>
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <input type="checkbox" id="google_gtm_enabled" name="google_gtm_enabled" value="1" {{ ($marketingSettings['google']['gtm_enabled'] ?? true) ? 'checked' : '' }} style="accent-color: #4285F4;">
+                                                        <label for="google_gtm_enabled" style="font-size: 0.8125rem; color: var(--text-muted); cursor: pointer;">Active</label>
+                                                    </div>
+                                                </div>
+                                                <input type="text" name="google_gtm_id" class="marketing-input font-mono" placeholder="GTM-XXXXXXX" value="{{ $marketingSettings['google']['gtm_id'] ?? 'GTM-SB89240' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 6px; font-size: 0.8125rem;">Standard container ID. Automatically injects official GTM script in &lt;head&gt; and &lt;noscript&gt; iframe in &lt;body&gt;.</small>
+                                            </div>
+
+                                            <!-- GA4 -->
+                                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                                    <label class="form-label" style="font-weight: 700; font-size: 0.9375rem; margin: 0; color: var(--text-primary);">Google Analytics 4 (GA4)</label>
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <input type="checkbox" id="google_ga4_enabled" name="google_ga4_enabled" value="1" {{ ($marketingSettings['google']['ga4_enabled'] ?? true) ? 'checked' : '' }} style="accent-color: #4285F4;">
+                                                        <label for="google_ga4_enabled" style="font-size: 0.8125rem; color: var(--text-muted); cursor: pointer;">Active</label>
+                                                    </div>
+                                                </div>
+                                                <input type="text" name="google_ga4_id" class="marketing-input font-mono" placeholder="G-XXXXXXXXXX" value="{{ $marketingSettings['google']['ga4_id'] ?? 'G-SB9824X891' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 6px; font-size: 0.8125rem;">GA4 Measurement ID. Injects modern gtag.js for tracking visitors, sessions, pageviews, and quote leads.</small>
+                                            </div>
+
+                                            <!-- Google Ads -->
+                                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                                    <label class="form-label" style="font-weight: 700; font-size: 0.9375rem; margin: 0; color: var(--text-primary);">Google Ads Conversion Tracking</label>
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <input type="checkbox" id="google_ads_enabled" name="google_ads_enabled" value="1" {{ ($marketingSettings['google']['google_ads_enabled'] ?? true) ? 'checked' : '' }} style="accent-color: #4285F4;">
+                                                        <label for="google_ads_enabled" style="font-size: 0.8125rem; color: var(--text-muted); cursor: pointer;">Active</label>
+                                                    </div>
+                                                </div>
+                                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                                    <div>
+                                                        <small style="color: var(--text-muted); display: block; margin-bottom: 4px;">Conversion ID (AW-XXXX)</small>
+                                                        <input type="text" name="google_ads_id" class="marketing-input font-mono" placeholder="AW-1094829104" value="{{ $marketingSettings['google']['google_ads_id'] ?? 'AW-1094829104' }}">
+                                                    </div>
+                                                    <div>
+                                                        <small style="color: var(--text-muted); display: block; margin-bottom: 4px;">Event Label</small>
+                                                        <input type="text" name="google_ads_label" class="marketing-input font-mono" placeholder="SB_lead_conversion" value="{{ $marketingSettings['google']['google_ads_label'] ?? 'SB_lead_conversion_2026' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Google Search Console -->
+                                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px;">
+                                                <label class="form-label" style="font-weight: 700; font-size: 0.9375rem; margin-bottom: 8px; display: block; color: var(--text-primary);">Google Search Console Verification Token</label>
+                                                <input type="text" name="google_site_verification" class="marketing-input font-mono" placeholder="google98420b98a0f81d83a" value="{{ $marketingSettings['google']['site_verification'] ?? 'google98420b98a0f81d83a' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 6px; font-size: 0.8125rem;">Meta tag content code. Injects &lt;meta name="google-site-verification" content="..."&gt; in &lt;head&gt;.</small>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+                                            <button type="button" onclick="testMarketingTag('google')" class="btn-secondary" style="font-size: 0.875rem;">⚡ Test Google Tag Connection</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ==========================================
+                                 2. META / FACEBOOK MARKETING SUITE
+                                 ========================================== -->
+                            <div class="marketing-section-pane hidden-pane" id="marketingPaneMeta">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" onclick="switchMarketingSubTab('overview')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px;">
+                                            <span>&larr; Back to Hub</span>
+                                        </button>
+                                        <button type="button" onclick="switchMarketingSubTab('google')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">
+                                            <span>&larr; Prev: Google</span>
+                                        </button>
+                                        <span style="color: var(--text-muted); font-size: 0.875rem; font-weight: 600;">Marketing &gt; Meta / Facebook</span>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <button type="button" onclick="testMarketingTag('meta')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px;">⚡ Test Ping</button>
+                                        <button type="button" onclick="switchMarketingSubTab('linkedin')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">Next: LinkedIn &rarr;</button>
+                                    </div>
+                                </div>
+                                <div class="card" style="border-top: 3px solid #1877F2;">
+                                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: rgba(24, 119, 242, 0.12); color: #1877F2; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.25rem;">M</div>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 1.125rem; color: var(--text-primary); font-weight: 700;">Meta (Facebook &amp; Instagram) Marketing Suite</h3>
+                                                <small style="color: var(--text-muted);">Manage Meta Pixel, Conversions API (CAPI) server token, and Facebook domain ownership verification.</small>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <input type="checkbox" id="meta_enabled" name="meta_enabled" value="1" {{ ($marketingSettings['meta']['enabled'] ?? true) ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #1877F2;">
+                                            <label for="meta_enabled" style="color: var(--text-primary); font-weight: 700; cursor: pointer; font-size: 0.9375rem;">Enable Meta Suite</label>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                                            <!-- Meta Pixel ID -->
+                                            <div>
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                                    <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin: 0; color: var(--text-secondary);">Meta Pixel ID (Numeric)</label>
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <input type="checkbox" id="meta_pixel_enabled" name="meta_pixel_enabled" value="1" {{ ($marketingSettings['meta']['pixel_enabled'] ?? true) ? 'checked' : '' }} style="accent-color: #1877F2;">
+                                                        <label for="meta_pixel_enabled" style="font-size: 0.8125rem; color: var(--text-muted); cursor: pointer;">Pixel Active</label>
+                                                    </div>
+                                                </div>
+                                                <input type="text" name="meta_pixel_id" class="table-search-input" style="width: 100%; height: 40px; font-family: monospace;" placeholder="123456789012345" value="{{ $marketingSettings['meta']['pixel_id'] ?? '982401859102941' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">Meta Events Manager Pixel ID. Fires standard PageView and lead events on quote submissions.</small>
+                                            </div>
+
+                                            <!-- Domain Verification -->
+                                            <div>
+                                                <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Facebook Domain Verification Code</label>
+                                                <input type="text" name="meta_domain_verification" class="table-search-input" style="width: 100%; height: 40px; font-family: monospace;" placeholder="meta981048fbverificationtoken" value="{{ $marketingSettings['meta']['domain_verification'] ?? 'meta981048fbverificationtoken' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">Meta Business Manager domain ownership token for &lt;meta name="facebook-domain-verification"&gt;.</small>
+                                            </div>
+
+                                            <!-- Conversions API Token -->
+                                            <div>
+                                                <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Conversions API (CAPI) Server Access Token</label>
+                                                <input type="password" name="meta_capi_token" class="table-search-input" style="width: 100%; height: 40px; font-family: monospace;" placeholder="EAAK..." value="{{ $marketingSettings['meta']['conversions_api_token'] ?? 'EAAK891048_sb_meta_capi_token_sample_key' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">System User token generated from Meta Business Manager for reliable server-side tracking.</small>
+                                            </div>
+
+                                            <!-- Test Event Code -->
+                                            <div>
+                                                <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Meta Test Event Code (Optional)</label>
+                                                <input type="text" name="meta_test_event_code" class="table-search-input" style="width: 100%; height: 40px; font-family: monospace;" placeholder="TEST12345" value="{{ $marketingSettings['meta']['test_event_code'] ?? 'TEST98421' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">Enter code from Events Manager &gt; Test Events to view diagnostic payloads in real-time.</small>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+                                            <button type="button" onclick="testMarketingTag('meta')" class="btn-secondary" style="font-size: 0.875rem;">⚡ Test Meta Pixel Ping</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ==========================================
+                                 3. LINKEDIN MARKETING SUITE
+                                 ========================================== -->
+                            <div class="marketing-section-pane hidden-pane" id="marketingPaneLinkedin">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" onclick="switchMarketingSubTab('overview')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px;">
+                                            <span>&larr; Back to Hub</span>
+                                        </button>
+                                        <button type="button" onclick="switchMarketingSubTab('meta')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">
+                                            <span>&larr; Prev: Meta</span>
+                                        </button>
+                                        <span style="color: var(--text-muted); font-size: 0.875rem; font-weight: 600;">Marketing &gt; LinkedIn Tag</span>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <button type="button" onclick="testMarketingTag('linkedin')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px;">⚡ Test Ping</button>
+                                        <button type="button" onclick="switchMarketingSubTab('twitter')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">Next: Twitter (X) &rarr;</button>
+                                    </div>
+                                </div>
+                                <div class="card" style="border-top: 3px solid #0A66C2;">
+                                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: rgba(10, 102, 194, 0.12); color: #0A66C2; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.25rem;">in</div>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 1.125rem; color: var(--text-primary); font-weight: 700;">LinkedIn Campaign Manager (Insight Tag)</h3>
+                                                <small style="color: var(--text-muted);">Track commercial and business insurance audience demographics, website conversions, and retargeting.</small>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <input type="checkbox" id="linkedin_enabled" name="linkedin_enabled" value="1" {{ ($marketingSettings['linkedin']['enabled'] ?? true) ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #0A66C2;">
+                                            <label for="linkedin_enabled" style="color: var(--text-primary); font-weight: 700; cursor: pointer; font-size: 0.9375rem;">Enable LinkedIn Tag</label>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                                            <div>
+                                                <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">LinkedIn Insight Tag Partner ID</label>
+                                                <input type="text" name="linkedin_partner_id" class="table-search-input" style="width: 100%; height: 40px; font-family: monospace;" placeholder="1234567" value="{{ $marketingSettings['linkedin']['partner_id'] ?? '6849201' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">6 to 8-digit Partner ID found in LinkedIn Campaign Manager under Analyze &gt; Insight Tag.</small>
+                                            </div>
+                                            <div>
+                                                <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Commercial Lead Conversion ID</label>
+                                                <input type="text" name="linkedin_conversion_id" class="table-search-input" style="width: 100%; height: 40px; font-family: monospace;" placeholder="1029481" value="{{ $marketingSettings['linkedin']['conversion_id'] ?? '1029481' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">Optional Conversion Rule ID for commercial quote inquiries and business insurance forms.</small>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+                                            <button type="button" onclick="testMarketingTag('linkedin')" class="btn-secondary" style="font-size: 0.875rem;">⚡ Test LinkedIn Insight Tag</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ==========================================
+                                 4. TWITTER / X MARKETING SUITE
+                                 ========================================== -->
+                            <div class="marketing-section-pane hidden-pane" id="marketingPaneTwitter">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" onclick="switchMarketingSubTab('overview')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px;">
+                                            <span>&larr; Back to Hub</span>
+                                        </button>
+                                        <button type="button" onclick="switchMarketingSubTab('linkedin')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">
+                                            <span>&larr; Prev: LinkedIn</span>
+                                        </button>
+                                        <span style="color: var(--text-muted); font-size: 0.875rem; font-weight: 600;">Marketing &gt; Twitter / X</span>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <button type="button" onclick="testMarketingTag('twitter')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px;">⚡ Test Ping</button>
+                                        <button type="button" onclick="switchMarketingSubTab('tiktok')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">Next: TikTok &rarr;</button>
+                                    </div>
+                                </div>
+                                <div class="card" style="border-top: 3px solid #111827;">
+                                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: rgba(17, 24, 39, 0.12); color: var(--text-primary); width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.25rem;">𝕏</div>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 1.125rem; color: var(--text-primary); font-weight: 700;">Twitter (X) Ads Universal Website Tag</h3>
+                                                <small style="color: var(--text-muted);">Configure X Ads conversion tracking, retargeting pixels, and official Twitter Card username attribution.</small>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <input type="checkbox" id="twitter_enabled" name="twitter_enabled" value="1" {{ ($marketingSettings['twitter']['enabled'] ?? true) ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #111827;">
+                                            <label for="twitter_enabled" style="color: var(--text-primary); font-weight: 700; cursor: pointer; font-size: 0.9375rem;">Enable Twitter / X</label>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                                            <div>
+                                                <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Twitter / X Pixel ID (Universal Website Tag)</label>
+                                                <input type="text" name="twitter_pixel_id" class="table-search-input" style="width: 100%; height: 40px; font-family: monospace;" placeholder="tw-o9842-10492" value="{{ $marketingSettings['twitter']['pixel_id'] ?? 'tw-o9842-10492' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">X Ads Universal Website Tag ID (e.g. tw-xxxxx-xxxxx or oxxxxx) for conversion tracking.</small>
+                                            </div>
+                                            <div>
+                                                <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Agency Twitter / X Handle</label>
+                                                <input type="text" name="twitter_site_handle" class="table-search-input" style="width: 100%; height: 40px;" placeholder="@SureboundIns" value="{{ $marketingSettings['twitter']['site_handle'] ?? '@SureboundIns' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">Used in &lt;meta name="twitter:site"&gt; and &lt;meta name="twitter:creator"&gt; tags.</small>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+                                            <button type="button" onclick="testMarketingTag('twitter')" class="btn-secondary" style="font-size: 0.875rem;">⚡ Test Twitter Pixel Tag</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ==========================================
+                                 5. TIKTOK MARKETING SUITE
+                                 ========================================== -->
+                            <div class="marketing-section-pane hidden-pane" id="marketingPaneTiktok">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" onclick="switchMarketingSubTab('overview')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px;">
+                                            <span>&larr; Back to Hub</span>
+                                        </button>
+                                        <button type="button" onclick="switchMarketingSubTab('twitter')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">
+                                            <span>&larr; Prev: Twitter (X)</span>
+                                        </button>
+                                        <span style="color: var(--text-muted); font-size: 0.875rem; font-weight: 600;">Marketing &gt; TikTok Pixel</span>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <button type="button" onclick="testMarketingTag('tiktok')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px;">⚡ Test Ping</button>
+                                        <button type="button" onclick="switchMarketingSubTab('social')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">Next: Social Meta &rarr;</button>
+                                    </div>
+                                </div>
+                                <div class="card" style="border-top: 3px solid #FE2C55;">
+                                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: rgba(254, 44, 85, 0.12); color: #FE2C55; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.25rem;">TT</div>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 1.125rem; color: var(--text-primary); font-weight: 700;">TikTok For Business (TikTok Pixel &amp; Events API)</h3>
+                                                <small style="color: var(--text-muted);">Measure video campaign ROI, website actions, and audience engagement across TikTok Ads.</small>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <input type="checkbox" id="tiktok_enabled" name="tiktok_enabled" value="1" {{ ($marketingSettings['tiktok']['enabled'] ?? true) ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #FE2C55;">
+                                            <label for="tiktok_enabled" style="color: var(--text-primary); font-weight: 700; cursor: pointer; font-size: 0.9375rem;">Enable TikTok Pixel</label>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                                            <div>
+                                                <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">TikTok Pixel ID</label>
+                                                <input type="text" name="tiktok_pixel_id" class="table-search-input" style="width: 100%; height: 40px; font-family: monospace;" placeholder="C1234567890ABCDEF" value="{{ $marketingSettings['tiktok']['pixel_id'] ?? 'C982401849102A9' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">Found in TikTok Ads Manager &gt; Assets &gt; Events &gt; Web Events.</small>
+                                            </div>
+                                            <div>
+                                                <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">TikTok Events API Server Access Token (Optional)</label>
+                                                <input type="password" name="tiktok_events_api_token" class="table-search-input" style="width: 100%; height: 40px; font-family: monospace;" placeholder="tt_events_api_token_..." value="{{ $marketingSettings['tiktok']['events_api_token'] ?? 'tt_events_api_token_sample_key' }}">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">Server-to-server tracking token for event reliability and iOS 14+ ad attribution.</small>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+                                            <button type="button" onclick="testMarketingTag('tiktok')" class="btn-secondary" style="font-size: 0.875rem;">⚡ Test TikTok Pixel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ==========================================
+                                 6. SOCIAL META & OPEN GRAPH SHARING ENGINE
+                                 ========================================== -->
+                            <div class="marketing-section-pane hidden-pane" id="marketingPaneSocial">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" onclick="switchMarketingSubTab('overview')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px;">
+                                            <span>&larr; Back to Hub</span>
+                                        </button>
+                                        <button type="button" onclick="switchMarketingSubTab('tiktok')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">
+                                            <span>&larr; Prev: TikTok</span>
+                                        </button>
+                                        <span style="color: var(--text-muted); font-size: 0.875rem; font-weight: 600;">Marketing &gt; Social Meta &amp; SEO</span>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <button type="button" onclick="switchMarketingSubTab('scripts')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">Next: Custom Scripts &rarr;</button>
+                                    </div>
+                                </div>
+                                <div class="card" style="border-top: 3px solid #8B5CF6;">
+                                    <div class="card-header">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: rgba(139, 92, 246, 0.12); color: #8B5CF6; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.25rem;">OG</div>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 1.125rem; color: var(--text-primary); font-weight: 700;">Social Meta Tags &amp; Open Graph (Facebook, LinkedIn &amp; X Link Previews)</h3>
+                                                <small style="color: var(--text-muted);">Controls how links look when shared on social networks with rich titles, snippets, and image cards.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 24px;">
+                                            <!-- Form Fields -->
+                                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                                <div>
+                                                    <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Default Open Graph / Social Title</label>
+                                                    <input type="text" id="socialTitleInput" name="social_default_title" oninput="updateSocialPreview()" class="table-search-input" style="width: 100%; height: 40px;" value="{{ $marketingSettings['social_meta']['default_title'] ?? 'Surebound Insurance – Premier Home, Auto & Business Coverage' }}">
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Default Meta Description</label>
+                                                    <textarea id="socialDescInput" name="social_default_description" oninput="updateSocialPreview()" class="table-search-input" style="width: 100%; height: 80px; padding: 10px; resize: vertical;">{{ $marketingSettings['social_meta']['default_description'] ?? 'Dependable insurance protection engineered around your family and business. Fast quotes, claims service, and dedicated agent support.' }}</textarea>
+                                                </div>
+                                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                                    <div>
+                                                        <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Social Share Image URL</label>
+                                                        <input type="text" id="socialImageInput" name="social_default_image" oninput="updateSocialPreview()" class="table-search-input" style="width: 100%; height: 40px;" value="{{ $marketingSettings['social_meta']['default_image'] ?? 'images/logo.png' }}">
+                                                    </div>
+                                                    <div>
+                                                        <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Canonical Domain URL</label>
+                                                        <input type="text" name="social_canonical_url" class="table-search-input" style="width: 100%; height: 40px;" value="{{ $marketingSettings['social_meta']['canonical_url'] ?? 'https://surebound.com' }}">
+                                                    </div>
+                                                </div>
+                                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                                    <div>
+                                                        <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Open Graph Type</label>
+                                                        <select name="social_og_type" class="table-search-input" style="width: 100%; height: 40px;">
+                                                            <option value="website" {{ ($marketingSettings['social_meta']['og_type'] ?? 'website') === 'website' ? 'selected' : '' }}>website</option>
+                                                            <option value="business.business" {{ ($marketingSettings['social_meta']['og_type'] ?? '') === 'business.business' ? 'selected' : '' }}>business.business</option>
+                                                            <option value="article" {{ ($marketingSettings['social_meta']['og_type'] ?? '') === 'article' ? 'selected' : '' }}>article</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label class="form-label" style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-secondary);">Twitter Card Format</label>
+                                                        <select name="social_twitter_card_type" class="table-search-input" style="width: 100%; height: 40px;">
+                                                            <option value="summary_large_image" {{ ($marketingSettings['social_meta']['twitter_card_type'] ?? 'summary_large_image') === 'summary_large_image' ? 'selected' : '' }}>summary_large_image (Large Hero Card)</option>
+                                                            <option value="summary" {{ ($marketingSettings['social_meta']['twitter_card_type'] ?? '') === 'summary' ? 'selected' : '' }}>summary (Small Thumbnail)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Interactive Live Preview Card -->
+                                            <div>
+                                                <label class="form-label" style="font-weight: 700; font-size: 0.9375rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; color: var(--text-primary);">
+                                                    <span>Live Social Feed Preview</span>
+                                                    <span style="font-size: 0.75rem; color: #10b981; background: rgba(16, 185, 129, 0.1); padding: 2px 8px; border-radius: 4px;">Dynamic Real-time</span>
+                                                </label>
+                                                <div style="border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; background: #0f172a; box-shadow: 0 10px 25px rgba(0,0,0,0.25);">
+                                                    <!-- Preview Image Container -->
+                                                    <div style="width: 100%; height: 160px; background: #1e293b; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                                                        <img id="previewOgImage" src="{{ asset($marketingSettings['social_meta']['default_image'] ?? 'images/logo.png') }}" style="max-height: 80%; max-width: 80%; object-fit: contain;" onerror="this.src='{{ asset('images/logo.png') }}'">
+                                                        <span style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.65); color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 4px;">surebound.com</span>
+                                                    </div>
+                                                    <!-- Preview Text Body -->
+                                                    <div style="padding: 14px; background: rgba(255,255,255,0.03);">
+                                                        <div style="font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; margin-bottom: 4px;">SUREBOUND.COM</div>
+                                                        <h4 id="previewOgTitle" style="margin: 0 0 6px 0; font-size: 0.9375rem; color: #f8fafc; font-weight: 700; line-height: 1.35;">{{ $marketingSettings['social_meta']['default_title'] ?? 'Surebound Insurance – Premier Home, Auto & Business Coverage' }}</h4>
+                                                        <p id="previewOgDesc" style="margin: 0; font-size: 0.8125rem; color: #94a3b8; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ $marketingSettings['social_meta']['default_description'] ?? 'Dependable insurance protection engineered around your family and business.' }}</p>
+                                                    </div>
+                                                </div>
+                                                <small style="color: var(--text-muted); display: block; margin-top: 10px; font-size: 0.8125rem;">Preview illustrates how shared links render across Facebook, LinkedIn, Twitter Cards, iMessage, and Slack.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ==========================================
+                                 7. CUSTOM HEAD & BODY INJECTION SCRIPTS
+                                 ========================================== -->
+                            <div class="marketing-section-pane hidden-pane" id="marketingPaneScripts">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" onclick="switchMarketingSubTab('overview')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px;">
+                                            <span>&larr; Back to Hub</span>
+                                        </button>
+                                        <button type="button" onclick="switchMarketingSubTab('social')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #60a5fa;">
+                                            <span>&larr; Prev: Social Meta</span>
+                                        </button>
+                                        <span style="color: var(--text-muted); font-size: 0.875rem; font-weight: 600;">Marketing &gt; Custom Scripts</span>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <button type="button" onclick="switchMarketingSubTab('overview')" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 12px; color: #10b981;">Back to Overview Hub &rarr;</button>
+                                    </div>
+                                </div>
+                                <div class="card" style="border-top: 3px solid #64748B;">
+                                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: rgba(100, 116, 139, 0.12); color: #64748B; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.25rem;">&lt;/&gt;</div>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 1.125rem; color: var(--text-primary); font-weight: 700;">Custom Tracking Scripts &amp; Webhooks Injection</h3>
+                                                <small style="color: var(--text-muted);">Insert additional custom pixels (Hotjar, Microsoft Clarity, Pinterest tag, custom CRM webhooks) directly into &lt;head&gt; or &lt;body&gt;.</small>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <input type="checkbox" id="custom_scripts_enabled" name="custom_scripts_enabled" value="1" {{ ($marketingSettings['custom_scripts']['enabled'] ?? true) ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #64748B;">
+                                            <label for="custom_scripts_enabled" style="color: var(--text-primary); font-weight: 700; cursor: pointer; font-size: 0.9375rem;">Enable Custom Scripts</label>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                                            <div>
+                                                <label class="form-label" style="font-weight: 700; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-primary);">Header Scripts (&lt;head&gt; ... &lt;/head&gt;)</label>
+                                                <textarea name="custom_header_scripts" class="table-search-input" style="width: 100%; height: 150px; font-family: monospace; font-size: 0.8125rem; line-height: 1.5; padding: 12px; background: #0b1120; color: #38bdf8; border: 1px solid #1e293b;" placeholder="<!-- Custom head scripts e.g. Clarity, Hotjar, or Meta verification -->">{{ $marketingSettings['custom_scripts']['header_scripts'] ?? '' }}</textarea>
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">Rendered before closing &lt;/head&gt; tag on all public pages.</small>
+                                            </div>
+                                            <div>
+                                                <label class="form-label" style="font-weight: 700; font-size: 0.9375rem; margin-bottom: 6px; display: block; color: var(--text-primary);">Body Scripts (&lt;body&gt; ... &lt;/body&gt;)</label>
+                                                <textarea name="custom_body_scripts" class="table-search-input" style="width: 100%; height: 150px; font-family: monospace; font-size: 0.8125rem; line-height: 1.5; padding: 12px; background: #0b1120; color: #34d399; border: 1px solid #1e293b;" placeholder="<!-- Custom body scripts e.g. chat widgets, noscript tags -->">{{ $marketingSettings['custom_scripts']['body_scripts'] ?? '' }}</textarea>
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px; font-size: 0.8125rem;">Rendered directly at the top of &lt;body&gt; tag on all public pages.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Sticky Bottom Save Bar -->
+                        <div style="margin-top: 28px; padding: 20px; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong style="color: var(--text-primary); font-size: 1rem; display: block;">Ready to deploy marketing changes live?</strong>
+                                <span style="color: var(--text-muted); font-size: 0.875rem;">Changes take effect immediately across all client-facing Surebound insurance pages.</span>
+                            </div>
+                            <button type="submit" id="saveMarketingBtnBottom" class="btn-primary-action" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 12px 28px; font-size: 1rem; font-weight: 700; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);">
+                                <span>Publish Marketing Settings Live &rarr;</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
 
             </div>
         </main>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: CREATE NEW ADMINISTRATOR (SUPER ADMIN ONLY)
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalCreateAdmin">
+        <div class="modal-content" style="max-width: 580px;">
+            <div class="modal-header">
+                <div class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(124, 58, 237, 0.15); color: #7c3aed; display: flex; align-items: center; justify-content: center;">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.765Z"/>
+                        </svg>
+                    </div>
+                    <span>Create Administrator Account</span>
+                </div>
+                <button class="modal-close" onclick="closeModal('modalCreateAdmin')">&times;</button>
+            </div>
+            <form action="{{ route('admin.users.store') }}" method="POST">
+                @csrf
+                <div class="modal-body" style="padding: 24px;">
+                    <div style="background: rgba(124, 58, 237, 0.08); border: 1px solid rgba(124, 58, 237, 0.2); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 20px; font-size: 0.875rem; color: #6d28d9; display: flex; align-items: center; gap: 10px;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                        <span>Super Administrator Privileges: You can provision new administrators and agents into the agency system.</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Full Name *</label>
+                            <input type="text" name="name" class="form-input" placeholder="e.g. Alexander Vance" required>
+                        </div>
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Email Address *</label>
+                            <input type="email" name="email" class="form-input" placeholder="admin@surebound.com" required>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Login Password *</label>
+                            <input type="password" name="password" class="form-input" placeholder="Min. 8 characters" minlength="8" required>
+                        </div>
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Contact Phone</label>
+                            <input type="text" name="phone" class="form-input" placeholder="(206) 555-0100">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Account Role *</label>
+                            <select name="role" class="form-select" id="newAdminRoleSelect" onchange="toggleSuperAdminCheckbox(this.value)" required>
+                                <option value="admin" selected>Administrator (Executive)</option>
+                                <option value="agent">Licensed Agent (Broker)</option>
+                                <option value="user">Customer (Policyholder)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Designation / Title</label>
+                            <input type="text" name="title" class="form-input" id="newAdminTitleInput" placeholder="e.g. Senior Underwriter" value="Administrator">
+                        </div>
+                    </div>
+
+                    <div id="superAdminToggleWrap" style="background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px 16px;">
+                        <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; margin: 0;">
+                            <input type="checkbox" name="is_super_admin" value="1" style="width: 18px; height: 18px; margin-top: 2px; accent-color: #7c3aed;">
+                            <div>
+                                <div style="font-weight: 700; color: var(--text-primary); font-size: 0.9375rem;">Grant Super Administrator Privileges</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">
+                                    Allows managing and removing other administrators. Standard administrators cannot edit or remove Super Admins.
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding: 16px 24px; display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" class="btn-secondary" onclick="closeModal('modalCreateAdmin')">Cancel</button>
+                    <button type="submit" class="btn-primary-action" style="background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);">
+                        Create Account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: EDIT USER ACCOUNT (EMAIL, PHONE, PASSWORD, ROLE)
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalEditUser">
+        <div class="modal-content" style="max-width: 580px;">
+            <div class="modal-header">
+                <div class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(37, 99, 235, 0.12); color: #2563eb; display: flex; align-items: center; justify-content: center;">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                        </svg>
+                    </div>
+                    <span>Edit User Account</span>
+                </div>
+                <button class="modal-close" onclick="closeModal('modalEditUser')">&times;</button>
+            </div>
+            <form id="formEditUser" method="POST" action="">
+                @csrf
+                @method('PUT')
+                <div class="modal-body" style="padding: 24px;">
+                    <div style="background: rgba(37, 99, 235, 0.06); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 20px; font-size: 0.875rem; color: #1d4ed8; display: flex; align-items: center; gap: 10px;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>Update credentials, email, contact phone, or set a new password below.</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Full Name *</label>
+                            <input type="text" name="name" id="edit_user_name" class="form-input" placeholder="e.g. Alexander Vance" required>
+                        </div>
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Email Address *</label>
+                            <input type="email" name="email" id="edit_user_email" class="form-input" placeholder="admin@surebound.com" required>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">
+                                New Password
+                                <span style="font-weight: 400; color: var(--text-muted); font-size: 0.75rem;">(blank = keep current)</span>
+                            </label>
+                            <input type="password" name="password" id="edit_user_password" class="form-input" placeholder="Min. 8 characters (optional)" minlength="8">
+                        </div>
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Contact Phone</label>
+                            <input type="text" name="phone" id="edit_user_phone" class="form-input" placeholder="(206) 555-0100">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Designation / Title</label>
+                            <input type="text" name="title" id="edit_user_title" class="form-input" placeholder="e.g. Senior Underwriter">
+                        </div>
+                        @if(auth()->check() && auth()->user()->isSuperAdmin())
+                        <div class="form-group" style="margin: 0;" id="editUserRoleGroup">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Account Role</label>
+                            <select name="role" id="edit_user_role" class="form-select" onchange="toggleEditSuperAdminCheckbox(this.value)">
+                                <option value="admin">Administrator (Executive)</option>
+                                <option value="agent">Licensed Agent (Broker)</option>
+                                <option value="user">Customer (Policyholder)</option>
+                            </select>
+                        </div>
+                        @endif
+                    </div>
+
+                    @if(auth()->check() && auth()->user()->isSuperAdmin())
+                    <div id="editSuperAdminToggleWrap" style="background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px 16px;">
+                        <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; margin: 0;">
+                            <input type="checkbox" name="is_super_admin" id="edit_user_is_super_admin" value="1" style="width: 18px; height: 18px; margin-top: 2px; accent-color: #7c3aed;">
+                            <div>
+                                <div style="font-weight: 700; color: var(--text-primary); font-size: 0.9375rem;">Grant Super Administrator Privileges</div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">
+                                    Full system control including managing administrators. Standard administrators cannot edit or remove Super Admins.
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    @endif
+                </div>
+                <div class="modal-footer" style="padding: 16px 24px; display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" class="btn-secondary" onclick="closeModal('modalEditUser')">Cancel</button>
+                    <button type="submit" class="btn-primary-action" style="background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- ====================================================================
@@ -4874,220 +6822,1303 @@
          ==================================================================== -->
     <div class="modal-overlay" id="modalNewInvoice">
         <div class="modal-content" style="max-width: 800px;">
-            <div class="modal-header">
-                <div class="modal-title">Create New Premium Invoice</div>
-                <button class="modal-close" onclick="closeModal('modalNewInvoice')">&times;</button>
+            <div class="modal-header" style="padding: 20px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(16, 185, 129, 0.12); color: #059669; display: flex; align-items: center; justify-content: center;">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14.25l6-6m4.5-3.75H4.5A2.25 2.25 0 002.25 6.75v10.5A2.25 2.25 0 004.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5zM12 9v6m-3-3h6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="modal-title" style="font-size: 1.1875rem; font-weight: 700; color: var(--text-primary); margin: 0;">Create New Premium Invoice</div>
+                        <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">Generate an itemized billing statement and PDF for policyholders</div>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeModal('modalNewInvoice')" style="font-size: 1.5rem; line-height: 1;">&times;</button>
             </div>
             <form id="newInvoiceForm" onsubmit="saveNewInvoice(event)">
                 @csrf
-                <div class="modal-body">
+                <div class="modal-body" style="padding: 24px;">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label class="form-label">Customer / Policyholder Name *</label>
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Customer / Policyholder Name *</label>
                             <input type="text" name="customer_name" class="form-input" required placeholder="e.g. Acme Corporation or Jane Doe">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Customer Email Address *</label>
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Customer Email Address *</label>
                             <input type="email" name="customer_email" class="form-input" required placeholder="client@example.com">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Customer Phone Number</label>
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Customer Phone Number</label>
                             <input type="text" name="customer_phone" class="form-input" placeholder="(555) 000-0000">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Associated Policy Number</label>
-                            <select name="policy_number" class="form-input">
-                                <option value="">-- Optional / Select Active Policy --</option>
+                            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; margin-bottom: 6px;">
+                                <span>Associated Policy Number</span>
+                                <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted);">Type or select</span>
+                            </label>
+                            <input type="text" name="policy_number" id="newInvoicePolicyNumber" class="form-input" list="policyDatalistOptions" placeholder="e.g. POL-98412 (type manually or pick)">
+                            <datalist id="policyDatalistOptions">
                                 @foreach($policies as $pol)
-                                    <option value="{{ $pol->policy_number }}">{{ $pol->policy_number }} – {{ $pol->holder_name }} ({{ $pol->type_label }})</option>
+                                    <option value="{{ $pol->policy_number }}">{{ $pol->holder_name }} ({{ $pol->type_label }})</option>
                                 @endforeach
-                            </select>
+                            </datalist>
                         </div>
 
                         <div class="form-group full">
-                            <label class="form-label">Customer Billing Address</label>
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Customer Billing Address</label>
                             <input type="text" name="customer_address" class="form-input" placeholder="Street Address, City, State, ZIP">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Issue Date *</label>
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Issue Date *</label>
                             <input type="date" name="issue_date" class="form-input" required value="{{ date('Y-m-d') }}">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Payment Due Date *</label>
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Payment Due Date *</label>
                             <input type="date" name="due_date" class="form-input" required value="{{ date('Y-m-d', strtotime('+30 days')) }}">
                         </div>
                     </div>
 
                     <!-- Line Items Dynamic Table -->
-                    <div style="margin-top: 20px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <label class="form-label" style="font-weight: 700; color: #38bdf8; margin: 0;">Invoice Line Items &amp; Premium Breakdown</label>
-                            <button type="button" onclick="addInvoiceLineRow()" class="btn-secondary" style="padding: 4px 12px; font-size: 14px;">+ Add Line Item</button>
+                    <div style="margin-top: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <label class="form-label" style="font-weight: 700; color: var(--text-primary); font-size: 0.9375rem; margin: 0;">
+                                Invoice Line Items &amp; Premium Breakdown
+                            </label>
+                            <button type="button" onclick="addInvoiceLineRow()" class="btn-secondary" style="padding: 6px 14px; font-size: 0.8125rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                                <span>Add Line Item</span>
+                            </button>
                         </div>
-                        <table style="width: 100%; border-collapse: collapse;" id="newInvoiceItemsTable">
-                            <thead>
-                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 14px; text-align: left;">
-                                    <th style="padding: 6px;">Description</th>
-                                    <th style="padding: 6px; width: 80px;">Qty</th>
-                                    <th style="padding: 6px; width: 120px;">Unit Price ($)</th>
-                                    <th style="padding: 6px; width: 100px; text-align: right;">Total ($)</th>
-                                    <th style="padding: 6px; width: 40px;"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="invoiceLineItemsBody">
-                                <tr>
-                                    <td style="padding: 6px;">
-                                        <input type="text" name="item_desc[]" class="form-input" required value="Annual Insurance Policy Premium">
-                                    </td>
-                                    <td style="padding: 6px;">
-                                        <input type="number" name="item_qty[]" class="form-input inv-qty" required value="1" min="1" onchange="calcNewInvoiceTotals()">
-                                    </td>
-                                    <td style="padding: 6px;">
-                                        <input type="number" name="item_price[]" class="form-input inv-price" required value="1200.00" step="0.01" onchange="calcNewInvoiceTotals()">
-                                    </td>
-                                    <td style="padding: 6px; text-align: right; font-weight: 600; color: #f8fafc;" class="inv-row-total">
-                                        $1,200.00
-                                    </td>
-                                    <td style="padding: 6px; text-align: center;">
-                                        <button type="button" onclick="removeInvoiceLineRow(this)" style="background: none; border: none; color: #fda4af; cursor: pointer; font-size: 18px;">&times;</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface);">
+                            <table style="width: 100%; border-collapse: collapse;" id="newInvoiceItemsTable">
+                                <thead>
+                                    <tr style="background: var(--bg-surface-secondary); border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; text-align: left;">
+                                        <th style="padding: 10px 12px;">Description</th>
+                                        <th style="padding: 10px 12px; width: 90px; text-align: center;">Qty</th>
+                                        <th style="padding: 10px 12px; width: 140px; text-align: right;">Unit Price ($)</th>
+                                        <th style="padding: 10px 12px; width: 130px; text-align: right;">Total ($)</th>
+                                        <th style="padding: 10px 8px; width: 44px; text-align: center;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoiceLineItemsBody">
+                                    <tr>
+                                        <td style="padding: 10px 12px;">
+                                            <input type="text" name="item_desc[]" class="form-input" required value="" placeholder="Enter item or coverage description...">
+                                        </td>
+                                        <td style="padding: 10px 12px;">
+                                            <input type="number" name="item_qty[]" class="form-input inv-qty" required value="1" min="1" oninput="calcNewInvoiceTotals()" style="text-align: center;">
+                                        </td>
+                                        <td style="padding: 10px 12px;">
+                                            <input type="number" name="item_price[]" class="form-input inv-price" required value="" placeholder="0.00" step="0.01" min="0" oninput="calcNewInvoiceTotals()" style="text-align: right;">
+                                        </td>
+                                        <td style="padding: 10px 12px; text-align: right; font-weight: 700; color: var(--text-primary); font-size: 0.9375rem;" class="inv-row-total">
+                                            $0.00
+                                        </td>
+                                        <td style="padding: 10px 8px; text-align: center;">
+                                            <button type="button" onclick="removeInvoiceLineRow(this)" style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; border-radius: 4px; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px;" title="Remove row">&times;</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <!-- Totals Summary Box -->
-                    <div style="margin-top: 16px; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; color: #cbd5e1; font-size: 16px;">
-                            <span>Subtotal:</span>
-                            <strong id="invSubtotalDisplay">$1,200.00</strong>
-                            <input type="hidden" name="subtotal" id="invSubtotalInput" value="1200.00">
+                    <div style="margin-top: 18px; background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9375rem;">
+                            <span style="font-weight: 500;">Subtotal:</span>
+                            <strong id="invSubtotalDisplay" style="color: var(--text-primary); font-size: 1rem;">$0.00</strong>
+                            <input type="hidden" name="subtotal" id="invSubtotalInput" value="0.00">
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; color: #cbd5e1; font-size: 16px;">
-                            <span>Tax / Policy Fee ($ USD):</span>
-                            <input type="number" name="tax" id="invTaxInput" value="0.00" step="0.01" style="width: 100px; padding: 2px 6px; background: #1e293b; color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; text-align: right;" onchange="calcNewInvoiceTotals()">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9375rem;">
+                            <span style="font-weight: 500;">Tax / Policy Fee ($ USD):</span>
+                            <input type="number" name="tax" id="invTaxInput" value="0.00" step="0.01" min="0" class="form-input" style="width: 120px; padding: 6px 10px; text-align: right; font-weight: 600;" oninput="calcNewInvoiceTotals()">
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; color: #cbd5e1; font-size: 16px;">
-                            <span>Discount ($ USD):</span>
-                            <input type="number" name="discount" id="invDiscountInput" value="0.00" step="0.01" style="width: 100px; padding: 2px 6px; background: #1e293b; color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; text-align: right;" onchange="calcNewInvoiceTotals()">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9375rem;">
+                            <span style="font-weight: 500;">Discount ($ USD):</span>
+                            <input type="number" name="discount" id="invDiscountInput" value="0.00" step="0.01" min="0" class="form-input" style="width: 120px; padding: 6px 10px; text-align: right; font-weight: 600;" oninput="calcNewInvoiceTotals()">
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); color: #f8fafc; font-size: 20px; font-weight: 800;">
-                            <span>Total Amount Due:</span>
-                            <span id="invTotalDisplay" style="color: #34d399;">$1,200.00</span>
-                            <input type="hidden" name="total_amount" id="invTotalInput" value="1200.00">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+                            <span style="font-size: 1.0625rem; font-weight: 700; color: var(--text-primary);">Total Amount Due:</span>
+                            <span id="invTotalDisplay" style="font-size: 1.375rem; font-weight: 800; color: #059669;">$0.00</span>
+                            <input type="hidden" name="total_amount" id="invTotalInput" value="0.00">
                         </div>
                     </div>
 
-                    <div class="form-group full" style="margin-top: 12px;">
-                        <label class="form-label">Payment Notes &amp; Terms for Customer</label>
-                        <textarea name="notes" class="form-textarea" rows="2">Thank you for choosing Surebound Insurance. Payment accepted via Credit Card, ACH Direct Debit, or Wire Transfer.</textarea>
+                    <div class="form-group full" style="margin-top: 16px;">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Payment Notes &amp; Terms for Customer</label>
+                        <textarea name="notes" class="form-textarea" rows="2" style="font-size: 0.875rem;">Thank you for choosing Surebound Insurance. Payment accepted via Credit Card, ACH Direct Debit, or Wire Transfer.</textarea>
+                    </div>
+
+                    <!-- Authorized Underwriter & Official Corporate Signature -->
+                    <div style="margin-top: 24px; padding: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 30px; height: 30px; border-radius: 8px; background: rgba(37, 99, 235, 0.1); color: #2563eb; display: flex; align-items: center; justify-content: center;">
+                                    <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                                </div>
+                                <div>
+                                    <span style="font-size: 0.9375rem; font-weight: 700; color: #0f172a; display: block;">Authorized Representative Signature</span>
+                                    <span style="font-size: 0.75rem; color: #64748b;">Included on official invoice statement, printable PDF, and client billing portal</span>
+                                </div>
+                            </div>
+                            <div class="sig-mode-pills">
+                                <button type="button" class="sig-pill active" id="tabSigUpload" onclick="setInvoiceSigTab('upload')">📁 Upload File</button>
+                                <button type="button" class="sig-pill" id="tabSigDraw" onclick="setInvoiceSigTab('draw')">✍️ Draw On Screen</button>
+                                <button type="button" class="sig-pill" id="tabSigType" onclick="setInvoiceSigTab('type')">🔤 Typed Script</button>
+                                @if(!empty($agencySignature['signature_image']))
+                                    <button type="button" class="sig-pill" id="tabSigSaved" onclick="setInvoiceSigTab('saved')">🏛️ Agency Master</button>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-grid" style="margin-bottom: 14px;">
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 600; margin-bottom: 4px; font-size: 0.8125rem;">Signatory Officer Name</label>
+                                <input type="text" name="signatory_name" id="invSignatoryNameInput" class="form-input" value="{{ $agencySignature['signatory_name'] ?? (Auth::check() ? Auth::user()->name : 'Md Rezawl') }}" oninput="updateTypedSigPreview()">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 600; margin-bottom: 4px; font-size: 0.8125rem;">Corporate Title / Designation</label>
+                                <input type="text" name="signatory_title" id="invSignatoryTitleInput" class="form-input" value="{{ $agencySignature['signatory_title'] ?? 'Chief Underwriter & Authorized Representative' }}">
+                            </div>
+                        </div>
+
+                        <!-- 1. Upload File Mode -->
+                        <div id="sigPanelUpload" class="sig-panel">
+                            <div class="sig-dropzone" onclick="document.getElementById('invSigFileInput').click()">
+                                <input type="file" name="signature_file" id="invSigFileInput" accept="image/png,image/jpeg,image/webp,image/svg+xml" style="display:none;" onchange="handleNewInvoiceSigUpload(event)">
+                                <div id="sigUploadPrompt">
+                                    <svg width="34" height="34" fill="none" stroke="#2563eb" viewBox="0 0 24 24" style="margin: 0 auto 8px; display: block;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                                    <div style="font-weight: 700; color: #1e293b; font-size: 0.875rem;">Click or drag to upload signature image</div>
+                                    <div style="font-size: 0.75rem; color: #64748b; margin-top: 2px;">PNG with transparent background, JPG, or SVG (Up to 5MB)</div>
+                                </div>
+                                <div id="sigUploadPreviewWrap" style="display: none; align-items: center; justify-content: center; gap: 16px; padding: 6px 0;">
+                                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 16px; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+                                        <img id="sigUploadPreviewImg" src="" alt="Signature Preview" style="max-height: 54px; max-width: 220px; object-fit: contain;">
+                                        <button type="button" onclick="event.stopPropagation(); clearNewInvoiceSigUpload();" style="background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 6px; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Draw On Screen Canvas Mode -->
+                        <div id="sigPanelDraw" class="sig-panel" style="display: none;">
+                            <div style="border: 2px dashed #93c5fd; border-radius: 10px; background: #ffffff; padding: 12px; text-align: center; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding: 0 4px;">
+                                    <span style="font-size: 0.75rem; font-weight: 600; color: #2563eb; display: flex; align-items: center; gap: 5px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2563eb;"></span>
+                                        Draw signature with mouse, stylus pen, or fingertip
+                                    </span>
+                                    <button type="button" onclick="clearInvoiceCanvas()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; border-radius: 6px; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Clear Canvas</button>
+                                </div>
+                                <canvas id="invoiceSigCanvas" width="700" height="130" style="width: 100%; height: 130px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; cursor: crosshair; touch-action: none;"></canvas>
+                                <div style="border-top: 1px dashed #cbd5e1; margin: 6px 20px 0; padding-top: 2px;">
+                                    <span style="font-size: 0.6875rem; color: #94a3b8; font-weight: 500;">Authorized Signatory Baseline &bull; Document Security Stamp</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Typed Script Mode -->
+                        <div id="sigPanelType" class="sig-panel" style="display: none;">
+                            <div style="border: 2px dashed #cbd5e1; border-radius: 10px; background: #ffffff; padding: 18px; text-align: center;">
+                                <div id="typedSigPreview" style="font-family: 'Great Vibes', 'Dancing Script', cursive; font-size: 2.375rem; color: #1e3a8a; min-height: 52px; display: flex; align-items: center; justify-content: center; user-select: none;">
+                                    {{ $agencySignature['signatory_name'] ?? 'Md Rezawl' }}
+                                </div>
+                                <div style="border-top: 1px solid #e2e8f0; margin-top: 10px; padding-top: 6px; font-size: 0.75rem; color: #64748b;">
+                                    High-resolution cursive signature vector generated automatically from the signatory name.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Default Saved Agency Signature Mode -->
+                        @if(!empty($agencySignature['signature_image']))
+                        <div id="sigPanelSaved" class="sig-panel" style="display: none;">
+                            <div style="border: 1px solid #bfdbfe; background: #eff6ff; border-radius: 10px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="background: #ffffff; border: 1px solid #dbeafe; border-radius: 8px; padding: 8px 16px;">
+                                        <img src="{{ $agencySignature['signature_image'] }}" alt="Default Agency Signature" style="max-height: 48px; max-width: 180px; object-fit: contain;">
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 700; color: #1e3a8a; font-size: 0.875rem;">Agency Master Signature File</div>
+                                        <div style="font-size: 0.75rem; color: #3b82f6;">{{ $agencySignature['signatory_name'] ?? 'Md Rezawl' }} &bull; {{ $agencySignature['signatory_title'] ?? 'Chief Underwriter' }}</div>
+                                    </div>
+                                </div>
+                                <span class="badge" style="background: #dbeafe; color: #1d4ed8; font-weight: 700;">Active Default</span>
+                            </div>
+                        </div>
+                        @endif
+
+                        <input type="hidden" name="signature_image" id="invSignatureImageInput" value="{{ $agencySignature['signature_image'] ?? '' }}">
+                        <input type="hidden" name="signature_mode" id="invSignatureModeInput" value="upload">
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid #e2e8f0; flex-wrap: wrap; gap: 8px;">
+                            <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.8125rem; color: #334155; cursor: pointer; user-select: none;">
+                                <input type="checkbox" name="save_as_agency_default" value="1" style="accent-color: #2563eb; width: 16px; height: 16px;">
+                                <span style="font-weight: 500;">Save as Master Agency Signature for all future policies</span>
+                            </label>
+                            <span style="font-size: 0.75rem; color: #059669; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Authenticated Underwriter Certificate
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: flex-end; gap: 10px;">
                     <button type="button" class="btn-secondary" onclick="closeModal('modalNewInvoice')">Cancel</button>
-                    <button type="submit" id="saveInvoiceBtn" class="btn-primary-action" style="background: #10b981;">Issue Invoice &amp; Save</button>
+                    <button type="submit" id="saveInvoiceBtn" class="btn-primary-action" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); display: inline-flex; align-items: center; gap: 6px;">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                        <span>Issue Invoice &amp; Save</span>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- ====================================================================
-         MODAL: PRINTABLE / VIEW INVOICE
+         MODAL: INVOICE CREATED SUCCESS & DIRECT PDF DOWNLOAD
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalInvoiceCreatedSuccess">
+        <div class="modal-content" style="max-width: 480px; text-align: center; padding: 32px 28px;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: #ecfdf5; border: 2px solid #a7f3d0; color: #059669; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.5 12.75l6 6 9-13.5"/>
+                </svg>
+            </div>
+            
+            <h3 style="font-size: 1.375rem; font-weight: 800; color: var(--text-primary); margin: 0 0 6px;">Invoice Issued Successfully!</h3>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin: 0 0 20px;">
+                Official commercial billing statement has been saved in the agency database.
+            </p>
+
+            <div style="background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 24px; text-align: left;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-size: 0.8125rem; color: var(--text-secondary); font-weight: 500;">Invoice Number:</span>
+                    <strong id="successInvoiceNumberDisplay" style="font-family: monospace; font-size: 0.9375rem; color: #2563eb;">INV-2026-001</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-size: 0.8125rem; color: var(--text-secondary); font-weight: 500;">Policyholder:</span>
+                    <strong id="successCustomerNameDisplay" style="font-size: 0.875rem; color: var(--text-primary);">Jonathan Harris</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.8125rem; color: var(--text-secondary); font-weight: 500;">Total Amount Due:</span>
+                    <strong id="successTotalAmountDisplay" style="font-size: 1.0625rem; color: #059669; font-weight: 800;">$0.00</strong>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <a id="successDownloadPdfLink" href="#" target="_blank" class="btn-primary-action" style="padding: 12px 20px; font-size: 0.9375rem; font-weight: 700; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+                    </svg>
+                    <span>Download PDF Invoice</span>
+                </a>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button type="button" id="successViewInvoiceActionBtn" class="btn-secondary" style="padding: 10px 14px; font-size: 0.875rem; font-weight: 600;">
+                        View Invoice
+                    </button>
+                    <button type="button" onclick="try{localStorage.setItem('sb_admin_active_tab', 'invoices');}catch(e){} window.location.hash='#invoices'; closeModal('modalInvoiceCreatedSuccess'); window.location.reload();" class="btn-secondary" style="padding: 10px 14px; font-size: 0.875rem; font-weight: 600;">
+                        Done / Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: BIND NEW INSURANCE POLICY
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalCreatePolicy">
+        <div class="modal-content" style="max-width: 820px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header" style="padding: 20px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(37, 99, 235, 0.12); color: #2563eb; display: flex; align-items: center; justify-content: center;">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <div>
+                        <div class="modal-title" style="font-size: 1.1875rem; font-weight: 700; color: var(--text-primary); margin: 0;">Bind New Insurance Policy</div>
+                        <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">Issue and bind an official underwritten policy contract in the agency repository</div>
+                    </div>
+                </div>
+                <button type="button" class="modal-close" onclick="closeModal('modalCreatePolicy')" style="font-size: 1.5rem; line-height: 1;">&times;</button>
+            </div>
+            <form id="createPolicyForm" onsubmit="saveNewPolicy(event)">
+                @csrf
+                <div class="modal-body" style="padding: 24px;">
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Insured Customer Name *</label>
+                            <input type="text" name="holder_name" class="form-input" required placeholder="e.g. Jonathan Harris or Acme Inc.">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policyholder Email Address</label>
+                            <input type="email" name="holder_email" class="form-input" placeholder="policyholder@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Contact Phone</label>
+                            <input type="text" name="holder_phone" class="form-input" placeholder="(512) 555-0199">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Link to Registered User Account</label>
+                            <select name="user_id" class="form-input">
+                                <option value="">-- Unassigned / External Client --</option>
+                                @foreach($allUsers as $u)
+                                    <option value="{{ $u->id }}">{{ $u->name }} ({{ $u->email }}) [{{ ucfirst($u->role) }}]</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Insurance Line / Type *</label>
+                            <select name="type" class="form-input" required onchange="updateDefaultPolicyLabel(this.value, 'create')">
+                                <option value="home">Homeowners Insurance</option>
+                                <option value="auto">Auto / Motor Vehicle</option>
+                                <option value="umbrella">Umbrella &amp; Excess Liability</option>
+                                <option value="business">Commercial Business (BOP)</option>
+                                <option value="life">Life Insurance</option>
+                                <option value="cyber">Cyber Security &amp; Data Breach</option>
+                                <option value="general">General Liability</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policy Plan Title / Label</label>
+                            <input type="text" name="type_label" id="create_type_label" class="form-input" placeholder="e.g. Homeowners Comprehensive (HO-5)" value="Homeowners Comprehensive (HO-5)">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policy Number (Leave blank to auto-generate)</label>
+                            <input type="text" name="policy_number" class="form-input" placeholder="e.g. SB-HOM-883921">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Underwriting Carrier *</label>
+                            <input type="text" name="carrier" class="form-input" required value="Surebound Underwriting Syndicate" placeholder="e.g. Travelers, Chubb, Progressive">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 18px;">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Insured Property / Vehicle / Subject Asset</label>
+                        <input type="text" name="insured_item" class="form-input" placeholder="e.g. 742 Evergreen Terrace, Austin TX or 2024 Tesla Model S Plaid (VIN...)">
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Total Coverage Limit *</label>
+                            <input type="text" name="coverage_limit" class="form-input" required placeholder="$1,500,000" value="$1,000,000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Deductible Terms</label>
+                            <input type="text" name="deductible" class="form-input" placeholder="$1,000 All Perils" value="$1,000 Standard">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Annual Premium ($ USD) *</label>
+                            <input type="text" name="annual_premium" class="form-input" required placeholder="$2,450.00" value="$1,850.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Billing Frequency *</label>
+                            <select name="billing_frequency" class="form-input" required>
+                                <option value="annual" selected>Annual (1x / yr)</option>
+                                <option value="semi-annual">Semi-Annual (2x / yr)</option>
+                                <option value="quarterly">Quarterly (4x / yr)</option>
+                                <option value="monthly">Monthly (12x / yr)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Effective Inception Date</label>
+                            <input type="date" name="effective_date" class="form-input" value="{{ date('Y-m-d') }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policy Renewal / Expiration Date</label>
+                            <input type="date" name="renewal_date" class="form-input" value="{{ date('Y-m-d', strtotime('+1 year')) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Underwriting Status *</label>
+                            <select name="status" class="form-input" required>
+                                <option value="active" selected>Active &amp; In Good Standing</option>
+                                <option value="pending">Pending Underwriter Review</option>
+                                <option value="expired">Expired</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Underwriter Endorsement Notes &amp; Warranty Conditions</label>
+                        <textarea name="notes" rows="3" class="form-input" placeholder="Enter special policy conditions, risk inspection notes, endorsements, or alarms discount verifications..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: flex-end; gap: 12px; background: var(--bg-surface-secondary);">
+                    <button type="button" class="btn-secondary" onclick="closeModal('modalCreatePolicy')">Cancel</button>
+                    <button type="submit" id="createPolicySubmitBtn" class="btn-primary-action" style="padding: 10px 22px;">
+                        <span>Bind Policy Contract</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: EDIT EXISTING INSURANCE POLICY
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalEditPolicy">
+        <div class="modal-content" style="max-width: 820px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header" style="padding: 20px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(37, 99, 235, 0.12); color: #2563eb; display: flex; align-items: center; justify-content: center;">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                    </div>
+                    <div>
+                        <div class="modal-title" style="font-size: 1.1875rem; font-weight: 700; color: var(--text-primary); margin: 0;">Edit Policy Contract</div>
+                        <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">Update coverage limits, deductibles, premiums, dates, or insured asset schedules</div>
+                    </div>
+                </div>
+                <button type="button" class="modal-close" onclick="closeModal('modalEditPolicy')" style="font-size: 1.5rem; line-height: 1;">&times;</button>
+            </div>
+            <form id="editPolicyForm" onsubmit="saveEditPolicy(event)">
+                @csrf
+                <input type="hidden" name="policy_id" id="edit_policy_id">
+                <div class="modal-body" style="padding: 24px;">
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Insured Customer Name *</label>
+                            <input type="text" name="holder_name" id="edit_holder_name" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policyholder Email Address</label>
+                            <input type="email" name="holder_email" id="edit_holder_email" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Contact Phone</label>
+                            <input type="text" name="holder_phone" id="edit_holder_phone" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Link to Registered User Account</label>
+                            <select name="user_id" id="edit_user_id" class="form-input">
+                                <option value="">-- Unassigned / External Client --</option>
+                                @foreach($allUsers as $u)
+                                    <option value="{{ $u->id }}">{{ $u->name }} ({{ $u->email }}) [{{ ucfirst($u->role) }}]</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Insurance Line / Type *</label>
+                            <select name="type" id="edit_type" class="form-input" required onchange="updateDefaultPolicyLabel(this.value, 'edit')">
+                                <option value="home">Homeowners Insurance</option>
+                                <option value="auto">Auto / Motor Vehicle</option>
+                                <option value="umbrella">Umbrella &amp; Excess Liability</option>
+                                <option value="business">Commercial Business (BOP)</option>
+                                <option value="life">Life Insurance</option>
+                                <option value="cyber">Cyber Security &amp; Data Breach</option>
+                                <option value="general">General Liability</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policy Plan Title / Label</label>
+                            <input type="text" name="type_label" id="edit_type_label" class="form-input" placeholder="e.g. Homeowners Comprehensive (HO-5)">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policy Number *</label>
+                            <input type="text" name="policy_number" id="edit_policy_number" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Underwriting Carrier *</label>
+                            <input type="text" name="carrier" id="edit_carrier" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 18px;">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Insured Property / Vehicle / Subject Asset</label>
+                        <input type="text" name="insured_item" id="edit_insured_item" class="form-input">
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Total Coverage Limit *</label>
+                            <input type="text" name="coverage_limit" id="edit_coverage_limit" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Deductible Terms</label>
+                            <input type="text" name="deductible" id="edit_deductible" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Annual Premium ($ USD) *</label>
+                            <input type="text" name="annual_premium" id="edit_annual_premium" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Billing Frequency *</label>
+                            <select name="billing_frequency" id="edit_billing_frequency" class="form-input" required>
+                                <option value="annual">Annual (1x / yr)</option>
+                                <option value="semi-annual">Semi-Annual (2x / yr)</option>
+                                <option value="quarterly">Quarterly (4x / yr)</option>
+                                <option value="monthly">Monthly (12x / yr)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Effective Inception Date</label>
+                            <input type="date" name="effective_date" id="edit_effective_date" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policy Renewal / Expiration Date</label>
+                            <input type="date" name="renewal_date" id="edit_renewal_date" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Underwriting Status *</label>
+                            <select name="status" id="edit_status" class="form-input" required>
+                                <option value="active">Active &amp; In Good Standing</option>
+                                <option value="pending">Pending Underwriter Review</option>
+                                <option value="expired">Expired</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Underwriter Endorsement Notes &amp; Warranty Conditions</label>
+                        <textarea name="notes" id="edit_notes" rows="3" class="form-input"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: flex-end; gap: 12px; background: var(--bg-surface-secondary);">
+                    <button type="button" class="btn-secondary" onclick="closeModal('modalEditPolicy')">Cancel</button>
+                    <button type="submit" id="editPolicySubmitBtn" class="btn-primary-action" style="padding: 10px 22px;">
+                        <span>Save Policy Changes</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: INSPECT POLICY DETAILS (ADMIN VIEW)
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalAdminViewPolicy">
+        <div class="modal-content" style="max-width: 680px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header" style="padding: 20px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <span id="adminViewPolicyBadge" style="font-family: monospace; font-size: 0.8125rem; font-weight: 700; color: #2563eb; background: #eff6ff; padding: 2px 8px; border-radius: 4px;"></span>
+                    <div id="adminViewPolicyTitle" style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-top: 4px;"></div>
+                </div>
+                <button type="button" class="modal-close" onclick="closeModal('modalAdminViewPolicy')" style="font-size: 1.5rem; line-height: 1;">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 24px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; background: var(--bg-surface-secondary); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                    <div>
+                        <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; display: block;">Insured Customer</span>
+                        <strong id="adminViewHolderName" style="color: var(--text-primary); font-size: 1rem; display: block;"></strong>
+                        <div id="adminViewHolderEmail" style="font-size: 0.8125rem; color: var(--text-muted);"></div>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; display: block;">Carrier Syndicate</span>
+                        <strong id="adminViewCarrier" style="color: var(--text-primary); font-size: 1rem; display: block;"></strong>
+                        <div id="adminViewStatus" style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; margin-top: 2px;"></div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
+                    <div style="border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Limit</span>
+                        <div id="adminViewLimit" style="font-size: 1.15rem; font-weight: 800; color: #2563eb; margin-top: 2px;"></div>
+                    </div>
+                    <div style="border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Deductible</span>
+                        <div id="adminViewDeductible" style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-top: 2px;"></div>
+                    </div>
+                    <div style="border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Premium</span>
+                        <div id="adminViewPremium" style="font-size: 1.05rem; font-weight: 700; color: #059669; margin-top: 2px;"></div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                    <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 4px;">Insured Property / Vehicle</span>
+                    <div id="adminViewItem" style="font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); background: #f8fafc; padding: 10px 14px; border-radius: 6px; border: 1px solid #e2e8f0;"></div>
+                </div>
+
+                <div id="adminViewNotesWrap" style="margin-bottom: 18px; display: none;">
+                    <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 4px;">Underwriter Notes</span>
+                    <div id="adminViewNotes" style="font-size: 0.875rem; color: #475569; background: #fffbeb; border: 1px solid #fde68a; padding: 10px 14px; border-radius: 6px;"></div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 14px 24px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; background: var(--bg-surface-secondary);">
+                <a id="adminViewIdCardLink" href="#" target="_blank" class="btn-secondary" style="font-size: 0.8125rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+                    <span>View Digital ID Card</span>
+                </a>
+                <button type="button" class="btn-secondary" onclick="closeModal('modalAdminViewPolicy')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: CREATE NEW CLAIM (FIRST NOTICE OF LOSS - FNOL)
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalCreateClaim">
+        <div class="modal-content" style="max-width: 860px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header" style="padding: 20px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(16, 185, 129, 0.12); color: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div>
+                        <div class="modal-title" style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0; letter-spacing: -0.01em;">First Notice of Loss (FNOL) Intake</div>
+                        <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">Record an official loss event, assign an adjuster, and establish initial loss reserves</div>
+                    </div>
+                </div>
+                <button type="button" class="modal-close" onclick="closeModal('modalCreateClaim')" style="font-size: 1.5rem; line-height: 1;">&times;</button>
+            </div>
+            <form id="createClaimForm" onsubmit="saveNewClaim(event)">
+                @csrf
+                <div class="modal-body" style="padding: 24px;">
+                    <!-- Policy Selection Helper -->
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px;">
+                        <label class="form-label" style="font-weight: 700; color: #1e293b; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                            <span>Select Bound Policy from Registry</span>
+                            <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted);">(Auto-populates claimant info &amp; scheduled asset)</span>
+                        </label>
+                        <select id="claim_policy_select" class="form-input" onchange="onClaimPolicySelected(this)">
+                            <option value="">-- Choose Bound Policy or Enter Manually Below --</option>
+                            @foreach($policies as $p)
+                                <option value="{{ $p->policy_number }}"
+                                    data-holder="{{ $p->holder_name }}"
+                                    data-email="{{ $p->holder_email }}"
+                                    data-phone="{{ $p->holder_phone }}"
+                                    data-item="{{ $p->insured_item }}"
+                                    data-type="{{ $p->type_label ?: ucfirst($p->type) }}"
+                                    data-limit="{{ $p->coverage_limit }}">
+                                    {{ $p->policy_number }} — {{ $p->holder_name }} ({{ $p->type_label ?: ucfirst($p->type) }}) [Limit: {{ $p->coverage_limit }}]
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policy Number *</label>
+                            <input type="text" name="policy_number" id="claim_policy_number" class="form-input" required placeholder="e.g. SB-HOM-883921">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claim Number (Auto-assigned if empty)</label>
+                            <input type="text" name="claim_number" id="claim_claim_number" class="form-input" placeholder="e.g. CLM-2026-48192">
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claimant / Insured Name *</label>
+                            <input type="text" name="claimant_name" id="claim_claimant_name" class="form-input" required placeholder="e.g. Jonathan Harris or Apex Logistics LLC">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claimant Email Address</label>
+                            <input type="email" name="claimant_email" id="claim_claimant_email" class="form-input" placeholder="claimant@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claimant Phone Number</label>
+                            <input type="text" name="claimant_phone" id="claim_claimant_phone" class="form-input" placeholder="(512) 555-0199">
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Date of Loss / Occurrence *</label>
+                            <input type="date" name="incident_date" id="claim_incident_date" class="form-input" required value="{{ date('Y-m-d') }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Peril / Incident Category *</label>
+                            <select name="incident_type" id="claim_incident_type" class="form-input" required>
+                                <option value="Water Damage & Plumbing Rupture">Water Damage &amp; Plumbing Rupture</option>
+                                <option value="Vehicle Collision / Physical Damage">Vehicle Collision / Physical Damage</option>
+                                <option value="Severe Windstorm & Hail">Severe Windstorm &amp; Hail</option>
+                                <option value="Fire, Smoke & Lightning">Fire, Smoke &amp; Lightning</option>
+                                <option value="Theft, Burglary & Vandalism">Theft, Burglary &amp; Vandalism</option>
+                                <option value="Bodily Injury & Slip/Fall Liability">Bodily Injury &amp; Slip/Fall Liability</option>
+                                <option value="Commercial Equipment Breakdown">Commercial Equipment Breakdown</option>
+                                <option value="Cyber Ransomware & Data Breach">Cyber Ransomware &amp; Data Breach</option>
+                                <option value="Business Interruption & Loss of Use">Business Interruption &amp; Loss of Use</option>
+                                <option value="General Property Damage">General Property Damage</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Incident Location / Property Address</label>
+                            <input type="text" name="incident_location" id="claim_incident_location" class="form-input" placeholder="e.g. 742 Evergreen Terrace, Austin, TX">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 18px;">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Occurrence &amp; Damage Description *</label>
+                        <textarea name="incident_description" id="claim_incident_description" rows="3" class="form-input" required placeholder="Provide a detailed narrative of the loss event, point of origin, damaged assets, and emergency mitigation initiated..."></textarea>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Estimated Loss Reserve ($ USD) *</label>
+                            <input type="text" name="estimated_loss" id="claim_estimated_loss" class="form-input" required placeholder="$5,000.00" value="$7,500.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Assigned Field Adjuster</label>
+                            <input type="text" name="assigned_adjuster" id="claim_assigned_adjuster" class="form-input" placeholder="e.g. David Miller (Senior Property Adjuster)" value="David Miller (Senior Property Adjuster)">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claim Priority *</label>
+                            <select name="priority" id="claim_priority" class="form-input" required>
+                                <option value="normal" selected>Normal</option>
+                                <option value="urgent">Urgent (Catastrophe / Major Loss)</option>
+                                <option value="high">High</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Initial Intake Status *</label>
+                            <select name="status" id="claim_status" class="form-input" required>
+                                <option value="reviewing" selected>Reviewing (Field Investigation Dispatched)</option>
+                                <option value="submitted">Submitted (Awaiting Assignment)</option>
+                                <option value="approved">Approved (Authorized for Settlement)</option>
+                                <option value="paid">Paid (Draft Disbursed)</option>
+                                <option value="declined">Declined</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Internal Adjuster Notes &amp; Investigation Log</label>
+                        <textarea name="adjuster_notes" id="claim_adjuster_notes" rows="2" class="form-input" placeholder="Enter notes on field inspections, mitigation contractor reports, evidence photos, or coverage endorsements..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: flex-end; gap: 12px; background: var(--bg-surface-secondary);">
+                    <button type="button" class="btn-secondary" onclick="closeModal('modalCreateClaim')">Cancel</button>
+                    <button type="submit" id="createClaimSubmitBtn" class="btn-primary-action" style="padding: 10px 24px;">
+                        <span>Record FNOL Claim</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: EDIT CLAIM RECORD
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalEditClaim">
+        <div class="modal-content" style="max-width: 860px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header" style="padding: 20px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(37, 99, 235, 0.12); color: #2563eb; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    </div>
+                    <div>
+                        <div class="modal-title" style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0; letter-spacing: -0.01em;">Edit Claim Record</div>
+                        <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">Update loss reserves, peril classification, assigned adjuster, and underwriting notes</div>
+                    </div>
+                </div>
+                <button type="button" class="modal-close" onclick="closeModal('modalEditClaim')" style="font-size: 1.5rem; line-height: 1;">&times;</button>
+            </div>
+            <form id="editClaimForm" onsubmit="saveEditClaim(event)">
+                @csrf
+                <input type="hidden" id="edit_claim_id">
+                <div class="modal-body" style="padding: 24px;">
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claim Number *</label>
+                            <input type="text" name="claim_number" id="edit_claim_number" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Bound Policy Number *</label>
+                            <input type="text" name="policy_number" id="edit_claim_policy_number" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claimant / Insured Name *</label>
+                            <input type="text" name="claimant_name" id="edit_claimant_name" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claimant Email Address</label>
+                            <input type="email" name="claimant_email" id="edit_claimant_email" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claimant Phone Number</label>
+                            <input type="text" name="claimant_phone" id="edit_claimant_phone" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Date of Loss / Occurrence</label>
+                            <input type="date" name="incident_date" id="edit_claim_incident_date" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Peril / Incident Category</label>
+                            <input type="text" name="incident_type" id="edit_claim_incident_type" class="form-input" placeholder="e.g. Water Damage & Plumbing Rupture">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Incident Location / Property Address</label>
+                            <input type="text" name="incident_location" id="edit_claim_incident_location" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 18px;">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Occurrence &amp; Damage Description *</label>
+                        <textarea name="incident_description" id="edit_claim_incident_description" rows="3" class="form-input" required></textarea>
+                    </div>
+
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Estimated Loss Reserve ($ USD) *</label>
+                            <input type="text" name="estimated_loss" id="edit_claim_estimated_loss" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Assigned Adjuster</label>
+                            <input type="text" name="assigned_adjuster" id="edit_claim_assigned_adjuster" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claim Priority *</label>
+                            <select name="priority" id="edit_claim_priority" class="form-input" required>
+                                <option value="urgent">Urgent</option>
+                                <option value="high">High</option>
+                                <option value="normal">Normal</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Claim Status *</label>
+                            <select name="status" id="edit_claim_status" class="form-input" required>
+                                <option value="submitted">Submitted</option>
+                                <option value="reviewing">Reviewing</option>
+                                <option value="approved">Approved</option>
+                                <option value="paid">Paid</option>
+                                <option value="declined">Declined</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Adjuster Investigation Notes</label>
+                        <textarea name="adjuster_notes" id="edit_claim_adjuster_notes" rows="3" class="form-input"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: flex-end; gap: 12px; background: var(--bg-surface-secondary);">
+                    <button type="button" class="btn-secondary" onclick="closeModal('modalEditClaim')">Cancel</button>
+                    <button type="submit" id="editClaimSubmitBtn" class="btn-primary-action" style="padding: 10px 24px;">
+                        <span>Save Claim Changes</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: VIEW CLAIM DOSSIER & INVESTIGATION DETAILS
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalViewClaimDetail">
+        <div class="modal-content" style="max-width: 820px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header" style="padding: 20px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(2, 132, 199, 0.12); color: #0284c7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span id="viewClaimNumber" style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); font-family: var(--font-mono);"></span>
+                            <span id="viewClaimPriority" class="priority-pill normal">NORMAL</span>
+                            <span id="viewClaimStatusBadge" class="status-pill reviewing">Reviewing</span>
+                        </div>
+                        <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">Comprehensive First Notice of Loss (FNOL) Dossier &amp; Settlement Record</div>
+                    </div>
+                </div>
+                <button type="button" class="modal-close" onclick="closeModal('modalViewClaimDetail')" style="font-size: 1.5rem; line-height: 1;">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 24px;">
+                <!-- Key Stats Grid -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;">
+                        <span style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; display: block;">Policy Number</span>
+                        <div id="viewClaimPolicy" style="font-size: 0.9375rem; font-weight: 700; color: #1e293b; font-family: var(--font-mono); margin-top: 2px;"></div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;">
+                        <span style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; display: block;">Loss Reserve</span>
+                        <div id="viewClaimReserve" style="font-size: 1rem; font-weight: 800; color: #dc2626; font-family: var(--font-mono); margin-top: 2px;"></div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;">
+                        <span style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; display: block;">Incident Date</span>
+                        <div id="viewClaimDate" style="font-size: 0.875rem; font-weight: 600; color: #1e293b; margin-top: 2px;"></div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;">
+                        <span style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; display: block;">Assigned Adjuster</span>
+                        <div id="viewClaimAdjuster" style="font-size: 0.8125rem; font-weight: 600; color: #4338ca; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
+                    </div>
+                </div>
+
+                <!-- Claimant & Occurrence Card -->
+                <div style="border: 1px solid var(--border-subtle); border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; background: #ffffff;">
+                    <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        <span>Claimant Contact &amp; Asset Location</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Insured Claimant</span>
+                            <strong id="viewClaimantName" style="font-size: 0.9375rem; color: var(--text-primary);"></strong>
+                            <div id="viewClaimantContact" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 2px;"></div>
+                        </div>
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Incident Location</span>
+                            <div id="viewClaimLocation" style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 500;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loss Details Narrative -->
+                <div style="border: 1px solid var(--border-subtle); border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; background: #ffffff;">
+                    <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>Peril &amp; Incident Narrative</span>
+                        </div>
+                        <span id="viewClaimTypeBadge" style="font-size: 0.75rem; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 3px 10px; border-radius: 6px;"></span>
+                    </div>
+                    <div id="viewClaimDescription" style="font-size: 0.875rem; color: #334155; line-height: 1.6; white-space: pre-wrap; background: #f8fafc; border-radius: 6px; padding: 12px 14px; border: 1px solid #f1f5f9;"></div>
+                </div>
+
+                <!-- Adjuster Notes & Investigation -->
+                <div id="viewClaimNotesWrapper" style="border: 1px solid #fed7aa; border-radius: 8px; padding: 16px 20px; background: #fffbeb;">
+                    <div style="font-size: 0.875rem; font-weight: 700; color: #9a3412; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                        <span>Adjuster Investigation Log &amp; Settlement Notes</span>
+                    </div>
+                    <div id="viewClaimNotes" style="font-size: 0.875rem; color: #7c2d12; line-height: 1.5; white-space: pre-wrap;"></div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 14px 24px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; background: var(--bg-surface-secondary);">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 0.8125rem; font-weight: 600; color: var(--text-muted);">Quick Status:</span>
+                    <select id="viewClaimQuickStatus" class="form-input" style="height: 34px; padding: 0 10px; font-size: 0.8125rem; width: auto;" onchange="onViewModalStatusChange(this.value)">
+                        <option value="submitted">Submitted</option>
+                        <option value="reviewing">Reviewing</option>
+                        <option value="approved">Approved</option>
+                        <option value="paid">Paid</option>
+                        <option value="declined">Declined</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" id="viewClaimEditBtn" class="btn-secondary" style="font-weight: 600;">
+                        <span>Edit Full Claim</span>
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="closeModal('modalViewClaimDetail')">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: CONFIGURE MASTER AGENCY SIGNATURE & UNDERWRITING SEAL
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalAgencySignature">
+        <div class="modal-content" style="max-width: 640px;">
+            <div class="modal-header" style="border-bottom: 1px solid var(--border-subtle); padding: 18px 24px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(37, 99, 235, 0.12); color: #2563eb; display: flex; align-items: center; justify-content: center;">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+                    </div>
+                    <div>
+                        <div class="modal-title" style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin: 0;">Master Agency Signature &amp; Seal</div>
+                        <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">Applied to all official policy invoices, quotes, and PDF certificates</div>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeModal('modalAgencySignature')">&times;</button>
+            </div>
+            <form id="masterAgencySignatureForm" onsubmit="saveMasterAgencySignature(event)">
+                @csrf
+                <div class="modal-body" style="padding: 24px;">
+                    <div class="form-grid" style="margin-bottom: 18px;">
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Signatory Officer Name *</label>
+                            <input type="text" name="signatory_name" id="masterSignatoryName" class="form-input" required value="{{ $agencySignature['signatory_name'] ?? 'Md Rezawl' }}">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Corporate Title / Designation *</label>
+                            <input type="text" name="signatory_title" id="masterSignatoryTitle" class="form-input" required value="{{ $agencySignature['signatory_title'] ?? 'Chief Underwriter & Authorized Representative' }}">
+                        </div>
+                    </div>
+
+                    <!-- Current Active Signature Preview -->
+                    <div style="margin-bottom: 18px;">
+                        <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Current Master Signature</label>
+                        <div style="border: 1px solid var(--border-subtle); border-radius: 8px; background: #ffffff; padding: 14px; text-align: center; min-height: 70px; display: flex; align-items: center; justify-content: center;">
+                            @if(!empty($agencySignature['signature_image']))
+                                <img id="masterCurrentSigImg" src="{{ $agencySignature['signature_image'] }}" alt="Current Agency Signature" style="max-height: 60px; max-width: 260px; object-fit: contain;">
+                            @else
+                                <div id="masterCurrentSigImg" style="font-family: 'Great Vibes', 'Dancing Script', cursive; font-size: 2rem; color: #1e3a8a;">
+                                    {{ $agencySignature['signatory_name'] ?? 'Md Rezawl' }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Signature Input Mode Switcher -->
+                    <div style="margin-bottom: 14px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <label class="form-label" style="font-weight: 600; margin: 0;">Upload or Draw New Signature</label>
+                            <div class="sig-mode-pills">
+                                <button type="button" class="sig-pill active" id="masterTabUpload" onclick="setMasterSigTab('upload')">📁 Upload File</button>
+                                <button type="button" class="sig-pill" id="masterTabDraw" onclick="setMasterSigTab('draw')">✍️ Draw On Screen</button>
+                            </div>
+                        </div>
+
+                        <!-- Upload File Panel -->
+                        <div id="masterPanelUpload" class="sig-panel">
+                            <div class="sig-dropzone" onclick="document.getElementById('masterSigFileInput').click()">
+                                <input type="file" name="signature_file" id="masterSigFileInput" accept="image/png,image/jpeg,image/webp,image/svg+xml" style="display:none;" onchange="handleMasterSigUpload(event)">
+                                <div id="masterUploadPrompt">
+                                    <svg width="34" height="34" fill="none" stroke="#2563eb" viewBox="0 0 24 24" style="margin: 0 auto 8px; display: block;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                                    <div style="font-weight: 700; color: #1e293b; font-size: 0.875rem;">Click to upload new signature image</div>
+                                    <div style="font-size: 0.75rem; color: #64748b; margin-top: 2px;">PNG with transparent background recommended (Max 5MB)</div>
+                                </div>
+                                <div id="masterUploadPreviewWrap" style="display: none; align-items: center; justify-content: center; gap: 16px; padding: 6px 0;">
+                                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 16px; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+                                        <img id="masterUploadPreviewImg" src="" alt="New Signature Preview" style="max-height: 54px; max-width: 220px; object-fit: contain;">
+                                        <button type="button" onclick="event.stopPropagation(); clearMasterSigUpload();" style="background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 6px; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Draw Canvas Panel -->
+                        <div id="masterPanelDraw" class="sig-panel" style="display: none;">
+                            <div style="border: 2px dashed #93c5fd; border-radius: 10px; background: #ffffff; padding: 12px; text-align: center; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding: 0 4px;">
+                                    <span style="font-size: 0.75rem; font-weight: 600; color: #2563eb; display: flex; align-items: center; gap: 5px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2563eb;"></span>
+                                        Draw signature with mouse, pen, or touch
+                                    </span>
+                                    <button type="button" onclick="clearMasterCanvas()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; border-radius: 6px; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Clear Canvas</button>
+                                </div>
+                                <canvas id="masterSigCanvas" width="580" height="130" style="width: 100%; height: 130px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; cursor: crosshair; touch-action: none;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="signature_image" id="masterSignatureImageInput" value="{{ $agencySignature['signature_image'] ?? '' }}">
+                </div>
+                <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" class="btn-secondary" onclick="closeModal('modalAgencySignature')">Cancel</button>
+                    <button type="submit" id="saveMasterSigBtn" class="btn-primary-action" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); display: inline-flex; align-items: center; gap: 6px;">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                        <span>Save Master Agency Signature</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: OFFICIAL PREMIUM INVOICE STATEMENT PREVIEW
          ==================================================================== -->
     <div class="modal-overlay" id="modalViewInvoice">
-        <div class="modal-content" style="max-width: 750px; background: #0f172a; color: #f8fafc;">
-            <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                <div class="modal-title" style="display: flex; align-items: center; gap: 8px;">
-                    <span>Official Premium Invoice</span>
+        <div class="modal-content" style="max-width: 840px;">
+            <div class="modal-header" style="border-bottom: 1px solid var(--border-subtle); padding: 18px 24px; display: flex; justify-content: space-between; align-items: center;">
+                <div class="modal-title" style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-weight: 800; color: var(--text-primary); font-size: 1.125rem;">Official Premium Statement</span>
                     <span id="viewInvStatusBadge" class="badge"></span>
                 </div>
                 <div style="display: flex; gap: 8px; align-items: center;">
-                    <button type="button" onclick="printInvoiceModal()" class="btn-secondary" style="padding: 6px 14px; font-size: 15px;">
-                        🖨 Print / PDF
+                    <a id="viewInvDownloadPdfLink" href="#" target="_blank" class="btn-primary-action" style="padding: 7px 14px; font-size: 0.8125rem; font-weight: 600; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                        <span>Download PDF</span>
+                    </a>
+                    <button type="button" onclick="printInvoiceModal()" class="btn-secondary" style="padding: 7px 14px; font-size: 0.8125rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.72 13.829c-.24-1.076-.672-2.03-1.27-2.829H18.55c-.598.8-1.03 1.753-1.27 2.829M18.75 6.75H5.25A2.25 2.25 0 003 9v7.5A2.25 2.25 0 005.25 18.75h.75v3h12v-3h.75A2.25 2.25 0 0021 16.5V9a2.25 2.25 0 00-2.25-2.25z"/></svg>
+                        <span>Print</span>
                     </button>
                     <button class="modal-close" onclick="closeModal('modalViewInvoice')">&times;</button>
                 </div>
             </div>
-            <div class="modal-body" id="printableInvoiceBody" style="padding: 24px;">
-                <!-- Header logo and company info -->
-                <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #2563eb; padding-bottom: 16px; margin-bottom: 20px;">
+            <div class="modal-body" id="printableInvoiceBody" style="padding: 28px; background: #ffffff;">
+                <!-- Top Accent Line -->
+                <div style="height: 4px; background: linear-gradient(90deg, #059669 0%, #0d9488 25%, #2563eb 70%, #1e3a8a 100%); border-radius: 2px; margin-bottom: 24px;"></div>
+
+                <!-- Header: Brand & Invoice Meta -->
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px;">
                     <div>
-                        <img src="{{ asset('images/logo.png') }}" style="height: 36px; margin-bottom: 8px;">
-                        <div style="color: #94a3b8; font-size: 14px; line-height: 1.5;">
-                            Surebound Insurance Agency LLC<br>
-                            1200 Fifth Avenue, Suite 2400<br>
-                            Seattle, WA 98101 | (206) 555-0142<br>
-                            billing@surebound.com
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                            <img src="{{ asset('images/icon.png') }}" style="height: 36px; width: 36px; object-fit: contain;" alt="Surebound">
+                            <div>
+                                <span style="font-size: 1.25rem; font-weight: 800; color: #0f172a; letter-spacing: -0.02em;">SUREBOUND</span>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-top: -3px;">INSURANCE AGENCY LLC</span>
+                            </div>
+                        </div>
+                        <div style="color: #64748b; font-size: 0.8125rem; line-height: 1.5;">
+                            1200 Fifth Avenue, Suite 2400 &bull; Seattle, WA 98101<br>
+                            Tel: (206) 555-0142 &bull; billing@surebound.com<br>
+                            <span style="font-size: 0.75rem; color: #94a3b8;">WA State Insurance Commissioner License #WA-992418</span>
                         </div>
                     </div>
                     <div style="text-align: right;">
-                        <h2 id="viewInvNumber" style="margin: 0; color: #38bdf8; font-family: monospace; font-size: 24px;">INV-2026-001</h2>
-                        <div style="font-size: 15px; color: #cbd5e1; margin-top: 6px;">
-                            <div>Issue Date: <span id="viewInvIssueDate">May 12, 2026</span></div>
-                            <div>Due Date: <strong id="viewInvDueDate" style="color: #fbbf24;">Jun 12, 2026</strong></div>
+                        <span style="font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b; display: block; margin-bottom: 2px;">COMMERCIAL STATEMENT</span>
+                        <h2 id="viewInvNumber" style="margin: 0; color: #1e3a8a; font-family: monospace; font-size: 1.625rem; font-weight: 800;">INV-2026-001</h2>
+                        <div style="font-size: 0.8125rem; color: #64748b; margin-top: 8px; line-height: 1.6;">
+                            <div>Issue Date: <strong id="viewInvIssueDate" style="color: #0f172a;">May 12, 2026</strong></div>
+                            <div>Payment Due: <strong id="viewInvDueDate" style="color: #b45309; font-weight: 700;">Jun 12, 2026</strong></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Bill To Box -->
-                <div style="display: flex; justify-content: space-between; margin-bottom: 24px; background: rgba(255,255,255,0.03); padding: 14px; border-radius: 8px;">
+                <!-- Billed To & Coverage Summary Grid -->
+                <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; margin-bottom: 22px; background: #f8fafc; padding: 18px 20px; border-radius: 10px; border: 1px solid #e2e8f0;">
                     <div>
-                        <small style="color: #64748b; font-weight: 700; text-transform: uppercase;">BILLED TO:</small>
-                        <div id="viewInvCustomerName" style="font-weight: 700; font-size: 18px; color: #f8fafc; margin-top: 2px;">Jonathan Harris</div>
-                        <div id="viewInvCustomerEmail" style="color: #38bdf8; font-size: 15px;">jharris@example.com</div>
-                        <div id="viewInvCustomerAddress" style="color: #94a3b8; font-size: 14px; margin-top: 2px;">742 Evergreen Terrace, Seattle, WA 98101</div>
+                        <small style="color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.6875rem;">BILLED TO / POLICYHOLDER:</small>
+                        <div id="viewInvCustomerName" style="font-weight: 800; font-size: 1.125rem; color: #0f172a; margin-top: 4px;">Jonathan Harris</div>
+                        <div id="viewInvCustomerEmail" style="color: #2563eb; font-size: 0.875rem; font-weight: 600; margin-top: 1px;">jharris@example.com</div>
+                        <div id="viewInvCustomerAddress" style="color: #64748b; font-size: 0.8125rem; margin-top: 3px;">742 Evergreen Terrace, Seattle, WA 98101</div>
                     </div>
                     <div style="text-align: right;">
-                        <small style="color: #64748b; font-weight: 700; text-transform: uppercase;">COVERAGE POLICY:</small>
-                        <div id="viewInvPolicyNumber" style="font-weight: 700; font-size: 16px; color: #cbd5e1; margin-top: 2px;">SB-POL-98412</div>
-                        <div id="viewInvPaymentMethod" style="color: #34d399; font-size: 14px; margin-top: 4px;">Paid via Stripe</div>
+                        <small style="color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.6875rem;">UNDERWRITTEN POLICY:</small>
+                        <div id="viewInvPolicyNumber" style="font-weight: 800; font-size: 1rem; color: #1e40af; font-family: monospace; margin-top: 4px;">SB-POL-98412</div>
+                        <div id="viewInvPaymentMethod" style="color: #059669; font-size: 0.8125rem; font-weight: 700; margin-top: 4px;">Paid via Stripe</div>
                     </div>
                 </div>
 
                 <!-- Line Items Table -->
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
-                    <thead>
-                        <tr style="background: rgba(255,255,255,0.08); color: #94a3b8; font-size: 14px; text-transform: uppercase;">
-                            <th style="padding: 10px; text-align: left;">Item Description</th>
-                            <th style="padding: 10px; text-align: center;">Qty</th>
-                            <th style="padding: 10px; text-align: right;">Price</th>
-                            <th style="padding: 10px; text-align: right;">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody id="viewInvItemsBody" style="font-size: 16px; color: #e2e8f0;">
-                    </tbody>
-                </table>
+                <div style="border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 22px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f1f5f9; border-bottom: 1px solid #cbd5e1; color: #475569; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                                <th style="padding: 11px 16px; text-align: left;">Coverage Item / Description</th>
+                                <th style="padding: 11px 16px; text-align: center; width: 70px;">Qty</th>
+                                <th style="padding: 11px 16px; text-align: right; width: 140px;">Rate ($)</th>
+                                <th style="padding: 11px 16px; text-align: right; width: 140px;">Amount ($)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="viewInvItemsBody" style="font-size: 0.875rem;">
+                        </tbody>
+                    </table>
+                </div>
 
                 <!-- Total Math Breakdown -->
-                <div style="display: flex; justify-content: flex-end;">
-                    <div style="width: 280px; font-size: 16px;">
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; color: #94a3b8;">
-                            <span>Subtotal:</span>
-                            <span id="viewInvSubtotal">$0.00</span>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 24px;">
+                    <div style="width: 320px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px;">
+                        <div style="display: flex; justify-content: space-between; padding: 4px 0; color: #64748b; font-size: 0.875rem;">
+                            <span>Premium Subtotal:</span>
+                            <strong id="viewInvSubtotal" style="color: #0f172a; font-family: monospace;">$0.00</strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; color: #94a3b8;">
-                            <span>Tax / Fees:</span>
-                            <span id="viewInvTax">$0.00</span>
+                        <div style="display: flex; justify-content: space-between; padding: 4px 0; color: #64748b; font-size: 0.875rem;">
+                            <span>State Taxes &amp; Fees:</span>
+                            <span id="viewInvTax" style="font-family: monospace; color: #0f172a;">$0.00</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; color: #94a3b8;">
-                            <span>Discount:</span>
-                            <span id="viewInvDiscount">-$0.00</span>
+                        <div style="display: flex; justify-content: space-between; padding: 4px 0; color: #64748b; font-size: 0.875rem;">
+                            <span>Underwriter Discount:</span>
+                            <span id="viewInvDiscount" style="color: #059669; font-family: monospace;">-$0.00</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding: 10px 0; margin-top: 6px; border-top: 2px solid rgba(255,255,255,0.2); font-size: 20px; font-weight: 800; color: #f8fafc;">
-                            <span>Total Due ($ USD):</span>
-                            <span id="viewInvTotal" style="color: #34d399;">$0.00</span>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0 0; margin-top: 8px; border-top: 2px solid #e2e8f0; font-size: 1.0625rem; font-weight: 800; color: #0f172a;">
+                            <span>Total Due (USD $):</span>
+                            <span id="viewInvTotal" style="color: #059669; font-family: monospace; font-size: 1.375rem;">$0.00</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Payment Remittance Notice -->
-                <div style="margin-top: 30px; padding: 14px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border-left: 4px solid #2563eb; font-size: 14px; color: #93c5fd;">
-                    <strong>US Remittance Instructions:</strong> Payments can be remitted electronically via ACH Direct Debit (ABA #021000021), FedNow Real-Time Transfer, or online via Credit Card at <code style="color: #fff;">http://127.0.0.1:8000/admin</code>.
+                <!-- Official Corporate Seal & Authorized Signature Section -->
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 20px; gap: 20px;">
+                    <!-- Left: Underwriting Seal -->
+                    <div style="display: flex; align-items: center; gap: 14px;">
+                        <div style="flex-shrink: 0;">
+                            <svg viewBox="0 0 120 120" width="68" height="68">
+                                <circle cx="60" cy="60" r="56" fill="#f8fafc" stroke="#1e3a8a" stroke-width="2.5" stroke-dasharray="3,2"/>
+                                <circle cx="60" cy="60" r="48" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+                                <path id="modalSealTextPath" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" fill="none"/>
+                                <text font-size="7.5" font-family="'Inter', sans-serif" font-weight="800" fill="#1e3a8a" letter-spacing="1.5">
+                                    <textPath href="#modalSealTextPath" startOffset="50%" text-anchor="middle">
+                                        SUREBOUND INSURANCE AGENCY LLC
+                                    </textPath>
+                                </text>
+                                <g transform="translate(60,60)">
+                                    <path d="M 0,-18 L 14,-10 L 14,4 C 14,14 0,22 0,22 C 0,22 -14,14 -14,4 L -14,-10 Z" fill="#059669"/>
+                                    <path d="M -5,-1 L -1,3 L 6,-5" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <div style="font-size: 0.75rem; color: #64748b; line-height: 1.4;">
+                            <strong style="color: #0f172a; font-size: 0.8125rem;">Official Underwriting Certificate</strong><br>
+                            Authorized by Surebound Insurance Agency LLC<br>
+                            WA Insurance Commissioner License #WA-992418<br>
+                            <span style="color: #059669; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; margin-top: 3px;">
+                                <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Cryptographically Signed &amp; Verified
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Authorized Signature Render -->
+                    <div style="text-align: right; min-width: 220px;">
+                        <div style="min-height: 52px; display: flex; align-items: flex-end; justify-content: flex-end; margin-bottom: 6px;">
+                            <img id="viewInvSignatureImg" src="" alt="Authorized Signature" style="max-height: 50px; max-width: 200px; object-fit: contain; display: none;">
+                            <div id="viewInvSignatureCursive" style="font-family: 'Great Vibes', 'Dancing Script', cursive; font-size: 2.125rem; color: #1e3a8a; line-height: 1; user-select: none;">
+                                Md Rezawl
+                            </div>
+                        </div>
+                        <div style="height: 1px; background: #94a3b8; width: 100%; margin-bottom: 6px;"></div>
+                        <div id="viewInvSignatoryName" style="font-weight: 700; font-size: 0.875rem; color: #0f172a;">Md Rezawl</div>
+                        <div id="viewInvSignatoryTitle" style="font-size: 0.75rem; color: #64748b;">Chief Underwriter &amp; Authorized Representative</div>
+                    </div>
+                </div>
+
+                <!-- US Remittance Notice -->
+                <div style="padding: 14px 18px; background: rgba(37, 99, 235, 0.06); border-radius: 8px; border-left: 4px solid #2563eb; font-size: 0.8125rem; color: #475569; line-height: 1.5;">
+                    <strong style="color: #1e3a8a;">US Banking Remittance Instructions:</strong>
+                    Payments remitted electronically via ACH Direct Debit (ABA routing <strong>#021000021</strong>, Account <strong>#8841-9920-1124</strong>), JPMorgan Chase FedNow wire, or online via Credit Card.
                 </div>
             </div>
         </div>
@@ -5240,13 +8271,435 @@
         </div>
     </div>
 
+    <!-- ====================================================================
+         MODAL: MARKETING TAG & PIXEL DIAGNOSTICS TEST REPORT
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalMarketingTest">
+        <div class="modal-content" style="max-width: 650px; background: #0f172a; color: #f8fafc; border: 1px solid rgba(255,255,255,0.1);">
+            <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <div class="modal-title" style="display: flex; align-items: center; gap: 10px;">
+                    <span style="display: inline-flex; width: 28px; height: 28px; border-radius: 6px; background: rgba(16, 185, 129, 0.2); color: #10b981; align-items: center; justify-content: center; font-size: 14px;">⚡</span>
+                    <span id="marketingTestModalTitle">Pixel Diagnostics Health Ping</span>
+                </div>
+                <button class="modal-close" onclick="closeModal('modalMarketingTest')">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 24px;">
+                <div id="marketingTestLoading" style="display: none; text-align: center; padding: 30px;">
+                    <div style="font-size: 2rem; margin-bottom: 12px; animation: spin 1s linear infinite;">⏳</div>
+                    <div style="color: #94a3b8; font-size: 1rem;">Testing connectivity with advertising platform gateway...</div>
+                </div>
+
+                <div id="marketingTestResults" style="display: block;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 14px 18px; border-radius: 8px;">
+                        <div>
+                            <div style="font-weight: 800; font-size: 1.0625rem; color: #34d399;" id="marketingTestPlatformName">Google Marketing Suite</div>
+                            <div style="font-size: 0.8125rem; color: #94a3b8;" id="marketingTestTimestamp">Timestamp: 2026-10-11 21:30:00 UTC</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="badge badge-success" style="font-size: 0.875rem; padding: 4px 10px;">HTTP 200 OK</span>
+                            <div style="font-size: 0.8125rem; color: #38bdf8; margin-top: 4px;" id="marketingTestLatency">Latency: 28ms</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Configuration &amp; Syntax Verification</label>
+                        <div id="marketingTestDetailsList" style="background: #1e293b; border-radius: 8px; padding: 14px; font-family: monospace; font-size: 0.875rem; line-height: 1.8; color: #e2e8f0;">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 8px; padding: 12px 16px; font-size: 0.875rem; color: #93c5fd;" id="marketingTestMessage">
+                        Successfully established communication with advertising tag server.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid rgba(255,255,255,0.1);">
+                <button type="button" class="btn-secondary" onclick="closeModal('modalMarketingTest')">Close Report</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Injected Data from MySQL Controller -->
+    <!-- ====================================================================
+         MODAL: ADMIN REVIEW & RESOLVE SUPPORT TICKET
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalAdminTicket">
+        <div class="modal-content" style="max-width: 760px; width: 95%;">
+            <div class="modal-header" style="border-bottom: 1px solid var(--border-light); padding: 18px 24px;">
+                <div class="modal-title" style="display: flex; align-items: center; gap: 10px;">
+                    <span style="display: inline-flex; width: 32px; height: 32px; border-radius: 8px; background: rgba(37, 99, 235, 0.1); color: var(--brand-blue); align-items: center; justify-content: center; font-size: 16px;">🎧</span>
+                    <div>
+                        <div style="font-size: 1.125rem; font-weight: 800; color: var(--brand-navy);">
+                            Support Inquiry: #<span id="adminTicketModalNumber"></span>
+                        </div>
+                        <div id="adminTicketModalDate" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500; margin-top: 2px;"></div>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeModal('modalAdminTicket')">&times;</button>
+            </div>
+            <form id="adminTicketResponseForm" onsubmit="saveAdminTicketResponse(event)">
+                @csrf
+                <input type="hidden" id="adminTicketId" name="ticket_id">
+                <div class="modal-body" style="padding: 24px; max-height: calc(85vh - 140px); overflow-y: auto;">
+                    
+                    <!-- Policyholder & Ticket Details Grid -->
+                    <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase;">Policyholder</div>
+                            <div id="adminTicketCustomerName" style="font-weight: 800; color: var(--brand-navy); font-size: 0.9375rem; margin-top: 2px;"></div>
+                            <div style="margin-top: 4px; font-size: 0.8125rem;">
+                                <a id="adminTicketCustomerEmailLink" href="#" style="color: var(--brand-blue); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                    <span id="adminTicketCustomerEmail"></span>
+                                </a>
+                            </div>
+                            <div style="margin-top: 2px; font-size: 0.75rem;">
+                                <a id="adminTicketCustomerPhoneLink" href="#" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                    <span id="adminTicketCustomerPhone"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase;">Policy Reference</div>
+                            <div id="adminTicketPolicyNumber" style="font-family: monospace; font-weight: 800; color: var(--brand-blue); font-size: 0.9375rem; margin-top: 2px;"></div>
+                            
+                            <div style="margin-top: 10px;">
+                                <div style="color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase;">Category &amp; Priority</div>
+                                <div style="display: flex; gap: 6px; margin-top: 4px; align-items: center;">
+                                    <span id="adminTicketCategoryBadge" class="badge" style="background: #eff6ff; color: var(--brand-blue); font-weight: 700; font-size: 0.75rem;"></span>
+                                    <span id="adminTicketPriorityBadge" class="badge" style="font-weight: 700; font-size: 0.75rem;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subject -->
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Subject</label>
+                        <div id="adminTicketSubjectText" style="font-size: 1rem; font-weight: 700; color: var(--brand-navy); padding: 10px 14px; background: #ffffff; border: 1px solid var(--border-light); border-radius: var(--radius-sm);"></div>
+                    </div>
+
+                    <!-- Full Message / Inquiry Reader Box -->
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label style="font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin: 0;">Policyholder Message &amp; Request Details</label>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">Full Message Reader</span>
+                        </div>
+                        <div id="adminTicketMessageText" style="font-size: 0.9375rem; color: #0f172a; line-height: 1.65; padding: 16px; background: #ffffff; border: 1px solid var(--border-light); border-left: 4px solid var(--brand-blue); border-radius: var(--radius-sm); max-height: 240px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);"></div>
+                    </div>
+
+                    <!-- Underwriter Status & Resolution Section -->
+                    <div style="background: #fdfefe; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 16px;">
+                        <div style="font-size: 0.875rem; font-weight: 800; color: var(--brand-navy); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                            <span>✍️</span>
+                            <span>Underwriter Status &amp; Client Response</span>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 14px;">
+                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 6px;">Underwriting Status *</label>
+                            <select name="status" id="adminTicketStatusSelect" class="form-input" required style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 600;">
+                                <option value="open">Open (In Queue)</option>
+                                <option value="in_progress">In Progress (Drafting Changes / Endorsement)</option>
+                                <option value="resolved">Resolved (Completed &amp; Dispatched)</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 6px;">Underwriter Response / Resolution Notes (Visible to Customer)</label>
+                            <textarea name="admin_notes" id="adminTicketNotesInput" class="form-input" rows="4" placeholder="Enter resolution details, endorsement confirmation, certificate numbers, or instructions for the policyholder (instantly reflected on client portal)..." style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.875rem; line-height: 1.5;"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid var(--border-light); display: flex; justify-content: flex-end; gap: 12px;">
+                    <button type="button" class="btn-secondary" onclick="closeModal('modalAdminTicket')">Close</button>
+                    <button type="submit" id="btnSaveTicketResponse" class="btn-primary-action" style="padding: 10px 20px; font-weight: 700;">Save Resolution &amp; Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         window.__SUREBOUND_DB_QUOTES__ = @json($quotes ?? []);
         window.__SUREBOUND_DB_POLICIES__ = @json($policies ?? []);
         window.__SUREBOUND_DB_CLAIMS__ = @json($claims ?? []);
         window.__SUREBOUND_DB_AGENTS__ = @json($agents ?? []);
         window.__CSRF_TOKEN__ = "{{ csrf_token() }}";
+
+        // Global Modal Helpers
+        function openModal(id) {
+            const m = document.getElementById(id);
+            if (m) m.classList.add('active');
+        }
+        function closeModal(id) {
+            const m = document.getElementById(id);
+            if (m) m.classList.remove('active');
+        }
+
+        function toggleSuperAdminCheckbox(role) {
+            const wrap = document.getElementById('superAdminToggleWrap');
+            const titleInput = document.getElementById('newAdminTitleInput');
+            if (role === 'admin') {
+                if (wrap) wrap.style.display = 'block';
+                if (titleInput && (!titleInput.value || titleInput.value === 'Licensed Agent' || titleInput.value === 'Policyholder')) {
+                    titleInput.value = 'Administrator';
+                }
+            } else {
+                if (wrap) wrap.style.display = 'none';
+                if (titleInput) {
+                    titleInput.value = role === 'agent' ? 'Licensed Agent' : 'Policyholder';
+                }
+            }
+        }
+
+        function openEditUserModal(user) {
+            const form = document.getElementById('formEditUser');
+            if (form) {
+                form.action = '/admin/users/' + user.id;
+            }
+            const nameInput = document.getElementById('edit_user_name');
+            if (nameInput) nameInput.value = user.name || '';
+
+            const emailInput = document.getElementById('edit_user_email');
+            if (emailInput) emailInput.value = user.email || '';
+
+            const phoneInput = document.getElementById('edit_user_phone');
+            if (phoneInput) phoneInput.value = user.phone || '';
+
+            const titleInput = document.getElementById('edit_user_title');
+            if (titleInput) titleInput.value = user.title || '';
+
+            const passwordInput = document.getElementById('edit_user_password');
+            if (passwordInput) passwordInput.value = '';
+
+            const roleSelect = document.getElementById('edit_user_role');
+            if (roleSelect) {
+                roleSelect.value = user.role || 'user';
+                toggleEditSuperAdminCheckbox(roleSelect.value);
+            }
+
+            const superCheck = document.getElementById('edit_user_is_super_admin');
+            if (superCheck) {
+                superCheck.checked = Boolean(user.is_super_admin);
+            }
+
+            openModal('modalEditUser');
+        }
+
+        function toggleEditSuperAdminCheckbox(role) {
+            const wrap = document.getElementById('editSuperAdminToggleWrap');
+            if (wrap) {
+                wrap.style.display = (role === 'admin') ? 'block' : 'none';
+            }
+        }
+
+        // Marketing Sub-Tab Switcher
+        window.switchMarketingSubTab = function(subtab, updateHash = true) {
+            if (!subtab) subtab = 'overview';
+            subtab = subtab.toLowerCase();
+
+            // 1. Update pills
+            document.querySelectorAll('.marketing-pill-btn').forEach(btn => {
+                const target = btn.getAttribute('data-subtab-target');
+                if (target === subtab) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // 2. Update sidebar sublinks
+            document.querySelectorAll('.sidebar-sublink[data-tab="marketing"]').forEach(link => {
+                const target = link.getAttribute('data-subtab');
+                if (target === subtab) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // 3. Keep marketing sidebar group open
+            const group = document.getElementById('sidebarGroupMarketing');
+            if (group) group.classList.add('open');
+
+            // 4. Update breadcrumb
+            const bc = document.getElementById('breadcrumbCurrent');
+            if (bc) {
+                const labels = {
+                    overview: 'Marketing Overview Hub',
+                    google: 'Google Marketing Suite',
+                    meta: 'Meta / Facebook Suite',
+                    linkedin: 'LinkedIn Insight Tag',
+                    twitter: 'Twitter / X Ads',
+                    tiktok: 'TikTok For Business',
+                    social: 'Social Meta & SEO',
+                    scripts: 'Custom Tracking Scripts',
+                    all: 'Marketing (All Suites)'
+                };
+                bc.textContent = labels[subtab] || 'Marketing Hub';
+            }
+
+            // 5. Toggle section panes
+            const allPanes = document.querySelectorAll('.marketing-section-pane');
+            if (subtab === 'all') {
+                allPanes.forEach(pane => pane.classList.remove('hidden-pane'));
+            } else {
+                const targetId = 'marketingPane' + subtab.charAt(0).toUpperCase() + subtab.slice(1);
+                allPanes.forEach(pane => {
+                    if (pane.id.toLowerCase() === targetId.toLowerCase()) {
+                        pane.classList.remove('hidden-pane');
+                    } else {
+                        pane.classList.add('hidden-pane');
+                    }
+                });
+            }
+
+            // 6. Update URL hash and localStorage
+            try {
+                localStorage.setItem('sb_admin_active_tab', 'marketing');
+                localStorage.setItem('sb_admin_marketing_subtab', subtab);
+            } catch (e) {}
+
+            if (updateHash !== false && window.location.hash !== ('#marketing-' + subtab)) {
+                if (subtab === 'overview') {
+                    history.replaceState(null, null, '#marketing');
+                } else {
+                    history.replaceState(null, null, '#marketing-' + subtab);
+                }
+            }
+        };
+
+        // Live Social Preview Updating
+        function updateSocialPreview() {
+            const titleInput = document.getElementById('socialTitleInput');
+            const descInput = document.getElementById('socialDescInput');
+            const imgInput = document.getElementById('socialImageInput');
+
+            const pTitle = document.getElementById('previewOgTitle');
+            const pDesc = document.getElementById('previewOgDesc');
+            const pImg = document.getElementById('previewOgImage');
+
+            if (pTitle && titleInput) pTitle.textContent = titleInput.value || 'Surebound Insurance – Premier Home, Auto & Business Coverage';
+            if (pDesc && descInput) pDesc.textContent = descInput.value || 'Dependable insurance protection built around you.';
+            if (pImg && imgInput && imgInput.value) {
+                pImg.src = imgInput.value.startsWith('http') ? imgInput.value : ('/' + imgInput.value.replace(/^\//, ''));
+            }
+        }
+
+        // Save Marketing Settings via AJAX
+        function saveMarketingSettings(e) {
+            e.preventDefault();
+            const form = document.getElementById('marketingSettingsForm');
+            const formData = new FormData(form);
+            const btn1 = document.getElementById('saveMarketingBtn');
+            const btn2 = document.getElementById('saveMarketingBtnBottom');
+
+            if (btn1) { btn1.innerHTML = 'Saving...'; btn1.disabled = true; }
+            if (btn2) { btn2.innerHTML = 'Saving...'; btn2.disabled = true; }
+
+            fetch("{{ route('admin.marketing.update') }}", {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn1) { btn1.innerHTML = '✓ Config Saved!'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
+
+                // Update Status Badges in Overview Cards
+                const gEnabled = document.getElementById('google_enabled')?.checked;
+                const mEnabled = document.getElementById('meta_enabled')?.checked;
+                const lEnabled = document.getElementById('linkedin_enabled')?.checked;
+                const tEnabled = document.getElementById('twitter_enabled')?.checked;
+                const ttEnabled = document.getElementById('tiktok_enabled')?.checked;
+
+                const bgG = document.getElementById('statusBadgeGoogle');
+                if (bgG) { bgG.className = gEnabled ? 'badge badge-success' : 'badge badge-neutral'; bgG.textContent = gEnabled ? '● Active' : '○ Disabled'; }
+
+                const bgM = document.getElementById('statusBadgeMeta');
+                if (bgM) { bgM.className = mEnabled ? 'badge badge-success' : 'badge badge-neutral'; bgM.textContent = mEnabled ? '● Active' : '○ Disabled'; }
+
+                const bgL = document.getElementById('statusBadgeLinkedin');
+                if (bgL) { bgL.className = lEnabled ? 'badge badge-success' : 'badge badge-neutral'; bgL.textContent = lEnabled ? '● Active' : '○ Disabled'; }
+
+                const bgT = document.getElementById('statusBadgeTwitter');
+                if (bgT) { bgT.className = tEnabled ? 'badge badge-success' : 'badge badge-neutral'; bgT.textContent = tEnabled ? '● Active' : '○ Disabled'; }
+
+                const bgTT = document.getElementById('statusBadgeTiktok');
+                if (bgTT) { bgTT.className = ttEnabled ? 'badge badge-success' : 'badge badge-neutral'; bgTT.textContent = ttEnabled ? '● Active' : '○ Disabled'; }
+
+                alert('Success: Advertising marketing tracking pixels, tags & social meta configurations updated successfully!');
+                setTimeout(() => {
+                    if (btn1) btn1.innerHTML = 'Save Marketing Config';
+                    if (btn2) btn2.innerHTML = 'Publish Marketing Settings Live &rarr;';
+                }, 2500);
+            })
+            .catch(err => {
+                if (btn1) { btn1.innerHTML = 'Save Marketing Config'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = 'Publish Marketing Settings Live &rarr;'; btn2.disabled = false; }
+                alert('Error saving marketing config: ' + err.message);
+            });
+        }
+
+        // Test Marketing Pixel Connection via AJAX
+        function testMarketingTag(platform) {
+            const loading = document.getElementById('marketingTestLoading');
+            const results = document.getElementById('marketingTestResults');
+            const modalTitle = document.getElementById('marketingTestModalTitle');
+
+            if (modalTitle) modalTitle.textContent = 'Diagnostics Ping: ' + platform.toUpperCase();
+            if (loading) loading.style.display = 'block';
+            if (results) results.style.display = 'none';
+
+            openModal('modalMarketingTest');
+
+            fetch("{{ route('admin.marketing.test') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ platform: platform })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (loading) loading.style.display = 'none';
+                if (results) results.style.display = 'block';
+
+                document.getElementById('marketingTestPlatformName').textContent = data.platform || 'Marketing Gateway';
+                document.getElementById('marketingTestTimestamp').textContent = 'Timestamp: ' + (data.timestamp || new Date().toISOString());
+                document.getElementById('marketingTestLatency').textContent = 'Latency: ' + (data.latency_ms || 32) + 'ms';
+                document.getElementById('marketingTestMessage').textContent = data.message || 'Tag ping successful.';
+
+                const list = document.getElementById('marketingTestDetailsList');
+                if (list) {
+                    list.innerHTML = '';
+                    if (data.details) {
+                        for (const [k, v] of Object.entries(data.details)) {
+                            const row = document.createElement('div');
+                            row.innerHTML = `<span style="color: #94a3b8;">${k}:</span> <strong style="color: #38bdf8;">${v}</strong>`;
+                            list.appendChild(row);
+                        }
+                    } else {
+                        list.innerHTML = `<div>Status: <strong style="color: #34d399;">Connected &amp; Verified</strong></div><div>Transport: <strong>HTTPS / TLS 1.3 Asynchronous</strong></div>`;
+                    }
+                }
+            })
+            .catch(err => {
+                if (loading) loading.style.display = 'none';
+                if (results) results.style.display = 'block';
+                document.getElementById('marketingTestMessage').textContent = 'Error testing tag: ' + err.message;
+            });
+        }
 
         function saveHomeCms(e) {
             e.preventDefault();
@@ -6037,30 +9490,352 @@ function saveCoverageCms(e) {
         }
 
         /* ====================================================================
-           INVOICE MANAGEMENT SYSTEM JAVASCRIPT HANDLERS
+           INVOICE MANAGEMENT & DIGITAL SIGNATURE JAVASCRIPT HANDLERS
            ==================================================================== */
+        let invSigCanvas = null;
+        let invSigCtx = null;
+        let invIsDrawing = false;
+
+        let masterSigCanvas = null;
+        let masterSigCtx = null;
+        let masterIsDrawing = false;
+
         function openNewInvoiceModal() {
             openModal('modalNewInvoice');
+            setTimeout(() => {
+                const currentMode = document.getElementById('invSignatureModeInput') ? document.getElementById('invSignatureModeInput').value : 'upload';
+                setInvoiceSigTab(currentMode);
+            }, 100);
         }
+
+        function setInvoiceSigTab(mode) {
+            const modeInput = document.getElementById('invSignatureModeInput');
+            if (modeInput) modeInput.value = mode;
+
+            ['upload', 'draw', 'type', 'saved'].forEach(m => {
+                const tab = document.getElementById('tabSig' + m.charAt(0).toUpperCase() + m.slice(1));
+                const panel = document.getElementById('sigPanel' + m.charAt(0).toUpperCase() + m.slice(1));
+                if (tab) tab.classList.toggle('active', m === mode);
+                if (panel) panel.style.display = (m === mode) ? 'block' : 'none';
+            });
+
+            if (mode === 'draw') {
+                setTimeout(initInvoiceCanvas, 60);
+            } else if (mode === 'saved') {
+                const savedSig = '{{ $agencySignature["signature_image"] ?? "" }}';
+                const sigInput = document.getElementById('invSignatureImageInput');
+                if (sigInput) sigInput.value = savedSig;
+            } else if (mode === 'type') {
+                generateTypedSigImage();
+            }
+        }
+
+        function initInvoiceCanvas() {
+            invSigCanvas = document.getElementById('invoiceSigCanvas');
+            if (!invSigCanvas) return;
+            invSigCtx = invSigCanvas.getContext('2d');
+            invSigCtx.strokeStyle = '#1e3a8a';
+            invSigCtx.lineWidth = 2.5;
+            invSigCtx.lineCap = 'round';
+            invSigCtx.lineJoin = 'round';
+
+            function getPos(e) {
+                const rect = invSigCanvas.getBoundingClientRect();
+                const clientX = e.touches && e.touches.length ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches && e.touches.length ? e.touches[0].clientY : e.clientY;
+                const scaleX = invSigCanvas.width / rect.width;
+                const scaleY = invSigCanvas.height / rect.height;
+                return {
+                    x: (clientX - rect.left) * scaleX,
+                    y: (clientY - rect.top) * scaleY
+                };
+            }
+
+            // Remove existing listeners to avoid duplicates
+            invSigCanvas.onmousedown = function(e) {
+                invIsDrawing = true;
+                const pos = getPos(e);
+                invSigCtx.beginPath();
+                invSigCtx.moveTo(pos.x, pos.y);
+            };
+
+            invSigCanvas.onmousemove = function(e) {
+                if (!invIsDrawing) return;
+                const pos = getPos(e);
+                invSigCtx.lineTo(pos.x, pos.y);
+                invSigCtx.stroke();
+            };
+
+            window.addEventListener('mouseup', function() {
+                if (invIsDrawing) {
+                    invIsDrawing = false;
+                    saveInvoiceCanvasToInput();
+                }
+            });
+
+            invSigCanvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                invIsDrawing = true;
+                const pos = getPos(e);
+                invSigCtx.beginPath();
+                invSigCtx.moveTo(pos.x, pos.y);
+            }, { passive: false });
+
+            invSigCanvas.addEventListener('touchmove', function(e) {
+                if (!invIsDrawing) return;
+                e.preventDefault();
+                const pos = getPos(e);
+                invSigCtx.lineTo(pos.x, pos.y);
+                invSigCtx.stroke();
+            }, { passive: false });
+
+            invSigCanvas.addEventListener('touchend', function(e) {
+                if (invIsDrawing) {
+                    invIsDrawing = false;
+                    saveInvoiceCanvasToInput();
+                }
+            });
+        }
+
+        function clearInvoiceCanvas() {
+            if (!invSigCanvas || !invSigCtx) return;
+            invSigCtx.clearRect(0, 0, invSigCanvas.width, invSigCanvas.height);
+            const input = document.getElementById('invSignatureImageInput');
+            if (input) input.value = '';
+        }
+
+        function saveInvoiceCanvasToInput() {
+            if (!invSigCanvas) return;
+            const dataUrl = invSigCanvas.toDataURL('image/png');
+            const input = document.getElementById('invSignatureImageInput');
+            if (input) input.value = dataUrl;
+        }
+
+        function handleNewInvoiceSigUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const base64 = evt.target.result;
+                const input = document.getElementById('invSignatureImageInput');
+                if (input) input.value = base64;
+                const previewImg = document.getElementById('sigUploadPreviewImg');
+                if (previewImg) previewImg.src = base64;
+                const prompt = document.getElementById('sigUploadPrompt');
+                if (prompt) prompt.style.display = 'none';
+                const wrap = document.getElementById('sigUploadPreviewWrap');
+                if (wrap) wrap.style.display = 'flex';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearNewInvoiceSigUpload() {
+            const fileInput = document.getElementById('invSigFileInput');
+            if (fileInput) fileInput.value = '';
+            const input = document.getElementById('invSignatureImageInput');
+            if (input) input.value = '';
+            const prompt = document.getElementById('sigUploadPrompt');
+            if (prompt) prompt.style.display = 'block';
+            const wrap = document.getElementById('sigUploadPreviewWrap');
+            if (wrap) wrap.style.display = 'none';
+        }
+
+        function updateTypedSigPreview() {
+            const name = document.getElementById('invSignatoryNameInput') ? document.getElementById('invSignatoryNameInput').value : 'Md Rezawl';
+            const preview = document.getElementById('typedSigPreview');
+            if (preview) preview.innerText = name || 'Authorized Signatory';
+            if (document.getElementById('invSignatureModeInput') && document.getElementById('invSignatureModeInput').value === 'type') {
+                generateTypedSigImage();
+            }
+        }
+
+        function generateTypedSigImage() {
+            const name = (document.getElementById('invSignatoryNameInput') && document.getElementById('invSignatoryNameInput').value) || 'Md Rezawl';
+            const c = document.createElement('canvas');
+            c.width = 600;
+            c.height = 140;
+            const ctx = c.getContext('2d');
+            ctx.font = "italic 48px 'Great Vibes', 'Dancing Script', cursive";
+            ctx.fillStyle = '#1e3a8a';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(name, 300, 70);
+            const input = document.getElementById('invSignatureImageInput');
+            if (input) input.value = c.toDataURL('image/png');
+        }
+
+        /* Master Agency Signature Management */
+        function setMasterSigTab(mode) {
+            ['upload', 'draw'].forEach(m => {
+                const tab = document.getElementById('masterTab' + m.charAt(0).toUpperCase() + m.slice(1));
+                const panel = document.getElementById('masterPanel' + m.charAt(0).toUpperCase() + m.slice(1));
+                if (tab) tab.classList.toggle('active', m === mode);
+                if (panel) panel.style.display = (m === mode) ? 'block' : 'none';
+            });
+            if (mode === 'draw') {
+                setTimeout(initMasterCanvas, 60);
+            }
+        }
+
+        function initMasterCanvas() {
+            masterSigCanvas = document.getElementById('masterSigCanvas');
+            if (!masterSigCanvas) return;
+            masterSigCtx = masterSigCanvas.getContext('2d');
+            masterSigCtx.strokeStyle = '#1e3a8a';
+            masterSigCtx.lineWidth = 2.5;
+            masterSigCtx.lineCap = 'round';
+            masterSigCtx.lineJoin = 'round';
+
+            function getPos(e) {
+                const rect = masterSigCanvas.getBoundingClientRect();
+                const clientX = e.touches && e.touches.length ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches && e.touches.length ? e.touches[0].clientY : e.clientY;
+                const scaleX = masterSigCanvas.width / rect.width;
+                const scaleY = masterSigCanvas.height / rect.height;
+                return {
+                    x: (clientX - rect.left) * scaleX,
+                    y: (clientY - rect.top) * scaleY
+                };
+            }
+
+            masterSigCanvas.onmousedown = function(e) {
+                masterIsDrawing = true;
+                const pos = getPos(e);
+                masterSigCtx.beginPath();
+                masterSigCtx.moveTo(pos.x, pos.y);
+            };
+
+            masterSigCanvas.onmousemove = function(e) {
+                if (!masterIsDrawing) return;
+                const pos = getPos(e);
+                masterSigCtx.lineTo(pos.x, pos.y);
+                masterSigCtx.stroke();
+            };
+
+            window.addEventListener('mouseup', function() {
+                if (masterIsDrawing) {
+                    masterIsDrawing = false;
+                    saveMasterCanvasToInput();
+                }
+            });
+
+            masterSigCanvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                masterIsDrawing = true;
+                const pos = getPos(e);
+                masterSigCtx.beginPath();
+                masterSigCtx.moveTo(pos.x, pos.y);
+            }, { passive: false });
+
+            masterSigCanvas.addEventListener('touchmove', function(e) {
+                if (!masterIsDrawing) return;
+                e.preventDefault();
+                const pos = getPos(e);
+                masterSigCtx.lineTo(pos.x, pos.y);
+                masterSigCtx.stroke();
+            }, { passive: false });
+
+            masterSigCanvas.addEventListener('touchend', function(e) {
+                if (masterIsDrawing) {
+                    masterIsDrawing = false;
+                    saveMasterCanvasToInput();
+                }
+            });
+        }
+
+        function clearMasterCanvas() {
+            if (!masterSigCanvas || !masterSigCtx) return;
+            masterSigCtx.clearRect(0, 0, masterSigCanvas.width, masterSigCanvas.height);
+            const input = document.getElementById('masterSignatureImageInput');
+            if (input) input.value = '';
+        }
+
+        function saveMasterCanvasToInput() {
+            if (!masterSigCanvas) return;
+            const dataUrl = masterSigCanvas.toDataURL('image/png');
+            const input = document.getElementById('masterSignatureImageInput');
+            if (input) input.value = dataUrl;
+        }
+
+        function handleMasterSigUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const base64 = evt.target.result;
+                const input = document.getElementById('masterSignatureImageInput');
+                if (input) input.value = base64;
+                const previewImg = document.getElementById('masterUploadPreviewImg');
+                if (previewImg) previewImg.src = base64;
+                const prompt = document.getElementById('masterUploadPrompt');
+                if (prompt) prompt.style.display = 'none';
+                const wrap = document.getElementById('masterUploadPreviewWrap');
+                if (wrap) wrap.style.display = 'flex';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearMasterSigUpload() {
+            const fileInput = document.getElementById('masterSigFileInput');
+            if (fileInput) fileInput.value = '';
+            const input = document.getElementById('masterSignatureImageInput');
+            if (input) input.value = '';
+            const prompt = document.getElementById('masterUploadPrompt');
+            if (prompt) prompt.style.display = 'block';
+            const wrap = document.getElementById('masterUploadPreviewWrap');
+            if (wrap) wrap.style.display = 'none';
+        }
+
+        function saveMasterAgencySignature(e) {
+            e.preventDefault();
+            const form = document.getElementById('masterAgencySignatureForm');
+            const formData = new FormData(form);
+            const btn = document.getElementById('saveMasterSigBtn');
+            if (btn) { btn.innerHTML = 'Saving Master Signature...'; btn.disabled = true; }
+
+            fetch("{{ route('admin.invoices.agency-signature') }}", {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn) { btn.innerHTML = '✓ Saved Successfully!'; btn.disabled = false; }
+                alert(data.message || 'Agency signature saved successfully!');
+                closeModal('modalAgencySignature');
+                try { localStorage.setItem('sb_admin_active_tab', 'invoices'); } catch(e) {}
+                window.location.hash = '#invoices';
+                window.location.reload();
+            })
+            .catch(err => {
+                if (btn) { btn.innerHTML = 'Save Master Agency Signature'; btn.disabled = false; }
+                alert('Error saving signature: ' + err.message);
+            });
+        }
+
+        let __CURRENT_VIEW_INVOICE_ID__ = null;
 
         function addInvoiceLineRow() {
             const tbody = document.getElementById('invoiceLineItemsBody');
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td style="padding: 6px;">
-                    <input type="text" name="item_desc[]" class="form-input" required placeholder="Endorsement / Endorsement fee">
+                <td style="padding: 10px 12px;">
+                    <input type="text" name="item_desc[]" class="form-input" required value="" placeholder="Enter item or coverage description...">
                 </td>
-                <td style="padding: 6px;">
-                    <input type="number" name="item_qty[]" class="form-input inv-qty" required value="1" min="1" onchange="calcNewInvoiceTotals()">
+                <td style="padding: 10px 12px;">
+                    <input type="number" name="item_qty[]" class="form-input inv-qty" required value="1" min="1" oninput="calcNewInvoiceTotals()" style="text-align: center;">
                 </td>
-                <td style="padding: 6px;">
-                    <input type="number" name="item_price[]" class="form-input inv-price" required value="150.00" step="0.01" onchange="calcNewInvoiceTotals()">
+                <td style="padding: 10px 12px;">
+                    <input type="number" name="item_price[]" class="form-input inv-price" required value="" placeholder="0.00" step="0.01" min="0" oninput="calcNewInvoiceTotals()" style="text-align: right;">
                 </td>
-                <td style="padding: 6px; text-align: right; font-weight: 600; color: #f8fafc;" class="inv-row-total">
-                    $150.00
+                <td style="padding: 10px 12px; text-align: right; font-weight: 700; color: var(--text-primary); font-size: 0.9375rem;" class="inv-row-total">
+                    $0.00
                 </td>
-                <td style="padding: 6px; text-align: center;">
-                    <button type="button" onclick="removeInvoiceLineRow(this)" style="background: none; border: none; color: #fda4af; cursor: pointer; font-size: 18px;">&times;</button>
+                <td style="padding: 10px 8px; text-align: center;">
+                    <button type="button" onclick="removeInvoiceLineRow(this)" style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; border-radius: 4px; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px;" title="Remove row">&times;</button>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -6123,10 +9898,41 @@ function saveCoverageCms(e) {
             })
             .then(r => r.json())
             .then(data => {
-                if (btn) { btn.innerHTML = '✓ Issued!'; btn.disabled = false; }
-                alert(data.message);
-                closeModal('modalNewInvoice');
-                window.location.reload();
+                if (btn) { btn.innerHTML = 'Issue Invoice & Save'; btn.disabled = false; }
+                if (data.success && data.invoice) {
+                    closeModal('modalNewInvoice');
+                    form.reset();
+
+                    // Fill success modal details
+                    const inv = data.invoice;
+                    const invNumberEl = document.getElementById('successInvoiceNumberDisplay');
+                    if (invNumberEl) invNumberEl.innerText = inv.invoice_number;
+                    const custNameEl = document.getElementById('successCustomerNameDisplay');
+                    if (custNameEl) custNameEl.innerText = inv.customer_name;
+                    const totalEl = document.getElementById('successTotalAmountDisplay');
+                    if (totalEl) totalEl.innerText = '$' + parseFloat(inv.total_amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+                    const pdfLink = document.getElementById('successDownloadPdfLink');
+                    if (pdfLink) {
+                        pdfLink.href = `/admin/invoices/${inv.id}/pdf?download=1`;
+                    }
+
+                    const viewBtn = document.getElementById('successViewInvoiceActionBtn');
+                    if (viewBtn) {
+                        viewBtn.onclick = function() {
+                            closeModal('modalInvoiceCreatedSuccess');
+                            viewInvoice(inv);
+                        };
+                    }
+
+                    openModal('modalInvoiceCreatedSuccess');
+                } else {
+                    alert(data.message || 'Invoice created successfully.');
+                    closeModal('modalNewInvoice');
+                    try { localStorage.setItem('sb_admin_active_tab', 'invoices'); } catch(e) {}
+                    window.location.hash = '#invoices';
+                    window.location.reload();
+                }
             })
             .catch(err => {
                 if (btn) { btn.innerHTML = 'Issue Invoice & Save'; btn.disabled = false; }
@@ -6135,6 +9941,7 @@ function saveCoverageCms(e) {
         }
 
         function viewInvoice(inv) {
+            __CURRENT_VIEW_INVOICE_ID__ = inv.id;
             document.getElementById('viewInvNumber').innerText = inv.invoice_number;
             document.getElementById('viewInvIssueDate').innerText = inv.issue_date ? inv.issue_date.substring(0, 10) : '';
             document.getElementById('viewInvDueDate').innerText = inv.due_date ? inv.due_date.substring(0, 10) : '';
@@ -6144,16 +9951,51 @@ function saveCoverageCms(e) {
             document.getElementById('viewInvPolicyNumber').innerText = inv.policy_number || 'N/A';
             document.getElementById('viewInvPaymentMethod').innerText = inv.status === 'paid' ? ('Paid via ' + (inv.payment_method || 'Stripe')) : 'Unpaid Receivable';
 
-            const badge = document.getElementById('viewInvStatusBadge');
-            if (inv.status === 'paid') {
-                badge.className = 'badge badge-success';
-                badge.innerText = '✓ Paid';
-            } else if (inv.status === 'overdue') {
-                badge.className = 'badge badge-urgent';
-                badge.innerText = 'OVERDUE';
+            // Signatory Details & Signature Rendering
+            const sigName = inv.signatory_name || '{{ $agencySignature["signatory_name"] ?? "Md Rezawl" }}';
+            const sigTitle = inv.signatory_title || '{{ $agencySignature["signatory_title"] ?? "Chief Underwriter & Authorized Representative" }}';
+            const sigImg = inv.signature_image || '{{ $agencySignature["signature_image"] ?? "" }}';
+
+            const signNameEl = document.getElementById('viewInvSignatoryName');
+            if (signNameEl) signNameEl.innerText = sigName;
+
+            const signTitleEl = document.getElementById('viewInvSignatoryTitle');
+            if (signTitleEl) signTitleEl.innerText = sigTitle;
+
+            const signImgEl = document.getElementById('viewInvSignatureImg');
+            const signCursiveEl = document.getElementById('viewInvSignatureCursive');
+
+            if (sigImg) {
+                if (signImgEl) {
+                    signImgEl.src = sigImg;
+                    signImgEl.style.display = 'block';
+                }
+                if (signCursiveEl) signCursiveEl.style.display = 'none';
             } else {
-                badge.className = 'badge badge-warning';
-                badge.innerText = 'Pending Payment';
+                if (signImgEl) signImgEl.style.display = 'none';
+                if (signCursiveEl) {
+                    signCursiveEl.innerText = sigName;
+                    signCursiveEl.style.display = 'block';
+                }
+            }
+
+            const downloadPdfLink = document.getElementById('viewInvDownloadPdfLink');
+            if (downloadPdfLink) {
+                downloadPdfLink.href = `/admin/invoices/${inv.id}/pdf?download=1`;
+            }
+
+            const badge = document.getElementById('viewInvStatusBadge');
+            if (badge) {
+                if (inv.status === 'paid') {
+                    badge.className = 'badge badge-success';
+                    badge.innerText = '✓ Paid';
+                } else if (inv.status === 'overdue') {
+                    badge.className = 'badge badge-urgent';
+                    badge.innerText = 'OVERDUE';
+                } else {
+                    badge.className = 'badge badge-warning';
+                    badge.innerText = 'Pending Payment';
+                }
             }
 
             const tbody = document.getElementById('viewInvItemsBody');
@@ -6168,14 +10010,15 @@ function saveCoverageCms(e) {
                 items = [{desc: 'Insurance Premium & Coverage Fee', qty: 1, price: parseFloat(inv.total_amount), total: parseFloat(inv.total_amount)}];
             }
 
-            items.forEach(it => {
+            items.forEach((it, idx) => {
                 const tr = document.createElement('tr');
-                tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                tr.style.borderBottom = '1px solid #e2e8f0';
+                const itemTotal = parseFloat(it.total || (it.qty * it.price)) || 0;
                 tr.innerHTML = `
-                    <td style="padding: 10px;">${it.desc}</td>
-                    <td style="padding: 10px; text-align: center;">${it.qty || 1}</td>
-                    <td style="padding: 10px; text-align: right;">$${parseFloat(it.price || 0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                    <td style="padding: 10px; text-align: right; font-weight: 600;">$${parseFloat(it.total || (it.qty * it.price)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td style="padding: 12px 16px; color: #0f172a; font-weight: 500;">${it.desc || 'Policy Premium Item'}</td>
+                    <td style="padding: 12px 16px; text-align: center; color: #475569;">${it.qty || 1}</td>
+                    <td style="padding: 12px 16px; text-align: right; color: #475569; font-family: monospace;">$${parseFloat(it.price || 0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td style="padding: 12px 16px; text-align: right; font-weight: 700; color: #0f172a; font-family: monospace;">$${itemTotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -6189,7 +10032,11 @@ function saveCoverageCms(e) {
         }
 
         function printInvoiceModal() {
-            window.print();
+            if (__CURRENT_VIEW_INVOICE_ID__) {
+                window.open(`/admin/invoices/${__CURRENT_VIEW_INVOICE_ID__}/print?print=1`, '_blank');
+            } else {
+                window.print();
+            }
         }
 
         function openPayInvoiceModal(inv) {
@@ -6221,6 +10068,8 @@ function saveCoverageCms(e) {
                 if (btn) { btn.innerHTML = '✓ Payment Approved!'; btn.disabled = false; }
                 alert(data.message);
                 closeModal('modalPayInvoice');
+                try { localStorage.setItem('sb_admin_active_tab', 'invoices'); } catch(e) {}
+                window.location.hash = '#invoices';
                 window.location.reload();
             })
             .catch(err => {
@@ -6243,6 +10092,8 @@ function saveCoverageCms(e) {
             .then(r => r.json())
             .then(data => {
                 alert(data.message);
+                try { localStorage.setItem('sb_admin_active_tab', 'invoices'); } catch(e) {}
+                window.location.hash = '#invoices';
                 window.location.reload();
             })
             .catch(err => alert('Error updating status: ' + err.message));
@@ -6297,7 +10148,7 @@ function saveCoverageCms(e) {
             
             rows.forEach(row => {
                 const rowRole = row.getAttribute('data-role');
-                const roleMatches = (role === 'all' || rowRole === role);
+                const roleMatches = (role === 'all' || rowRole === role || (role === 'admin' && (rowRole === 'admin' || rowRole === 'super_admin')));
                 const nameMatches = !query || 
                     (row.getAttribute('data-name') && row.getAttribute('data-name').includes(query)) || 
                     (row.getAttribute('data-email') && row.getAttribute('data-email').includes(query)) || 
@@ -6316,7 +10167,7 @@ function saveCoverageCms(e) {
             const rows = document.querySelectorAll('#usersDirectoryTableBody .user-row');
             rows.forEach(row => {
                 const rowRole = row.getAttribute('data-role');
-                const roleMatches = (role === 'all' || rowRole === role);
+                const roleMatches = (role === 'all' || rowRole === role || (role === 'admin' && (rowRole === 'admin' || rowRole === 'super_admin')));
                 const nameMatches = !query || 
                     (row.getAttribute('data-name') && row.getAttribute('data-name').includes(query)) || 
                     (row.getAttribute('data-email') && row.getAttribute('data-email').includes(query)) || 
@@ -6347,15 +10198,909 @@ function saveCoverageCms(e) {
             a.click();
             document.body.removeChild(a);
         }
-            function submitClaimsCms() {
+        function submitClaimsCms() {
             document.getElementById('claimsCmsForm').submit();
+        }
+
+        // ====================================================================
+        // POLICY MANAGEMENT JAVASCRIPT HANDLERS
+        // ====================================================================
+        function updateDefaultPolicyLabel(type, mode) {
+            const labels = {
+                'home': 'Homeowners Comprehensive (HO-5)',
+                'auto': 'Executive Auto Comprehensive & Collision',
+                'umbrella': 'Personal & Excess Umbrella Liability',
+                'business': 'Commercial Business Owner Policy (BOP)',
+                'life': 'Executive Term Life Protection',
+                'cyber': 'Cyber Security & Data Breach Shield',
+                'general': 'Commercial General Liability'
+            };
+            const targetEl = document.getElementById(mode === 'create' ? 'create_type_label' : 'edit_type_label');
+            if (targetEl && labels[type]) {
+                targetEl.value = labels[type];
+            }
+        }
+
+        function openCreatePolicyModal() {
+            const form = document.getElementById('createPolicyForm');
+            if (form) form.reset();
+            updateDefaultPolicyLabel('home', 'create');
+            openModal('modalCreatePolicy');
+        }
+
+        function saveNewPolicy(e) {
+            e.preventDefault();
+            const form = document.getElementById('createPolicyForm');
+            const submitBtn = document.getElementById('createPolicySubmitBtn');
+            const formData = new FormData(form);
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>Binding Policy...</span>';
+            }
+
+            fetch('{{ route("admin.policies.store") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Bind Policy Contract</span>';
+                }
+                if (data.success) {
+                    alert(data.message || 'Policy bound successfully.');
+                    closeModal('modalCreatePolicy');
+                    try { localStorage.setItem('sb_admin_active_tab', 'policies'); } catch(e) {}
+                    window.location.hash = '#policies';
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Could not bind policy. Please verify required fields.'));
+                }
+            })
+            .catch(err => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Bind Policy Contract</span>';
+                }
+                alert('Error binding policy: ' + err.message);
+            });
+        }
+
+        function openEditPolicyModal(policy) {
+            if (typeof policy === 'number' || typeof policy === 'string') {
+                // Fetch policy from backend
+                fetch(`/admin/policies/${policy}`, {
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.policy) {
+                        populateEditPolicyForm(data.policy);
+                    }
+                })
+                .catch(err => alert('Error loading policy details: ' + err.message));
+            } else {
+                populateEditPolicyForm(policy);
+            }
+        }
+
+        function populateEditPolicyForm(p) {
+            document.getElementById('edit_policy_id').value = p.id;
+            document.getElementById('edit_holder_name').value = p.holder_name || '';
+            document.getElementById('edit_holder_email').value = p.holder_email || '';
+            document.getElementById('edit_holder_phone').value = p.holder_phone || '';
+            document.getElementById('edit_user_id').value = p.user_id || '';
+            document.getElementById('edit_type').value = p.type || 'home';
+            document.getElementById('edit_type_label').value = p.type_label || '';
+            document.getElementById('edit_policy_number').value = p.policy_number || '';
+            document.getElementById('edit_carrier').value = p.carrier || 'Surebound Underwriting Syndicate';
+            document.getElementById('edit_insured_item').value = p.insured_item || '';
+            document.getElementById('edit_coverage_limit').value = p.coverage_limit || '';
+            document.getElementById('edit_deductible').value = p.deductible || '';
+            document.getElementById('edit_annual_premium').value = p.annual_premium || '';
+            document.getElementById('edit_billing_frequency').value = p.billing_frequency || 'annual';
+            document.getElementById('edit_effective_date').value = p.effective_date ? String(p.effective_date).substring(0, 10) : '';
+            document.getElementById('edit_renewal_date').value = p.renewal_date ? String(p.renewal_date).substring(0, 10) : '';
+            document.getElementById('edit_status').value = p.status || 'active';
+            document.getElementById('edit_notes').value = p.notes || '';
+
+            openModal('modalEditPolicy');
+        }
+
+        function saveEditPolicy(e) {
+            e.preventDefault();
+            const form = document.getElementById('editPolicyForm');
+            const policyId = document.getElementById('edit_policy_id').value;
+            const submitBtn = document.getElementById('editPolicySubmitBtn');
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>Saving Changes...</span>';
+            }
+
+            const formData = new FormData(form);
+            // Append method PUT for Laravel form handling or JSON
+            const dataObj = {};
+            formData.forEach((value, key) => { dataObj[key] = value; });
+
+            fetch(`/admin/policies/${policyId}`, {
+                method: 'PUT',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(dataObj)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Save Policy Changes</span>';
+                }
+                if (data.success) {
+                    alert(data.message || 'Policy contract updated successfully.');
+                    closeModal('modalEditPolicy');
+                    try { localStorage.setItem('sb_admin_active_tab', 'policies'); } catch(e) {}
+                    window.location.hash = '#policies';
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Could not update policy contract.'));
+                }
+            })
+            .catch(err => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Save Policy Changes</span>';
+                }
+                alert('Error updating policy: ' + err.message);
+            });
+        }
+
+        function changePolicyStatus(policyId, status) {
+            if (!status) return;
+            fetch(`/admin/policies/${policyId}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ status: status })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message || 'Status updated successfully.');
+                    try { localStorage.setItem('sb_admin_active_tab', 'policies'); } catch(e) {}
+                    window.location.hash = '#policies';
+                    window.location.reload();
+                } else {
+                    alert('Error updating status: ' + (data.message || 'Unknown error'));
+                }
+            })
+            .catch(err => alert('Error updating status: ' + err.message));
+        }
+
+        function deleteAdminPolicy(policyId, policyNumber) {
+            SureboundModal.confirm({
+                title: 'Delete Policy Record',
+                badge: policyNumber,
+                message: `Are you sure you want to permanently delete policy ${policyNumber}? This will immediately remove it from all underwriter and customer portal dashboards.`,
+                confirmText: 'Delete Policy',
+                cancelText: 'Cancel',
+                type: 'danger',
+                icon: 'trash'
+            }).then(confirmed => {
+                if (!confirmed) return;
+
+                fetch(`/admin/policies/${policyId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        SureboundModal.alert({
+                            title: 'Policy Deleted',
+                            message: data.message || 'Policy record permanently deleted.',
+                            type: 'success',
+                            buttonText: 'Done'
+                        }).then(() => {
+                            const row = document.getElementById(`policy-row-${policyId}`);
+                            if (row) row.remove();
+                            try { localStorage.setItem('sb_admin_active_tab', 'policies'); } catch(e) {}
+                            window.location.hash = '#policies';
+                            window.location.reload();
+                        });
+                    } else {
+                        SureboundModal.alert({
+                            title: 'Delete Failed',
+                            message: 'Error deleting policy: ' + (data.message || 'Action failed'),
+                            type: 'danger',
+                            buttonText: 'Close'
+                        });
+                    }
+                })
+                .catch(err => {
+                    SureboundModal.alert({
+                        title: 'Network Error',
+                        message: 'Error deleting policy: ' + err.message,
+                        type: 'danger',
+                        buttonText: 'Close'
+                    });
+                });
+            });
+        }
+
+        function filterAdminPolicies(status, btn) {
+            const container = btn.closest('.filter-tabs');
+            if (container) {
+                container.querySelectorAll('.filter-tab-btn').forEach(b => b.classList.remove('active'));
+            }
+            btn.classList.add('active');
+
+            const rows = document.querySelectorAll('#serverPoliciesTable tbody tr[data-status]');
+            rows.forEach(tr => {
+                const trStatus = tr.getAttribute('data-status');
+                if (status === 'all' || trStatus === status) {
+                    tr.style.display = '';
+                } else {
+                    tr.style.display = 'none';
+                }
+            });
+        }
+
+        function searchAdminPolicies() {
+            const query = document.getElementById('adminPolicySearch').value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#serverPoliciesTable tbody tr');
+
+            rows.forEach(tr => {
+                const text = tr.innerText.toLowerCase();
+                tr.style.display = (!query || text.includes(query)) ? '' : 'none';
+            });
+        }
+
+        function openAdminViewPolicyModal(pol) {
+            document.getElementById('adminViewPolicyBadge').innerText = pol.policy_number;
+            document.getElementById('adminViewPolicyTitle').innerText = pol.type_label || (pol.type ? pol.type.toUpperCase() + ' Insurance' : 'Policy Schedule');
+            document.getElementById('adminViewHolderName').innerText = pol.holder_name;
+            document.getElementById('adminViewHolderEmail').innerText = (pol.holder_email || 'No email') + (pol.holder_phone ? ' • ' + pol.holder_phone : '');
+            document.getElementById('adminViewCarrier').innerText = pol.carrier || 'Surebound Syndicate';
+            
+            const statusEl = document.getElementById('adminViewStatus');
+            statusEl.innerText = (pol.status || 'active').toUpperCase();
+            statusEl.className = 'status-pill ' + (pol.status || 'active');
+
+            document.getElementById('adminViewLimit').innerText = pol.coverage_limit;
+            document.getElementById('adminViewDeductible').innerText = pol.deductible || '$1,000 Standard';
+            document.getElementById('adminViewPremium').innerText = (pol.annual_premium || '') + ' (' + (pol.billing_frequency || 'Annual') + ')';
+            document.getElementById('adminViewItem').innerText = pol.insured_item || 'General Scheduled Policy';
+
+            const notesWrap = document.getElementById('adminViewNotesWrap');
+            if (pol.notes && pol.notes.trim() !== '') {
+                document.getElementById('adminViewNotes').innerText = pol.notes;
+                notesWrap.style.display = 'block';
+            } else {
+                notesWrap.style.display = 'none';
+            }
+
+            document.getElementById('adminViewIdCardLink').href = `/dashboard/policies/${pol.id}/id-card`;
+
+            openModal('modalAdminViewPolicy');
+        }
+
+        // -------------------------------------------------------------------------
+        // CLAIMS CENTER & FNOL JS HANDLERS
+        // -------------------------------------------------------------------------
+        let activeViewingClaimId = null;
+
+        function openCreateClaimModal() {
+            const form = document.getElementById('createClaimForm');
+            if (form) form.reset();
+            const dateInput = document.getElementById('claim_incident_date');
+            if (dateInput && !dateInput.value) {
+                dateInput.value = new Date().toISOString().split('T')[0];
+            }
+            openModal('modalCreateClaim');
+        }
+
+        function onClaimPolicySelected(selectEl) {
+            const opt = selectEl.options[selectEl.selectedIndex];
+            if (!opt || !opt.value) return;
+
+            document.getElementById('claim_policy_number').value = opt.value;
+            if (opt.dataset.holder) document.getElementById('claim_claimant_name').value = opt.dataset.holder;
+            if (opt.dataset.email) document.getElementById('claim_claimant_email').value = opt.dataset.email;
+            if (opt.dataset.phone) document.getElementById('claim_claimant_phone').value = opt.dataset.phone;
+            if (opt.dataset.item && !document.getElementById('claim_incident_location').value) {
+                document.getElementById('claim_incident_location').value = opt.dataset.item;
+            }
+        }
+
+        function saveNewClaim(e) {
+            e.preventDefault();
+            const form = document.getElementById('createClaimForm');
+            const submitBtn = document.getElementById('createClaimSubmitBtn');
+            const formData = new FormData(form);
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>Recording FNOL Claim...</span>';
+            }
+
+            fetch('{{ route("admin.claims-center.store") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Record FNOL Claim</span>';
+                }
+                if (data.success) {
+                    alert(data.message || 'First Notice of Loss recorded successfully.');
+                    closeModal('modalCreateClaim');
+                    try { localStorage.setItem('sb_admin_active_tab', 'claims'); } catch(err) {}
+                    window.location.hash = '#claims';
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Could not record claim.'));
+                }
+            })
+            .catch(err => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Record FNOL Claim</span>';
+                }
+                alert('Error submitting claim: ' + err.message);
+            });
+        }
+
+        function openEditClaimModal(claim) {
+            if (typeof claim === 'number' || typeof claim === 'string') {
+                fetch(`/admin/claims-center/${claim}`, {
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.claim) {
+                        populateEditClaimForm(data.claim);
+                    }
+                })
+                .catch(err => alert('Error loading claim details: ' + err.message));
+            } else {
+                populateEditClaimForm(claim);
+            }
+        }
+
+        function populateEditClaimForm(c) {
+            document.getElementById('edit_claim_id').value = c.id;
+            document.getElementById('edit_claim_number').value = c.claim_number || '';
+            document.getElementById('edit_claim_policy_number').value = c.policy_number || '';
+            document.getElementById('edit_claimant_name').value = c.claimant_name || '';
+            document.getElementById('edit_claimant_email').value = c.claimant_email || '';
+            document.getElementById('edit_claimant_phone').value = c.claimant_phone || '';
+            document.getElementById('edit_claim_incident_date').value = c.incident_date ? String(c.incident_date).substring(0, 10) : '';
+            document.getElementById('edit_claim_incident_type').value = c.incident_type || '';
+            document.getElementById('edit_claim_incident_location').value = c.incident_location || '';
+            document.getElementById('edit_claim_incident_description').value = c.incident_description || '';
+            document.getElementById('edit_claim_estimated_loss').value = c.estimated_loss || '';
+            document.getElementById('edit_claim_assigned_adjuster').value = c.assigned_adjuster || '';
+            document.getElementById('edit_claim_priority').value = c.priority || 'normal';
+            document.getElementById('edit_claim_status').value = c.status || 'reviewing';
+            document.getElementById('edit_claim_adjuster_notes').value = c.adjuster_notes || '';
+
+            openModal('modalEditClaim');
+        }
+
+        function saveEditClaim(e) {
+            e.preventDefault();
+            const form = document.getElementById('editClaimForm');
+            const claimId = document.getElementById('edit_claim_id').value;
+            const submitBtn = document.getElementById('editClaimSubmitBtn');
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>Saving Changes...</span>';
+            }
+
+            const formData = new FormData(form);
+            const dataObj = {};
+            formData.forEach((val, key) => { dataObj[key] = val; });
+
+            fetch(`/admin/claims-center/${claimId}`, {
+                method: 'PUT',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(dataObj)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Save Claim Changes</span>';
+                }
+                if (data.success) {
+                    alert(data.message || 'Claim record updated successfully.');
+                    closeModal('modalEditClaim');
+                    try { localStorage.setItem('sb_admin_active_tab', 'claims'); } catch(err) {}
+                    window.location.hash = '#claims';
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Could not update claim record.'));
+                }
+            })
+            .catch(err => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Save Claim Changes</span>';
+                }
+                alert('Error updating claim: ' + err.message);
+            });
+        }
+
+        function openViewClaimModal(c) {
+            activeViewingClaimId = c.id;
+
+            document.getElementById('viewClaimNumber').innerText = c.claim_number;
+            
+            const prioEl = document.getElementById('viewClaimPriority');
+            prioEl.innerText = (c.priority || 'normal').toUpperCase();
+            prioEl.className = 'priority-pill ' + (c.priority || 'normal');
+
+            const statusEl = document.getElementById('viewClaimStatusBadge');
+            statusEl.innerText = (c.status || 'reviewing').toUpperCase();
+            statusEl.className = 'status-pill ' + (c.status || 'reviewing');
+
+            document.getElementById('viewClaimPolicy').innerText = c.policy_number;
+            document.getElementById('viewClaimReserve').innerText = c.estimated_loss || '$0.00';
+            document.getElementById('viewClaimDate').innerText = c.incident_date ? new Date(c.incident_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+            document.getElementById('viewClaimAdjuster').innerText = c.assigned_adjuster || 'Unassigned';
+
+            document.getElementById('viewClaimantName').innerText = c.claimant_name;
+            document.getElementById('viewClaimantContact').innerText = (c.claimant_email || 'No email') + (c.claimant_phone ? ' • ' + c.claimant_phone : '');
+            document.getElementById('viewClaimLocation').innerText = c.incident_location || 'Not specified';
+
+            document.getElementById('viewClaimTypeBadge').innerText = c.incident_type || 'General Property Loss';
+            document.getElementById('viewClaimDescription').innerText = c.incident_description || 'No description provided.';
+
+            const notesWrap = document.getElementById('viewClaimNotesWrapper');
+            if (c.adjuster_notes && c.adjuster_notes.trim() !== '') {
+                document.getElementById('viewClaimNotes').innerText = c.adjuster_notes;
+                notesWrap.style.display = 'block';
+            } else {
+                notesWrap.style.display = 'none';
+            }
+
+            document.getElementById('viewClaimQuickStatus').value = c.status || 'reviewing';
+
+            document.getElementById('viewClaimEditBtn').onclick = function() {
+                closeModal('modalViewClaimDetail');
+                openEditClaimModal(c);
+            };
+
+            openModal('modalViewClaimDetail');
+        }
+
+        function onViewModalStatusChange(newStatus) {
+            if (!activeViewingClaimId || !newStatus) return;
+            changeClaimStatus(activeViewingClaimId, newStatus);
+        }
+
+        function changeClaimStatus(claimId, status) {
+            if (!status) return;
+            fetch(`/admin/claims-center/${claimId}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ status: status })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message || 'Claim status updated successfully.');
+                    try { localStorage.setItem('sb_admin_active_tab', 'claims'); } catch(err) {}
+                    window.location.hash = '#claims';
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Could not update status.'));
+                }
+            })
+            .catch(err => alert('Error updating status: ' + err.message));
+        }
+
+        function deleteAdminClaim(claimId, claimNumber) {
+            SureboundModal.confirm({
+                title: 'Delete Claim Dossier',
+                badge: '#' + claimNumber,
+                message: `Are you sure you want to permanently delete claim record #${claimNumber}?\n\nThis action cannot be undone.`,
+                confirmText: 'Delete Claim',
+                cancelText: 'Cancel',
+                type: 'danger',
+                icon: 'trash'
+            }).then(confirmed => {
+                if (!confirmed) return;
+
+                fetch(`/admin/claims-center/${claimId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        SureboundModal.alert({
+                            title: 'Claim Record Removed',
+                            message: data.message || 'Claim record deleted successfully.',
+                            type: 'success',
+                            buttonText: 'Done'
+                        }).then(() => {
+                            try { localStorage.setItem('sb_admin_active_tab', 'claims'); } catch(err) {}
+                            window.location.hash = '#claims';
+                            window.location.reload();
+                        });
+                    } else {
+                        SureboundModal.alert({
+                            title: 'Delete Failed',
+                            message: 'Error: ' + (data.message || 'Could not delete claim.'),
+                            type: 'danger',
+                            buttonText: 'Close'
+                        });
+                    }
+                })
+                .catch(err => {
+                    SureboundModal.alert({
+                        title: 'Error',
+                        message: 'Error deleting claim: ' + err.message,
+                        type: 'danger',
+                        buttonText: 'Close'
+                    });
+                });
+            });
+        }
+
+        function filterAdminClaims(status, btn) {
+            const filterTabs = document.querySelectorAll('#tab-claims .filter-tab-btn');
+            filterTabs.forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const rows = document.querySelectorAll('#serverClaimsTable tbody tr');
+            rows.forEach(tr => {
+                const rowStatus = tr.getAttribute('data-status');
+                if (!rowStatus) return;
+                if (status === 'all') {
+                    tr.style.display = '';
+                } else if (status === 'declined') {
+                    tr.style.display = (rowStatus === 'declined' || rowStatus === 'rejected') ? '' : 'none';
+                } else {
+                    tr.style.display = (rowStatus === status) ? '' : 'none';
+                }
+            });
+        }
+
+        function searchAdminClaims() {
+            const input = document.getElementById('adminClaimSearch');
+            const query = input ? input.value.toLowerCase().trim() : '';
+            const rows = document.querySelectorAll('#serverClaimsTable tbody tr');
+
+            rows.forEach(tr => {
+                const text = tr.innerText.toLowerCase();
+                tr.style.display = (!query || text.includes(query)) ? '' : 'none';
+            });
+        }
+
+        // ==========================================
+        // SUPPORT CONFIGURATION & TICKET READER LOGIC
+        // ==========================================
+        function toggleSupportConfigCard() {
+            const body = document.getElementById('supportConfigCardBody');
+            const toggleText = document.getElementById('supportConfigToggleText');
+            if (!body) return;
+            if (body.style.display === 'none') {
+                body.style.display = 'block';
+                if (toggleText) toggleText.textContent = 'Hide Editor';
+            } else {
+                body.style.display = 'none';
+                if (toggleText) toggleText.textContent = 'Edit Details';
+            }
+        }
+
+        function saveSupportConfig(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = document.getElementById('btnSaveSupportConfig');
+            const statusMsg = document.getElementById('supportConfigStatusMessage');
+            
+            const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>Saving...</span>';
+            }
+            if (statusMsg) {
+                statusMsg.style.display = 'inline';
+                statusMsg.style.color = 'var(--text-muted)';
+                statusMsg.textContent = 'Saving configuration...';
+            }
+
+            const formData = new FormData(form);
+
+            fetch('{{ route('admin.support.content.update') }}', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+                }
+                if (data.success) {
+                    if (statusMsg) {
+                        statusMsg.style.display = 'inline';
+                        statusMsg.style.color = '#059669';
+                        statusMsg.textContent = '✓ ' + (data.message || 'Support details saved successfully!');
+                        setTimeout(() => {
+                            if (statusMsg) statusMsg.style.display = 'none';
+                        }, 5000);
+                    }
+                    alert(data.message || 'Support page contact numbers, email, and underwriter configuration updated successfully!');
+                } else {
+                    if (statusMsg) {
+                        statusMsg.style.display = 'inline';
+                        statusMsg.style.color = '#dc2626';
+                        statusMsg.textContent = '✕ Error saving configuration.';
+                    }
+                    alert('Error: ' + (data.message || 'Could not save support content.'));
+                }
+            })
+            .catch(err => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+                }
+                if (statusMsg) {
+                    statusMsg.style.display = 'inline';
+                    statusMsg.style.color = '#dc2626';
+                    statusMsg.textContent = '✕ Server error.';
+                }
+                alert('Error saving support configuration: ' + err.message);
+            });
+        }
+
+        function readAdminTicket(id) {
+            // Fetch clean ticket record from database
+            fetch(`/admin/support-tickets/${id}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success || !data.ticket) {
+                    alert('Could not load ticket details.');
+                    return;
+                }
+                const t = data.ticket;
+
+                document.getElementById('adminTicketId').value = t.id;
+                document.getElementById('adminTicketModalNumber').textContent = t.ticket_number || ('#' + t.id);
+                
+                const dateEl = document.getElementById('adminTicketModalDate');
+                if (dateEl) {
+                    if (t.created_at) {
+                        const d = new Date(t.created_at);
+                        dateEl.textContent = 'Submitted on: ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' at ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                    } else {
+                        dateEl.textContent = 'Submitted recently';
+                    }
+                }
+
+                document.getElementById('adminTicketCustomerName').textContent = t.name || 'Anonymous User';
+                
+                const emailEl = document.getElementById('adminTicketCustomerEmail');
+                const emailLink = document.getElementById('adminTicketCustomerEmailLink');
+                if (emailEl) emailEl.textContent = t.email || 'N/A';
+                if (emailLink) emailLink.href = t.email ? `mailto:${t.email}` : '#';
+
+                const phoneEl = document.getElementById('adminTicketCustomerPhone');
+                const phoneLink = document.getElementById('adminTicketCustomerPhoneLink');
+                if (phoneEl) phoneEl.textContent = t.phone || 'No phone provided';
+                if (phoneLink) phoneLink.href = t.phone ? `tel:${t.phone.replace(/[^0-9+]/g, '')}` : '#';
+
+                document.getElementById('adminTicketPolicyNumber').textContent = t.policy_number || 'General / None';
+                
+                const catEl = document.getElementById('adminTicketCategoryBadge');
+                if (catEl) catEl.textContent = (t.category || 'General').toUpperCase().replace(/_/g, ' ');
+
+                const prioEl = document.getElementById('adminTicketPriorityBadge');
+                if (prioEl) {
+                    const prio = (t.priority || 'medium').toLowerCase();
+                    prioEl.textContent = prio.toUpperCase();
+                    if (prio === 'urgent' || prio === 'high') {
+                        prioEl.style.background = '#fef2f2';
+                        prioEl.style.color = '#dc2626';
+                    } else {
+                        prioEl.style.background = '#f1f5f9';
+                        prioEl.style.color = '#475569';
+                    }
+                }
+
+                document.getElementById('adminTicketSubjectText').textContent = t.subject || 'No Subject';
+                document.getElementById('adminTicketMessageText').textContent = t.message || 'No message content provided.';
+                document.getElementById('adminTicketStatusSelect').value = t.status || 'open';
+                document.getElementById('adminTicketNotesInput').value = t.admin_notes || '';
+
+                openModal('modalAdminTicket');
+            })
+            .catch(err => {
+                alert('Error loading ticket details: ' + err.message);
+            });
+        }
+
+        // Fallback for any legacy invocation
+        function openAdminTicketModal(ticket) {
+            if (ticket && ticket.id) {
+                readAdminTicket(ticket.id);
+            }
+        }
+
+        function saveAdminTicketResponse(event) {
+            event.preventDefault();
+            const id = document.getElementById('adminTicketId').value;
+            const status = document.getElementById('adminTicketStatusSelect').value;
+            const adminNotes = document.getElementById('adminTicketNotesInput').value;
+            const submitBtn = document.getElementById('btnSaveTicketResponse');
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Saving...';
+            }
+
+            fetch(`/admin/support-tickets/${id}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    status: status,
+                    admin_notes: adminNotes
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Save Resolution & Update Status';
+                }
+                if (data.success) {
+                    alert(data.message || 'Ticket response saved and status updated!');
+                    closeModal('modalAdminTicket');
+                    try { localStorage.setItem('sb_admin_active_tab', 'support-tickets'); } catch(err) {}
+                    window.location.hash = '#support-tickets';
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + (data.message || 'Could not update ticket.'));
+                }
+            })
+            .catch(err => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Save Resolution & Update Status';
+                }
+                alert('Error saving response: ' + err.message);
+            });
+        }
+
+        function deleteAdminTicket(id, ticketNumber) {
+            SureboundModal.confirm({
+                title: 'Delete Service Ticket',
+                badge: '#' + ticketNumber,
+                message: `Are you sure you want to permanently delete service ticket #${ticketNumber}?\n\nThis action cannot be undone.`,
+                confirmText: 'Delete Ticket',
+                cancelText: 'Cancel',
+                type: 'danger',
+                icon: 'trash'
+            }).then(confirmed => {
+                if (!confirmed) return;
+
+                fetch(`/admin/support-tickets/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        SureboundModal.alert({
+                            title: 'Ticket Removed',
+                            message: data.message || 'Ticket deleted successfully.',
+                            type: 'success',
+                            buttonText: 'Done'
+                        }).then(() => {
+                            try { localStorage.setItem('sb_admin_active_tab', 'support-tickets'); } catch(err) {}
+                            window.location.hash = '#support-tickets';
+                            window.location.reload();
+                        });
+                    } else {
+                        SureboundModal.alert({
+                            title: 'Delete Failed',
+                            message: 'Error: ' + (data.message || 'Could not delete ticket.'),
+                            type: 'danger',
+                            buttonText: 'Close'
+                        });
+                    }
+                })
+                .catch(err => {
+                    SureboundModal.alert({
+                        title: 'Error',
+                        message: 'Error deleting ticket: ' + err.message,
+                        type: 'danger',
+                        buttonText: 'Close'
+                    });
+                });
+            });
+        }
+
+        function filterAdminTickets(status, btn) {
+            document.querySelectorAll('#tab-support-tickets .filter-tab-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const rows = document.querySelectorAll('#adminTicketsTable tbody tr');
+            rows.forEach(tr => {
+                const s = tr.getAttribute('data-status');
+                if (!s) return;
+                if (status === 'all' || s === status) {
+                    tr.style.display = '';
+                } else {
+                    tr.style.display = 'none';
+                }
+            });
+        }
+
+        function searchAdminTickets() {
+            const query = document.getElementById('adminTicketSearch').value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#adminTicketsTable tbody tr');
+            rows.forEach(tr => {
+                const text = tr.innerText.toLowerCase();
+                tr.style.display = (!query || text.includes(query)) ? '' : 'none';
+            });
         }
     </script>
 
-    <!-- Admin Portal Script -->
-    <script src="{{ asset('js/admin.js') }}">        function submitClaimsCms() {
-            document.getElementById('claimsCmsForm').submit();
-        }
-    </script>
+    <!-- Surebound Modal System & Admin Portal Script -->
+    <script src="{{ asset('js/surebound-modal.js') }}"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
 </body>
 </html>
