@@ -114,7 +114,7 @@ class PolicySeeder extends Seeder
                 'holder_email' => $holderEmail,
                 'holder_phone' => $holderPhone,
                 'type' => 'business',
-                'type_label' => 'Commercial Business Owner Policy (BOP)',
+                'type_label' => 'Business Owner Policy (BOP)',
                 'carrier' => 'Surebound Syndicate & The Hartford',
                 'insured_item' => 'Corporate Office Suite - 1200 Tech Ridge Blvd, Ste 400',
                 'coverage_limit' => '$2,000,000',

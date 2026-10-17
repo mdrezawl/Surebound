@@ -106,7 +106,7 @@ class PolicyManagementTest extends TestCase
             'holder_phone' => '(512) 555-9012',
             'user_id' => $customer->id,
             'type' => 'business',
-            'type_label' => 'Commercial Business Owners Policy (BOP)',
+            'type_label' => 'Business Owner Policy (BOP)',
             'policy_number' => 'SB-BUS-554433',
             'carrier' => 'The Hartford & Surebound',
             'insured_item' => 'Tech Center Suite 500, Austin, TX',

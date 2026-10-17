@@ -91,7 +91,10 @@ class AdminController extends Controller
         $homePolicies = $policies->where('type', 'home');
         $autoPolicies = $policies->where('type', 'auto');
         $lifePolicies = $policies->where('type', 'life');
-        $businessPolicies = $policies->where('type', 'business');
+        $healthPolicies = $policies->where('type', 'health');
+        $umbrellaPolicies = $policies->where('type', 'umbrella');
+        $businessPolicies = $policies->whereIn('type', ['business', 'bop']);
+        $commercialPolicies = $policies->whereIn('type', ['workers_comp', 'general_liability', 'general', 'commercial_property', 'commercial_auto', 'surety_bond']);
 
         $distribution = [
             'home' => [
@@ -109,10 +112,25 @@ class AdminController extends Controller
                 'pct' => $totalPolCount > 0 ? round(($lifePolicies->count() / $totalPolCount) * 100) : 0,
                 'volume' => '$'.number_format($lifePolicies->sum(fn ($p) => (int) preg_replace('/[^0-9]/', '', $p->annual_premium ?? '0'))),
             ],
+            'health' => [
+                'count' => $healthPolicies->count(),
+                'pct' => $totalPolCount > 0 ? round(($healthPolicies->count() / $totalPolCount) * 100) : 0,
+                'volume' => '$'.number_format($healthPolicies->sum(fn ($p) => (int) preg_replace('/[^0-9]/', '', $p->annual_premium ?? '0'))),
+            ],
+            'umbrella' => [
+                'count' => $umbrellaPolicies->count(),
+                'pct' => $totalPolCount > 0 ? round(($umbrellaPolicies->count() / $totalPolCount) * 100) : 0,
+                'volume' => '$'.number_format($umbrellaPolicies->sum(fn ($p) => (int) preg_replace('/[^0-9]/', '', $p->annual_premium ?? '0'))),
+            ],
             'business' => [
                 'count' => $businessPolicies->count(),
                 'pct' => $totalPolCount > 0 ? round(($businessPolicies->count() / $totalPolCount) * 100) : 0,
                 'volume' => '$'.number_format($businessPolicies->sum(fn ($p) => (int) preg_replace('/[^0-9]/', '', $p->annual_premium ?? '0'))),
+            ],
+            'commercial' => [
+                'count' => $commercialPolicies->count(),
+                'pct' => $totalPolCount > 0 ? round(($commercialPolicies->count() / $totalPolCount) * 100) : 0,
+                'volume' => '$'.number_format($commercialPolicies->sum(fn ($p) => (int) preg_replace('/[^0-9]/', '', $p->annual_premium ?? '0'))),
             ],
         ];
 
@@ -176,6 +194,9 @@ class AdminController extends Controller
 
         $homeInsuranceContent = PageContent::getForPage('home-insurance', self::getDefaultHomeInsuranceContent());
         $autoInsuranceContent = PageContent::getForPage('auto-insurance', self::getDefaultAutoInsuranceContent());
+        $lifeInsuranceContent = PageContent::getForPage('life-insurance', self::getDefaultLifeInsuranceContent());
+        $healthInsuranceContent = PageContent::getForPage('health-insurance', self::getDefaultHealthInsuranceContent());
+        $umbrellaInsuranceContent = PageContent::getForPage('umbrella-insurance', self::getDefaultUmbrellaInsuranceContent());
         $personalCoverageContent = PageContent::getForPage('personal-coverage', self::getDefaultPersonalCoverageContent());
         $propertyInsuranceContent = PageContent::getForPage('property-insurance', self::getDefaultPropertyInsuranceContent());
         $liabilityInsuranceContent = PageContent::getForPage('liability-insurance', self::getDefaultLiabilityInsuranceContent());
@@ -193,6 +214,8 @@ class AdminController extends Controller
         $faqsContent = PageContent::getForPage('faqs', self::getDefaultFaqsContent());
         $guidesContent = PageContent::getForPage('guides', self::getDefaultGuidesContent());
         $supportContent = PageContent::getForPage('support', self::getDefaultSupportContent());
+        $commercialAutoInsuranceContent = PageContent::getForPage('commercial-auto-insurance', self::getDefaultCommercialAutoInsuranceContent());
+        $suretyBondContent = PageContent::getForPage('surety-bond', self::getDefaultSuretyBondContent());
 
         $agencySignature = ApiSetting::where('key', 'agency_signature')->first()?->value ?? [
             'signatory_name' => 'Md Rezawl',
@@ -238,6 +261,11 @@ class AdminController extends Controller
             'recentQuotes',
             'homeInsuranceContent',
             'autoInsuranceContent',
+            'commercialAutoInsuranceContent',
+            'suretyBondContent',
+            'lifeInsuranceContent',
+            'healthInsuranceContent',
+            'umbrellaInsuranceContent',
             'personalCoverageContent',
             'propertyInsuranceContent',
             'liabilityInsuranceContent',
@@ -266,26 +294,38 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:50',
-            'type' => 'required|string|in:home,auto,life,business',
+            'type' => 'required|string|max:50',
             'coverage' => 'nullable|string|max:255',
             'zip' => 'nullable|string|max:20',
             'notes' => 'nullable|string',
         ]);
 
         $typeLabels = [
-            'home' => 'Homeowners',
+            'home' => 'Homeowners Insurance',
             'auto' => 'Auto Insurance',
-            'life' => 'Life & Health',
-            'business' => 'Commercial BOP',
+            'life' => 'Life Insurance',
+            'health' => 'Health Insurance',
+            'umbrella' => 'Umbrella Liability',
+            'bop' => 'Business Owner Policy (BOP)',
+            'business' => 'Business Owner Policy (BOP)',
+            'workers_comp' => "Workers' Compensation",
+            'general_liability' => 'General Liability',
+            'general' => 'General Liability',
+            'commercial_property' => 'Commercial Property Coverage',
+            'property' => 'Commercial Property Coverage',
+            'commercial_auto' => 'Commercial Auto Insurance',
+            'surety_bond' => 'Surety Bond',
+            'cyber' => 'Cyber Security',
         ];
 
+        $rawType = strtolower($request->input('type', 'home'));
         $quote = Quote::create([
             'quote_ref' => 'Q-'.rand(10000, 99999),
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone', '(206) 555-0100'),
-            'type' => $request->input('type', 'home'),
-            'type_label' => $typeLabels[$request->input('type', 'home')] ?? 'Personal Line',
+            'type' => $rawType,
+            'type_label' => $typeLabels[$rawType] ?? ucfirst(str_replace('_', ' ', $rawType)),
             'coverage' => $request->input('coverage') ?: '$500,000 Standard',
             'premium' => '$'.rand(850, 3200).' / yr',
             'location' => $request->filled('zip') ? 'ZIP: '.$request->input('zip') : 'Washington',
@@ -350,30 +390,70 @@ class AdminController extends Controller
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:50',
             'zip' => 'required|string|max:20',
-            'type' => 'nullable|string|in:home,auto,life,business',
+            'type' => 'nullable|string|max:50',
+            'company_name' => 'nullable|string|max:255',
+            'fleet_size' => 'nullable|string|max:100',
+            'vehicle_type' => 'nullable|string|max:100',
+            'coverage_tier' => 'nullable|string|max:255',
+            'bond_type' => 'nullable|string|max:255',
+            'bond_amount' => 'nullable|string|max:100',
         ]);
 
-        $type = $request->input('type', 'home');
+        $rawType = strtolower($request->input('type', 'home'));
         $typeLabels = [
-            'home' => 'Homeowners',
+            'home' => 'Homeowners Insurance',
             'auto' => 'Auto Insurance',
-            'life' => 'Life & Health',
-            'business' => 'Commercial BOP',
+            'life' => 'Life Insurance',
+            'health' => 'Health Insurance',
+            'umbrella' => 'Umbrella Liability',
+            'bop' => 'Business Owner Policy (BOP)',
+            'business' => 'Business Owner Policy (BOP)',
+            'workers_comp' => "Workers' Compensation",
+            'general_liability' => 'General Liability',
+            'general' => 'General Liability',
+            'commercial_property' => 'Commercial Property Coverage',
+            'property' => 'Commercial Property Coverage',
+            'commercial_auto' => 'Commercial Auto Insurance',
+            'surety_bond' => 'Surety Bond',
+            'surety' => 'Surety Bond',
+            'cyber' => 'Cyber Security',
         ];
+
+        $notesList = [];
+        if ($request->filled('company_name')) {
+            $notesList[] = 'Company: '.$request->input('company_name');
+        }
+        if ($request->filled('fleet_size')) {
+            $notesList[] = 'Fleet Size: '.$request->input('fleet_size');
+        }
+        if ($request->filled('vehicle_type')) {
+            $notesList[] = 'Vehicle Type: '.$request->input('vehicle_type');
+        }
+        if ($request->filled('bond_type')) {
+            $notesList[] = 'Bond Type: '.$request->input('bond_type');
+        }
+        if ($request->filled('bond_amount')) {
+            $notesList[] = 'Bond Limit: '.$request->input('bond_amount');
+        }
+        $notesStr = ! empty($notesList)
+            ? implode(' | ', $notesList)
+            : 'Generated via website quote widget.';
+
+        $coverage = $request->input('coverage_tier') ?: ($request->filled('bond_amount') ? 'Bond Limit: '.$request->input('bond_amount') : '$500,000 Standard Tier');
 
         $quote = Quote::create([
             'quote_ref' => 'Q-'.rand(10000, 99999),
             'name' => $request->input('name') ?: 'Online Inquirer',
             'email' => $request->input('email') ?: 'lead-'.rand(100, 999).'@surebound-inquiry.com',
             'phone' => $request->input('phone') ?: null,
-            'type' => $type,
-            'type_label' => $typeLabels[$type] ?? 'Homeowners',
-            'coverage' => '$500,000 Standard Tier',
+            'type' => $rawType,
+            'type_label' => $typeLabels[$rawType] ?? ucfirst(str_replace('_', ' ', $rawType)),
+            'coverage' => $coverage,
             'premium' => '$'.rand(900, 2400).' / yr',
             'location' => 'ZIP: '.$request->input('zip'),
             'zip_code' => $request->input('zip'),
             'status' => 'new',
-            'notes' => 'Generated via homepage instant quote widget.',
+            'notes' => $notesStr,
         ]);
 
         return response()->json([
@@ -602,6 +682,224 @@ class AdminController extends Controller
     }
 
     /**
+     * Default content dictionary for Commercial Auto Insurance page
+     */
+    public static function getDefaultCommercialAutoInsuranceContent(): array
+    {
+        return [
+            // Hero
+            'hero_image' => 'images/hero-commercial-auto.jpg',
+            'hero_eyebrow' => 'COMMERCIAL AUTO &amp; FLEET INSURANCE',
+            'hero_title' => 'Total Protection for Every<br>Vehicle, Driver &amp; Mile',
+            'hero_subtitle' => 'From single service vans to heavy commercial fleets, Surebound delivers customizable liability, collision, cargo, and telematics-powered safety coverage built to keep your business moving forward.',
+            'hero_card_sub' => 'Fleet Safety &amp; Savings',
+            'hero_card_label' => 'Save up to 35% with telematics &amp; clean fleet records',
+
+            // Coverage Cards
+            'card_1_title' => 'Commercial Auto Liability (BI & PD)',
+            'card_1_desc' => 'High-limit bodily injury and property damage coverage protecting your business against catastrophic legal and medical expenses if a company driver causes an accident.',
+            'card_2_title' => 'Collision & Comprehensive Shield',
+            'card_2_desc' => 'Covers physical damage to company trucks, vans, and utility vehicles from highway collisions, rollovers, theft, vandalism, falling objects, and extreme weather events.',
+            'card_3_title' => 'Hired & Non-Owned Auto (HNOA)',
+            'card_3_desc' => 'Essential liability protection when employees use personal vehicles for business errands or your company leases, hires, or rents commercial vehicles temporarily.',
+            'card_4_title' => 'Motor Truck Cargo & Equipment',
+            'card_4_desc' => 'Safeguards customer goods, raw materials, inventory, and specialized tools while in transit against theft, transit damage, spoilage, or highway overturn.',
+            'card_5_title' => 'Uninsured / Underinsured Motorist',
+            'card_5_desc' => 'Shields your company drivers and vehicles if struck by an at-fault driver who lacks insurance, has insufficient limits, or leaves the scene.',
+            'card_6_title' => 'Fleet Telematics & 24/7 Roadside',
+            'card_6_desc' => 'Commercial-grade heavy-duty towing, battery jump-starts, tire changes, fuel dispatch, and intelligent dashcam telematics discounts for proactive risk management.',
+
+            // Value Pillars
+            'value_1_title' => 'Up to $5M Combined Single Limit',
+            'value_1_desc' => 'Heavy-duty commercial liability limits to protect corporate balance sheets against catastrophic road liability claims.',
+            'value_2_title' => 'Telematics Fleet Discounts',
+            'value_2_desc' => 'Earn up to 35% premium reductions with integrated safe-driving telemetry, GPS speed tracking, and dual-facing dashcams.',
+            'value_3_title' => 'Rapid Heavy-Duty Roadside',
+            'value_3_desc' => 'Dedicated 24/7 dispatch for commercial flatbeds, heavy wreckers, mobile mechanics, and replacement vehicle logistics.',
+            'value_4_title' => 'Hired & Non-Owned Inclusion',
+            'value_4_desc' => 'Seamless blanket protection covering employees running work errands in personal cars or rented utility trucks.',
+
+            // Guidance
+            'guidance_eyebrow' => 'COMMERCIAL FLEET RISK MANAGEMENT',
+            'guidance_title' => 'Fleet Insurance Engineered Around Your Business Operations',
+            'guidance_text' => 'Whether you operate local trade vans, regional delivery routes, or interstate freight lines, commercial auto insurance requires more than a generic policy. Surebound works directly with fleet managers, contractors, and business owners to optimize driver MVR monitoring, customize cargo limits, and secure volume discounts that directly improve your bottom line.',
+
+            // Why Choose
+            'why_1_title' => 'Instant Multi-Carrier Comparison',
+            'why_1_desc' => 'Compare commercial auto quotes across A-rated commercial carriers in minutes with a single digital application.',
+            'why_2_title' => 'Dedicated Fleet Claims Specialists',
+            'why_2_desc' => 'Direct access to certified commercial claims adjusters focused on minimizing downtime and getting your vehicles back on the road.',
+            'why_3_title' => 'Flexible Schedule of Vehicles',
+            'why_3_desc' => 'Add or remove vans, box trucks, trailers, and drivers instantly through the Surebound digital policy portal.',
+            'why_4_title' => 'USDOT &amp; State Filings Handled',
+            'why_4_desc' => 'Prompt federal and state compliance filings including Form BMC-91X, MCS-90, and state certificate dispatches.',
+
+            // FAQs
+            'faq_1_question' => 'What vehicles require Commercial Auto Insurance instead of Personal Auto?',
+            'faq_1_answer' => 'Any vehicle titled to a business or used primarily for commercial purposes—such as transporting equipment, delivering goods, driving clients, hauling cargo, or displaying commercial branding—must be covered under a commercial auto policy. Personal auto policies almost always exclude business use.',
+            'faq_2_question' => 'What is Hired and Non-Owned Auto (HNOA) insurance, and do I need it?',
+            'faq_2_answer' => 'HNOA covers your business against liability if an employee causes an accident while driving their own personal vehicle for company business (like delivering orders, picking up supplies, or driving to job sites) or if your company rents a vehicle for work. It is essential for protecting your business against vicarious liability.',
+            'faq_3_question' => 'How are commercial auto insurance premiums calculated?',
+            'faq_3_answer' => 'Premiums depend on vehicle types and weights, annual mileage, operational radius, cargo hauled, driver motor vehicle records (MVRs), fleet safety telematics, and chosen policy limits and deductibles. Surebound helps you qualify for discounts up to 35% based on driver safety programs.',
+            'faq_4_question' => 'Can I add and remove vehicles or drivers during the policy term?',
+            'faq_4_answer' => 'Yes. Our digital policyholder portal allows fleet managers and business owners to submit vehicle additions, swaps, and new driver authorizations 24/7 with instant endorsement processing and immediate digital proof of insurance certificates.',
+            'faq_5_question' => 'Does commercial auto insurance cover the tools and equipment inside my truck?',
+            'faq_5_answer' => 'Commercial auto comprehensive and collision covers damage to the vehicle itself. To protect tools, machinery, and cargo carried inside the vehicle, you can add an Inland Marine or Motor Truck Cargo rider to your Surebound policy for complete protection.',
+
+            // CTA
+            'cta_title' => 'Ready to protect your company fleet and cut commercial auto costs?',
+            'cta_subtitle' => 'Get a customized commercial vehicle quote in minutes or consult with our fleet risk underwriters.',
+        ];
+    }
+
+    /**
+     * Display Public Commercial Auto Insurance Page with Dynamic CMS Content
+     */
+    public function showCommercialAutoInsurance()
+    {
+        $content = PageContent::getForPage('commercial-auto-insurance', self::getDefaultCommercialAutoInsuranceContent());
+
+        return view('commercial-auto-insurance', compact('content'));
+    }
+
+    /**
+     * Update Commercial Auto Insurance CMS Content from Admin Portal
+     */
+    public function updateCommercialAutoInsurance(Request $request)
+    {
+        $data = $request->except(['_token', '_method', 'hero_image_file']);
+
+        if ($request->hasFile('hero_image_file')) {
+            $file = $request->file('hero_image_file');
+            $filename = 'hero_commercial_auto_'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $data['hero_image'] = 'images/'.$filename;
+        }
+
+        PageContent::setForPage('commercial-auto-insurance', $data);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Commercial Auto Insurance page updated and published live successfully!',
+                'content' => PageContent::getForPage('commercial-auto-insurance', self::getDefaultCommercialAutoInsuranceContent()),
+            ]);
+        }
+
+        return redirect()->to(route('admin.dashboard').'#commercial-auto-cms')
+            ->with('success', 'Commercial Auto Insurance page updated successfully!');
+    }
+
+    /**
+     * Default content dictionary for Surety Bond page
+     */
+    public static function getDefaultSuretyBondContent(): array
+    {
+        return [
+            // Hero
+            'hero_image' => 'images/hero-surety-bond.jpg',
+            'hero_eyebrow' => 'COMMERCIAL SURETY &amp; CONTRACT GUARANTEES',
+            'hero_title' => 'Guaranteed Performance &amp;<br>Financial Compliance on Demand',
+            'hero_subtitle' => 'Secure project bid capacity, meet state licensing requirements, and protect contractual obligations with instant online underwriting and Treasury-listed surety backing.',
+            'hero_card_sub' => 'Instant Bond Issuance',
+            'hero_card_label' => 'Over 98% of license and permit bonds approved instantly',
+
+            // Coverage / Bond Category Cards
+            'card_1_title' => 'Contract & Performance Bonds',
+            'card_1_desc' => 'Guarantees project completion, subcontractor payments, and warranty maintenance for general contractors and municipal infrastructure bids.',
+            'card_2_title' => 'License & Permit Bonds',
+            'card_2_desc' => 'Mandatory state and municipal compliance bonds for general contractors, electricians, plumbers, HVAC technicians, and licensed trade operators.',
+            'card_3_title' => 'Commercial & Court Bonds',
+            'card_3_desc' => 'Guarantees fiduciary duties, estate administration, judicial appeals, receiverships, and guardian responsibilities required by probate courts.',
+            'card_4_title' => 'Freight Broker BMC-84 Bonds',
+            'card_4_desc' => 'Meets the mandatory $75,000 USDOT/FMCSA financial security requirement for transportation freight brokers and forwarders.',
+            'card_5_title' => 'Auto Dealer & DMV Bonds',
+            'card_5_desc' => 'Protects car buyers and satisfies state Department of Motor Vehicles licensing mandates for wholesale and retail motor vehicle dealers.',
+            'card_6_title' => 'Fidelity & ERISA Employee Bonds',
+            'card_6_desc' => 'Protects company assets and 401(k) pension plans against employee theft, embezzlement, fraud, and unlawful misappropriation.',
+
+            // Value Pillars
+            'value_1_title' => 'Instant Digital Issuance',
+            'value_1_desc' => 'Fast online approvals with instant downloadable e-bonds and digital power-of-attorney seals.',
+            'value_2_title' => 'Treasury-Listed (T-Listed) Sureties',
+            'value_2_desc' => 'Accepted by all 50 states, federal agencies, municipal boards, and commercial developers nationwide.',
+            'value_3_title' => 'Competitive Rates from 0.75%',
+            'value_3_desc' => 'Tier-1 rates tailored to your business credit, contractor track record, and bonding line history.',
+            'value_4_title' => 'Automated Agency Filings',
+            'value_4_desc' => 'Direct electronic filing to state licensing boards and obligees to eliminate licensing delays.',
+
+            // Guidance
+            'guidance_eyebrow' => 'SURETY CAPACITY &amp; BONDING STRATEGY',
+            'guidance_title' => 'Expand Your Bidding Capacity with Dedicated Surety Underwriters',
+            'guidance_text' => 'Unlike traditional commercial insurance that covers unexpected losses, surety bonds serve as a strict tripartite guarantee of your operational ability and financial integrity. At Surebound, our senior bond underwriters help growing contractors and enterprises establish generous single and aggregate bonding lines, enabling you to pursue larger public and private tenders with total confidence.',
+
+            // Why Choose
+            'why_1_title' => 'No Financials Required up to $500k',
+            'why_1_desc' => 'Streamlined credit-only underwriting programs for qualified contractors on jobs up to $500,000.',
+            'why_2_title' => 'All 50 States & Federal Jurisdiction',
+            'why_2_desc' => 'Licensed across all US jurisdictions with approved power-of-attorney authority for rapid dispatch.',
+            'why_3_title' => 'Flexible Collateral Options',
+            'why_3_desc' => 'Multiple non-collateral pathways and bad-credit rehabilitation programs to keep your projects moving.',
+            'why_4_title' => 'Dedicated Bond Specialists',
+            'why_4_desc' => 'Direct phone access to bond officers who understand construction bidding deadlines and tender schedules.',
+
+            // FAQs
+            'faq_1_question' => 'What is the difference between a Surety Bond and Insurance?',
+            'faq_1_answer' => 'Commercial insurance is a two-party contract designed to protect your business against accidental loss or damage. A Surety Bond is a three-party contract (Principal, Obligee, and Surety) where the surety guarantees to the obligee that the principal will fulfill contractual or legal obligations. If the surety pays a claim, the principal is legally obligated to indemnify the surety.',
+            'faq_2_question' => 'How much does a Surety Bond typically cost?',
+            'faq_2_answer' => 'Bond costs (premiums) are a small percentage of the total bond amount, typically ranging from 0.75% to 2.5% per year for applicants with solid credit. For higher-risk bonds or non-standard credit, rates typically range from 3% to 7%. For example, a standard $10,000 contractor license bond often costs only $100 to $150 per year.',
+            'faq_3_question' => 'Can I get a Surety Bond with poor or challenged credit?',
+            'faq_3_answer' => 'Yes. Surebound partners with specialized non-standard surety markets that evaluate your operational experience, business assets, and references. We offer bad-credit bond programs for almost all license, permit, and commercial bonds.',
+            'faq_4_question' => 'How quickly can I receive my official bond certificate?',
+            'faq_4_answer' => 'Most license and permit bonds, notary bonds, and freight broker bonds are issued digitally within minutes upon payment. Complex contract performance bonds can usually be underwritten and approved within 24 to 48 hours.',
+            'faq_5_question' => 'What happens if a claim is filed against my surety bond?',
+            'faq_5_answer' => 'If a claim is submitted, the surety conducts a thorough investigation to determine its validity. If the claim is valid and the principal does not resolve the issue, the surety settles the claim with the obligee up to the bond penal sum. However, under the General Indemnity Agreement, the principal is legally responsible to reimburse the surety in full.',
+
+            // CTA
+            'cta_title' => 'Ready to secure your surety bond line with competitive rates?',
+            'cta_subtitle' => 'Apply online in under 2 minutes or speak directly with our senior surety underwriters.',
+        ];
+    }
+
+    /**
+     * Display Public Surety Bond Page with Dynamic CMS Content
+     */
+    public function showSuretyBond()
+    {
+        $content = PageContent::getForPage('surety-bond', self::getDefaultSuretyBondContent());
+
+        return view('surety-bond', compact('content'));
+    }
+
+    /**
+     * Update Surety Bond CMS Content from Admin Portal
+     */
+    public function updateSuretyBond(Request $request)
+    {
+        $data = $request->except(['_token', '_method', 'hero_image_file']);
+
+        if ($request->hasFile('hero_image_file')) {
+            $file = $request->file('hero_image_file');
+            $filename = 'hero_surety_bond_'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $data['hero_image'] = 'images/'.$filename;
+        }
+
+        PageContent::setForPage('surety-bond', $data);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Surety Bond page updated and published live successfully!',
+                'content' => PageContent::getForPage('surety-bond', self::getDefaultSuretyBondContent()),
+            ]);
+        }
+
+        return redirect()->to(route('admin.dashboard').'#surety-bond-cms')
+            ->with('success', 'Surety Bond page updated successfully!');
+    }
+
+    /**
      * Default content dictionary for Personal Coverage page
      */
     public static function getDefaultPersonalCoverageContent(): array
@@ -708,6 +1006,333 @@ class AdminController extends Controller
 
         return redirect()->to(route('admin.dashboard').'#personal-cms')
             ->with('success', 'Personal Coverage page updated successfully!');
+    }
+
+    /**
+     * Default content dictionary for Life Insurance page
+     */
+    public static function getDefaultLifeInsuranceContent(): array
+    {
+        return [
+            // Hero
+            'hero_image' => 'images/hero-life.jpg',
+            'hero_eyebrow' => 'LIFE &amp; FAMILY FINANCIAL SECURITY',
+            'hero_title' => 'Lifelong Protection for<br>the People You Cherish Most',
+            'hero_subtitle' => 'Ensure your family’s standard of living, fund college education, and safeguard generational wealth with customizable term and permanent life insurance solutions.',
+            'hero_card_sub' => 'Guaranteed Death Benefit',
+            'hero_card_label' => 'From $250k to $10M+ tailored coverage',
+
+            // Coverage Cards
+            'card_1_title' => 'Level Term Life Insurance',
+            'card_1_desc' => 'Pure death benefit protection for 10, 15, 20, 25, or 30 years with guaranteed level premiums that never increase over the term duration.',
+            'card_2_title' => 'Whole Life Insurance',
+            'card_2_desc' => 'Permanent lifelong coverage with guaranteed level premiums, guaranteed death benefits, and steady tax-deferred cash value accumulation.',
+            'card_3_title' => 'Universal Life Insurance',
+            'card_3_desc' => 'Flexible permanent life coverage that lets you adjust premium amounts and death benefit limits as your financial situation evolves.',
+            'card_4_title' => 'Final Expense &amp; Burial Guard',
+            'card_4_desc' => 'Affordable, simplified-issue coverage designed specifically to cover end-of-life expenses and medical debts with zero medical exams.',
+            'card_5_title' => 'Key Person &amp; Executive Life',
+            'card_5_desc' => 'Protects business continuity, funds buy-sell agreements, and offsets financial losses if a key executive or partner passes away.',
+            'card_6_title' => 'Critical Illness &amp; Living Benefits',
+            'card_6_desc' => 'Accelerated benefit riders allowing you to access a portion of your death benefit early if diagnosed with a qualifying illness or injury.',
+
+            // Value Pillars
+            'value_1_title' => 'Guaranteed Level Rates',
+            'value_1_desc' => 'Lock in fixed premium rates for up to 30 years with zero unexpected cost hikes.',
+            'value_2_title' => 'Cash Value Accumulation',
+            'value_2_desc' => 'Build guaranteed cash reserves you can borrow against for future opportunities or retirement.',
+            'value_3_title' => 'Accelerated Living Benefits',
+            'value_3_desc' => 'Access financial support during your lifetime if facing critical, chronic, or terminal illness.',
+            'value_4_title' => 'Fast Digital Underwriting',
+            'value_4_desc' => 'Accelerated underwriting with no-medical-exam pathways for qualifying applicants up to $2,000,000.',
+
+            // Guidance
+            'guidance_eyebrow' => 'LIFE PROTECTION SIMPLIFIED',
+            'guidance_title' => 'Securing Tomorrow\'s Promise, Today',
+            'guidance_text' => 'Life insurance isn\'t just about planning for the unexpected—it\'s about giving the people you love the freedom to thrive no matter what. At Surebound, we take the mystery out of life insurance by calculating your exact debt, mortgage, and future income replacement needs so you get bulletproof protection at competitive rates.',
+
+            // Why Choose
+            'why_1_title' => 'A+ Rated Carrier Syndicate',
+            'why_1_desc' => 'We partner exclusively with top-tier insurance carriers holding the highest AM Best financial stability ratings.',
+            'why_2_title' => 'Convertibility Privileges',
+            'why_2_desc' => 'Easily convert term policies to permanent whole life without undergoing a new medical exam or health evaluation.',
+            'why_3_title' => 'Flexible Payment Schedules',
+            'why_3_desc' => 'Choose monthly, quarterly, semi-annual, or annual billing with automatic account debit discounts.',
+            'why_4_title' => 'Expedited Beneficiary Payouts',
+            'why_4_desc' => 'Our compassionate claims specialists prioritize family beneficiaries, delivering prompt payouts within 48-72 hours of verification.',
+
+            // FAQs
+            'faq_1_question' => 'How much life insurance coverage do I actually need?',
+            'faq_1_answer' => 'A common rule of thumb is 10 to 12 times your annual income. However, our advisors recommend adding outstanding mortgages, personal debts, and estimated future college tuition costs for your children, then subtracting existing liquid savings to find your precise coverage figure.',
+            'faq_2_question' => 'What is the main difference between Term and Whole Life Insurance?',
+            'faq_2_answer' => 'Term life covers you for a set period (such as 20 or 30 years) and pays out only if death occurs during that window; it is the most affordable type of life insurance. Whole life provides lifetime coverage with a guaranteed death benefit and builds cash value over time.',
+            'faq_3_question' => 'Can I obtain a policy without having to take a medical exam?',
+            'faq_3_answer' => 'Yes! Surebound offers accelerated digital underwriting and simplified-issue life policies for qualified applicants up to age 60 and coverage limits up to $2,000,000 without requiring blood draws or physical examinations.',
+            'faq_4_question' => 'Are life insurance death benefit proceeds taxable for my beneficiaries?',
+            'faq_4_answer' => 'In the vast majority of cases, life insurance death benefits paid to named beneficiaries are completely free of federal and state income tax.',
+            'faq_5_question' => 'What happens when my term life insurance policy expires?',
+            'faq_5_answer' => 'When your term concludes, you typically have three options: renew the policy on an annual basis, convert all or part of it into a permanent life policy without health questions, or let the coverage expire if your financial obligations have decreased.',
+
+            // CTA
+            'cta_title' => 'Protect your family\'s future with total certainty.',
+            'cta_subtitle' => 'Get an instant personalized life insurance quote in less than 2 minutes and lock in your rate today.',
+        ];
+    }
+
+    /**
+     * Display Public Life Insurance Page with Dynamic CMS Content
+     */
+    public function showLifeInsurance()
+    {
+        $content = PageContent::getForPage('life-insurance', self::getDefaultLifeInsuranceContent());
+
+        return view('life-insurance', compact('content'));
+    }
+
+    /**
+     * Update Life Insurance CMS Content from Admin Portal
+     */
+    public function updateLifeInsurance(Request $request)
+    {
+        $data = $request->except(['_token', '_method', 'hero_image_file']);
+
+        if ($request->hasFile('hero_image_file')) {
+            $file = $request->file('hero_image_file');
+            $filename = 'hero_life_'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $data['hero_image'] = 'images/'.$filename;
+        }
+
+        PageContent::setForPage('life-insurance', $data);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Life Insurance page updated and published live successfully!',
+                'content' => PageContent::getForPage('life-insurance', self::getDefaultLifeInsuranceContent()),
+            ]);
+        }
+
+        return redirect()->to(route('admin.dashboard').'#life-cms')
+            ->with('success', 'Life Insurance page updated successfully!');
+    }
+
+    /**
+     * Default content dictionary for Health Insurance page
+     */
+    public static function getDefaultHealthInsuranceContent(): array
+    {
+        return [
+            // Hero
+            'hero_image' => 'images/hero-health.jpg',
+            'hero_eyebrow' => 'INDIVIDUAL &amp; FAMILY HEALTH PLANS',
+            'hero_title' => 'Comprehensive Healthcare<br>for You &amp; Your Family',
+            'hero_subtitle' => 'Access premier national provider networks, 24/7 virtual urgent care, prescription savings, and robust hospital coverage with predictable deductibles and zero surprise medical bills.',
+            'hero_card_sub' => 'Open Enrollment &amp; PPO Plans',
+            'hero_card_label' => 'Save up to 35% on quality healthcare plans',
+
+            // Coverage Cards
+            'card_1_title' => 'Comprehensive Major Medical',
+            'card_1_desc' => 'Extensive inpatient hospital stays, outpatient procedures, emergency room care, and surgical coverage across leading national medical centers.',
+            'card_2_title' => 'High-Deductible Health Plans (HDHP &amp; HSA)',
+            'card_2_desc' => 'Pair lower monthly insurance premiums with triple-tax-advantaged Health Savings Accounts to grow funds for future medical care.',
+            'card_3_title' => '100% Preventive &amp; Routine Care',
+            'card_3_desc' => 'Annual wellness physicals, preventive cancer screenings, pediatric immunizations, and prenatal checkups covered at 100% with zero copay.',
+            'card_4_title' => 'Prescription Drug Coverage',
+            'card_4_desc' => 'Comprehensive tiered pharmacy benefits saving up to 85% on generic and brand-name medications through retail pharmacies and home delivery.',
+            'card_5_title' => '24/7 Virtual Urgent Care &amp; Telehealth',
+            'card_5_desc' => 'Instant video consultations with board-certified physicians from the comfort of your home or smartphone with $0 copays on qualifying plans.',
+            'card_6_title' => 'Dental, Vision &amp; Hearing Add-Ons',
+            'card_6_desc' => 'Complete coverage packages for routine cleanings, restorative dental treatments, eye exams, designer prescription frames, and hearing aids.',
+
+            // Value Pillars
+            'value_1_title' => 'Nationwide PPO Networks',
+            'value_1_desc' => 'Choose your own doctors and specialists without burdensome primary care referral requirements.',
+            'value_2_title' => '24/7 $0 Telehealth Visits',
+            'value_2_desc' => 'Connect to top medical doctors in under 15 minutes right from your phone for instant prescriptions and diagnosis.',
+            'value_3_title' => 'HSA Triple Tax Advantage',
+            'value_3_desc' => 'Contribute pre-tax dollars, enjoy tax-free growth, and withdraw tax-free for qualified medical expenses.',
+            'value_4_title' => 'Clear Out-of-Pocket Limits',
+            'value_4_desc' => 'Rest easy with capped annual maximums protecting your family from unexpected catastrophic medical expenses.',
+
+            // Guidance
+            'guidance_eyebrow' => 'HEALTHCARE NAVIGATED EASILY',
+            'guidance_title' => 'Health Coverage Built Around Modern Wellness',
+            'guidance_text' => 'Navigating health insurance plans, co-pays, deductibles, and doctor networks shouldn\'t be a headache. Surebound simplifies the healthcare marketplace by offering curated individual, family, and group options that balance affordable monthly premiums with expansive network freedom and dependable emergency care.',
+
+            // Why Choose
+            'why_1_title' => 'Broad In-Network Freedom',
+            'why_1_desc' => 'Keep your trusted family physicians, local pediatricians, and regional medical facilities with expansive PPO network options.',
+            'why_2_title' => 'No Surprise Medical Billing',
+            'why_2_desc' => 'Strict consumer safeguards ensure in-network rates apply to emergency care even if provided by out-of-network clinicians.',
+            'why_3_title' => 'Dedicated Patient Advocates',
+            'why_3_desc' => 'Personal concierge specialists assist with pre-authorizations, bill audits, and scheduling specialist appointments.',
+            'why_4_title' => 'Customized Plan Comparison',
+            'why_4_desc' => 'Compare ACA marketplace plans, private carrier plans, and catastrophic coverage side by side in minutes.',
+
+            // FAQs
+            'faq_1_question' => 'What is the difference between a PPO and an HMO health plan?',
+            'faq_1_answer' => 'A PPO (Preferred Provider Organization) gives you the freedom to see any doctor or specialist without requiring a referral from a primary care physician, and offers coverage for both in-network and out-of-network care. An HMO (Health Maintenance Organization) requires you to choose a primary care doctor and get referrals for specialists, and typically covers only in-network providers.',
+            'faq_2_question' => 'Does Surebound health insurance cover pre-existing conditions?',
+            'faq_2_answer' => 'Yes. All our ACA-compliant individual and family health insurance plans provide comprehensive coverage for pre-existing conditions from day one with zero waiting periods.',
+            'faq_3_question' => 'How does a Health Savings Account (HSA) work with my plan?',
+            'faq_3_answer' => 'When enrolled in an HSA-qualified High Deductible Health Plan, you can contribute tax-deductible dollars to a dedicated HSA account. Those funds roll over year after year, can be invested, and can be withdrawn completely tax-free for medical, dental, and vision expenses.',
+            'faq_4_question' => 'When can I enroll in or switch my health insurance policy?',
+            'faq_4_answer' => 'You can enroll during the annual Open Enrollment period or at any time during the year if you qualify for a Special Enrollment Period due to a life event such as changing jobs, moving, marriage, or the birth of a child.',
+            'faq_5_question' => 'What happens if I need medical care while traveling out of state?',
+            'faq_5_answer' => 'Emergency medical care is covered nationwide at in-network cost-sharing levels regardless of where you are in the United States. Additionally, our 24/7 virtual telehealth service is available anywhere across all 50 states.',
+
+            // CTA
+            'cta_title' => 'Take control of your health and medical peace of mind.',
+            'cta_subtitle' => 'Explore tailored health insurance plans for yourself, your family, or your business in under 2 minutes.',
+        ];
+    }
+
+    /**
+     * Display Public Health Insurance Page with Dynamic CMS Content
+     */
+    public function showHealthInsurance()
+    {
+        $content = PageContent::getForPage('health-insurance', self::getDefaultHealthInsuranceContent());
+
+        return view('health-insurance', compact('content'));
+    }
+
+    /**
+     * Update Health Insurance CMS Content from Admin Portal
+     */
+    public function updateHealthInsurance(Request $request)
+    {
+        $data = $request->except(['_token', '_method', 'hero_image_file']);
+
+        if ($request->hasFile('hero_image_file')) {
+            $file = $request->file('hero_image_file');
+            $filename = 'hero_health_'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $data['hero_image'] = 'images/'.$filename;
+        }
+
+        PageContent::setForPage('health-insurance', $data);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Health Insurance page updated and published live successfully!',
+                'content' => PageContent::getForPage('health-insurance', self::getDefaultHealthInsuranceContent()),
+            ]);
+        }
+
+        return redirect()->to(route('admin.dashboard').'#health-cms')
+            ->with('success', 'Health Insurance page updated successfully!');
+    }
+
+    /**
+     * Default content dictionary for Umbrella Insurance page
+     */
+    public static function getDefaultUmbrellaInsuranceContent(): array
+    {
+        return [
+            // Hero
+            'hero_image' => 'images/hero-umbrella.jpg',
+            'hero_eyebrow' => 'PERSONAL UMBRELLA &amp; EXCESS LIABILITY',
+            'hero_title' => 'Excess Liability Shield for<br>Your Entire Net Worth',
+            'hero_subtitle' => 'When a major accident or lawsuit exhausts your homeowners or auto liability limits, Surebound Umbrella Insurance provides an indispensable $1M to $10M+ shield over your savings, home, and future earnings.',
+            'hero_card_sub' => 'Excess Liability Protection',
+            'hero_card_label' => '$1,000,000 to $10,000,000 asset shield',
+
+            // Coverage Cards
+            'card_1_title' => 'High-Limit Bodily Injury Defense',
+            'card_1_desc' => 'Provides an additional $1M to $10M+ in liability protection if you cause an accident resulting in serious injuries to other parties.',
+            'card_2_title' => 'Multi-Car &amp; Teen Driver Protection',
+            'card_2_desc' => 'Safeguards your wealth against severe multi-vehicle accidents involving inexperienced household drivers or teenage motorists.',
+            'card_3_title' => 'Catastrophic Property Damage Excess',
+            'card_3_desc' => 'Covers multimillion-dollar structural, environmental, or commercial property damage that easily breaches basic auto or home limits.',
+            'card_4_title' => 'Worldwide Travel &amp; Rental Liability',
+            'card_4_desc' => 'Extends your liability protection internationally, covering accidents in overseas rental vehicles, vacation villas, and chartered watercraft.',
+            'card_5_title' => 'Defamation, Libel &amp; Slander Defense',
+            'card_5_desc' => 'Defends you and your household against legal allegations of character defamation, privacy infringement, false arrest, or online slander.',
+            'card_6_title' => 'Legal Defense Costs Outside Limits',
+            'card_6_desc' => 'Attorney fees, litigation expenses, court filings, and expert witness charges are fully covered on top of your chosen policy limit.',
+
+            // Value Pillars
+            'value_1_title' => '$1M - $10M+ Limits',
+            'value_1_desc' => 'Flexible excess liability layers tailored precisely to your estate value and exposure profile.',
+            'value_2_title' => 'Worldwide Protection',
+            'value_2_desc' => 'Comprehensive protection that travels with you across international borders, vacations, and global rentals.',
+            'value_3_title' => 'Legal Defense Included',
+            'value_3_desc' => 'Elite legal representation provided with legal defense costs paid in addition to your coverage cap.',
+            'value_4_title' => 'Extremely Affordable Rates',
+            'value_4_desc' => 'Enjoy an extra $1,000,000 in excess lawsuit protection for often under $1 per day.',
+
+            // Guidance
+            'guidance_eyebrow' => 'PRESERVING GENERATIONAL WEALTH',
+            'guidance_title' => 'Why High-Net-Worth Households Rely on Umbrella Protection',
+            'guidance_text' => 'In today’s litigious environment, a single catastrophic multi-vehicle accident or serious property injury lawsuit can easily lead to a multi-million-dollar judgment. If your underlying auto or homeowners policy caps out at $300,000 or $500,000, the remaining balance can be collected from your personal savings, retirement funds, real estate equity, and future income. Surebound Umbrella Insurance prevents that catastrophe from ever happening.',
+
+            // Why Choose
+            'why_1_title' => 'Seamless Underlying Coordination',
+            'why_1_desc' => 'Effortlessly integrates above your existing auto, homeowners, condo, boat, and rental property policies.',
+            'why_2_title' => 'Household-Wide Protection',
+            'why_2_desc' => 'Covers all resident family members including spouses, young drivers, and dependent children living in your home.',
+            'why_3_title' => 'Private Client Legal Defense',
+            'why_3_desc' => 'Direct access to premier insurance defense litigation teams to handle complex claims and protect your reputation.',
+            'why_4_title' => 'No Deductible Claims',
+            'why_4_desc' => 'Once your primary policy pays its standard limit, your umbrella coverage takes over immediately with $0 additional deductible.',
+
+            // FAQs
+            'faq_1_question' => 'What exactly is Personal Umbrella Insurance?',
+            'faq_1_answer' => 'Personal Umbrella Insurance is an excess liability policy designed to provide an extra layer of financial protection beyond the liability limits of your standard auto, homeowners, or boat insurance policies. If you are sued for a major claim, your umbrella policy pays out after your primary policy limits are exhausted.',
+            'faq_2_question' => 'Who actually needs an Umbrella Insurance policy?',
+            'faq_2_answer' => 'Anyone with assets to protect, including home equity, investment portfolios, retirement accounts, or future earning potential. You are particularly exposed if you own a home, have teenage drivers, own a swimming pool, host frequent gatherings, coach youth sports, or own rental properties.',
+            'faq_3_question' => 'How much does an Umbrella Insurance policy typically cost?',
+            'faq_3_answer' => 'Umbrella insurance is one of the most cost-effective insurance coverages available. A $1,000,000 personal umbrella policy typically costs between $150 and $300 annually (under $25 a month). Each additional million in coverage generally costs even less.',
+            'faq_4_question' => 'Does an umbrella policy cover legal defense and attorney fees?',
+            'faq_4_answer' => 'Yes! Your umbrella policy pays for your legal defense costs, including attorney fees, court costs, and investigator expenses. These defense costs are typically paid in addition to your liability limit, meaning they do not reduce your actual payout coverage.',
+            'faq_5_question' => 'Can I get Umbrella Insurance if my home and auto policies are with different companies?',
+            'faq_5_answer' => 'Yes. While bundling under one carrier can earn you additional multi-policy discounts, Surebound can issue standalone personal umbrella policies over qualifying primary policies from other reputable insurance carriers.',
+
+            // CTA
+            'cta_title' => 'Safeguard everything you\'ve worked hard to build.',
+            'cta_subtitle' => 'Speak with an underwriting specialist or request your personal umbrella proposal in under 2 minutes.',
+        ];
+    }
+
+    /**
+     * Display Public Umbrella Insurance Page with Dynamic CMS Content
+     */
+    public function showUmbrellaInsurance()
+    {
+        $content = PageContent::getForPage('umbrella-insurance', self::getDefaultUmbrellaInsuranceContent());
+
+        return view('umbrella-insurance', compact('content'));
+    }
+
+    /**
+     * Update Umbrella Insurance CMS Content from Admin Portal
+     */
+    public function updateUmbrellaInsurance(Request $request)
+    {
+        $data = $request->except(['_token', '_method', 'hero_image_file']);
+
+        if ($request->hasFile('hero_image_file')) {
+            $file = $request->file('hero_image_file');
+            $filename = 'hero_umbrella_'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $data['hero_image'] = 'images/'.$filename;
+        }
+
+        PageContent::setForPage('umbrella-insurance', $data);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Umbrella Insurance page updated and published live successfully!',
+                'content' => PageContent::getForPage('umbrella-insurance', self::getDefaultUmbrellaInsuranceContent()),
+            ]);
+        }
+
+        return redirect()->to(route('admin.dashboard').'#umbrella-cms')
+            ->with('success', 'Umbrella Insurance page updated successfully!');
     }
 
     public static function getDefaultPropertyInsuranceContent(): array
@@ -2976,8 +3601,14 @@ class AdminController extends Controller
                 'home' => 'HOM',
                 'auto' => 'AUT',
                 'umbrella' => 'UMB',
-                'business' => 'BUS',
+                'business', 'bop' => 'BOP',
                 'life' => 'LIF',
+                'health' => 'HLT',
+                'workers_comp' => 'WKC',
+                'general_liability', 'general' => 'LIA',
+                'commercial_property', 'property' => 'PRP',
+                'commercial_auto' => 'CAU',
+                'surety_bond' => 'SBD',
                 'cyber' => 'CYB',
                 default => 'POL',
             };
@@ -2990,10 +3621,16 @@ class AdminController extends Controller
                 'home' => 'Homeowners Comprehensive (HO-5)',
                 'auto' => 'Executive Auto Comprehensive & Collision',
                 'umbrella' => 'Excess Umbrella Liability Protection',
-                'business' => 'Commercial Business Owners Policy (BOP)',
+                'business', 'bop' => 'Business Owner Policy (BOP)',
                 'life' => 'Executive Term Life Protection',
+                'health' => 'Comprehensive Healthcare & Medical Shield',
+                'workers_comp' => "Workers' Compensation Insurance",
+                'general_liability', 'general' => 'Commercial General Liability',
+                'commercial_property', 'property' => 'Commercial Property Coverage',
+                'commercial_auto' => 'Commercial Auto & Fleet Shield',
+                'surety_bond' => 'Surety Bond & Contract Guarantee',
                 'cyber' => 'Cyber Security & Privacy Breach Shield',
-                default => ucfirst($validated['type']).' Coverage',
+                default => ucfirst(str_replace('_', ' ', $validated['type'])).' Coverage',
             };
         }
 

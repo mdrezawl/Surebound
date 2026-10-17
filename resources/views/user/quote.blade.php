@@ -265,12 +265,22 @@
                 <div>
                     <label style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px;">Insurance Line *</label>
                     <select name="type" id="new_quote_type" required onchange="onQuoteTypeChanged(this.value)" style="width: 100%; padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.875rem; color: var(--text-main); background: #ffffff;">
-                        <option value="home">Homeowners Comprehensive (HO-5)</option>
-                        <option value="auto">Auto / Motor Vehicle Fleet</option>
-                        <option value="business">Commercial Business Owners (BOP)</option>
-                        <option value="umbrella">Excess Umbrella &amp; Worldwide Liability</option>
-                        <option value="cyber">Cyber Security &amp; Data Breach</option>
-                        <option value="life">Universal Life &amp; Key Person</option>
+                        <optgroup label="Personal Lines">
+                            <option value="home">Homeowners Comprehensive (HO-5)</option>
+                            <option value="auto">Personal Auto / Motor Vehicle</option>
+                            <option value="life">Term &amp; Permanent Life Insurance</option>
+                            <option value="health">Comprehensive Individual &amp; Family Health</option>
+                            <option value="umbrella">Excess Umbrella &amp; Worldwide Liability</option>
+                        </optgroup>
+                        <optgroup label="Commercial Lines">
+                            <option value="bop">Business Owner Policy (BOP)</option>
+                            <option value="workers_comp">Workers' Compensation Insurance</option>
+                            <option value="general_liability">Commercial General Liability</option>
+                            <option value="commercial_property">Commercial Property Coverage</option>
+                            <option value="commercial_auto">Commercial Auto / Vehicle Fleet</option>
+                            <option value="surety_bond">Surety Bond &amp; Contract Guarantee</option>
+                            <option value="cyber">Cyber Security &amp; Data Breach</option>
+                        </optgroup>
                     </select>
                 </div>
 
@@ -426,11 +436,18 @@ function closeUserModal(id) {
 function onQuoteTypeChanged(val) {
     const labels = {
         home: 'Homeowners Comprehensive (HO-5)',
-        auto: 'Auto / Motor Vehicle Fleet',
-        business: 'Commercial Business Owners (BOP)',
+        auto: 'Personal Auto / Motor Vehicle',
+        life: 'Term & Permanent Life Insurance',
+        health: 'Comprehensive Individual & Family Health',
         umbrella: 'Excess Umbrella & Worldwide Liability',
-        cyber: 'Cyber Security & Data Breach',
-        life: 'Universal Life & Key Person'
+        bop: 'Business Owner Policy (BOP)',
+        business: 'Business Owner Policy (BOP)',
+        workers_comp: "Workers' Compensation Insurance",
+        general_liability: 'Commercial General Liability',
+        commercial_property: 'Commercial Property Coverage',
+        commercial_auto: 'Commercial Auto / Vehicle Fleet',
+        surety_bond: 'Surety Bond & Contract Guarantee',
+        cyber: 'Cyber Security & Data Breach'
     };
     document.getElementById('new_quote_type_label').value = labels[val] || 'Custom Line';
 }

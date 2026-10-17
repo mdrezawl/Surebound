@@ -93,7 +93,7 @@
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   max-width: 100vw;
   scroll-behavior: smooth;
@@ -107,7 +107,7 @@ body {
   background-color: #ffffff;
   line-height: 1.6;
   font-size: 17px;
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   max-width: 100vw;
   min-width: 0;
@@ -224,11 +224,21 @@ button {
    ========================================================= */
 .site-header {
   background-color: #ffffff;
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
   box-shadow: 0 1px 4px rgba(11, 26, 72, 0.05);
-  transition: box-shadow 0.3s ease;
+  transition: all 0.25s ease;
+}
+
+.site-header.is-sticky {
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(11, 26, 72, 0.08);
 }
 
 .site-header .container {
@@ -817,17 +827,40 @@ button {
   transform: translateX(4px);
 }
 
+.coverage-card-link {
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease;
+}
+
+.coverage-card-link svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.5;
+  transition: transform 0.2s ease;
+}
+
+.coverage-card:hover .coverage-card-link svg {
+  transform: translateX(4px);
+}
+
 /* =========================================================
-   6. DARK NAVY VALUE BAR (4 PILLARS)
+   6. DARK NAVY VALUE BAR (4 PILLARS) & VALUE SECTIONS
    ========================================================= */
-.value-bar-section {
+.value-bar-section,
+.value-section {
   background-color: #012e71;
   padding: 46px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.value-bar-grid {
+.value-bar-grid,
+.value-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
@@ -883,6 +916,11 @@ button {
   color: #b0c0e8;
   line-height: 1.55;
   max-width: 220px;
+}
+
+/* Special aspect ratio framing for life advisor consultation */
+.simpler-image-frame-life {
+  aspect-ratio: 16 / 10;
 }
 
 /* =========================================================
@@ -2062,7 +2100,8 @@ button {
   }
 
   /* Value Bar - 2x2 Grid on Mobile */
-  .value-bar-grid {
+  .value-bar-grid,
+  .value-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px 16px;
@@ -2087,6 +2126,7 @@ button {
     font-size: 11px;
     line-height: 1.4;
   }
+
 
   /* Insurance Made Simpler */
   .simpler-grid {
@@ -2528,5 +2568,589 @@ button {
     font-size: 18px;
     line-height: 1.45;
   }
+}
 
+/* =========================================================
+   COMMERCIAL AUTO FLEET QUOTE CALCULATOR & INLINE FORM
+   ========================================================= */
+.quote-calculator-section {
+  padding: 80px 0;
+  background: linear-gradient(180deg, #f0f5fc 0%, #ffffff 100%);
+  position: relative;
+}
+
+.fleet-quote-card {
+  max-width: 960px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid rgba(18, 85, 219, 0.12);
+  border-radius: var(--radius-xl);
+  padding: 44px 40px;
+  box-shadow: 0 20px 50px rgba(11, 26, 72, 0.08);
+  position: relative;
+}
+
+.fleet-quote-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 36px;
+}
+
+.fleet-quote-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(18, 85, 219, 0.08);
+  color: var(--color-royal-blue);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.fleet-quote-title {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  color: var(--color-navy);
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.fleet-quote-subtitle {
+  font-size: 16px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.fleet-quote-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.fleet-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.fleet-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.fleet-form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 7px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fleet-form-label span.req {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.fleet-form-input,
+.fleet-form-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-card-border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--color-text-dark);
+  background-color: #fbfdff;
+  transition: all 0.2s ease;
+}
+
+.fleet-form-input:focus,
+.fleet-form-select:focus {
+  outline: none;
+  border-color: var(--color-royal-blue);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(18, 85, 219, 0.12);
+}
+
+.fleet-submit-btn {
+  width: 100%;
+  padding: 15px 28px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 18px rgba(11, 26, 72, 0.15);
+}
+
+.fleet-submit-btn:hover {
+  background-color: var(--color-royal-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(18, 85, 219, 0.28);
+}
+
+.fleet-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.fleet-trust-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(11, 26, 72, 0.08);
+  flex-wrap: wrap;
+}
+
+.fleet-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.fleet-trust-item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-royal-blue);
+}
+
+.fleet-alert-success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #065f46;
+}
+
+.fleet-alert-success svg {
+  width: 22px;
+  height: 22px;
+  color: #059669;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+  .fleet-quote-card {
+    padding: 30px 20px;
+  }
+  .fleet-quote-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .fleet-quote-title {
+    font-size: 26px;
+  }
+  .fleet-trust-bar {
+    gap: 16px;
+    justify-content: flex-start;
+  }
+}
+
+/* =========================================================
+   SURETY BOND & COMMERCIAL BOND SOLUTIONS ENHANCEMENTS
+   ========================================================= */
+
+/* --- 3-Column Bond Solutions Grid --- */
+.coverage-cards-grid.three-col {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.coverage-cards-grid.three-col .coverage-card {
+  min-height: 250px;
+  padding: 30px 24px 24px;
+  background-color: #ffffff;
+  border: 1px solid rgba(18, 85, 219, 0.1);
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(11, 26, 72, 0.04);
+}
+
+.coverage-cards-grid.three-col .coverage-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(18, 85, 219, 0.28);
+  box-shadow: 0 14px 32px rgba(18, 85, 219, 0.11);
+}
+
+.coverage-cards-grid.three-col .coverage-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.coverage-cards-grid.three-col .coverage-card-desc {
+  font-size: 14.5px;
+  color: #556477;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.coverage-cards-grid.three-col .coverage-card-arrow {
+  color: var(--color-primary);
+  font-size: 20px;
+  font-weight: 700;
+  transition: transform 0.25s ease;
+}
+
+.coverage-cards-grid.three-col .coverage-card:hover .coverage-card-arrow {
+  transform: translateX(6px);
+}
+
+/* --- Guidance & Consultation Section --- */
+.guidance-section {
+  padding: 85px 0 95px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.guidance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.guidance-image-wrap {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(11, 26, 72, 0.12);
+  aspect-ratio: 4 / 3;
+  background-color: #f1f5f9;
+}
+
+.guidance-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.guidance-image-wrap:hover .guidance-img {
+  transform: scale(1.03);
+}
+
+.guidance-badge {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(1, 46, 113, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  padding: 14px 22px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 2;
+}
+
+.guidance-badge .badge-num {
+  font-family: var(--font-headline);
+  font-size: 28px;
+  font-weight: 800;
+  color: #60a5fa;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.guidance-badge .badge-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e2e8f0;
+  letter-spacing: 0.3px;
+}
+
+.guidance-content {
+  padding-left: 8px;
+}
+
+.guidance-text {
+  font-size: 16.5px;
+  color: #4b586e;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.guidance-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+
+.guidance-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.guidance-check-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e0edff;
+  color: var(--color-royal-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.guidance-check-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.5;
+}
+
+.guidance-feature-item .feature-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: 4px;
+}
+
+.guidance-feature-item .feature-desc {
+  font-size: 14.5px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.guidance-action {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* --- Why Choose Section / Advantage Grid --- */
+.why-choose-section {
+  padding: 85px 0 95px;
+  background-color: #eff5fc;
+}
+
+.why-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 48px;
+}
+
+.why-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.why-cards-grid .why-card {
+  background: #ffffff;
+  border: 1px solid rgba(18, 85, 219, 0.1);
+  border-radius: 14px;
+  padding: 32px 22px 28px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(11, 26, 72, 0.04);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.why-cards-grid .why-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(18, 85, 219, 0.12);
+  border-color: rgba(18, 85, 219, 0.28);
+}
+
+.why-icon-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  transition: all 0.25s ease;
+}
+
+.why-cards-grid .why-card:hover .why-icon-box {
+  background: var(--color-primary);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.why-icon-box svg {
+  width: 26px;
+  height: 26px;
+  stroke-width: 1.8;
+}
+
+/* --- FAQ Accordion List & Chevron Styling --- */
+.faq-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 40px;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.faq-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.faq-question-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 26px;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-navy);
+  background: none;
+  cursor: pointer;
+  border: none;
+  gap: 16px;
+  transition: color 0.2s ease;
+}
+
+.faq-question-btn:hover {
+  color: var(--color-primary);
+}
+
+.faq-chevron {
+  width: 22px;
+  height: 22px;
+  color: var(--color-primary);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.faq-item.active .faq-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-answer-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  padding: 0 26px;
+  color: var(--color-text-body);
+  font-size: 16.5px;
+  line-height: 1.7;
+}
+
+.faq-item.active .faq-answer-panel {
+  max-height: 500px;
+  padding: 0 26px 24px 26px;
+}
+
+.faq-answer-panel p {
+  margin: 0;
+}
+
+/* --- Responsive Media Queries for Surety Bond --- */
+@media (max-width: 1024px) {
+  .coverage-cards-grid.three-col {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .guidance-grid {
+    gap: 36px;
+  }
+}
+
+@media (max-width: 900px) {
+  .guidance-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .guidance-image-wrap {
+    aspect-ratio: 16 / 10;
+    max-height: 420px;
+  }
+
+  .why-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .coverage-cards-grid.three-col {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .guidance-section,
+  .why-choose-section {
+    padding: 55px 0;
+  }
+
+  .why-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .guidance-badge {
+    bottom: 16px;
+    right: 16px;
+    padding: 10px 14px;
+  }
+
+  .guidance-badge .badge-num {
+    font-size: 22px;
+  }
+
+  .faq-question-btn {
+    padding: 16px 18px;
+    font-size: 16px;
+  }
+
+  .faq-answer-panel {
+    padding: 0 18px;
+    font-size: 15px;
+  }
+
+  .faq-item.active .faq-answer-panel {
+    padding: 0 18px 18px 18px;
+  }
 }

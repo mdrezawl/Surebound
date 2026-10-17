@@ -106,7 +106,7 @@
                 <!-- Left: Photo -->
                 <div class="simpler-image-frame">
                     <img 
-                        src="{{ asset('images/advisor-meeting-hires.jpg') }}" 
+                        src="{{ asset('images/payment-security-card.jpg') }}" 
                         alt="Secure Payments with Surebound" 
                         class="simpler-image"
                     >

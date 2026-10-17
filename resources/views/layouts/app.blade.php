@@ -27,43 +27,6 @@
     @include('partials.marketing-body')
 
     <!-- ==========================================
-         TOP UTILITY BAR
-         ========================================== -->
-    <div class="top-bar">
-        <div class="container">
-            <div class="top-bar-links">
-                <a href="{{ route('claims') }}" class="top-bar-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    <span>Claims</span>
-                </a>
-                <span class="top-bar-divider"></span>
-                <a href="{{ route('payment') }}" class="top-bar-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-6-8.25h19.5a1.5 1.5 0 0 1 1.5 1.5v10.5a1.5 1.5 0 0 1-1.5 1.5H3.75a1.5 1.5 0 0 1-1.5-1.5V10.5a1.5 1.5 0 0 1 1.5-1.5Z" />
-                    </svg>
-                    <span>Make a Payment</span>
-                </a>
-                <span class="top-bar-divider"></span>
-                <a href="/admin" class="top-bar-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                    </svg>
-                    <span>Agent Login</span>
-                </a>
-                <span class="top-bar-divider"></span>
-                <a href="{{ route('contact') }}" class="top-bar-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                    </svg>
-                    <span>Contact</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==========================================
          MAIN HEADER
          ========================================== -->
     <header class="site-header" id="site-header">
@@ -77,8 +40,8 @@
 
             <nav class="main-nav" id="main-nav">
                 <!-- Personal -->
-                <div class="nav-dropdown {{ request()->routeIs('home-insurance', 'auto-insurance', 'personal-coverage', 'specialty-coverage') ? 'active' : '' }}">
-                    <a href="javascript:void(0)" class="nav-link {{ request()->routeIs('home-insurance', 'auto-insurance', 'personal-coverage', 'specialty-coverage') ? 'active' : '' }}">
+                <div class="nav-dropdown {{ request()->routeIs('home-insurance', 'auto-insurance', 'life-insurance', 'health-insurance', 'umbrella-insurance', 'personal-coverage', 'specialty-coverage') ? 'active' : '' }}">
+                    <a href="javascript:void(0)" class="nav-link {{ request()->routeIs('home-insurance', 'auto-insurance', 'life-insurance', 'health-insurance', 'umbrella-insurance', 'personal-coverage', 'specialty-coverage') ? 'active' : '' }}">
                         <span>Personal</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -91,35 +54,44 @@
                         <a href="{{ route('auto-insurance') }}" class="{{ request()->routeIs('auto-insurance') ? 'active' : '' }}">
                             @if(request()->routeIs('auto-insurance'))<span class="active-dot">•</span>@endif Auto Insurance
                         </a>
-                        <a href="{{ route('personal-coverage') }}" class="{{ request()->routeIs('personal-coverage') ? 'active' : '' }}">
-                            @if(request()->routeIs('personal-coverage'))<span class="active-dot">•</span>@endif Personal Coverage
+                        <a href="{{ route('life-insurance') }}" class="{{ request()->routeIs('life-insurance') ? 'active' : '' }}">
+                            @if(request()->routeIs('life-insurance'))<span class="active-dot">•</span>@endif Life Insurance
                         </a>
-                        <a href="{{ route('specialty-coverage') }}" class="{{ request()->routeIs('specialty-coverage') ? 'active' : '' }}">
-                            @if(request()->routeIs('specialty-coverage'))<span class="active-dot">•</span>@endif Specialty Coverage
+                        <a href="{{ route('health-insurance') }}" class="{{ request()->routeIs('health-insurance') ? 'active' : '' }}">
+                            @if(request()->routeIs('health-insurance'))<span class="active-dot">•</span>@endif Health Insurance
+                        </a>
+                        <a href="{{ route('umbrella-insurance') }}" class="{{ request()->routeIs('umbrella-insurance') ? 'active' : '' }}">
+                            @if(request()->routeIs('umbrella-insurance'))<span class="active-dot">•</span>@endif Umbrella Insurance
                         </a>
                     </div>
                 </div>
 
-                <!-- Business -->
-                <div class="nav-dropdown {{ request()->routeIs('business-insurance', 'property-insurance', 'liability-insurance', 'group-benefits') ? 'active' : '' }}">
-                    <a href="javascript:void(0)" class="nav-link {{ request()->routeIs('business-insurance', 'property-insurance', 'liability-insurance', 'group-benefits') ? 'active' : '' }}">
-                        <span>Business</span>
+                <!-- Commercial -->
+                <div class="nav-dropdown {{ request()->routeIs('business-insurance', 'property-insurance', 'liability-insurance', 'group-benefits', 'commercial-auto-insurance', 'surety-bond') ? 'active' : '' }}">
+                    <a href="javascript:void(0)" class="nav-link {{ request()->routeIs('business-insurance', 'property-insurance', 'liability-insurance', 'group-benefits', 'commercial-auto-insurance', 'surety-bond') ? 'active' : '' }}">
+                        <span>Commercial</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                         </svg>
                     </a>
                     <div class="dropdown-flyout">
                         <a href="{{ route('business-insurance') }}" class="{{ request()->routeIs('business-insurance') ? 'active' : '' }}">
-                            @if(request()->routeIs('business-insurance'))<span class="active-dot">•</span>@endif Business Insurance
-                        </a>
-                        <a href="{{ route('property-insurance') }}" class="{{ request()->routeIs('property-insurance') ? 'active' : '' }}">
-                            @if(request()->routeIs('property-insurance'))<span class="active-dot">•</span>@endif Property Insurance
-                        </a>
-                        <a href="{{ route('liability-insurance') }}" class="{{ request()->routeIs('liability-insurance') ? 'active' : '' }}">
-                            @if(request()->routeIs('liability-insurance'))<span class="active-dot">•</span>@endif Commercial Liability
+                            @if(request()->routeIs('business-insurance'))<span class="active-dot">•</span>@endif Business Owner Policy (BOP)
                         </a>
                         <a href="{{ route('group-benefits') }}" class="{{ request()->routeIs('group-benefits') ? 'active' : '' }}">
-                            @if(request()->routeIs('group-benefits'))<span class="active-dot">•</span>@endif Workers Compensation
+                            @if(request()->routeIs('group-benefits'))<span class="active-dot">•</span>@endif Workers' Compensation
+                        </a>
+                        <a href="{{ route('liability-insurance') }}" class="{{ request()->routeIs('liability-insurance') ? 'active' : '' }}">
+                            @if(request()->routeIs('liability-insurance'))<span class="active-dot">•</span>@endif General Liability
+                        </a>
+                        <a href="{{ route('property-insurance') }}" class="{{ request()->routeIs('property-insurance') ? 'active' : '' }}">
+                            @if(request()->routeIs('property-insurance'))<span class="active-dot">•</span>@endif Property Coverage
+                        </a>
+                        <a href="{{ route('commercial-auto-insurance') }}" class="{{ request()->routeIs('commercial-auto-insurance') ? 'active' : '' }}">
+                            @if(request()->routeIs('commercial-auto-insurance'))<span class="active-dot">•</span>@endif Commercial Auto
+                        </a>
+                        <a href="{{ route('surety-bond') }}" class="{{ request()->routeIs('surety-bond') ? 'active' : '' }}">
+                            @if(request()->routeIs('surety-bond'))<span class="active-dot">•</span>@endif Surety Bond
                         </a>
                     </div>
                 </div>
@@ -256,10 +228,12 @@
                     <ul class="footer-links-list">
                         <li><a href="{{ route('home-insurance') }}">Home Insurance</a></li>
                         <li><a href="{{ route('auto-insurance') }}">Auto Insurance</a></li>
+                        <li><a href="{{ route('life-insurance') }}">Life Insurance</a></li>
+                        <li><a href="{{ route('health-insurance') }}">Health Insurance</a></li>
+                        <li><a href="{{ route('umbrella-insurance') }}">Umbrella Insurance</a></li>
                         <li><a href="{{ route('business-insurance') }}">Business Insurance</a></li>
-                        <li><a href="{{ route('property-insurance') }}">Property Insurance</a></li>
-                        <li><a href="{{ route('personal-coverage') }}">Personal Coverage</a></li>
-                        <li><a href="{{ route('specialty-coverage') }}">Specialty Coverage</a></li>
+                        <li><a href="{{ route('commercial-auto-insurance') }}">Commercial Auto</a></li>
+                        <li><a href="{{ route('surety-bond') }}">Surety Bond</a></li>
                     </ul>
                 </div>
 
@@ -325,12 +299,21 @@
                 <div class="modal-form-group">
                     <label for="coverage-type">Select Insurance Type</label>
                     <select id="coverage-type" required>
-                        <option value="Home Insurance">Home Insurance</option>
-                        <option value="Auto Insurance">Auto Insurance</option>
-                        <option value="Business Insurance">Business Insurance</option>
-                        <option value="Property Insurance">Property Insurance</option>
-                        <option value="Personal Coverage">Personal Coverage</option>
-                        <option value="Specialty Coverage">Specialty Coverage</option>
+                        <optgroup label="Personal Lines">
+                            <option value="Home Insurance">Home Insurance</option>
+                            <option value="Auto Insurance">Auto Insurance</option>
+                            <option value="Life Insurance">Life Insurance</option>
+                            <option value="Health Insurance">Health Insurance</option>
+                            <option value="Umbrella Insurance">Umbrella Insurance</option>
+                        </optgroup>
+                        <optgroup label="Commercial Lines">
+                            <option value="Business Owner Policy">Business Owner Policy (BOP)</option>
+                            <option value="Workers' Compensation">Workers' Compensation</option>
+                            <option value="General Liability">General Liability</option>
+                            <option value="Commercial Property Coverage">Property Coverage</option>
+                            <option value="Commercial Auto">Commercial Auto</option>
+                            <option value="Surety Bond">Surety Bond</option>
+                        </optgroup>
                     </select>
                 </div>
                 <div class="modal-form-group">
@@ -357,10 +340,32 @@
 
     <!-- Scripts -->
     <script>
+        // Sticky Header scroll elevation
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('site-header');
+            if (header) {
+                if (window.scrollY > 15) {
+                    header.classList.add('is-sticky');
+                } else {
+                    header.classList.remove('is-sticky');
+                }
+            }
+        }, { passive: true });
+
         function openQuoteModal(type) {
             if (type) {
                 const select = document.getElementById('coverage-type');
-                if (select) select.value = type;
+                if (select) {
+                    const search = type.toLowerCase().trim();
+                    for (let i = 0; i < select.options.length; i++) {
+                        const optVal = select.options[i].value.toLowerCase();
+                        const optText = select.options[i].text.toLowerCase();
+                        if (optVal.includes(search) || optText.includes(search) || search.includes(optVal)) {
+                            select.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
             }
             const modal = document.getElementById('quoteModal');
             if (modal) modal.classList.add('active');
@@ -390,9 +395,19 @@
             let type = 'home';
             if (typeSelect) {
                 const val = typeSelect.value.toLowerCase();
-                if (val.includes('auto')) type = 'auto';
+                if (val.includes('workers')) type = 'workers_comp';
+                else if (val.includes('general liability') || val.includes('liability')) type = 'general_liability';
+                else if (val.includes('surety')) type = 'surety_bond';
+                else if (val.includes('commercial auto')) type = 'commercial_auto';
+                else if (val.includes('commercial property') || val.includes('property coverage')) type = 'commercial_property';
+                else if (val.includes('business owner') || val.includes('bop')) type = 'bop';
+                else if (val.includes('health')) type = 'health';
                 else if (val.includes('life')) type = 'life';
-                else if (val.includes('business')) type = 'business';
+                else if (val.includes('umbrella')) type = 'umbrella';
+                else if (val.includes('auto')) type = 'auto';
+                else if (val.includes('property')) type = 'property';
+                else if (val.includes('business')) type = 'bop';
+                else type = 'home';
             }
 
             btn.innerHTML = 'Connecting Underwriting Database...';

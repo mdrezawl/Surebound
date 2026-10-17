@@ -59,8 +59,29 @@ savePage('specialty-coverage/index.html', $specHtml);
 $bizHtml = $adminController->showBusinessInsurance()->render();
 savePage('business-insurance/index.html', $bizHtml);
 
+// 6a. Commercial Auto Insurance
+$commAutoHtml = $adminController->showCommercialAutoInsurance()->render();
+savePage('commercial-auto-insurance/index.html', $commAutoHtml);
+
+// 6b. Surety Bond
+$suretyBondHtml = $adminController->showSuretyBond()->render();
+savePage('surety-bond/index.html', $suretyBondHtml);
+
+// 6b. Life Insurance
+$lifeHtml = $adminController->showLifeInsurance()->render();
+savePage('life-insurance/index.html', $lifeHtml);
+
+// 6c. Health Insurance
+$healthHtml = $adminController->showHealthInsurance()->render();
+savePage('health-insurance/index.html', $healthHtml);
+
+// 6d. Umbrella Insurance
+$umbrellaHtml = $adminController->showUmbrellaInsurance()->render();
+savePage('umbrella-insurance/index.html', $umbrellaHtml);
+
 // 7. Login
 $emptyErrors = new ViewErrorBag;
+view()->share('errors', $emptyErrors);
 $loginHtml = view('auth.login', ['errors' => $emptyErrors])->render();
 savePage('login/index.html', $loginHtml);
 

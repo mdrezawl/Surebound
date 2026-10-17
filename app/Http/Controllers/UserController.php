@@ -258,6 +258,59 @@ class UserController extends Controller
     }
 
     /**
+     * Submit custom quote inquiry from user dashboard
+     */
+    public function requestQuote(Request $request)
+    {
+        $validated = $request->validate([
+            'type' => 'required|string|max:50',
+            'type_label' => 'nullable|string|max:150',
+            'coverage' => 'nullable|string|max:100',
+            'location' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
+
+        /** @var User|null $user */
+        $user = Auth::user();
+
+        $typeLabels = [
+            'home' => 'Homeowners Comprehensive (HO-5)',
+            'auto' => 'Personal Auto / Motor Vehicle',
+            'life' => 'Term & Permanent Life Insurance',
+            'health' => 'Comprehensive Individual & Family Health',
+            'umbrella' => 'Excess Umbrella & Worldwide Liability',
+            'bop' => 'Business Owner Policy (BOP)',
+            'business' => 'Business Owner Policy (BOP)',
+            'workers_comp' => "Workers' Compensation Insurance",
+            'general_liability' => 'Commercial General Liability',
+            'commercial_property' => 'Commercial Property Coverage',
+            'commercial_auto' => 'Commercial Auto & Fleet Coverage',
+            'surety_bond' => 'Surety Bond & Contract Guarantee',
+            'cyber' => 'Cyber Security & Data Breach',
+        ];
+
+        $rawType = strtolower($validated['type']);
+        $label = $validated['type_label'] ?: ($typeLabels[$rawType] ?? ucfirst(str_replace('_', ' ', $rawType)));
+
+        $quote = Quote::create([
+            'quote_ref' => 'SB-Q-'.rand(10000, 99999),
+            'name' => $user?->name ?? 'Valued Policyholder',
+            'email' => $user?->email ?? 'policyholder@surebound.com',
+            'phone' => $user?->phone ?? '(512) 840-2918',
+            'type' => $rawType,
+            'type_label' => $label,
+            'coverage' => $validated['coverage'] ?: '$1,000,000 Comprehensive Limit',
+            'premium' => '$'.rand(850, 3400).' / yr',
+            'location' => $validated['location'] ?: 'Austin, TX 78701',
+            'zip_code' => $validated['location'] ? (preg_match('/\b\d{5}\b/', $validated['location'], $m) ? $m[0] : null) : null,
+            'status' => 'new',
+            'notes' => $validated['notes'] ?: 'Customer requested quote via dashboard portal.',
+        ]);
+
+        return redirect()->route('user.quote')->with('success', 'Quote inquiry #'.$quote->quote_ref.' for '.$label.' submitted successfully! An underwriter is reviewing your file.');
+    }
+
+    /**
      * Accept rate proposal and bind policy contract instantly
      */
     public function acceptQuote($id)
@@ -273,8 +326,16 @@ class UserController extends Controller
         $policyPrefix = match ($quote->type) {
             'home' => 'SB-HOM-',
             'auto' => 'SB-AUT-',
-            'business' => 'SB-BUS-',
             'life' => 'SB-LIF-',
+            'health' => 'SB-HLT-',
+            'umbrella' => 'SB-UMB-',
+            'bop', 'business' => 'SB-BOP-',
+            'workers_comp' => 'SB-WKC-',
+            'general_liability', 'general' => 'SB-LIA-',
+            'commercial_property' => 'SB-PRP-',
+            'commercial_auto' => 'SB-CAU-',
+            'surety_bond' => 'SB-SBD-',
+            'cyber' => 'SB-CYB-',
             default => 'SB-POL-',
         };
         $policyNumber = $policyPrefix.rand(100000, 999999);
@@ -286,8 +347,8 @@ class UserController extends Controller
             'holder_name' => $quote->name ?: ($user?->name ?? 'Valued Policyholder'),
             'holder_email' => $quote->email ?: ($user?->email ?? 'policyholder@surebound.com'),
             'holder_phone' => $quote->phone ?: ($user?->phone ?? '(512) 840-2918'),
-            'type' => in_array($quote->type, ['home', 'auto', 'life', 'business']) ? $quote->type : 'business',
-            'plan_name' => $quote->type_label ?? 'Comprehensive Executive Coverage',
+            'type' => $quote->type ?: 'business',
+            'type_label' => $quote->type_label ?? 'Comprehensive Executive Coverage',
             'insured_item' => 'Primary Named Insured Asset ('.$quote->location.')',
             'coverage_limit' => $quote->coverage ?? '$1,000,000 Aggregate',
             'deductible' => '$1,000 per occurrence',

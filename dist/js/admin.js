@@ -400,8 +400,17 @@
             const typeLabels = {
                 home: 'Homeowners',
                 auto: 'Auto Insurance',
-                life: 'Life & Health',
-                business: 'Business BOP'
+                life: 'Life Insurance',
+                health: 'Health Insurance',
+                umbrella: 'Umbrella Liability',
+                bop: 'Business Owner Policy (BOP)',
+                business: 'Business Owner Policy (BOP)',
+                workers_comp: "Workers' Compensation",
+                general_liability: 'General Liability',
+                commercial_property: 'Commercial Property Coverage',
+                commercial_auto: 'Commercial Auto Insurance',
+                surety_bond: 'Surety Bond',
+                cyber: 'Cyber Security'
             };
 
             const newQuote = {

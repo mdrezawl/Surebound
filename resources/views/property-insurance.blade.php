@@ -224,8 +224,8 @@
                 <!-- Left: House photo -->
                 <div class="simpler-image-frame">
                     <img 
-                        src="{{ asset('images/article-house-hires.jpg') }}" 
-                        alt="Beautiful modern home covered by Surebound Property Insurance" 
+                        src="{{ asset('images/property-architecture-villa.jpg') }}" 
+                        alt="Luxury architectural residential estate covered by Surebound Property Insurance" 
                         class="simpler-image"
                     >
                 </div>

@@ -89,6 +89,8 @@
             <button type="button" class="policy-filter-btn active" data-filter="all" onclick="filterUserPolicies('all', this)">All Policies ({{ $totalPoliciesCount }})</button>
             <button type="button" class="policy-filter-btn" data-filter="home" onclick="filterUserPolicies('home', this)">Home</button>
             <button type="button" class="policy-filter-btn" data-filter="auto" onclick="filterUserPolicies('auto', this)">Auto</button>
+            <button type="button" class="policy-filter-btn" data-filter="life" onclick="filterUserPolicies('life', this)">Life</button>
+            <button type="button" class="policy-filter-btn" data-filter="health" onclick="filterUserPolicies('health', this)">Health</button>
             <button type="button" class="policy-filter-btn" data-filter="umbrella" onclick="filterUserPolicies('umbrella', this)">Umbrella</button>
             <button type="button" class="policy-filter-btn" data-filter="business" onclick="filterUserPolicies('business', this)">Business</button>
         </div>
@@ -110,11 +112,15 @@
             <!-- Card Header -->
             <div style="padding: 20px 24px; background: #ffffff; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
                 <div style="display: flex; align-items: center; gap: 14px;">
-                    <div style="width: 46px; height: 46px; border-radius: 12px; background: {{ $p->type === 'home' ? '#eff6ff' : ($p->type === 'auto' ? '#ecfdf5' : ($p->type === 'umbrella' ? '#f3e8ff' : '#fef3c7')) }}; color: {{ $p->type === 'home' ? '#1d4ed8' : ($p->type === 'auto' ? '#059669' : ($p->type === 'umbrella' ? '#7c3aed' : '#d97706')) }}; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 46px; height: 46px; border-radius: 12px; background: {{ $p->type === 'home' ? '#eff6ff' : ($p->type === 'auto' ? '#ecfdf5' : ($p->type === 'life' ? '#fdf2f8' : ($p->type === 'health' ? '#f0fdf4' : ($p->type === 'umbrella' ? '#f3e8ff' : '#fef3c7')))) }}; color: {{ $p->type === 'home' ? '#1d4ed8' : ($p->type === 'auto' ? '#059669' : ($p->type === 'life' ? '#db2777' : ($p->type === 'health' ? '#16a34a' : ($p->type === 'umbrella' ? '#7c3aed' : '#d97706')))) }}; display: flex; align-items: center; justify-content: center;">
                         @if($p->type === 'home')
                             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                         @elseif($p->type === 'auto')
                             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                        @elseif($p->type === 'life')
+                            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>
+                        @elseif($p->type === 'health')
+                            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
                         @elseif($p->type === 'umbrella')
                             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                         @else

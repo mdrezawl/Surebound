@@ -31,6 +31,11 @@ Route::get('/', function () {
 
 Route::get('/home-insurance', [AdminController::class, 'showHomeInsurance'])->name('home-insurance');
 Route::get('/auto-insurance', [AdminController::class, 'showAutoInsurance'])->name('auto-insurance');
+Route::get('/commercial-auto-insurance', [AdminController::class, 'showCommercialAutoInsurance'])->name('commercial-auto-insurance');
+Route::get('/surety-bond', [AdminController::class, 'showSuretyBond'])->name('surety-bond');
+Route::get('/life-insurance', [AdminController::class, 'showLifeInsurance'])->name('life-insurance');
+Route::get('/health-insurance', [AdminController::class, 'showHealthInsurance'])->name('health-insurance');
+Route::get('/umbrella-insurance', [AdminController::class, 'showUmbrellaInsurance'])->name('umbrella-insurance');
 Route::get('/personal-coverage', [AdminController::class, 'showPersonalCoverage'])->name('personal-coverage');
 Route::get('/property-insurance', [AdminController::class, 'showPropertyInsurance'])->name('property-insurance');
 Route::get('/liability-insurance', [AdminController::class, 'showLiabilityInsurance'])->name('liability-insurance');
@@ -94,6 +99,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/quotes/{id}', [AdminController::class, 'deleteQuote'])->name('admin.quotes.delete');
     Route::post('/admin/home-insurance', [AdminController::class, 'updateHomeInsurance'])->name('admin.home-insurance.update');
     Route::post('/admin/auto-insurance', [AdminController::class, 'updateAutoInsurance'])->name('admin.auto-insurance.update');
+    Route::post('/admin/commercial-auto-insurance', [AdminController::class, 'updateCommercialAutoInsurance'])->name('admin.commercial-auto-insurance.update');
+    Route::post('/admin/surety-bond', [AdminController::class, 'updateSuretyBond'])->name('admin.surety-bond.update');
+    Route::post('/admin/life-insurance', [AdminController::class, 'updateLifeInsurance'])->name('admin.life-insurance.update');
+    Route::post('/admin/health-insurance', [AdminController::class, 'updateHealthInsurance'])->name('admin.health-insurance.update');
+    Route::post('/admin/umbrella-insurance', [AdminController::class, 'updateUmbrellaInsurance'])->name('admin.umbrella-insurance.update');
     Route::post('/admin/personal-coverage', [AdminController::class, 'updatePersonalCoverage'])->name('admin.personal-coverage.update');
     Route::post('/admin/property-insurance', [AdminController::class, 'updatePropertyInsurance'])->name('admin.property-insurance.update');
     Route::post('/admin/liability-insurance', [AdminController::class, 'updateLiabilityInsurance'])->name('admin.liability-insurance.update');

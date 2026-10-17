@@ -105,7 +105,52 @@
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
 
-                <!-- 3. Business Insurance -->
+                <!-- 3. Life Insurance -->
+                <div class="coverage-card" onclick="window.location.href='{{ route('life-insurance') }}'" style="cursor: pointer;">
+                    <div>
+                        <div class="coverage-icon-box">
+                            <!-- Heart outline -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                            </svg>
+                        </div>
+                        <h3 class="coverage-card-title">Life Insurance</h3>
+                        <p class="coverage-card-desc">Protect your family's future certainty.</p>
+                    </div>
+                    <span class="coverage-card-arrow">&rarr;</span>
+                </div>
+
+                <!-- 4. Health Insurance -->
+                <div class="coverage-card" onclick="window.location.href='{{ route('health-insurance') }}'" style="cursor: pointer;">
+                    <div>
+                        <div class="coverage-icon-box">
+                            <!-- Medical plus outline -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
+                        <h3 class="coverage-card-title">Health Insurance</h3>
+                        <p class="coverage-card-desc">Premier care and doctor network access.</p>
+                    </div>
+                    <span class="coverage-card-arrow">&rarr;</span>
+                </div>
+
+                <!-- 5. Umbrella Insurance -->
+                <div class="coverage-card" onclick="window.location.href='{{ route('umbrella-insurance') }}'" style="cursor: pointer;">
+                    <div>
+                        <div class="coverage-icon-box">
+                            <!-- Shield outline -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                            </svg>
+                        </div>
+                        <h3 class="coverage-card-title">Umbrella Insurance</h3>
+                        <p class="coverage-card-desc">Multi-million excess liability shield.</p>
+                    </div>
+                    <span class="coverage-card-arrow">&rarr;</span>
+                </div>
+
+                <!-- 6. Business Insurance -->
                 <div class="coverage-card" onclick="window.location.href='{{ route('business-insurance') }}'" style="cursor: pointer;">
                     <div>
                         <div class="coverage-icon-box">
@@ -115,52 +160,7 @@
                             </svg>
                         </div>
                         <h3 class="coverage-card-title">Business Insurance</h3>
-                        <p class="coverage-card-desc">Keep your business moving forward.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
-                <!-- 4. Property Insurance -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <!-- Building/Skyscraper outline -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Property Insurance</h3>
-                        <p class="coverage-card-desc">Safeguard your valuable assets.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
-                <!-- 5. Personal Coverage -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('personal-coverage') }}'">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <!-- Person / user outline -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Personal Coverage</h3>
-                        <p class="coverage-card-desc">Protect what matters most.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
-                <!-- 6. Specialty Coverage -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('specialty-coverage') }}'" style="cursor: pointer;">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <!-- Star outline -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Specialty Coverage</h3>
-                        <p class="coverage-card-desc">Unique needs, custom solutions.</p>
+                        <p class="coverage-card-desc">Keep your enterprise moving forward.</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>

@@ -231,6 +231,46 @@
                     <span class="nav-badge" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">CMS</span>
                 </a>
 
+                <a class="sidebar-link" data-tab="commercial-auto-cms">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/>
+                    </svg>
+                    <span>Commercial Auto CMS</span>
+                    <span class="nav-badge" style="background: rgba(14, 165, 233, 0.2); color: #0284c7;">CMS</span>
+                </a>
+
+                <a class="sidebar-link" data-tab="surety-bond-cms">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
+                    </svg>
+                    <span>Surety Bond CMS</span>
+                    <span class="nav-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">CMS</span>
+                </a>
+
+                <a class="sidebar-link" data-tab="life-cms">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+                    </svg>
+                    <span>Life Insurance CMS</span>
+                    <span class="nav-badge" style="background: rgba(236, 72, 153, 0.2); color: #f472b6;">CMS</span>
+                </a>
+
+                <a class="sidebar-link" data-tab="health-cms">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15"/>
+                    </svg>
+                    <span>Health Insurance CMS</span>
+                    <span class="nav-badge" style="background: rgba(20, 184, 166, 0.2); color: #2dd4bf;">CMS</span>
+                </a>
+
+                <a class="sidebar-link" data-tab="umbrella-cms">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/>
+                    </svg>
+                    <span>Umbrella Insurance CMS</span>
+                    <span class="nav-badge" style="background: rgba(249, 115, 22, 0.2); color: #fb923c;">CMS</span>
+                </a>
+
                 <a class="sidebar-link" data-tab="personal-cms">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.285Z"/>
@@ -637,17 +677,31 @@
                                     </div>
                                     <div class="dist-item">
                                         <div class="dist-info">
-                                            <span class="dist-category"><span class="dist-dot" style="background: var(--sb-amber-500);"></span> Life & Health</span>
+                                            <span class="dist-category"><span class="dist-dot" style="background: var(--sb-amber-500);"></span> Life Insurance</span>
                                             <span class="dist-val">{{ $distribution['life']['pct'] }}% ({{ $distribution['life']['volume'] }})</span>
                                         </div>
                                         <div class="dist-bar-track"><div class="dist-bar-fill" style="width: {{ max(6, $distribution['life']['pct']) }}%; background: var(--sb-amber-500);"></div></div>
                                     </div>
                                     <div class="dist-item">
                                         <div class="dist-info">
-                                            <span class="dist-category"><span class="dist-dot" style="background: var(--sb-purple-500);"></span> Commercial BOP</span>
+                                            <span class="dist-category"><span class="dist-dot" style="background: #06b6d4;"></span> Health Insurance</span>
+                                            <span class="dist-val">{{ $distribution['health']['pct'] }}% ({{ $distribution['health']['volume'] }})</span>
+                                        </div>
+                                        <div class="dist-bar-track"><div class="dist-bar-fill" style="width: {{ max(6, $distribution['health']['pct']) }}%; background: #06b6d4;"></div></div>
+                                    </div>
+                                    <div class="dist-item">
+                                        <div class="dist-info">
+                                            <span class="dist-category"><span class="dist-dot" style="background: var(--sb-purple-500);"></span> Business Owner Policy (BOP)</span>
                                             <span class="dist-val">{{ $distribution['business']['pct'] }}% ({{ $distribution['business']['volume'] }})</span>
                                         </div>
                                         <div class="dist-bar-track"><div class="dist-bar-fill" style="width: {{ max(6, $distribution['business']['pct']) }}%; background: var(--sb-purple-500);"></div></div>
+                                    </div>
+                                    <div class="dist-item">
+                                        <div class="dist-info">
+                                            <span class="dist-category"><span class="dist-dot" style="background: #f97316;"></span> Commercial Lines</span>
+                                            <span class="dist-val">{{ $distribution['commercial']['pct'] }}% ({{ $distribution['commercial']['volume'] }})</span>
+                                        </div>
+                                        <div class="dist-bar-track"><div class="dist-bar-fill" style="width: {{ max(6, $distribution['commercial']['pct']) }}%; background: #f97316;"></div></div>
                                     </div>
                                 </div>
                             </div>
@@ -2508,6 +2562,1325 @@
                             <div style="margin-top: 12px; margin-bottom: 40px; display: flex; justify-content: flex-end; gap: 16px;">
                                 <button type="submit" id="saveAutoCmsBtnBottom" class="btn-primary-action" style="padding: 14px 32px; font-size: 18px; border-radius: var(--radius-md); background: #2563eb;">
                                     Publish Auto Changes Live &rarr;
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================
+                     TAB: COMMERCIAL AUTO INSURANCE PAGE CMS
+                     ======================================================== -->
+                <div class="tab-pane" id="tab-commercial-auto-cms">
+                    <form id="commercialAutoCmsForm" enctype="multipart/form-data" onsubmit="saveCommercialAutoCms(event)">
+                        @csrf
+                        <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <div class="view-title-group">
+                                <h1>Commercial Auto Insurance Content Editor</h1>
+                                <p>Edit and publish all section titles, subtitles, fleet cards, pillars, and FAQs on the public Commercial Auto Insurance page live.</p>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <a href="{{ route('commercial-auto-insurance') }}" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                    View Live Commercial Auto Page
+                                </a>
+                                <button type="submit" id="saveCommercialAutoCmsBtn" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 16px; background: #0284c7;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    <span>Publish Commercial Auto Live</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1100px;">
+                            
+                            <!-- 1. HERO SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">1. Hero Section Content &amp; Fleet Image Upload</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full" style="background: rgba(255, 255, 255, 0.03); padding: 16px; border-radius: 8px; border: 1px dashed rgba(255, 255, 255, 0.2);">
+                                            <label class="form-label" style="font-weight: 600; color: #38bdf8;">Hero Fleet Image Upload / Change</label>
+                                            <div style="display: flex; gap: 16px; align-items: center; margin-top: 8px;">
+                                                <img id="heroImagePreview_commercial_auto" src="{{ asset($commercialAutoInsuranceContent['hero_image'] ?? 'images/hero-commercial-auto.jpg') }}" style="width: 140px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+                                                <div style="flex: 1;">
+                                                    <input type="file" name="hero_image_file" accept="image/*" class="form-input" style="padding: 8px;" onchange="previewImage(this, 'heroImagePreview_commercial_auto')">
+                                                    <small style="color: #94a3b8; display: block; margin-top: 6px;">Select an image file (JPG, PNG, WEBP) to update the main commercial fleet hero photo live on the website.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Eyebrow Tag</label>
+                                            <input type="text" name="hero_eyebrow" class="form-input" value="{{ $commercialAutoInsuranceContent['hero_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Headline Title (HTML allowed e.g. &lt;br&gt;)</label>
+                                            <input type="text" name="hero_title" class="form-input" value="{{ $commercialAutoInsuranceContent['hero_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Subtitle Paragraph</label>
+                                            <textarea name="hero_subtitle" class="form-input" rows="3" required>{{ $commercialAutoInsuranceContent['hero_subtitle'] ?? '' }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Pill Card - Top Subtitle</label>
+                                            <input type="text" name="hero_card_sub" class="form-input" value="{{ $commercialAutoInsuranceContent['hero_card_sub'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Pill Card - Main Highlight</label>
+                                            <input type="text" name="hero_card_label" class="form-input" value="{{ $commercialAutoInsuranceContent['hero_card_label'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. COMMERCIAL AUTO COVERAGE CARDS (6 CARDS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">2. Commercial Auto Coverage Cards (6 Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <!-- Card 1 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Card 1: Title</label>
+                                            <input type="text" name="card_1_title" class="form-input" value="{{ $commercialAutoInsuranceContent['card_1_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 1: Description</label>
+                                            <textarea name="card_1_desc" class="form-input" rows="2" required>{{ $commercialAutoInsuranceContent['card_1_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 2 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Card 2: Title</label>
+                                            <input type="text" name="card_2_title" class="form-input" value="{{ $commercialAutoInsuranceContent['card_2_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 2: Description</label>
+                                            <textarea name="card_2_desc" class="form-input" rows="2" required>{{ $commercialAutoInsuranceContent['card_2_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 3 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Card 3: Title</label>
+                                            <input type="text" name="card_3_title" class="form-input" value="{{ $commercialAutoInsuranceContent['card_3_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 3: Description</label>
+                                            <textarea name="card_3_desc" class="form-input" rows="2" required>{{ $commercialAutoInsuranceContent['card_3_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 4 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Card 4: Title</label>
+                                            <input type="text" name="card_4_title" class="form-input" value="{{ $commercialAutoInsuranceContent['card_4_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 4: Description</label>
+                                            <textarea name="card_4_desc" class="form-input" rows="2" required>{{ $commercialAutoInsuranceContent['card_4_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 5 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Card 5: Title</label>
+                                            <input type="text" name="card_5_title" class="form-input" value="{{ $commercialAutoInsuranceContent['card_5_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 5: Description</label>
+                                            <textarea name="card_5_desc" class="form-input" rows="2" required>{{ $commercialAutoInsuranceContent['card_5_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 6 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Card 6: Title</label>
+                                            <input type="text" name="card_6_title" class="form-input" value="{{ $commercialAutoInsuranceContent['card_6_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 6: Description</label>
+                                            <textarea name="card_6_desc" class="form-input" rows="2" required>{{ $commercialAutoInsuranceContent['card_6_desc'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. DARK NAVY VALUE PROPOSITION BAR (4 PILLARS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">3. Dark Navy Value Proposition Bar (4 Fleet Pillars)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <!-- Value 1 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Pillar 1: Title</label>
+                                            <input type="text" name="value_1_title" class="form-input" value="{{ $commercialAutoInsuranceContent['value_1_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 1: Description</label>
+                                            <input type="text" name="value_1_desc" class="form-input" value="{{ $commercialAutoInsuranceContent['value_1_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Value 2 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Pillar 2: Title</label>
+                                            <input type="text" name="value_2_title" class="form-input" value="{{ $commercialAutoInsuranceContent['value_2_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 2: Description</label>
+                                            <input type="text" name="value_2_desc" class="form-input" value="{{ $commercialAutoInsuranceContent['value_2_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Value 3 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Pillar 3: Title</label>
+                                            <input type="text" name="value_3_title" class="form-input" value="{{ $commercialAutoInsuranceContent['value_3_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 3: Description</label>
+                                            <input type="text" name="value_3_desc" class="form-input" value="{{ $commercialAutoInsuranceContent['value_3_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Value 4 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Pillar 4: Title</label>
+                                            <input type="text" name="value_4_title" class="form-input" value="{{ $commercialAutoInsuranceContent['value_4_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 4: Description</label>
+                                            <input type="text" name="value_4_desc" class="form-input" value="{{ $commercialAutoInsuranceContent['value_4_desc'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. FLEET RISK MANAGEMENT GUIDANCE SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">4. Guidance &amp; Fleet Operations Section</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">Guidance Eyebrow Tag</label>
+                                            <input type="text" name="guidance_eyebrow" class="form-input" value="{{ $commercialAutoInsuranceContent['guidance_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Guidance Headline Title</label>
+                                            <input type="text" name="guidance_title" class="form-input" value="{{ $commercialAutoInsuranceContent['guidance_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Guidance Descriptive Text</label>
+                                            <textarea name="guidance_text" class="form-input" rows="4" required>{{ $commercialAutoInsuranceContent['guidance_text'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. WHY CHOOSE SECTION (4 CARDS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">5. Why Choose Section (4 Fleet Advantage Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Advantage 1: Title</label>
+                                            <input type="text" name="why_1_title" class="form-input" value="{{ $commercialAutoInsuranceContent['why_1_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage 1: Description</label>
+                                            <input type="text" name="why_1_desc" class="form-input" value="{{ $commercialAutoInsuranceContent['why_1_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Advantage 2: Title</label>
+                                            <input type="text" name="why_2_title" class="form-input" value="{{ $commercialAutoInsuranceContent['why_2_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage 2: Description</label>
+                                            <input type="text" name="why_2_desc" class="form-input" value="{{ $commercialAutoInsuranceContent['why_2_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Advantage 3: Title</label>
+                                            <input type="text" name="why_3_title" class="form-input" value="{{ $commercialAutoInsuranceContent['why_3_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage 3: Description</label>
+                                            <input type="text" name="why_3_desc" class="form-input" value="{{ $commercialAutoInsuranceContent['why_3_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Advantage 4: Title</label>
+                                            <input type="text" name="why_4_title" class="form-input" value="{{ $commercialAutoInsuranceContent['why_4_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage 4: Description</label>
+                                            <input type="text" name="why_4_desc" class="form-input" value="{{ $commercialAutoInsuranceContent['why_4_desc'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 6. FREQUENTLY ASKED QUESTIONS (5 ITEMS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">6. Commercial Auto FAQ Accordion (5 Items)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <!-- FAQ 1 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">FAQ 1: Question</label>
+                                            <input type="text" name="faq_1_question" class="form-input" value="{{ $commercialAutoInsuranceContent['faq_1_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 1: Answer</label>
+                                            <textarea name="faq_1_answer" class="form-input" rows="3" required>{{ $commercialAutoInsuranceContent['faq_1_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 2 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">FAQ 2: Question</label>
+                                            <input type="text" name="faq_2_question" class="form-input" value="{{ $commercialAutoInsuranceContent['faq_2_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 2: Answer</label>
+                                            <textarea name="faq_2_answer" class="form-input" rows="3" required>{{ $commercialAutoInsuranceContent['faq_2_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 3 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">FAQ 3: Question</label>
+                                            <input type="text" name="faq_3_question" class="form-input" value="{{ $commercialAutoInsuranceContent['faq_3_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 3: Answer</label>
+                                            <textarea name="faq_3_answer" class="form-input" rows="3" required>{{ $commercialAutoInsuranceContent['faq_3_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 4 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">FAQ 4: Question</label>
+                                            <input type="text" name="faq_4_question" class="form-input" value="{{ $commercialAutoInsuranceContent['faq_4_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 4: Answer</label>
+                                            <textarea name="faq_4_answer" class="form-input" rows="3" required>{{ $commercialAutoInsuranceContent['faq_4_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 5 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">FAQ 5: Question</label>
+                                            <input type="text" name="faq_5_question" class="form-input" value="{{ $commercialAutoInsuranceContent['faq_5_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 5: Answer</label>
+                                            <textarea name="faq_5_answer" class="form-input" rows="3" required>{{ $commercialAutoInsuranceContent['faq_5_answer'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. BOTTOM CTA BANNER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">7. Bottom CTA Banner</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Headline Title (HTML allowed)</label>
+                                            <input type="text" name="cta_title" class="form-input" value="{{ $commercialAutoInsuranceContent['cta_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Subtitle Description</label>
+                                            <input type="text" name="cta_subtitle" class="form-input" value="{{ $commercialAutoInsuranceContent['cta_subtitle'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SAVE BUTTON BAR -->
+                            <div style="margin-top: 12px; margin-bottom: 40px; display: flex; justify-content: flex-end; gap: 16px;">
+                                <button type="submit" id="saveCommercialAutoCmsBtnBottom" class="btn-primary-action" style="padding: 14px 32px; font-size: 18px; border-radius: var(--radius-md); background: #0284c7;">
+                                    Publish Commercial Auto Changes Live &rarr;
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================
+                     TAB: SURETY BOND PAGE CMS
+                     ======================================================== -->
+                <div class="tab-pane" id="tab-surety-bond-cms">
+                    <form id="suretyBondCmsForm" enctype="multipart/form-data" onsubmit="saveSuretyBondCms(event)">
+                        @csrf
+                        <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <div class="view-title-group">
+                                <h1>Surety Bond Content Editor</h1>
+                                <p>Edit and publish all headlines, bond category cards, value pillars, guidance, and FAQs on the public Surety Bond page live.</p>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <a href="{{ route('surety-bond') }}" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                    View Live Surety Bond Page
+                                </a>
+                                <button type="submit" id="saveSuretyBondCmsBtn" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 16px; background: #059669;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    <span>Publish Surety Bond Live</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1100px;">
+                            
+                            <!-- 1. HERO SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">1. Hero Section Content &amp; Image Upload</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full" style="background: rgba(255, 255, 255, 0.03); padding: 16px; border-radius: 8px; border: 1px dashed rgba(255, 255, 255, 0.2);">
+                                            <label class="form-label" style="font-weight: 600; color: #34d399;">Hero Surety Image Upload / Change</label>
+                                            <div style="display: flex; gap: 16px; align-items: center; margin-top: 8px;">
+                                                <img id="heroImagePreview_surety_bond" src="{{ asset($suretyBondContent['hero_image'] ?? 'images/hero-surety-bond.jpg') }}" style="width: 140px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+                                                <div style="flex: 1;">
+                                                    <input type="file" name="hero_image_file" accept="image/*" class="form-input" style="padding: 8px;" onchange="previewImage(this, 'heroImagePreview_surety_bond')">
+                                                    <small style="color: #94a3b8; display: block; margin-top: 6px;">Select an image file (JPG, PNG, WEBP) to update the main commercial surety hero photo live on the website.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Eyebrow Tag</label>
+                                            <input type="text" name="hero_eyebrow" class="form-input" value="{{ $suretyBondContent['hero_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Headline Title (HTML allowed e.g. &lt;br&gt;)</label>
+                                            <input type="text" name="hero_title" class="form-input" value="{{ $suretyBondContent['hero_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Subtitle Paragraph</label>
+                                            <textarea name="hero_subtitle" class="form-input" rows="3" required>{{ $suretyBondContent['hero_subtitle'] ?? '' }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Pill Card - Top Subtitle</label>
+                                            <input type="text" name="hero_card_sub" class="form-input" value="{{ $suretyBondContent['hero_card_sub'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Pill Card - Main Highlight</label>
+                                            <input type="text" name="hero_card_label" class="form-input" value="{{ $suretyBondContent['hero_card_label'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. SURETY BOND COVERAGE CARDS (6 CARDS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">2. Surety Bond Coverage Solutions (6 Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <!-- Card 1 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Card 1: Title</label>
+                                            <input type="text" name="card_1_title" class="form-input" value="{{ $suretyBondContent['card_1_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 1: Description</label>
+                                            <textarea name="card_1_desc" class="form-input" rows="2" required>{{ $suretyBondContent['card_1_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 2 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Card 2: Title</label>
+                                            <input type="text" name="card_2_title" class="form-input" value="{{ $suretyBondContent['card_2_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 2: Description</label>
+                                            <textarea name="card_2_desc" class="form-input" rows="2" required>{{ $suretyBondContent['card_2_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 3 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Card 3: Title</label>
+                                            <input type="text" name="card_3_title" class="form-input" value="{{ $suretyBondContent['card_3_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 3: Description</label>
+                                            <textarea name="card_3_desc" class="form-input" rows="2" required>{{ $suretyBondContent['card_3_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 4 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Card 4: Title</label>
+                                            <input type="text" name="card_4_title" class="form-input" value="{{ $suretyBondContent['card_4_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 4: Description</label>
+                                            <textarea name="card_4_desc" class="form-input" rows="2" required>{{ $suretyBondContent['card_4_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 5 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Card 5: Title</label>
+                                            <input type="text" name="card_5_title" class="form-input" value="{{ $suretyBondContent['card_5_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 5: Description</label>
+                                            <textarea name="card_5_desc" class="form-input" rows="2" required>{{ $suretyBondContent['card_5_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Card 6 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Card 6: Title</label>
+                                            <input type="text" name="card_6_title" class="form-input" value="{{ $suretyBondContent['card_6_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card 6: Description</label>
+                                            <textarea name="card_6_desc" class="form-input" rows="2" required>{{ $suretyBondContent['card_6_desc'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. DARK NAVY VALUE PROPOSITION BAR (4 PILLARS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">3. Dark Navy Value Proposition Bar (4 Surety Pillars)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <!-- Value 1 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Pillar 1: Title</label>
+                                            <input type="text" name="value_1_title" class="form-input" value="{{ $suretyBondContent['value_1_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 1: Description</label>
+                                            <input type="text" name="value_1_desc" class="form-input" value="{{ $suretyBondContent['value_1_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Value 2 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Pillar 2: Title</label>
+                                            <input type="text" name="value_2_title" class="form-input" value="{{ $suretyBondContent['value_2_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 2: Description</label>
+                                            <input type="text" name="value_2_desc" class="form-input" value="{{ $suretyBondContent['value_2_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Value 3 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Pillar 3: Title</label>
+                                            <input type="text" name="value_3_title" class="form-input" value="{{ $suretyBondContent['value_3_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 3: Description</label>
+                                            <input type="text" name="value_3_desc" class="form-input" value="{{ $suretyBondContent['value_3_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Value 4 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Pillar 4: Title</label>
+                                            <input type="text" name="value_4_title" class="form-input" value="{{ $suretyBondContent['value_4_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 4: Description</label>
+                                            <input type="text" name="value_4_desc" class="form-input" value="{{ $suretyBondContent['value_4_desc'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. GUIDANCE & STRATEGY SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">4. Guidance &amp; Bonding Capacity Section</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">Guidance Eyebrow Tag</label>
+                                            <input type="text" name="guidance_eyebrow" class="form-input" value="{{ $suretyBondContent['guidance_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Guidance Headline Title</label>
+                                            <input type="text" name="guidance_title" class="form-input" value="{{ $suretyBondContent['guidance_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Guidance Descriptive Text</label>
+                                            <textarea name="guidance_text" class="form-input" rows="4" required>{{ $suretyBondContent['guidance_text'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. WHY CHOOSE SECTION (4 CARDS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">5. Why Choose Section (4 Surety Advantage Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Advantage 1: Title</label>
+                                            <input type="text" name="why_1_title" class="form-input" value="{{ $suretyBondContent['why_1_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage 1: Description</label>
+                                            <input type="text" name="why_1_desc" class="form-input" value="{{ $suretyBondContent['why_1_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Advantage 2: Title</label>
+                                            <input type="text" name="why_2_title" class="form-input" value="{{ $suretyBondContent['why_2_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage 2: Description</label>
+                                            <input type="text" name="why_2_desc" class="form-input" value="{{ $suretyBondContent['why_2_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Advantage 3: Title</label>
+                                            <input type="text" name="why_3_title" class="form-input" value="{{ $suretyBondContent['why_3_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage 3: Description</label>
+                                            <input type="text" name="why_3_desc" class="form-input" value="{{ $suretyBondContent['why_3_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Advantage 4: Title</label>
+                                            <input type="text" name="why_4_title" class="form-input" value="{{ $suretyBondContent['why_4_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage 4: Description</label>
+                                            <input type="text" name="why_4_desc" class="form-input" value="{{ $suretyBondContent['why_4_desc'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 6. FREQUENTLY ASKED QUESTIONS (5 ITEMS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">6. Surety Bond FAQ Accordion (5 Items)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <!-- FAQ 1 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">FAQ 1: Question</label>
+                                            <input type="text" name="faq_1_question" class="form-input" value="{{ $suretyBondContent['faq_1_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 1: Answer</label>
+                                            <textarea name="faq_1_answer" class="form-input" rows="3" required>{{ $suretyBondContent['faq_1_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 2 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">FAQ 2: Question</label>
+                                            <input type="text" name="faq_2_question" class="form-input" value="{{ $suretyBondContent['faq_2_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 2: Answer</label>
+                                            <textarea name="faq_2_answer" class="form-input" rows="3" required>{{ $suretyBondContent['faq_2_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 3 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">FAQ 3: Question</label>
+                                            <input type="text" name="faq_3_question" class="form-input" value="{{ $suretyBondContent['faq_3_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 3: Answer</label>
+                                            <textarea name="faq_3_answer" class="form-input" rows="3" required>{{ $suretyBondContent['faq_3_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 4 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">FAQ 4: Question</label>
+                                            <input type="text" name="faq_4_question" class="form-input" value="{{ $suretyBondContent['faq_4_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 4: Answer</label>
+                                            <textarea name="faq_4_answer" class="form-input" rows="3" required>{{ $suretyBondContent['faq_4_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 5 -->
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">FAQ 5: Question</label>
+                                            <input type="text" name="faq_5_question" class="form-input" value="{{ $suretyBondContent['faq_5_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ 5: Answer</label>
+                                            <textarea name="faq_5_answer" class="form-input" rows="3" required>{{ $suretyBondContent['faq_5_answer'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. BOTTOM CTA BANNER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">7. Bottom CTA Banner</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Headline Title (HTML allowed)</label>
+                                            <input type="text" name="cta_title" class="form-input" value="{{ $suretyBondContent['cta_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Subtitle Description</label>
+                                            <input type="text" name="cta_subtitle" class="form-input" value="{{ $suretyBondContent['cta_subtitle'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SAVE BUTTON BAR -->
+                            <div style="margin-top: 12px; margin-bottom: 40px; display: flex; justify-content: flex-end; gap: 16px;">
+                                <button type="submit" id="saveSuretyBondCmsBtnBottom" class="btn-primary-action" style="padding: 14px 32px; font-size: 18px; border-radius: var(--radius-md); background: #059669;">
+                                    Publish Surety Bond Changes Live &rarr;
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================
+                     LIFE INSURANCE PAGE CMS
+                     ======================================================== -->
+                <div class="tab-pane" id="tab-life-cms">
+                    <form id="lifeCmsForm" enctype="multipart/form-data" onsubmit="saveLifeCms(event)">
+                        @csrf
+                        <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <div class="view-title-group">
+                                <h1>Life Insurance Page Content Editor</h1>
+                                <p>Edit and publish all section titles, subtitles, term &amp; whole life cards, pillars, and FAQs on the public Life Insurance page live.</p>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <a href="{{ route('life-insurance') }}" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                    View Live Life Page
+                                </a>
+                                <button type="submit" id="saveLifeCmsBtn" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 16px; background: #ec4899;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    <span>Publish Life Changes Live</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1100px;">
+                            
+                            <!-- 1. HERO SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">1. Hero Section Content &amp; Image Upload</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full" style="background: rgba(255, 255, 255, 0.03); padding: 16px; border-radius: 8px; border: 1px dashed rgba(255, 255, 255, 0.2);">
+                                            <label class="form-label" style="font-weight: 600; color: #f472b6;">Hero Image Upload / Change</label>
+                                            <div style="display: flex; gap: 16px; align-items: center; margin-top: 8px;">
+                                                <img id="heroImagePreview_life" src="{{ asset($lifeInsuranceContent['hero_image'] ?? 'images/hero-life.jpg') }}" style="width: 140px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+                                                <div style="flex: 1;">
+                                                    <input type="file" name="hero_image_file" accept="image/*" class="form-input" style="padding: 8px;" onchange="previewImage(this, 'heroImagePreview_life')">
+                                                    <small style="color: #94a3b8; display: block; margin-top: 6px;">Select an image file (JPG, PNG, WEBP) to update the main life hero photo live on the website.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Eyebrow Tag</label>
+                                            <input type="text" name="hero_eyebrow" class="form-input" value="{{ $lifeInsuranceContent['hero_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Headline Title (HTML allowed e.g. &lt;br&gt;)</label>
+                                            <input type="text" name="hero_title" class="form-input" value="{{ $lifeInsuranceContent['hero_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Subtitle Paragraph</label>
+                                            <textarea name="hero_subtitle" class="form-textarea" rows="2" required>{{ $lifeInsuranceContent['hero_subtitle'] ?? '' }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Badge Subtitle</label>
+                                            <input type="text" name="hero_card_sub" class="form-input" value="{{ $lifeInsuranceContent['hero_card_sub'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Badge Label</label>
+                                            <input type="text" name="hero_card_label" class="form-input" value="{{ $lifeInsuranceContent['hero_card_label'] ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. COVERAGE CARDS (6 CARDS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">2. Life Coverage Cards (6 Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 6; $i++)
+                                        <div class="form-group">
+                                            <label class="form-label">Card {{ $i }} Title</label>
+                                            <input type="text" name="card_{{ $i }}_title" class="form-input" value="{{ $lifeInsuranceContent['card_'.$i.'_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card {{ $i }} Description</label>
+                                            <input type="text" name="card_{{ $i }}_desc" class="form-input" value="{{ $lifeInsuranceContent['card_'.$i.'_desc'] ?? '' }}">
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. VALUE PROPOSITION PILLARS -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">3. Value Pillars (4 Pillars)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 4; $i++)
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar {{ $i }} Title</label>
+                                            <input type="text" name="value_{{ $i }}_title" class="form-input" value="{{ $lifeInsuranceContent['value_'.$i.'_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar {{ $i }} Description</label>
+                                            <input type="text" name="value_{{ $i }}_desc" class="form-input" value="{{ $lifeInsuranceContent['value_'.$i.'_desc'] ?? '' }}">
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. GUIDANCE SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">4. Guidance &amp; Family Legacy Section</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label">Eyebrow Tag</label>
+                                            <input type="text" name="guidance_eyebrow" class="form-input" value="{{ $lifeInsuranceContent['guidance_eyebrow'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Section Title</label>
+                                            <input type="text" name="guidance_title" class="form-input" value="{{ $lifeInsuranceContent['guidance_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Main Body Paragraph</label>
+                                            <textarea name="guidance_text" class="form-textarea" rows="3">{{ $lifeInsuranceContent['guidance_text'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. WHY CHOOSE SUREBOUND -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">5. Why Choose Surebound Life (4 Advantage Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 4; $i++)
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage {{ $i }} Title</label>
+                                            <input type="text" name="why_{{ $i }}_title" class="form-input" value="{{ $lifeInsuranceContent['why_'.$i.'_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage {{ $i }} Description</label>
+                                            <input type="text" name="why_{{ $i }}_desc" class="form-input" value="{{ $lifeInsuranceContent['why_'.$i.'_desc'] ?? '' }}">
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 6. FAQ ACCORDION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">6. Frequently Asked Questions (5 Accordion Q&amp;As)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 5; $i++)
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ {{ $i }} Question</label>
+                                            <input type="text" name="faq_{{ $i }}_question" class="form-input" value="{{ $lifeInsuranceContent['faq_'.$i.'_question'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ {{ $i }} Answer</label>
+                                            <textarea name="faq_{{ $i }}_answer" class="form-textarea" rows="2">{{ $lifeInsuranceContent['faq_'.$i.'_answer'] ?? '' }}</textarea>
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. CTA BANNER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">7. Bottom Call-To-Action Banner</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Banner Headline Title</label>
+                                            <input type="text" name="cta_title" class="form-input" value="{{ $lifeInsuranceContent['cta_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Banner Subtitle</label>
+                                            <input type="text" name="cta_subtitle" class="form-input" value="{{ $lifeInsuranceContent['cta_subtitle'] ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SAVE BUTTON BAR -->
+                            <div style="margin-top: 12px; margin-bottom: 40px; display: flex; justify-content: flex-end; gap: 16px;">
+                                <button type="submit" id="saveLifeCmsBtnBottom" class="btn-primary-action" style="padding: 14px 32px; font-size: 18px; border-radius: var(--radius-md); background: #ec4899;">
+                                    Publish Life Changes Live &rarr;
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================
+                     HEALTH INSURANCE PAGE CMS
+                     ======================================================== -->
+                <div class="tab-pane" id="tab-health-cms">
+                    <form id="healthCmsForm" enctype="multipart/form-data" onsubmit="saveHealthCms(event)">
+                        @csrf
+                        <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <div class="view-title-group">
+                                <h1>Health Insurance Page Content Editor</h1>
+                                <p>Edit and publish all section titles, subtitles, health plan cards, wellness pillars, and FAQs on the public Health Insurance page live.</p>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <a href="{{ route('health-insurance') }}" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                    View Live Health Page
+                                </a>
+                                <button type="submit" id="saveHealthCmsBtn" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 16px; background: #0d9488;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    <span>Publish Health Changes Live</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1100px;">
+                            
+                            <!-- 1. HERO SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">1. Hero Section Content &amp; Image Upload</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full" style="background: rgba(255, 255, 255, 0.03); padding: 16px; border-radius: 8px; border: 1px dashed rgba(255, 255, 255, 0.2);">
+                                            <label class="form-label" style="font-weight: 600; color: #2dd4bf;">Hero Image Upload / Change</label>
+                                            <div style="display: flex; gap: 16px; align-items: center; margin-top: 8px;">
+                                                <img id="heroImagePreview_health" src="{{ asset($healthInsuranceContent['hero_image'] ?? 'images/hero-health.jpg') }}" style="width: 140px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+                                                <div style="flex: 1;">
+                                                    <input type="file" name="hero_image_file" accept="image/*" class="form-input" style="padding: 8px;" onchange="previewImage(this, 'heroImagePreview_health')">
+                                                    <small style="color: #94a3b8; display: block; margin-top: 6px;">Select an image file (JPG, PNG, WEBP) to update the main health hero photo live on the website.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Eyebrow Tag</label>
+                                            <input type="text" name="hero_eyebrow" class="form-input" value="{{ $healthInsuranceContent['hero_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Headline Title (HTML allowed e.g. &lt;br&gt;)</label>
+                                            <input type="text" name="hero_title" class="form-input" value="{{ $healthInsuranceContent['hero_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Subtitle Paragraph</label>
+                                            <textarea name="hero_subtitle" class="form-textarea" rows="2" required>{{ $healthInsuranceContent['hero_subtitle'] ?? '' }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Badge Subtitle</label>
+                                            <input type="text" name="hero_card_sub" class="form-input" value="{{ $healthInsuranceContent['hero_card_sub'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Badge Label</label>
+                                            <input type="text" name="hero_card_label" class="form-input" value="{{ $healthInsuranceContent['hero_card_label'] ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. COVERAGE CARDS (6 CARDS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">2. Health Coverage Cards (6 Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 6; $i++)
+                                        <div class="form-group">
+                                            <label class="form-label">Card {{ $i }} Title</label>
+                                            <input type="text" name="card_{{ $i }}_title" class="form-input" value="{{ $healthInsuranceContent['card_'.$i.'_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card {{ $i }} Description</label>
+                                            <input type="text" name="card_{{ $i }}_desc" class="form-input" value="{{ $healthInsuranceContent['card_'.$i.'_desc'] ?? '' }}">
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. VALUE PROPOSITION PILLARS -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">3. Wellness Pillars (4 Pillars)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 4; $i++)
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar {{ $i }} Title</label>
+                                            <input type="text" name="value_{{ $i }}_title" class="form-input" value="{{ $healthInsuranceContent['value_'.$i.'_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar {{ $i }} Description</label>
+                                            <input type="text" name="value_{{ $i }}_desc" class="form-input" value="{{ $healthInsuranceContent['value_'.$i.'_desc'] ?? '' }}">
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. GUIDANCE SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">4. Guidance &amp; Healthcare Navigation Section</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label">Eyebrow Tag</label>
+                                            <input type="text" name="guidance_eyebrow" class="form-input" value="{{ $healthInsuranceContent['guidance_eyebrow'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Section Title</label>
+                                            <input type="text" name="guidance_title" class="form-input" value="{{ $healthInsuranceContent['guidance_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Main Body Paragraph</label>
+                                            <textarea name="guidance_text" class="form-textarea" rows="3">{{ $healthInsuranceContent['guidance_text'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. WHY CHOOSE SUREBOUND -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">5. Why Choose Surebound Health (4 Advantage Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 4; $i++)
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage {{ $i }} Title</label>
+                                            <input type="text" name="why_{{ $i }}_title" class="form-input" value="{{ $healthInsuranceContent['why_'.$i.'_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage {{ $i }} Description</label>
+                                            <input type="text" name="why_{{ $i }}_desc" class="form-input" value="{{ $healthInsuranceContent['why_'.$i.'_desc'] ?? '' }}">
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 6. FAQ ACCORDION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">6. Frequently Asked Questions (5 Accordion Q&amp;As)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 5; $i++)
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ {{ $i }} Question</label>
+                                            <input type="text" name="faq_{{ $i }}_question" class="form-input" value="{{ $healthInsuranceContent['faq_'.$i.'_question'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ {{ $i }} Answer</label>
+                                            <textarea name="faq_{{ $i }}_answer" class="form-textarea" rows="2">{{ $healthInsuranceContent['faq_'.$i.'_answer'] ?? '' }}</textarea>
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. CTA BANNER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">7. Bottom Call-To-Action Banner</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Banner Headline Title</label>
+                                            <input type="text" name="cta_title" class="form-input" value="{{ $healthInsuranceContent['cta_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Banner Subtitle</label>
+                                            <input type="text" name="cta_subtitle" class="form-input" value="{{ $healthInsuranceContent['cta_subtitle'] ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SAVE BUTTON BAR -->
+                            <div style="margin-top: 12px; margin-bottom: 40px; display: flex; justify-content: flex-end; gap: 16px;">
+                                <button type="submit" id="saveHealthCmsBtnBottom" class="btn-primary-action" style="padding: 14px 32px; font-size: 18px; border-radius: var(--radius-md); background: #0d9488;">
+                                    Publish Health Changes Live &rarr;
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================
+                     UMBRELLA INSURANCE PAGE CMS
+                     ======================================================== -->
+                <div class="tab-pane" id="tab-umbrella-cms">
+                    <form id="umbrellaCmsForm" enctype="multipart/form-data" onsubmit="saveUmbrellaCms(event)">
+                        @csrf
+                        <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <div class="view-title-group">
+                                <h1>Umbrella Insurance Page Content Editor</h1>
+                                <p>Edit and publish all section titles, subtitles, excess liability tiers, asset protection pillars, and FAQs on the public Umbrella Insurance page live.</p>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <a href="{{ route('umbrella-insurance') }}" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                    View Live Umbrella Page
+                                </a>
+                                <button type="submit" id="saveUmbrellaCmsBtn" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 16px; background: #ea580c;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    <span>Publish Umbrella Changes Live</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1100px;">
+                            
+                            <!-- 1. HERO SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">1. Hero Section Content &amp; Image Upload</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full" style="background: rgba(255, 255, 255, 0.03); padding: 16px; border-radius: 8px; border: 1px dashed rgba(255, 255, 255, 0.2);">
+                                            <label class="form-label" style="font-weight: 600; color: #fb923c;">Hero Image Upload / Change</label>
+                                            <div style="display: flex; gap: 16px; align-items: center; margin-top: 8px;">
+                                                <img id="heroImagePreview_umbrella" src="{{ asset($umbrellaInsuranceContent['hero_image'] ?? 'images/hero-umbrella.jpg') }}" style="width: 140px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+                                                <div style="flex: 1;">
+                                                    <input type="file" name="hero_image_file" accept="image/*" class="form-input" style="padding: 8px;" onchange="previewImage(this, 'heroImagePreview_umbrella')">
+                                                    <small style="color: #94a3b8; display: block; margin-top: 6px;">Select an image file (JPG, PNG, WEBP) to update the main umbrella hero photo live on the website.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Eyebrow Tag</label>
+                                            <input type="text" name="hero_eyebrow" class="form-input" value="{{ $umbrellaInsuranceContent['hero_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Headline Title (HTML allowed e.g. &lt;br&gt;)</label>
+                                            <input type="text" name="hero_title" class="form-input" value="{{ $umbrellaInsuranceContent['hero_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Subtitle Paragraph</label>
+                                            <textarea name="hero_subtitle" class="form-textarea" rows="2" required>{{ $umbrellaInsuranceContent['hero_subtitle'] ?? '' }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Badge Subtitle</label>
+                                            <input type="text" name="hero_card_sub" class="form-input" value="{{ $umbrellaInsuranceContent['hero_card_sub'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Badge Label</label>
+                                            <input type="text" name="hero_card_label" class="form-input" value="{{ $umbrellaInsuranceContent['hero_card_label'] ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. COVERAGE CARDS (6 CARDS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">2. Umbrella Coverage Cards (6 Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 6; $i++)
+                                        <div class="form-group">
+                                            <label class="form-label">Card {{ $i }} Title</label>
+                                            <input type="text" name="card_{{ $i }}_title" class="form-input" value="{{ $umbrellaInsuranceContent['card_'.$i.'_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Card {{ $i }} Description</label>
+                                            <input type="text" name="card_{{ $i }}_desc" class="form-input" value="{{ $umbrellaInsuranceContent['card_'.$i.'_desc'] ?? '' }}">
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. VALUE PROPOSITION PILLARS -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">3. Asset Protection Pillars (4 Pillars)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 4; $i++)
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar {{ $i }} Title</label>
+                                            <input type="text" name="value_{{ $i }}_title" class="form-input" value="{{ $umbrellaInsuranceContent['value_'.$i.'_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar {{ $i }} Description</label>
+                                            <input type="text" name="value_{{ $i }}_desc" class="form-input" value="{{ $umbrellaInsuranceContent['value_'.$i.'_desc'] ?? '' }}">
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. GUIDANCE SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">4. Guidance &amp; Wealth Preservation Section</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label">Eyebrow Tag</label>
+                                            <input type="text" name="guidance_eyebrow" class="form-input" value="{{ $umbrellaInsuranceContent['guidance_eyebrow'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Section Title</label>
+                                            <input type="text" name="guidance_title" class="form-input" value="{{ $umbrellaInsuranceContent['guidance_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Main Body Paragraph</label>
+                                            <textarea name="guidance_text" class="form-textarea" rows="3">{{ $umbrellaInsuranceContent['guidance_text'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. WHY CHOOSE SUREBOUND -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">5. Why High-Net-Worth Households Choose Surebound (4 Advantage Cards)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 4; $i++)
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage {{ $i }} Title</label>
+                                            <input type="text" name="why_{{ $i }}_title" class="form-input" value="{{ $umbrellaInsuranceContent['why_'.$i.'_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Advantage {{ $i }} Description</label>
+                                            <input type="text" name="why_{{ $i }}_desc" class="form-input" value="{{ $umbrellaInsuranceContent['why_'.$i.'_desc'] ?? '' }}">
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 6. FAQ ACCORDION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">6. Frequently Asked Questions (5 Accordion Q&amp;As)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        @for($i = 1; $i <= 5; $i++)
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ {{ $i }} Question</label>
+                                            <input type="text" name="faq_{{ $i }}_question" class="form-input" value="{{ $umbrellaInsuranceContent['faq_'.$i.'_question'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ {{ $i }} Answer</label>
+                                            <textarea name="faq_{{ $i }}_answer" class="form-textarea" rows="2">{{ $umbrellaInsuranceContent['faq_'.$i.'_answer'] ?? '' }}</textarea>
+                                        </div>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. CTA BANNER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">7. Bottom Call-To-Action Banner</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Banner Headline Title</label>
+                                            <input type="text" name="cta_title" class="form-input" value="{{ $umbrellaInsuranceContent['cta_title'] ?? '' }}">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Banner Subtitle</label>
+                                            <input type="text" name="cta_subtitle" class="form-input" value="{{ $umbrellaInsuranceContent['cta_subtitle'] ?? '' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SAVE BUTTON BAR -->
+                            <div style="margin-top: 12px; margin-bottom: 40px; display: flex; justify-content: flex-end; gap: 16px;">
+                                <button type="submit" id="saveUmbrellaCmsBtnBottom" class="btn-primary-action" style="padding: 14px 32px; font-size: 18px; border-radius: var(--radius-md); background: #ea580c;">
+                                    Publish Umbrella Changes Live &rarr;
                                 </button>
                             </div>
 
@@ -7182,13 +8555,22 @@
                         <div class="form-group">
                             <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Insurance Line / Type *</label>
                             <select name="type" class="form-input" required onchange="updateDefaultPolicyLabel(this.value, 'create')">
-                                <option value="home">Homeowners Insurance</option>
-                                <option value="auto">Auto / Motor Vehicle</option>
-                                <option value="umbrella">Umbrella &amp; Excess Liability</option>
-                                <option value="business">Commercial Business (BOP)</option>
-                                <option value="life">Life Insurance</option>
-                                <option value="cyber">Cyber Security &amp; Data Breach</option>
-                                <option value="general">General Liability</option>
+                                <optgroup label="Personal Lines">
+                                    <option value="home">Homeowners Insurance</option>
+                                    <option value="auto">Auto / Motor Vehicle</option>
+                                    <option value="life">Life Insurance</option>
+                                    <option value="health">Health Insurance</option>
+                                    <option value="umbrella">Umbrella &amp; Excess Liability</option>
+                                </optgroup>
+                                <optgroup label="Commercial Lines">
+                                    <option value="bop">Business Owner Policy (BOP)</option>
+                                    <option value="workers_comp">Workers' Compensation</option>
+                                    <option value="general_liability">General Liability</option>
+                                    <option value="commercial_property">Commercial Property Coverage</option>
+                                    <option value="commercial_auto">Commercial Auto Insurance</option>
+                                    <option value="surety_bond">Surety Bond</option>
+                                    <option value="cyber">Cyber Security &amp; Data Breach</option>
+                                </optgroup>
                             </select>
                         </div>
 
@@ -7330,13 +8712,22 @@
                         <div class="form-group">
                             <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Insurance Line / Type *</label>
                             <select name="type" id="edit_type" class="form-input" required onchange="updateDefaultPolicyLabel(this.value, 'edit')">
-                                <option value="home">Homeowners Insurance</option>
-                                <option value="auto">Auto / Motor Vehicle</option>
-                                <option value="umbrella">Umbrella &amp; Excess Liability</option>
-                                <option value="business">Commercial Business (BOP)</option>
-                                <option value="life">Life Insurance</option>
-                                <option value="cyber">Cyber Security &amp; Data Breach</option>
-                                <option value="general">General Liability</option>
+                                <optgroup label="Personal Lines">
+                                    <option value="home">Homeowners Insurance</option>
+                                    <option value="auto">Auto / Motor Vehicle</option>
+                                    <option value="life">Life Insurance</option>
+                                    <option value="health">Health Insurance</option>
+                                    <option value="umbrella">Umbrella &amp; Excess Liability</option>
+                                </optgroup>
+                                <optgroup label="Commercial Lines">
+                                    <option value="bop">Business Owner Policy (BOP)</option>
+                                    <option value="workers_comp">Workers' Compensation</option>
+                                    <option value="general_liability">General Liability</option>
+                                    <option value="commercial_property">Commercial Property Coverage</option>
+                                    <option value="commercial_auto">Commercial Auto Insurance</option>
+                                    <option value="surety_bond">Surety Bond</option>
+                                    <option value="cyber">Cyber Security &amp; Data Breach</option>
+                                </optgroup>
                             </select>
                         </div>
 
@@ -8225,10 +9616,22 @@
                         <div class="form-group">
                             <label class="form-label">Insurance Line *</label>
                             <select name="type" class="form-select" required>
-                                <option value="home">Homeowners / Property</option>
-                                <option value="auto">Auto / Vehicle</option>
-                                <option value="life">Life & Health</option>
-                                <option value="business">Commercial / Business BOP</option>
+                                <optgroup label="Personal Lines">
+                                    <option value="home">Homeowners Insurance</option>
+                                    <option value="auto">Auto / Motor Vehicle</option>
+                                    <option value="life">Life Insurance</option>
+                                    <option value="health">Health Insurance</option>
+                                    <option value="umbrella">Umbrella Liability</option>
+                                </optgroup>
+                                <optgroup label="Commercial Lines">
+                                    <option value="bop">Business Owner Policy (BOP)</option>
+                                    <option value="workers_comp">Workers' Compensation</option>
+                                    <option value="general_liability">General Liability</option>
+                                    <option value="commercial_property">Commercial Property Coverage</option>
+                                    <option value="commercial_auto">Commercial Auto Insurance</option>
+                                    <option value="surety_bond">Surety Bond</option>
+                                    <option value="cyber">Cyber Security</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div class="form-group">
@@ -8769,6 +10172,186 @@
             .catch(err => {
                 if (btn1) { btn1.innerHTML = 'Publish Auto Changes Live'; btn1.disabled = false; }
                 if (btn2) { btn2.innerHTML = 'Publish Auto Changes Live &rarr;'; btn2.disabled = false; }
+                alert('Error updating page: ' + err.message);
+            });
+        }
+
+        function saveCommercialAutoCms(e) {
+            e.preventDefault();
+            const btn1 = document.getElementById('saveCommercialAutoCmsBtn');
+            const btn2 = document.getElementById('saveCommercialAutoCmsBtnBottom');
+            
+            if (btn1) { btn1.innerHTML = 'Saving...'; btn1.disabled = true; }
+            if (btn2) { btn2.innerHTML = 'Saving...'; btn2.disabled = true; }
+
+            const form = document.getElementById('commercialAutoCmsForm');
+            const formData = new FormData(form);
+
+            fetch('{{ route("admin.commercial-auto-insurance.update") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn1) { btn1.innerHTML = '✓ Published Live!'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
+                alert('Success: Commercial Auto Insurance page content has been updated and published live!');
+                setTimeout(() => {
+                    if (btn1) btn1.innerHTML = 'Publish Commercial Auto Live';
+                    if (btn2) btn2.innerHTML = 'Publish Commercial Auto Changes Live &rarr;';
+                }, 2500);
+            })
+            .catch(err => {
+                if (btn1) { btn1.innerHTML = 'Publish Commercial Auto Live'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = 'Publish Commercial Auto Changes Live &rarr;'; btn2.disabled = false; }
+                alert('Error updating page: ' + err.message);
+            });
+        }
+
+        function saveSuretyBondCms(e) {
+            e.preventDefault();
+            const btn1 = document.getElementById('saveSuretyBondCmsBtn');
+            const btn2 = document.getElementById('saveSuretyBondCmsBtnBottom');
+            
+            if (btn1) { btn1.innerHTML = 'Saving...'; btn1.disabled = true; }
+            if (btn2) { btn2.innerHTML = 'Saving...'; btn2.disabled = true; }
+
+            const form = document.getElementById('suretyBondCmsForm');
+            const formData = new FormData(form);
+
+            fetch('{{ route("admin.surety-bond.update") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn1) { btn1.innerHTML = '✓ Published Live!'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
+                alert('Success: Surety Bond page content has been updated and published live!');
+                setTimeout(() => {
+                    if (btn1) btn1.innerHTML = 'Publish Surety Bond Live';
+                    if (btn2) btn2.innerHTML = 'Publish Surety Bond Changes Live &rarr;';
+                }, 2500);
+            })
+            .catch(err => {
+                if (btn1) { btn1.innerHTML = 'Publish Surety Bond Live'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = 'Publish Surety Bond Changes Live &rarr;'; btn2.disabled = false; }
+                alert('Error updating page: ' + err.message);
+            });
+        }
+
+        function saveLifeCms(e) {
+            e.preventDefault();
+            const btn1 = document.getElementById('saveLifeCmsBtn');
+            const btn2 = document.getElementById('saveLifeCmsBtnBottom');
+            
+            if (btn1) { btn1.innerHTML = 'Saving...'; btn1.disabled = true; }
+            if (btn2) { btn2.innerHTML = 'Saving...'; btn2.disabled = true; }
+
+            const form = document.getElementById('lifeCmsForm');
+            const formData = new FormData(form);
+
+            fetch('{{ route("admin.life-insurance.update") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn1) { btn1.innerHTML = '✓ Published Live!'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
+                alert('Success: Life Insurance page content has been updated and published live!');
+                setTimeout(() => {
+                    if (btn1) btn1.innerHTML = 'Publish Life Changes Live';
+                    if (btn2) btn2.innerHTML = 'Publish Life Changes Live &rarr;';
+                }, 2500);
+            })
+            .catch(err => {
+                if (btn1) { btn1.innerHTML = 'Publish Life Changes Live'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = 'Publish Life Changes Live &rarr;'; btn2.disabled = false; }
+                alert('Error updating page: ' + err.message);
+            });
+        }
+
+        function saveHealthCms(e) {
+            e.preventDefault();
+            const btn1 = document.getElementById('saveHealthCmsBtn');
+            const btn2 = document.getElementById('saveHealthCmsBtnBottom');
+            
+            if (btn1) { btn1.innerHTML = 'Saving...'; btn1.disabled = true; }
+            if (btn2) { btn2.innerHTML = 'Saving...'; btn2.disabled = true; }
+
+            const form = document.getElementById('healthCmsForm');
+            const formData = new FormData(form);
+
+            fetch('{{ route("admin.health-insurance.update") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn1) { btn1.innerHTML = '✓ Published Live!'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
+                alert('Success: Health Insurance page content has been updated and published live!');
+                setTimeout(() => {
+                    if (btn1) btn1.innerHTML = 'Publish Health Changes Live';
+                    if (btn2) btn2.innerHTML = 'Publish Health Changes Live &rarr;';
+                }, 2500);
+            })
+            .catch(err => {
+                if (btn1) { btn1.innerHTML = 'Publish Health Changes Live'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = 'Publish Health Changes Live &rarr;'; btn2.disabled = false; }
+                alert('Error updating page: ' + err.message);
+            });
+        }
+
+        function saveUmbrellaCms(e) {
+            e.preventDefault();
+            const btn1 = document.getElementById('saveUmbrellaCmsBtn');
+            const btn2 = document.getElementById('saveUmbrellaCmsBtnBottom');
+            
+            if (btn1) { btn1.innerHTML = 'Saving...'; btn1.disabled = true; }
+            if (btn2) { btn2.innerHTML = 'Saving...'; btn2.disabled = true; }
+
+            const form = document.getElementById('umbrellaCmsForm');
+            const formData = new FormData(form);
+
+            fetch('{{ route("admin.umbrella-insurance.update") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn1) { btn1.innerHTML = '✓ Published Live!'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
+                alert('Success: Umbrella Insurance page content has been updated and published live!');
+                setTimeout(() => {
+                    if (btn1) btn1.innerHTML = 'Publish Umbrella Changes Live';
+                    if (btn2) btn2.innerHTML = 'Publish Umbrella Changes Live &rarr;';
+                }, 2500);
+            })
+            .catch(err => {
+                if (btn1) { btn1.innerHTML = 'Publish Umbrella Changes Live'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = 'Publish Umbrella Changes Live &rarr;'; btn2.disabled = false; }
                 alert('Error updating page: ' + err.message);
             });
         }
@@ -10209,11 +11792,18 @@ function saveCoverageCms(e) {
             const labels = {
                 'home': 'Homeowners Comprehensive (HO-5)',
                 'auto': 'Executive Auto Comprehensive & Collision',
-                'umbrella': 'Personal & Excess Umbrella Liability',
-                'business': 'Commercial Business Owner Policy (BOP)',
                 'life': 'Executive Term Life Protection',
-                'cyber': 'Cyber Security & Data Breach Shield',
-                'general': 'Commercial General Liability'
+                'health': 'Premier Comprehensive Health & Medical',
+                'umbrella': 'Personal & Excess Umbrella Liability',
+                'bop': 'Business Owner Policy (BOP)',
+                'business': 'Business Owner Policy (BOP)',
+                'workers_comp': "Workers' Compensation Insurance",
+                'general_liability': 'Commercial General Liability',
+                'general': 'Commercial General Liability',
+                'commercial_property': 'Commercial Property Coverage',
+                'commercial_auto': 'Commercial Auto & Fleet Shield',
+                'surety_bond': 'Surety Bond & Contract Guarantee',
+                'cyber': 'Cyber Security & Data Breach Shield'
             };
             const targetEl = document.getElementById(mode === 'create' ? 'create_type_label' : 'edit_type_label');
             if (targetEl && labels[type]) {

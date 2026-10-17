@@ -59,31 +59,20 @@
                     <a href="{{ route('user.quote') }}" class="view-all">View All Categories &rarr;</a>
                 </div>
                 
-                <div class="coverage-grid">
-                    <a href="{{ route('user.quote') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
-                        <div class="coverage-icon">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                <div class="coverage-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                    <a href="{{ route('home-insurance') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
+                        <div class="coverage-icon" style="background: #eff6ff; color: #1d4ed8;">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                         </div>
                         <div class="coverage-info">
-                            <h4>Health Insurance</h4>
-                            <p>Stay healthy, live better.</p>
+                            <h4>Home Insurance</h4>
+                            <p>Protect your sanctuary.</p>
                         </div>
                         <div class="coverage-arrow">&rarr;</div>
                     </a>
-                    
-                    <a href="{{ route('user.quote') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
-                        <div class="coverage-icon">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                        </div>
-                        <div class="coverage-info">
-                            <h4>Life Insurance</h4>
-                            <p>Protect what matters most.</p>
-                        </div>
-                        <div class="coverage-arrow">&rarr;</div>
-                    </a>
-                    
-                    <a href="{{ route('user.quote') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
-                        <div class="coverage-icon">
+
+                    <a href="{{ route('auto-insurance') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
+                        <div class="coverage-icon" style="background: #ecfdf5; color: #059669;">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                         </div>
                         <div class="coverage-info">
@@ -92,25 +81,47 @@
                         </div>
                         <div class="coverage-arrow">&rarr;</div>
                     </a>
-                    
-                    <a href="{{ route('user.quote') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
-                        <div class="coverage-icon">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+
+                    <a href="{{ route('life-insurance') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
+                        <div class="coverage-icon" style="background: #fdf2f8; color: #db2777;">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>
                         </div>
                         <div class="coverage-info">
-                            <h4>Home Insurance</h4>
-                            <p>Secure your home.</p>
+                            <h4>Life Insurance</h4>
+                            <p>Family financial certainty.</p>
+                        </div>
+                        <div class="coverage-arrow">&rarr;</div>
+                    </a>
+
+                    <a href="{{ route('health-insurance') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
+                        <div class="coverage-icon" style="background: #f0fdf4; color: #16a34a;">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                        </div>
+                        <div class="coverage-info">
+                            <h4>Health Insurance</h4>
+                            <p>Live healthy &amp; protected.</p>
+                        </div>
+                        <div class="coverage-arrow">&rarr;</div>
+                    </a>
+
+                    <a href="{{ route('umbrella-insurance') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
+                        <div class="coverage-icon" style="background: #f3e8ff; color: #7c3aed;">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <div class="coverage-info">
+                            <h4>Umbrella Insurance</h4>
+                            <p>$1M-$10M excess shield.</p>
                         </div>
                         <div class="coverage-arrow">&rarr;</div>
                     </a>
                     
-                    <a href="{{ route('user.quote') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
-                        <div class="coverage-icon">
+                    <a href="{{ route('business-insurance') }}" class="coverage-card" style="text-decoration: none; color: inherit;">
+                        <div class="coverage-icon" style="background: #fffbeb; color: #d97706;">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                         </div>
                         <div class="coverage-info">
                             <h4>Business Insurance</h4>
-                            <p>Grow with confidence.</p>
+                            <p>Commercial protection.</p>
                         </div>
                         <div class="coverage-arrow">&rarr;</div>
                     </a>
@@ -186,20 +197,20 @@
                 <div class="profile-content">
                     <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Profile" class="profile-avatar">
                     <h2 class="profile-name">{{ Auth::user()->name ?? 'Md Rejawl' }}</h2>
-                    <span class="profile-role">{{ Auth::user()->title ?: 'Primary Policyholder' }}</span>
+                    <span class="profile-role">{{ Auth::user()?->title ?: 'Primary Policyholder' }}</span>
                     
                     <div class="profile-details">
                         <div class="profile-detail-item">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            <span>{{ Auth::user()->email ?? 'client@surebound.com' }}</span>
+                            <span>{{ Auth::user()?->email ?? 'client@surebound.com' }}</span>
                         </div>
                         <div class="profile-detail-item">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                            <span>{{ Auth::user()->phone ?: '+880 9612 345678' }}</span>
+                            <span>{{ Auth::user()?->phone ?: '+880 9612 345678' }}</span>
                         </div>
                         <div class="profile-detail-item">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            <span>{{ Auth::user()->city ? Auth::user()->city.', '.Auth::user()->state : 'Austin, Texas' }}</span>
+                            <span>{{ Auth::user()?->city ? Auth::user()->city.', '.Auth::user()->state : 'Austin, Texas' }}</span>
                         </div>
                     </div>
                     
