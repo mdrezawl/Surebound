@@ -15,8 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('css/surebound.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/surebound.css') }}?v={{ file_exists(public_path('css/surebound.css')) ? filemtime(public_path('css/surebound.css')) : '2.0' }}">
+    <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}?v={{ file_exists(public_path('css/surebound-modal.css')) ? filemtime(public_path('css/surebound-modal.css')) : '2.0' }}">
     @yield('head')
 
     <!-- Marketing Pixels & Social Meta Tags (Google, Meta/FB, LinkedIn, Twitter, TikTok) -->
