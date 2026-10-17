@@ -2727,9 +2727,12 @@ button {
 }
 
 .fleet-trust-item svg {
-  width: 18px;
-  height: 18px;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
   color: var(--color-royal-blue);
+  flex-shrink: 0;
 }
 
 .fleet-alert-success {
