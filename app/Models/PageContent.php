@@ -13,9 +13,13 @@ class PageContent extends Model
      */
     public static function getForPage(string $page, array $defaults = []): array
     {
-        $stored = static::where('page', $page)->pluck('value', 'key')->all();
+        try {
+            $stored = static::where('page', $page)->pluck('value', 'key')->all();
 
-        return array_merge($defaults, array_filter($stored, fn ($v) => ! is_null($v)));
+            return array_merge($defaults, array_filter($stored, fn ($v) => ! is_null($v)));
+        } catch (\Throwable) {
+            return $defaults;
+        }
     }
 
     /**

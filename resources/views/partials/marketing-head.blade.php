@@ -33,7 +33,6 @@
     <meta name="twitter:title" content="{{ $ogTitle }}">
     <meta name="twitter:description" content="{{ $ogDesc }}">
     <meta name="twitter:image" content="{{ $ogImageUrl }}">
-    <link rel="canonical" href="{{ url()->current() }}">
 
     {{-- 1. Google Tag Manager (GTM) --}}
     @if(!empty($marketingConfig['google']['enabled']) && !empty($marketingConfig['google']['gtm_enabled']) && !empty($marketingConfig['google']['gtm_id']))

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none" class="partner-logo-svg">
+    <!-- Nationwide Framed N Logo -->
+    <g transform="translate(6, 6)">
+        <rect x="0" y="0" width="36" height="36" rx="6" fill="#005596"/>
+        <path d="M9 27V9h4.8l8.2 12.6V9H27v18h-4.8L13.8 14.4V27H9z" fill="#ffffff"/>
+    </g>
+    <!-- Wordmark Nationwide -->
+    <text x="50" y="31" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="22" fill="#005596" letter-spacing="0.2">Nationwide</text>
+</svg>

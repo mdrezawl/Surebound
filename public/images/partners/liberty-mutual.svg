@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none" class="partner-logo-svg">
+    <!-- Liberty Mutual Torch Icon -->
+    <g transform="translate(6, 4)">
+        <!-- Torch flame in bright amber/gold -->
+        <path d="M14 2C11 6 8 9 9 13c1 3.5 5 4 7 1.5s1-7.5-2-12.5z" fill="#F59E0B"/>
+        <path d="M11 8c-.5 2.5 1.5 3.5 3 3.5s2-1.8 1.2-3.8-2.5-2.2-4.2.3z" fill="#FDE047"/>
+        <!-- Torch holder & base in deep navy -->
+        <path d="M8 15h12l-1.8 5h-8.4L8 15z" fill="#002663"/>
+        <path d="M12 20h4v15h-4V20z" fill="#002663"/>
+        <path d="M10 35h8v3h-8v-3z" fill="#002663"/>
+    </g>
+    <!-- Wordmark Liberty Mutual -->
+    <text x="38" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="17" fill="#002663" letter-spacing="0.2">Liberty Mutual.</text>
+    <text x="38" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="10.5" fill="#475569" letter-spacing="2">INSURANCE</text>
+</svg>

@@ -51,4 +51,43 @@ class User extends Authenticatable
     {
         return $this->role === 'admin' || $this->role === 'super_admin' || $this->isSuperAdmin();
     }
+
+    /**
+     * Check if user has specific SEO capability.
+     */
+    public function hasSeoPermission(string $permission): bool
+    {
+        if ($this->isSuperAdmin() || $this->role === 'admin') {
+            return true;
+        }
+
+        if ($this->role === 'seo_manager') {
+            return true;
+        }
+
+        if ($this->role === 'content_editor') {
+            return in_array($permission, ['view', 'edit_metadata', 'create_content', 'request_review']);
+        }
+
+        if ($this->role === 'seo_viewer') {
+            return $permission === 'view';
+        }
+
+        return false;
+    }
+
+    public function canManageRedirects(): bool
+    {
+        return $this->hasSeoPermission('manage_redirects');
+    }
+
+    public function canEditRobotsTxt(): bool
+    {
+        return $this->hasSeoPermission('edit_robots');
+    }
+
+    public function canApproveSeoFixes(): bool
+    {
+        return $this->hasSeoPermission('approve_fixes');
+    }
 }

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none" class="partner-logo-svg">
+    <!-- State Farm 3 Interlocking Ovals in Vibrant Red -->
+    <g transform="translate(6, 6)">
+        <ellipse cx="18" cy="9" rx="10" ry="5.5" stroke="#D3202A" stroke-width="3" fill="none"/>
+        <ellipse cx="10" cy="24" rx="10" ry="5.5" stroke="#D3202A" stroke-width="3" fill="none"/>
+        <ellipse cx="26" cy="24" rx="10" ry="5.5" stroke="#D3202A" stroke-width="3" fill="none"/>
+    </g>
+    <!-- Wordmark State Farm -->
+    <text x="48" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="21.5" fill="#D3202A" letter-spacing="-0.3">StateFarm</text>
+</svg>

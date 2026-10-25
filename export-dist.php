@@ -79,6 +79,64 @@ savePage('health-insurance/index.html', $healthHtml);
 $umbrellaHtml = $adminController->showUmbrellaInsurance()->render();
 savePage('umbrella-insurance/index.html', $umbrellaHtml);
 
+// 6e. Contact Page
+$contactHtml = $adminController->showContact()->render();
+savePage('contact/index.html', $contactHtml);
+
+// 6f. Privacy Policy
+$privacyHtml = $adminController->showPrivacy()->render();
+savePage('privacy/index.html', $privacyHtml);
+
+// 6g. Terms of Service
+$termsHtml = $adminController->showTerms()->render();
+savePage('terms/index.html', $termsHtml);
+
+// 6h. Company & Resource Pages
+$storyHtml = $adminController->showStory()->render();
+savePage('story/index.html', $storyHtml);
+
+$teamHtml = $adminController->showTeam()->render();
+savePage('team/index.html', $teamHtml);
+
+$careersHtml = $adminController->showCareers()->render();
+savePage('careers/index.html', $careersHtml);
+
+$communityHtml = $adminController->showCommunity()->render();
+savePage('community/index.html', $communityHtml);
+
+$articlesHtml = $adminController->showArticles()->render();
+savePage('articles/index.html', $articlesHtml);
+
+$faqsHtml = $adminController->showFaqs()->render();
+savePage('faqs/index.html', $faqsHtml);
+
+$guidesHtml = $adminController->showGuides()->render();
+savePage('guides/index.html', $guidesHtml);
+
+$claimsHtml = $adminController->showClaims()->render();
+savePage('claims/index.html', $claimsHtml);
+
+$paymentHtml = $adminController->showPayment()->render();
+savePage('payment/index.html', $paymentHtml);
+
+$coverageHtml = $adminController->showCoverage()->render();
+savePage('coverage/index.html', $coverageHtml);
+
+$compareHtml = $adminController->showCompare()->render();
+savePage('compare/index.html', $compareHtml);
+
+$customQuoteHtml = $adminController->showCustomQuote()->render();
+savePage('custom-quote/index.html', $customQuoteHtml);
+
+$propertyHtml = $adminController->showPropertyInsurance()->render();
+savePage('property-insurance/index.html', $propertyHtml);
+
+$liabilityHtml = $adminController->showLiabilityInsurance()->render();
+savePage('liability-insurance/index.html', $liabilityHtml);
+
+$groupBenefitsHtml = $adminController->showGroupBenefits()->render();
+savePage('group-benefits/index.html', $groupBenefitsHtml);
+
 // 7. Login
 $emptyErrors = new ViewErrorBag;
 view()->share('errors', $emptyErrors);

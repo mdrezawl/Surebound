@@ -963,7 +963,7 @@
                 <div class="checkbox-container">
                     <label class="checkbox-label">
                         <input type="checkbox" name="terms" id="terms" required checked>
-                        <span>I accept Surebound's <a href="javascript:void(0)" onclick="SureboundModal.alert({ title: 'Terms of Service', message: 'All policyholder accounts are subject to standard underwriting verification, compliance standards, and state insurance commission regulations.', type: 'info', buttonText: 'Understood' })">Terms of Service</a> and <a href="javascript:void(0)" onclick="SureboundModal.alert({ title: 'Privacy & Security Policy', message: 'We protect all policyholder records, identity documents, and claims data with enterprise 256-bit encryption.', type: 'info', buttonText: 'Understood' })">Privacy Policy</a>.</span>
+                        <span>I accept Surebound's <a href="{{ route('terms') }}" target="_blank" rel="noopener">Terms of Service</a> and <a href="{{ route('privacy') }}" target="_blank" rel="noopener">Privacy Policy</a>.</span>
                     </label>
                     <label class="checkbox-label">
                         <input type="checkbox" name="communications" id="communications" checked>

@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\SeoAdminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SeoPublicController;
 use App\Http\Controllers\UserController;
+use App\Models\PageContent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,9 +27,16 @@ if (file_exists(base_path('routes/setup.php')) && file_exists(app_path('Http/Con
 |--------------------------------------------------------------------------
 */
 
+// Technical SEO Files
+Route::get('/sitemap.xml', [SeoPublicController::class, 'sitemap'])->name('seo.sitemap');
+Route::get('/robots.txt', [SeoPublicController::class, 'robots'])->name('seo.robots');
+
 // Public Website
 Route::get('/', function () {
-    return view('home');
+    $partnersContent = PageContent::getForPage('partners', AdminController::getDefaultPartnersContent());
+    $homeInsuranceContent = PageContent::getForPage('home-insurance', AdminController::getDefaultHomeInsuranceContent());
+
+    return view('home', compact('partnersContent', 'homeInsuranceContent'));
 })->name('home');
 
 Route::get('/home-insurance', [AdminController::class, 'showHomeInsurance'])->name('home-insurance');
@@ -55,6 +65,8 @@ Route::get('/business-insurance', [AdminController::class, 'showBusinessInsuranc
 Route::get('/claims', [AdminController::class, 'showClaims'])->name('claims');
 Route::get('/payment', [AdminController::class, 'showPayment'])->name('payment');
 Route::get('/contact', [AdminController::class, 'showContact'])->name('contact');
+Route::get('/privacy', [AdminController::class, 'showPrivacy'])->name('privacy');
+Route::get('/terms', [AdminController::class, 'showTerms'])->name('terms');
 
 Route::post('/quotes', [AdminController::class, 'storePublicQuote'])->name('quotes.store');
 
@@ -123,6 +135,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/claims', [AdminController::class, 'updateClaims'])->name('admin.claims.update');
     Route::post('/admin/payment', [AdminController::class, 'updatePayment'])->name('admin.payment.update');
     Route::post('/admin/contact', [AdminController::class, 'updateContact'])->name('admin.contact.update');
+    Route::post('/admin/partners', [AdminController::class, 'updatePartners'])->name('admin.partners.update');
 
     // API Integrations (Claims API & US Payments)
     Route::post('/admin/api/claims', [AdminController::class, 'saveClaimsApiConfig'])->name('admin.api.claims.update');
@@ -170,4 +183,26 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Live Database Auto-Migration & System Cache Refresh (Admin Control)
     Route::get('/admin/system/migrate', [AdminController::class, 'runLiveMigrations'])->name('admin.system.migrate');
+
+    // ==========================================
+    // ADVANCED SEO & AI SEARCH ADMIN SUITE
+    // ==========================================
+    Route::prefix('admin/seo')->name('admin.seo.')->group(function () {
+        Route::get('/', [SeoAdminController::class, 'index'])->name('index');
+        Route::post('/audit/run', [SeoAdminController::class, 'runAudit'])->name('audit.run');
+        Route::put('/pages/{id}', [SeoAdminController::class, 'updatePageSeo'])->name('pages.update');
+        Route::post('/recommendations/{id}/apply', [SeoAdminController::class, 'applyRecommendation'])->name('recommendations.apply');
+        Route::post('/recommendations/{id}/rollback', [SeoAdminController::class, 'rollbackRecommendation'])->name('recommendations.rollback');
+        Route::post('/redirects', [SeoAdminController::class, 'storeRedirect'])->name('redirects.store');
+        Route::delete('/redirects/{id}', [SeoAdminController::class, 'deleteRedirect'])->name('redirects.delete');
+        Route::post('/robots', [SeoAdminController::class, 'saveRobots'])->name('robots.save');
+        Route::post('/keywords', [SeoAdminController::class, 'storeKeyword'])->name('keywords.store');
+        Route::delete('/keywords/{id}', [SeoAdminController::class, 'deleteKeyword'])->name('keywords.delete');
+        Route::post('/citations', [SeoAdminController::class, 'storeCitation'])->name('citations.store');
+        Route::post('/pagespeed/test', [SeoAdminController::class, 'testPageSpeed'])->name('pagespeed.test');
+        Route::post('/integrations/{key}', [SeoAdminController::class, 'saveIntegration'])->name('integrations.save');
+        Route::post('/integrations/{key}/test', [SeoAdminController::class, 'testIntegration'])->name('integrations.test');
+        Route::post('/settings', [SeoAdminController::class, 'saveSettings'])->name('settings.save');
+        Route::patch('/alerts/{id}/read', [SeoAdminController::class, 'markAlertRead'])->name('alerts.read');
+    });
 });

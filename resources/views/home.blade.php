@@ -178,6 +178,52 @@
         </div>
     </section>
 
+    @php
+        $partnersContent = $partnersContent ?? \App\Models\PageContent::getForPage('partners', \App\Http\Controllers\AdminController::getDefaultPartnersContent());
+        $partnersCount = (int) ($partnersContent['partners_count'] ?? 10);
+        $partnersList = [];
+        for ($i = 1; $i <= $partnersCount; $i++) {
+            if (!empty($partnersContent["partner_{$i}_name"])) {
+                $partnersList[$i] = [
+                    'name' => $partnersContent["partner_{$i}_name"],
+                    'logo' => $partnersContent["partner_{$i}_logo"] ?? '',
+                    'active' => $partnersContent["partner_{$i}_active"] ?? '1',
+                    'desc' => $partnersContent["partner_{$i}_desc"] ?? '',
+                ];
+            }
+        }
+    @endphp
+
+    @if(($partnersContent['section_enabled'] ?? '1') === '1')
+    <!-- ==========================================
+         MINIMAL INSURANCE PARTNERS STRIP
+         ========================================== -->
+    <section class="partners-strip-section" id="insurance-partners" aria-label="Insurance Carrier Partners">
+        <div class="container">
+            <div class="partners-header">
+                <h2 class="section-title partners-heading">{{ $partnersContent['section_title'] ?? 'Coverage Backed by Trusted Names' }}</h2>
+                <p class="section-subtitle partners-subtitle">{{ $partnersContent['section_subtitle'] ?? 'We work with leading insurance carriers to help you find the right coverage.' }}</p>
+            </div>
+
+            <div class="partners-grid">
+                @foreach($partnersList as $partner)
+                    @if(($partner['active'] ?? '1') === '1')
+                    <div class="partner-logo-item" title="{{ $partner['name'] }}">
+                        @php
+                            $logoSrc = $partner['logo'] ?: 'images/logo.png';
+                            if (!str_starts_with($logoSrc, 'http://') && !str_starts_with($logoSrc, 'https://') && !str_starts_with($logoSrc, '/')) {
+                                $logoSrc = asset($logoSrc);
+                            }
+                        @endphp
+                        <img src="{{ $logoSrc }}" alt="{{ $partner['name'] }}" class="partner-logo-img" loading="lazy" width="180" height="46">
+                    </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
     <!-- ==========================================
          DARK NAVY VALUE PROPOSITION BAR (4 PILLARS)
          ========================================== -->
@@ -271,28 +317,154 @@
     <!-- ==========================================
          BRAND GUIDELINES 2026: PULL QUOTES & TESTIMONIAL
          ========================================== -->
-    <section class="pull-quote-section">
+    @php
+        $homeInsuranceContent = $homeInsuranceContent ?? \App\Models\PageContent::getForPage('home-insurance', \App\Http\Controllers\AdminController::getDefaultHomeInsuranceContent());
+        $quotesEnabled = ($homeInsuranceContent['quotes_enabled'] ?? '1') === '1';
+        $quotesCount = (int) ($homeInsuranceContent['quotes_count'] ?? 1);
+        $quotesList = [];
+
+        for ($qi = 1; $qi <= max(1, $quotesCount); $qi++) {
+            $quoteText = $homeInsuranceContent["quote_{$qi}_text"] ?? '';
+            $quoteActive = $homeInsuranceContent["quote_{$qi}_active"] ?? '1';
+            if ($quoteActive === '1' && trim($quoteText) !== '') {
+                $quotesList[] = [
+                    'text' => $quoteText,
+                    'author' => $homeInsuranceContent["quote_{$qi}_author"] ?? '',
+                    'role' => $homeInsuranceContent["quote_{$qi}_role"] ?? '',
+                    'badge' => $homeInsuranceContent["quote_{$qi}_badge"] ?? 'Verified Perspective',
+                ];
+            }
+        }
+
+        // Fallback to default quote if no active quote in DB
+        if (empty($quotesList) && $quotesEnabled) {
+            $quotesList[] = [
+                'text' => 'We believe that the advantages are so great that a shift to working on slack, or something like it, is inevitable.',
+                'author' => 'Marcel Gherkina',
+                'role' => 'Spokesperson, Surebound',
+                'badge' => 'Verified Perspective',
+            ];
+        }
+    @endphp
+
+    @if($quotesEnabled && count($quotesList) > 0)
+    <section class="pull-quote-section" id="pull-quote-section">
         <div class="container pull-quote-container">
-            <div class="brand-pull-quote-card">
-                <span class="brand-quote-mark">&ldquo;</span>
-                <blockquote class="brand-quote-text">
-                    We believe that the advantages are so great that a shift to working on slack, or something like it, is inevitable.
-                </blockquote>
-                <div class="brand-quote-attribution">
-                    <div class="brand-quote-author-info">
-                        <span class="brand-quote-author">Marcel Gherkina</span>
-                        <span class="brand-quote-role">Spokesperson, Surebound</span>
-                    </div>
-                    <div class="brand-quote-badge">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
+            @if(count($quotesList) === 1)
+                {{-- Single Quote: Fixed and static without slider controls --}}
+                @php
+                    $singleQuote = $quotesList[0];
+                    $initials = 'SB';
+                    if (!empty($singleQuote['author'])) {
+                        $parts = preg_split('/\s+/', trim($singleQuote['author']));
+                        $initials = strtoupper(substr($parts[0] ?? '', 0, 1) . substr($parts[1] ?? '', 0, 1));
+                    }
+                @endphp
+                <div class="brand-pull-quote-card">
+                    <div class="brand-quote-badge-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                            <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
                         </svg>
-                        <span>Verified Perspective</span>
+                    </div>
+                    <span class="brand-quote-mark sr-only" style="display:none;">&ldquo;</span>
+                    <blockquote class="brand-quote-text">
+                        {{ $singleQuote['text'] }}
+                    </blockquote>
+                    <div class="brand-quote-attribution">
+                        <div class="brand-quote-author-wrap">
+                            <div class="brand-quote-avatar" aria-hidden="true">
+                                <span>{{ $initials }}</span>
+                            </div>
+                            <div class="brand-quote-author-info">
+                                <span class="brand-quote-author">{{ $singleQuote['author'] }}</span>
+                                @if(!empty($singleQuote['role']))
+                                    <span class="brand-quote-role">{{ $singleQuote['role'] }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        @if(!empty($singleQuote['badge']))
+                            <div class="brand-quote-badge">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
+                                </svg>
+                                <span>{{ $singleQuote['badge'] }}</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
-            </div>
+            @else
+                {{-- Multiple Quotes: Sliding Carousel --}}
+                <div class="quote-slider-wrapper" id="quoteSliderWrapper">
+                    <div class="quote-slider-track" id="quoteSliderTrack">
+                        @foreach($quotesList as $index => $q)
+                            @php
+                                $qInitials = 'SB';
+                                if (!empty($q['author'])) {
+                                    $parts = preg_split('/\s+/', trim($q['author']));
+                                    $qInitials = strtoupper(substr($parts[0] ?? '', 0, 1) . substr($parts[1] ?? '', 0, 1));
+                                }
+                            @endphp
+                            <div class="quote-slide {{ $index === 0 ? 'active' : '' }}" data-quote-slide="{{ $index }}">
+                                <div class="brand-pull-quote-card">
+                                    <div class="brand-quote-badge-icon" aria-hidden="true">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                                            <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="brand-quote-mark sr-only" style="display:none;">&ldquo;</span>
+                                    <blockquote class="brand-quote-text">
+                                        {{ $q['text'] }}
+                                    </blockquote>
+                                    <div class="brand-quote-attribution">
+                                        <div class="brand-quote-author-wrap">
+                                            <div class="brand-quote-avatar" aria-hidden="true">
+                                                <span>{{ $qInitials }}</span>
+                                            </div>
+                                            <div class="brand-quote-author-info">
+                                                <span class="brand-quote-author">{{ $q['author'] }}</span>
+                                                @if(!empty($q['role']))
+                                                    <span class="brand-quote-role">{{ $q['role'] }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        @if(!empty($q['badge']))
+                                            <div class="brand-quote-badge">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span>{{ $q['badge'] }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="quote-slider-controls">
+                        <button type="button" class="quote-slider-arrow quote-prev" id="quotePrevBtn" aria-label="Previous Perspective">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            </svg>
+                        </button>
+
+                        <div class="quote-slider-dots" id="quoteSliderDots">
+                            @foreach($quotesList as $index => $q)
+                                <button type="button" class="quote-slider-dot {{ $index === 0 ? 'active' : '' }}" data-slide-index="{{ $index }}" aria-label="Go to perspective {{ $index + 1 }}"></button>
+                            @endforeach
+                        </div>
+
+                        <button type="button" class="quote-slider-arrow quote-next" id="quoteNextBtn" aria-label="Next Perspective">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
+    @endif
 
     <!-- ==========================================
          WHY CHOOSE SUREBOUND SECTION
@@ -457,11 +629,11 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>
                 </a>
-                <a href="#contact" class="btn-cta-transparent">
-                    <span>Talk to an Expert</span>
+                <a href="tel:+18132141731" class="btn-cta-transparent">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                     </svg>
+                    <span>Talk to an Expert: +1 813-214-1731</span>
                 </a>
             </div>
         </div>
@@ -604,6 +776,122 @@
                 }, {passive: true});
                 
                 startCovAutoSlide();
+            }
+
+            // Brand Quote Carousel Slider (Multiple Quotes)
+            const quoteSliderWrapper = document.getElementById('quoteSliderWrapper');
+            if (quoteSliderWrapper) {
+                const slides = quoteSliderWrapper.querySelectorAll('.quote-slide');
+                const dots = quoteSliderWrapper.querySelectorAll('.quote-slider-dot');
+                const prevBtn = document.getElementById('quotePrevBtn');
+                const nextBtn = document.getElementById('quoteNextBtn');
+                let currentSlide = 0;
+                let autoSlideTimer = null;
+                const totalSlides = slides.length;
+                const SLIDE_DURATION = 3000; // Exactly 3 seconds auto-scroll interval
+
+                function resetDotProgress() {
+                    dots.forEach((dot, i) => {
+                        dot.classList.remove('active');
+                        if (i === currentSlide) {
+                            // Force reflow to replay CSS progress animation from 0%
+                            void dot.offsetWidth;
+                            dot.classList.add('active');
+                        }
+                    });
+                }
+
+                function showSlide(index, direction) {
+                    if (totalSlides <= 1) return;
+                    
+                    if (index >= totalSlides) index = 0;
+                    if (index < 0) index = totalSlides - 1;
+
+                    slides.forEach((slide, i) => {
+                        slide.classList.remove('active', 'slide-prev-exit');
+                        if (i === currentSlide && i !== index && direction === 'next') {
+                            slide.classList.add('slide-prev-exit');
+                        }
+                    });
+
+                    currentSlide = index;
+                    slides[currentSlide].classList.add('active');
+                    resetDotProgress();
+                }
+
+                function nextSlide() {
+                    showSlide(currentSlide + 1, 'next');
+                }
+
+                function prevSlide() {
+                    showSlide(currentSlide - 1, 'prev');
+                }
+
+                function startAutoplay() {
+                    stopAutoplay();
+                    quoteSliderWrapper.classList.remove('is-paused');
+                    autoSlideTimer = setInterval(nextSlide, SLIDE_DURATION);
+                }
+
+                function stopAutoplay() {
+                    if (autoSlideTimer) {
+                        clearInterval(autoSlideTimer);
+                        autoSlideTimer = null;
+                    }
+                    quoteSliderWrapper.classList.add('is-paused');
+                }
+
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        prevSlide();
+                        startAutoplay();
+                    });
+                }
+
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        nextSlide();
+                        startAutoplay();
+                    });
+                }
+
+                dots.forEach(dot => {
+                    dot.addEventListener('click', () => {
+                        const targetIndex = parseInt(dot.getAttribute('data-slide-index'), 10);
+                        if (!isNaN(targetIndex) && targetIndex !== currentSlide) {
+                            showSlide(targetIndex, targetIndex > currentSlide ? 'next' : 'prev');
+                            startAutoplay();
+                        }
+                    });
+                });
+
+                // Pause autoplay on mouse enter / resume on mouse leave
+                quoteSliderWrapper.addEventListener('mouseenter', stopAutoplay);
+                quoteSliderWrapper.addEventListener('mouseleave', startAutoplay);
+
+                // Touch swipe support
+                let touchStartX = 0;
+                let touchEndX = 0;
+
+                quoteSliderWrapper.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                    stopAutoplay();
+                }, { passive: true });
+
+                quoteSliderWrapper.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    const diff = touchStartX - touchEndX;
+                    if (Math.abs(diff) > 40) {
+                        if (diff > 0) {
+                            nextSlide();
+                        } else {
+                            prevSlide();
+                        }
+                    }
+                    startAutoplay();
+                }, { passive: true });
+
+                startAutoplay();
             }
         });
     </script>

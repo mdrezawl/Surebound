@@ -16,7 +16,7 @@
     
     <!-- Admin Portal Stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}?v={{ file_exists(public_path('css/surebound-modal.css')) ? filemtime(public_path('css/surebound-modal.css')) : time() }}">
 
     <!-- Early Tab Restoration Script (Instant Active Tab Render on Page Reload) -->
     <script>
@@ -74,6 +74,18 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"/>
                     </svg>
                     <span>Overview</span>
+                </a>
+
+                <!-- Highlighted SEO & AI Search Link (Core Section) -->
+                <a href="{{ route('admin.seo.index') }}" class="sidebar-ext-nav-item" style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin: 4px 6px 8px; border-radius: 8px; background: linear-gradient(135deg, rgba(37, 99, 235, 0.22), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(59, 130, 246, 0.45); text-decoration: none; color: #93c5fd; font-weight: 600; font-size: 0.875rem; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);">
+                    <svg fill="none" stroke="#60a5fa" viewBox="0 0 24 24" style="width: 20px; height: 20px; flex-shrink: 0;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <div style="flex: 1; display: flex; flex-direction: column;">
+                        <span style="color: #60a5fa; font-weight: 700; font-size: 0.875rem; line-height: 1.2;">SEO &amp; AI Search Hub</span>
+                        <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 400;">Google &bull; ChatGPT &bull; AI Bots</span>
+                    </div>
+                    <span class="nav-badge" style="background: #2563eb; color: #ffffff; font-weight: 700; font-size: 0.6875rem; padding: 2px 7px; border-radius: 4px;">26 Tabs</span>
                 </a>
 
                 <a class="sidebar-link" data-tab="quotes">
@@ -168,6 +180,14 @@
                 </a>
 
                 <div class="nav-section-title">Marketing &amp; Growth</div>
+
+                <a href="{{ route('admin.seo.index') }}" class="sidebar-ext-nav-item" style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin: 4px 6px 8px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.12); text-decoration: none; color: #60a5fa; font-weight: 600; font-size: 0.85rem;">
+                    <svg fill="none" stroke="#60a5fa" viewBox="0 0 24 24" style="width: 18px; height: 18px; flex-shrink: 0;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span style="flex: 1; font-weight: 700;">SEO &amp; AI Search Hub</span>
+                    <span class="nav-badge" style="background: #2563eb; color: #fff; font-weight: 700; font-size: 0.6875rem;">26 Modules</span>
+                </a>
 
                 <div class="sidebar-group" id="sidebarGroupMarketing">
                     <a class="sidebar-link" data-tab="marketing" data-subtab="overview" id="sidebarLinkMarketing">
@@ -412,6 +432,12 @@
                     <span>Contact Page CMS</span>
                     <span class="nav-badge" style="background: rgba(249, 115, 22, 0.2); color: #f97316;">CMS</span>
                 </a>
+
+                <a class="sidebar-link" data-tab="partners-cms">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    <span>Insurance Partners</span>
+                    <span class="nav-badge" style="background: rgba(99, 102, 241, 0.2); color: #818cf8;">HOME</span>
+                </a>
             </nav>
 
             <div class="sidebar-footer">
@@ -481,6 +507,15 @@
                 </div>
 
                 <div class="header-right">
+                    <!-- High-visibility Quick Link to SEO & AI Search Hub -->
+                    <a href="{{ route('admin.seo.index') }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; background: linear-gradient(135deg, #1d4ed8, #2563eb); color: #ffffff; border-radius: 8px; font-weight: 600; font-size: 0.8125rem; text-decoration: none; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35); border: 1px solid rgba(96, 165, 250, 0.4); transition: transform 0.15s ease;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'" title="Open SEO &amp; AI Search Hub">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <span>SEO &amp; AI Search</span>
+                        <span style="background: rgba(255,255,255,0.22); font-size: 0.6875rem; padding: 2px 6px; border-radius: 4px; font-weight: 700;">26 Modules</span>
+                    </a>
+
                     <button class="header-action-btn" title="Notifications" onclick="alert('Notification Center: 3 new quote leads received today.')">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/>
@@ -538,12 +573,45 @@
                             <p>Real-time performance metrics, portfolio revenue, and underwriting pipeline.</p>
                         </div>
                         <div class="view-actions">
+                            <a href="{{ route('admin.seo.index') }}" class="btn-secondary" style="background: rgba(37, 99, 235, 0.1); border-color: rgba(59, 130, 246, 0.4); color: #2563eb; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                                <span>SEO &amp; AI Search Hub</span>
+                            </a>
                             <button class="btn-secondary" onclick="exportQuotesCSV()">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
                                 </svg>
                                 <span>Export Report</span>
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- SEO & AI Search Quick-Access Banner -->
+                    <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 12px; padding: 16px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.25);">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div style="width: 46px; height: 46px; border-radius: 10px; background: linear-gradient(135deg, #2563eb, #3b82f6); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; box-shadow: 0 4px 12px rgba(37,99,235,0.4);">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px; flex-wrap: wrap;">
+                                    <h3 style="margin: 0; font-size: 1.05rem; font-weight: 700; color: #f8fafc;">Advanced SEO &amp; AI Search Hub</h3>
+                                    <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(16, 185, 129, 0.4);">LIVE &bull; 26 Active Modules</span>
+                                    <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px;">Google + ChatGPT + Perplexity + Gemini</span>
+                                </div>
+                                <p style="margin: 0; font-size: 0.85rem; color: #94a3b8;">Automated Technical Audits, Live SERP Previews, Schema Graph, AI Crawlers, International SEO, Redirects &amp; Real-time Analytics.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+                            <a href="{{ route('admin.seo.index') }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #2563eb; color: #ffffff; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35); transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+                                <span>Open SEO Hub</span>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
 
@@ -736,7 +804,7 @@
                                     <tr>
                                         <td>
                                             <div style="font-weight: 700; color: var(--text-primary);">{{ $rq->name }}</div>
-                                            <div style="font-size: 0.875rem; color: var(--text-muted);">{{ $rq->email }}</div>
+                                            <div style="font-size: 0.875rem; color: var(--text-muted);">{{ $rq->email }}@if($rq->phone) &bull; {{ $rq->phone }}@endif</div>
                                         </td>
                                         <td><span class="category-badge {{ $rq->type }}">{{ $rq->type_label }}</span></td>
                                         <td>
@@ -1879,15 +1947,15 @@
                         @csrf
                         <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                             <div class="view-title-group">
-                                <h1>Home Insurance Page Content Editor</h1>
-                                <p>Edit and publish all section titles, subtitles, cards, pillars, and FAQs on the public Home Insurance page live.</p>
+                                <h1>Home &amp; Homepage Content Editor</h1>
+                                <p>Edit and publish all section titles, coverage cards, insurance partners network, value pillars, and copy live on the homepage.</p>
                             </div>
                             <div style="display: flex; gap: 12px; align-items: center;">
-                                <a href="{{ route('home-insurance') }}" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
+                                <a href="{{ route('home') }}#insurance-partners" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
                                     <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
                                     </svg>
-                                    View Live Page
+                                    View Live Homepage
                                 </a>
                                 <button type="submit" id="saveHomeCmsBtn" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 16px;">
                                     <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2011,6 +2079,108 @@
                                 </div>
                             </div>
 
+                            <!-- 2B. INSURANCE PARTNERS SECTION -->
+                            @php
+                                $partnersCount = (int) ($partnersContent['partners_count'] ?? 10);
+                            @endphp
+                            <div class="card" id="partners-section-editor">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; background: rgba(59, 130, 246, 0.05); border-bottom: 1px solid rgba(59, 130, 246, 0.15);">
+                                    <div class="card-title" style="color: #60a5fa; display: flex; align-items: center; gap: 8px;">
+                                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                        <span>2B. Insurance Partners Section &amp; Carrier Network</span>
+                                    </div>
+                                    <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: #38bdf8;">
+                                        <input type="checkbox" name="section_enabled" value="1" {{ ($partnersContent['section_enabled'] ?? '1') === '1' ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #0284c7; cursor: pointer;">
+                                        Display Section on Homepage
+                                    </label>
+                                </div>
+                                <div class="card-body">
+                                    <input type="hidden" name="partners_submitted" value="1">
+                                    <input type="hidden" name="partners_count" id="partners_count_home" value="{{ $partnersCount }}">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 600;">Partners Section Heading</label>
+                                            <input type="text" name="section_title" class="form-input" value="{{ $partnersContent['section_title'] ?? 'Coverage Backed by Trusted Names' }}" required>
+                                            <small style="color: #94a3b8; display: block; margin-top: 4px;">Main heading displayed on the homepage directly below coverage cards.</small>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 600;">Supporting Line</label>
+                                            <input type="text" name="section_subtitle" class="form-input" value="{{ $partnersContent['section_subtitle'] ?? 'We work with leading insurance carriers to help you find the right coverage.' }}" required>
+                                            <small style="color: #94a3b8; display: block; margin-top: 4px;">Subheading copy describing our carrier network.</small>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                                            <div>
+                                                <h4 style="font-size: 15px; font-weight: 700; color: #e2e8f0; margin: 0;">Approved Insurance Carrier Partners (<span id="partner_count_display_home">{{ $partnersCount }}</span> Carriers)</h4>
+                                                <p style="font-size: 12.5px; color: #94a3b8; margin: 4px 0 0 0;">Upload logos from your local PC, toggle active status, adjust names &amp; taglines, or remove and add partners.</p>
+                                            </div>
+                                            <div style="display: flex; gap: 8px; align-items: center;">
+                                                <span style="font-size: 12px; color: #94a3b8; background: rgba(255,255,255,0.06); padding: 4px 10px; border-radius: 4px;">4 across grid layout</span>
+                                                <button type="button" onclick="addNewPartnerRow('home')" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 12.5px; border-radius: 6px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); cursor: pointer; font-weight: 600;">
+                                                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                                    <span>+ Add Carrier Partner</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div id="partners_container_home" style="display: flex; flex-direction: column; gap: 14px;">
+                                            @for($i = 1; $i <= $partnersCount; $i++)
+                                            @php
+                                                $logoVal = $partnersContent['partner_' . $i . '_logo'] ?? '';
+                                                $logoSrc = $logoVal ?: 'images/logo.png';
+                                                if (!str_starts_with($logoSrc, 'http://') && !str_starts_with($logoSrc, 'https://') && !str_starts_with($logoSrc, '/')) {
+                                                    $logoSrc = asset($logoSrc);
+                                                }
+                                            @endphp
+                                            <div id="partner_row_home_{{ $i }}" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 14px 16px; display: grid; grid-template-columns: 36px 130px 1.2fr 1fr 1.2fr auto; gap: 14px; align-items: center;">
+                                                <input type="hidden" name="partner_{{ $i }}_removed" id="partner_removed_home_{{ $i }}" value="0">
+                                                <div style="text-align: center;">
+                                                    <input type="checkbox" name="partner_{{ $i }}_active" value="1" {{ ($partnersContent['partner_' . $i . '_active'] ?? '1') === '1' ? 'checked' : '' }} style="width: 20px; height: 20px; accent-color: #0284c7; cursor: pointer;" title="Toggle Carrier Active">
+                                                </div>
+                                                <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+                                                    <div style="background: #ffffff; padding: 4px 8px; border-radius: 6px; display: flex; align-items: center; justify-content: center; height: 42px; width: 100%; box-sizing: border-box; overflow: hidden;">
+                                                        <img id="partner_preview_home_{{ $i }}" src="{{ $logoSrc }}" alt="Logo" style="max-height: 28px; max-width: 110px; object-fit: contain;">
+                                                    </div>
+                                                    <label class="partner-upload-btn" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 3px 8px; font-size: 11px; border-radius: 4px; background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.25); font-weight: 500; width: 100%; box-sizing: border-box;">
+                                                        <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                                                        <span>Upload PC</span>
+                                                        <input type="file" name="partner_{{ $i }}_file" accept="image/*,image/svg+xml" style="display: none;" onchange="previewPartnerFile(this, 'partner_preview_home_{{ $i }}')">
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="font-size: 11.5px; margin-bottom: 4px; color: #cbd5e1;">Carrier Name *</label>
+                                                    <input type="text" name="partner_{{ $i }}_name" class="form-input" value="{{ $partnersContent['partner_' . $i . '_name'] ?? '' }}" required style="padding: 7px 10px; font-size: 13.5px;">
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="font-size: 11.5px; margin-bottom: 4px; color: #cbd5e1;">Specialization Line</label>
+                                                    <input type="text" name="partner_{{ $i }}_desc" class="form-input" value="{{ $partnersContent['partner_' . $i . '_desc'] ?? '' }}" style="padding: 7px 10px; font-size: 13.5px;">
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="font-size: 11.5px; margin-bottom: 4px; color: #cbd5e1;">Logo Asset Path / URL</label>
+                                                    <input type="text" name="partner_{{ $i }}_logo" class="form-input" value="{{ $partnersContent['partner_' . $i . '_logo'] ?? '' }}" oninput="previewPartnerUrl(this, 'partner_preview_home_{{ $i }}')" style="padding: 7px 10px; font-size: 13.5px;">
+                                                </div>
+                                                <div>
+                                                    <button type="button" onclick="removePartnerRow({{ $i }}, 'home')" style="background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 6px; padding: 7px 11px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-weight: 600;" title="Remove this partner">
+                                                        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                        <span>Remove</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            @endfor
+                                        </div>
+
+                                        <div style="margin-top: 16px; display: flex; justify-content: flex-start;">
+                                            <button type="button" onclick="addNewPartnerRow('home')" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; font-size: 13px; border-radius: 6px; background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px dashed rgba(59, 130, 246, 0.4); cursor: pointer; font-weight: 600;">
+                                                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                                <span>+ Add Another Insurance Partner</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- 3. VALUE PROPOSITION PILLARS -->
                             <div class="card">
                                 <div class="card-header">
@@ -2080,6 +2250,97 @@
                                             <label class="form-label">Main Body Paragraph</label>
                                             <textarea name="guidance_text" class="form-textarea" rows="3">{{ $homeInsuranceContent['guidance_text'] ?? '' }}</textarea>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4B. BRAND QUOTES & PERSPECTIVES SECTION -->
+                            @php
+                                $quotesCountAdmin = (int) ($homeInsuranceContent['quotes_count'] ?? 1);
+                                if ($quotesCountAdmin < 1) {
+                                    $quotesCountAdmin = 1;
+                                }
+                            @endphp
+                            <div class="card" id="quotes-section-editor">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; background: rgba(59, 130, 246, 0.05); border-bottom: 1px solid rgba(59, 130, 246, 0.15);">
+                                    <div class="card-title" style="color: #60a5fa; display: flex; align-items: center; gap: 8px;">
+                                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                        </svg>
+                                        <span>4B. Brand Quotes &amp; Perspectives (Single Fixed or Sliding Carousel)</span>
+                                    </div>
+                                    <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: #38bdf8;">
+                                        <input type="checkbox" name="quotes_enabled" value="1" {{ ($homeInsuranceContent['quotes_enabled'] ?? '1') === '1' ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #0284c7; cursor: pointer;">
+                                        Display Section on Homepage
+                                    </label>
+                                </div>
+                                <div class="card-body">
+                                    <input type="hidden" name="quotes_submitted" value="1">
+                                    <input type="hidden" name="quotes_count" id="quotes_count_home" value="{{ $quotesCountAdmin }}">
+
+                                    <div style="background: rgba(59, 130, 246, 0.08); border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px;">
+                                        <p style="margin: 0; font-size: 13.5px; color: #cbd5e1; line-height: 1.5;">
+                                            <strong style="color: #60a5fa;">Dynamic Carousel Behavior:</strong> If only <strong>1 quote</strong> is active, it stays completely <em>fixed &amp; static</em> on the homepage. When <strong>2 or more quotes</strong> are active, it automatically activates an interactive <em>sliding carousel</em> with arrows, dots, and touch swipe.
+                                        </p>
+                                    </div>
+
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                                        <div>
+                                            <h4 style="font-size: 15px; font-weight: 700; color: #e2e8f0; margin: 0;">Perspectives &amp; Quotes (<span id="quotes_count_display">{{ $quotesCountAdmin }}</span> Added)</h4>
+                                            <p style="font-size: 12.5px; color: #94a3b8; margin: 4px 0 0 0;">Add multiple quotes for carousel rotation, or keep a single prominent statement.</p>
+                                        </div>
+                                        <button type="button" onclick="addNewQuoteRow()" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; font-size: 13px; border-radius: 6px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); cursor: pointer; font-weight: 600;">
+                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                            <span>+ Add Another Perspective / Quote</span>
+                                        </button>
+                                    </div>
+
+                                    <div id="quotes_container" style="display: flex; flex-direction: column; gap: 16px;">
+                                        @for($i = 1; $i <= $quotesCountAdmin; $i++)
+                                        @php
+                                            $qText = $homeInsuranceContent['quote_' . $i . '_text'] ?? ($i === 1 ? 'We believe that the advantages are so great that a shift to working on slack, or something like it, is inevitable.' : '');
+                                            $qAuthor = $homeInsuranceContent['quote_' . $i . '_author'] ?? ($i === 1 ? 'Marcel Gherkina' : '');
+                                            $qRole = $homeInsuranceContent['quote_' . $i . '_role'] ?? ($i === 1 ? 'Spokesperson, Surebound' : '');
+                                            $qBadge = $homeInsuranceContent['quote_' . $i . '_badge'] ?? ($i === 1 ? 'Verified Perspective' : '');
+                                            $qActive = ($homeInsuranceContent['quote_' . $i . '_active'] ?? '1') === '1';
+                                        @endphp
+                                        <div id="quote_row_{{ $i }}" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-left: 4px solid #3b82f6; border-radius: 8px; padding: 18px 20px;">
+                                            <input type="hidden" name="quote_{{ $i }}_removed" id="quote_removed_{{ $i }}" value="0">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 10px;">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="background: #1e3a8a; color: #93c5fd; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 4px;">Quote #<span class="quote-number-badge">{{ $i }}</span></span>
+                                                    <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #cbd5e1; cursor: pointer;">
+                                                        <input type="checkbox" name="quote_{{ $i }}_active" value="1" {{ $qActive ? 'checked' : '' }} style="width: 17px; height: 17px; accent-color: #0284c7; cursor: pointer;">
+                                                        Active on Site
+                                                    </label>
+                                                </div>
+                                                <button type="button" onclick="removeQuoteRow({{ $i }})" style="background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                                                    <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                    <span>Remove</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="form-group full" style="margin-bottom: 14px;">
+                                                <label class="form-label" style="font-size: 13px; font-weight: 600; color: #e2e8f0;">Quote / Perspective Statement *</label>
+                                                <textarea name="quote_{{ $i }}_text" class="form-textarea" rows="2" placeholder="Enter prominent quote text..." style="font-size: 14px; line-height: 1.45;" required>{{ $qText }}</textarea>
+                                            </div>
+
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+                                                <div>
+                                                    <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Author Name</label>
+                                                    <input type="text" name="quote_{{ $i }}_author" class="form-input" value="{{ $qAuthor }}" placeholder="e.g. Marcel Gherkina" style="padding: 7px 10px; font-size: 13.5px;">
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Role / Affiliation</label>
+                                                    <input type="text" name="quote_{{ $i }}_role" class="form-input" value="{{ $qRole }}" placeholder="e.g. Spokesperson, Surebound" style="padding: 7px 10px; font-size: 13.5px;">
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Verification Badge</label>
+                                                    <input type="text" name="quote_{{ $i }}_badge" class="form-input" value="{{ $qBadge }}" placeholder="e.g. Verified Perspective" style="padding: 7px 10px; font-size: 13.5px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endfor
                                     </div>
                                 </div>
                             </div>
@@ -6303,26 +6564,660 @@
                     </form>
                 </div>
 
-                <!-- NEW TAB: CONTACT CMS -->
+                <!-- TAB: CONTACT PAGE CMS -->
                 <div class="tab-pane" id="tab-contact-cms">
-                    <form id="contactCmsForm" enctype="multipart/form-data" method="POST" action="{{ route('admin.contact.update') }}">
+                    <form id="contactCmsForm" enctype="multipart/form-data" onsubmit="saveContactCms(event)">
                         @csrf
                         <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                             <div class="view-title-group">
                                 <h1>Contact Page Content Editor</h1>
-                                <p>Edit and publish the hero section of the Contact page.</p>
+                                <p>Manage and publish all headlines, contact numbers, communication channels, office locations, guidance, FAQs, and instant rate CTAs live.</p>
                             </div>
                             <div style="display: flex; gap: 12px; align-items: center;">
-                                <a href="{{ route('contact') }}" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">View Live Page</a>
-                                <button type="submit" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;">Publish Changes Live</button>
+                                <a href="{{ route('contact') }}" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                    View Live Contact Page
+                                </a>
+                                <button type="submit" id="saveContactCmsBtn" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 16px; background: #059669;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    <span>Publish Contact Page Live</span>
+                                </button>
                             </div>
                         </div>
-                        <div class="card"><div class="card-body"><div class="form-grid">
-                            <div class="form-group full"><label class="form-label">Hero Eyebrow</label><input type="text" name="hero_eyebrow" class="form-input" value="{{ App\Models\PageContent::getForPage('contact', App\Http\Controllers\AdminController::getDefaultContactContent())['hero_eyebrow'] ?? '' }}"></div>
-                            <div class="form-group full"><label class="form-label">Hero Title</label><input type="text" name="hero_title" class="form-input" value="{{ App\Models\PageContent::getForPage('contact', App\Http\Controllers\AdminController::getDefaultContactContent())['hero_title'] ?? '' }}"></div>
-                            <div class="form-group full"><label class="form-label">Hero Subtitle</label><textarea name="hero_subtitle" class="form-textarea" rows="2">{{ App\Models\PageContent::getForPage('contact', App\Http\Controllers\AdminController::getDefaultContactContent())['hero_subtitle'] ?? '' }}</textarea></div>
-                            <div class="form-group full"><label class="form-label">Hero Image Upload</label><input type="file" name="hero_image_file" class="form-input"></div>
-                        </div></div></div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1100px;">
+                            
+                            <!-- 1. HERO SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">1. Hero Section Content &amp; Media</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full" style="background: rgba(255, 255, 255, 0.03); padding: 16px; border-radius: 8px; border: 1px dashed rgba(255, 255, 255, 0.2);">
+                                            <label class="form-label" style="font-weight: 600; color: #34d399;">Hero Background Photo Upload</label>
+                                            <div style="display: flex; gap: 16px; align-items: center; margin-top: 8px;">
+                                                <img id="heroImagePreview_contact" src="{{ asset($contactContent['hero_image'] ?? 'images/advisor-meeting-hires.jpg') }}" style="width: 140px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+                                                <div style="flex: 1;">
+                                                    <input type="file" name="hero_image_file" accept="image/*" class="form-input" style="padding: 8px;" onchange="previewImage(this, 'heroImagePreview_contact')">
+                                                    <small style="color: #94a3b8; display: block; margin-top: 6px;">Select an image file (JPG, PNG, WEBP) to update the contact hero photo live.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Eyebrow Tag</label>
+                                            <input type="text" name="hero_eyebrow" class="form-input" value="{{ $contactContent['hero_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Headline Title (HTML allowed e.g. &lt;br&gt;)</label>
+                                            <input type="text" name="hero_title" class="form-input" value="{{ $contactContent['hero_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hero Subtitle Paragraph</label>
+                                            <textarea name="hero_subtitle" class="form-input" rows="3" required>{{ $contactContent['hero_subtitle'] ?? '' }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Pill Card - Top Subtitle</label>
+                                            <input type="text" name="hero_card_sub" class="form-input" value="{{ $contactContent['hero_card_sub'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Floating Pill Card - Main Highlight</label>
+                                            <input type="text" name="hero_card_label" class="form-input" value="{{ $contactContent['hero_card_label'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Main Contact Phone Number</label>
+                                            <input type="text" name="primary_phone" class="form-input" value="{{ $contactContent['primary_phone'] ?? '+1 813-214-1731' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #ef4444;">24/7 Claims Phone (Hero Outline Button)</label>
+                                            <input type="text" name="claims_phone" class="form-input" value="{{ $contactContent['claims_phone'] ?? '+1 813-214-1731' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. TOP VALUE BAR (4 DIRECT CONTACT PILLARS) -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">2. Top Value Proposition Bar (4 Direct Contact Pillars)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <!-- Pillar 1 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Pillar 1: Client Care Phone/Title</label>
+                                            <input type="text" name="value_1_title" class="form-input" value="{{ $contactContent['value_1_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 1: Description</label>
+                                            <input type="text" name="value_1_desc" class="form-input" value="{{ $contactContent['value_1_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Pillar 2 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Pillar 2: Emergency Claims Phone/Title</label>
+                                            <input type="text" name="value_2_title" class="form-input" value="{{ $contactContent['value_2_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 2: Description</label>
+                                            <input type="text" name="value_2_desc" class="form-input" value="{{ $contactContent['value_2_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Pillar 3 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Pillar 3: Commercial Desk Phone/Title</label>
+                                            <input type="text" name="value_3_title" class="form-input" value="{{ $contactContent['value_3_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 3: Description</label>
+                                            <input type="text" name="value_3_desc" class="form-input" value="{{ $contactContent['value_3_desc'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Pillar 4 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Pillar 4: Email Portal Address/Title</label>
+                                            <input type="text" name="value_4_title" class="form-input" value="{{ $contactContent['value_4_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Pillar 4: Description</label>
+                                            <input type="text" name="value_4_desc" class="form-input" value="{{ $contactContent['value_4_desc'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. DIRECT COMMUNICATION CHANNELS & HQ HIGHLIGHT -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">3. Direct Communication Channels &amp; Corporate Headquarters Box</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">Live Center Status Badge Text</label>
+                                            <input type="text" name="live_status_text" class="form-input" value="{{ $contactContent['live_status_text'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Section Eyebrow</label>
+                                            <input type="text" name="section_eyebrow" class="form-input" value="{{ $contactContent['section_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Section Headline Title</label>
+                                            <input type="text" name="section_title" class="form-input" value="{{ $contactContent['section_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Lead Introductory Paragraph</label>
+                                            <textarea name="lead_desc" class="form-input" rows="3" required>{{ $contactContent['lead_desc'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- Channel 1 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Channel 1: Department Title</label>
+                                            <input type="text" name="channel_1_title" class="form-input" value="{{ $contactContent['channel_1_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 1: Operating Badge</label>
+                                            <input type="text" name="channel_1_badge" class="form-input" value="{{ $contactContent['channel_1_badge'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 1: Phone / Direct Line</label>
+                                            <input type="text" name="channel_1_value" class="form-input" value="{{ $contactContent['channel_1_value'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 1: Scope Description</label>
+                                            <input type="text" name="channel_1_sub" class="form-input" value="{{ $contactContent['channel_1_sub'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Channel 2 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #ef4444;">Channel 2: Emergency Department Title</label>
+                                            <input type="text" name="channel_2_title" class="form-input" value="{{ $contactContent['channel_2_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 2: Operating Badge</label>
+                                            <input type="text" name="channel_2_badge" class="form-input" value="{{ $contactContent['channel_2_badge'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 2: Emergency Claims Phone</label>
+                                            <input type="text" name="channel_2_value" class="form-input" value="{{ $contactContent['channel_2_value'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 2: Scope Description</label>
+                                            <input type="text" name="channel_2_sub" class="form-input" value="{{ $contactContent['channel_2_sub'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Channel 3 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Channel 3: Commercial Desk Title</label>
+                                            <input type="text" name="channel_3_title" class="form-input" value="{{ $contactContent['channel_3_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 3: Operating Badge</label>
+                                            <input type="text" name="channel_3_badge" class="form-input" value="{{ $contactContent['channel_3_badge'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 3: Commercial Phone Number</label>
+                                            <input type="text" name="channel_3_value" class="form-input" value="{{ $contactContent['channel_3_value'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 3: Scope Description</label>
+                                            <input type="text" name="channel_3_sub" class="form-input" value="{{ $contactContent['channel_3_sub'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Channel 4 -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Channel 4: Email Portal Title</label>
+                                            <input type="text" name="channel_4_title" class="form-input" value="{{ $contactContent['channel_4_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 4: Response SLA Badge</label>
+                                            <input type="text" name="channel_4_badge" class="form-input" value="{{ $contactContent['channel_4_badge'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 4: Official Email Address</label>
+                                            <input type="text" name="channel_4_value" class="form-input" value="{{ $contactContent['channel_4_value'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Channel 4: Scope Description</label>
+                                            <input type="text" name="channel_4_sub" class="form-input" value="{{ $contactContent['channel_4_sub'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Corporate HQ Box -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #fbbf24;">HQ Card: Title</label>
+                                            <input type="text" name="hq_title" class="form-input" value="{{ $contactContent['hq_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">HQ Card: Visiting Hours</label>
+                                            <input type="text" name="hq_hours" class="form-input" value="{{ $contactContent['hq_hours'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">HQ Card: Street Address (HTML &lt;br&gt; allowed)</label>
+                                            <input type="text" name="hq_address" class="form-input" value="{{ $contactContent['hq_address'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. INQUIRY FORM SETTINGS -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">4. Online Inquiry Form Settings</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label">Form Title</label>
+                                            <input type="text" name="form_title" class="form-input" value="{{ $contactContent['form_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Submit Button Text</label>
+                                            <input type="text" name="form_button_text" class="form-input" value="{{ $contactContent['form_button_text'] ?? 'Send Message to Advisor' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Form Subtitle</label>
+                                            <textarea name="form_subtitle" class="form-input" rows="2" required>{{ $contactContent['form_subtitle'] ?? '' }}</textarea>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Security &amp; Encryption Disclaimer Badge</label>
+                                            <input type="text" name="form_security_badge" class="form-input" value="{{ $contactContent['form_security_badge'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. REGIONAL UNDERWRITING HUBS -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">5. Regional Underwriting Hubs (4 Locations)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label">Hubs Section Eyebrow</label>
+                                            <input type="text" name="offices_eyebrow" class="form-input" value="{{ $contactContent['offices_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Hubs Section Title</label>
+                                            <input type="text" name="offices_title" class="form-input" value="{{ $contactContent['offices_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Hubs Section Subtitle</label>
+                                            <input type="text" name="offices_subtitle" class="form-input" value="{{ $contactContent['offices_subtitle'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Office 1 -->
+                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
+                                            <span style="font-weight: 700; color: #34d399; font-size: 15px;">Office Location 1</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Badge</label>
+                                            <input type="text" name="office_1_badge" class="form-input" value="{{ $contactContent['office_1_badge'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">City, State</label>
+                                            <input type="text" name="office_1_city" class="form-input" value="{{ $contactContent['office_1_city'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Direct Phone</label>
+                                            <input type="text" name="office_1_phone" class="form-input" value="{{ $contactContent['office_1_phone'] ?? '+1 813-214-1731' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Street Address (HTML allowed)</label>
+                                            <input type="text" name="office_1_address" class="form-input" value="{{ $contactContent['office_1_address'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Operating Hours &amp; Focus</label>
+                                            <input type="text" name="office_1_hours" class="form-input" value="{{ $contactContent['office_1_hours'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Office 2 -->
+                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
+                                            <span style="font-weight: 700; color: #34d399; font-size: 15px;">Office Location 2</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Badge</label>
+                                            <input type="text" name="office_2_badge" class="form-input" value="{{ $contactContent['office_2_badge'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">City, State</label>
+                                            <input type="text" name="office_2_city" class="form-input" value="{{ $contactContent['office_2_city'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Direct Phone</label>
+                                            <input type="text" name="office_2_phone" class="form-input" value="{{ $contactContent['office_2_phone'] ?? '+1 813-214-1731' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Street Address (HTML allowed)</label>
+                                            <input type="text" name="office_2_address" class="form-input" value="{{ $contactContent['office_2_address'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Operating Hours &amp; Focus</label>
+                                            <input type="text" name="office_2_hours" class="form-input" value="{{ $contactContent['office_2_hours'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Office 3 -->
+                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
+                                            <span style="font-weight: 700; color: #34d399; font-size: 15px;">Office Location 3</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Badge</label>
+                                            <input type="text" name="office_3_badge" class="form-input" value="{{ $contactContent['office_3_badge'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">City, State</label>
+                                            <input type="text" name="office_3_city" class="form-input" value="{{ $contactContent['office_3_city'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Direct Phone</label>
+                                            <input type="text" name="office_3_phone" class="form-input" value="{{ $contactContent['office_3_phone'] ?? '+1 813-214-1731' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Street Address (HTML allowed)</label>
+                                            <input type="text" name="office_3_address" class="form-input" value="{{ $contactContent['office_3_address'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Operating Hours &amp; Focus</label>
+                                            <input type="text" name="office_3_hours" class="form-input" value="{{ $contactContent['office_3_hours'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- Office 4 -->
+                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
+                                            <span style="font-weight: 700; color: #34d399; font-size: 15px;">Office Location 4</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Badge</label>
+                                            <input type="text" name="office_4_badge" class="form-input" value="{{ $contactContent['office_4_badge'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">City, State</label>
+                                            <input type="text" name="office_4_city" class="form-input" value="{{ $contactContent['office_4_city'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Direct Phone</label>
+                                            <input type="text" name="office_4_phone" class="form-input" value="{{ $contactContent['office_4_phone'] ?? '+1 813-214-1731' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Street Address (HTML allowed)</label>
+                                            <input type="text" name="office_4_address" class="form-input" value="{{ $contactContent['office_4_address'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Operating Hours &amp; Focus</label>
+                                            <input type="text" name="office_4_hours" class="form-input" value="{{ $contactContent['office_4_hours'] ?? '' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 6. DEDICATED ADVOCACY GUIDANCE SECTION -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">6. Dedicated Human Advocacy Section</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">Eyebrow Tag</label>
+                                            <input type="text" name="guidance_eyebrow" class="form-input" value="{{ $contactContent['guidance_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Headline Title (HTML allowed)</label>
+                                            <input type="text" name="guidance_title" class="form-input" value="{{ $contactContent['guidance_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Advocacy Paragraph Text</label>
+                                            <textarea name="guidance_text" class="form-input" rows="4" required>{{ $contactContent['guidance_text'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. CONTACT & SUPPORT FAQS -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">7. Contact &amp; Support FAQs (5 Items)</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label">FAQ Section Eyebrow</label>
+                                            <input type="text" name="faq_eyebrow" class="form-input" value="{{ $contactContent['faq_eyebrow'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">FAQ Section Title</label>
+                                            <input type="text" name="faq_title" class="form-input" value="{{ $contactContent['faq_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">FAQ Section Subtitle</label>
+                                            <input type="text" name="faq_subtitle" class="form-input" value="{{ $contactContent['faq_subtitle'] ?? '' }}" required>
+                                        </div>
+
+                                        <!-- FAQ 1 -->
+                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Question 1</label>
+                                            <input type="text" name="faq_1_question" class="form-input" value="{{ $contactContent['faq_1_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Answer 1 (HTML allowed)</label>
+                                            <textarea name="faq_1_answer" class="form-input" rows="3" required>{{ $contactContent['faq_1_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 2 -->
+                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Question 2</label>
+                                            <input type="text" name="faq_2_question" class="form-input" value="{{ $contactContent['faq_2_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Answer 2 (HTML allowed)</label>
+                                            <textarea name="faq_2_answer" class="form-input" rows="3" required>{{ $contactContent['faq_2_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 3 -->
+                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Question 3</label>
+                                            <input type="text" name="faq_3_question" class="form-input" value="{{ $contactContent['faq_3_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Answer 3 (HTML allowed)</label>
+                                            <textarea name="faq_3_answer" class="form-input" rows="3" required>{{ $contactContent['faq_3_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 4 -->
+                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Question 4</label>
+                                            <input type="text" name="faq_4_question" class="form-input" value="{{ $contactContent['faq_4_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Answer 4 (HTML allowed)</label>
+                                            <textarea name="faq_4_answer" class="form-input" rows="3" required>{{ $contactContent['faq_4_answer'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <!-- FAQ 5 -->
+                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Question 5</label>
+                                            <input type="text" name="faq_5_question" class="form-input" value="{{ $contactContent['faq_5_question'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Answer 5 (HTML allowed)</label>
+                                            <textarea name="faq_5_answer" class="form-input" rows="3" required>{{ $contactContent['faq_5_answer'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 8. BOTTOM CTA BANNER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">8. Bottom Rate Quote CTA Banner</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Headline Title (HTML allowed)</label>
+                                            <input type="text" name="cta_title" class="form-input" value="{{ $contactContent['cta_title'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">CTA Subtitle Description</label>
+                                            <input type="text" name="cta_subtitle" class="form-input" value="{{ $contactContent['cta_subtitle'] ?? '' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Quote Button Text</label>
+                                            <input type="text" name="cta_button_text" class="form-input" value="{{ $contactContent['cta_button_text'] ?? 'Start Instant Quote' }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">CTA Direct Phone Line</label>
+                                            <input type="text" name="cta_phone" class="form-input" value="{{ $contactContent['cta_phone'] ?? '+1 813-214-1731' }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SAVE BUTTON BAR -->
+                            <div style="margin-top: 12px; margin-bottom: 40px; display: flex; justify-content: flex-end; gap: 16px;">
+                                <button type="submit" id="saveContactCmsBtnBottom" class="btn-primary-action" style="padding: 14px 32px; font-size: 18px; border-radius: var(--radius-md); background: #059669;">
+                                    Publish Contact Page Changes Live &rarr;
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- TAB: INSURANCE PARTNERS CMS -->
+                <div class="tab-pane" id="tab-partners-cms">
+                    <form id="partnersCmsForm" enctype="multipart/form-data" onsubmit="savePartnersCms(event)">
+                        @csrf
+                        <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <div class="view-title-group">
+                                <h1>Insurance Partners Section Editor</h1>
+                                <p>Manage section visibility, headline copy, and individual carrier partner displays on the homepage.</p>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <a href="{{ route('home') }}#insurance-partners" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                    View Live Section
+                                </a>
+                                <button type="submit" id="savePartnersCmsBtn" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 16px; background: #059669;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    <span>Publish Partners Section Live</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1100px;">
+                            
+                            <!-- 1. SECTION HEADLINE & DISPLAY TOGGLE -->
+                            <div class="card">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div class="card-title">1. Section Display &amp; Copy Settings</div>
+                                    <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: #38bdf8;">
+                                        <input type="checkbox" name="section_enabled" value="1" {{ ($partnersContent['section_enabled'] ?? '1') === '1' ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #0284c7; cursor: pointer;">
+                                        Display Section on Homepage
+                                    </label>
+                                </div>
+                                <div class="card-body">
+                                    <input type="hidden" name="partners_submitted" value="1">
+                                    <input type="hidden" name="partners_count" id="partners_count_partners" value="{{ $partnersCount }}">
+                                    <div class="form-grid">
+                                        <div class="form-group full">
+                                            <label class="form-label">Section Heading</label>
+                                            <input type="text" name="section_title" class="form-input" value="{{ $partnersContent['section_title'] ?? 'Coverage Backed by Trusted Names' }}" required>
+                                            <small style="color: #94a3b8; display: block; margin-top: 4px;">Minimal header displayed directly above carrier partner logos.</small>
+                                        </div>
+                                        <div class="form-group full">
+                                            <label class="form-label">Supporting Line</label>
+                                            <input type="text" name="section_subtitle" class="form-input" value="{{ $partnersContent['section_subtitle'] ?? 'We work with leading insurance carriers to help you find the right coverage.' }}" required>
+                                            <small style="color: #94a3b8; display: block; margin-top: 4px;">Short supporting copy under the main heading.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. APPROVED INSURANCE PARTNERS -->
+                            <div class="card">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                                    <div class="card-title">2. Approved Insurance Carrier Partners (<span id="partner_count_display_partners">{{ $partnersCount }}</span> Carriers)</div>
+                                    <button type="button" onclick="addNewPartnerRow('partners')" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 12.5px; border-radius: 6px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); cursor: pointer; font-weight: 600;">
+                                        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                        <span>+ Add Carrier Partner</span>
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <p style="color: #94a3b8; font-size: 13.5px; margin-bottom: 20px;">
+                                        Manage approved carrier relationships displayed on the homepage. Upload logos directly from your PC, toggle individual carriers on/off, adjust names, or remove any partner.
+                                    </p>
+
+                                    <div id="partners_container_partners" style="display: flex; flex-direction: column; gap: 14px;">
+                                        @for($i = 1; $i <= $partnersCount; $i++)
+                                        @php
+                                            $logoVal = $partnersContent['partner_' . $i . '_logo'] ?? '';
+                                            $logoSrc = $logoVal ?: 'images/logo.png';
+                                            if (!str_starts_with($logoSrc, 'http://') && !str_starts_with($logoSrc, 'https://') && !str_starts_with($logoSrc, '/')) {
+                                                $logoSrc = asset($logoSrc);
+                                            }
+                                        @endphp
+                                        <div id="partner_row_partners_{{ $i }}" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 14px 16px; display: grid; grid-template-columns: 36px 130px 1.2fr 1fr 1.2fr auto; gap: 14px; align-items: center;">
+                                            <input type="hidden" name="partner_{{ $i }}_removed" id="partner_removed_partners_{{ $i }}" value="0">
+                                            <div style="text-align: center;">
+                                                <input type="checkbox" name="partner_{{ $i }}_active" value="1" {{ ($partnersContent['partner_' . $i . '_active'] ?? '1') === '1' ? 'checked' : '' }} style="width: 20px; height: 20px; accent-color: #0284c7; cursor: pointer;" title="Toggle Carrier Active">
+                                            </div>
+                                            <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+                                                <div style="background: #ffffff; padding: 4px 8px; border-radius: 6px; display: flex; align-items: center; justify-content: center; height: 42px; width: 100%; box-sizing: border-box; overflow: hidden;">
+                                                    <img id="partner_preview_partners_{{ $i }}" src="{{ $logoSrc }}" alt="Logo" style="max-height: 28px; max-width: 110px; object-fit: contain;">
+                                                </div>
+                                                <label class="partner-upload-btn" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 3px 8px; font-size: 11px; border-radius: 4px; background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.25); font-weight: 500; width: 100%; box-sizing: border-box;">
+                                                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                                                    <span>Upload PC</span>
+                                                    <input type="file" name="partner_{{ $i }}_file" accept="image/*,image/svg+xml" style="display: none;" onchange="previewPartnerFile(this, 'partner_preview_partners_{{ $i }}')">
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="form-label" style="font-size: 11.5px; margin-bottom: 4px; color: #cbd5e1;">Carrier Name *</label>
+                                                <input type="text" name="partner_{{ $i }}_name" class="form-input" value="{{ $partnersContent['partner_' . $i . '_name'] ?? '' }}" required style="padding: 7px 10px; font-size: 13.5px;">
+                                            </div>
+                                            <div>
+                                                <label class="form-label" style="font-size: 11.5px; margin-bottom: 4px; color: #cbd5e1;">Specialization Line</label>
+                                                <input type="text" name="partner_{{ $i }}_desc" class="form-input" value="{{ $partnersContent['partner_' . $i . '_desc'] ?? '' }}" style="padding: 7px 10px; font-size: 13.5px;">
+                                            </div>
+                                            <div>
+                                                <label class="form-label" style="font-size: 11.5px; margin-bottom: 4px; color: #cbd5e1;">Logo Asset Path / URL</label>
+                                                <input type="text" name="partner_{{ $i }}_logo" class="form-input" value="{{ $partnersContent['partner_' . $i . '_logo'] ?? '' }}" oninput="previewPartnerUrl(this, 'partner_preview_partners_{{ $i }}')" style="padding: 7px 10px; font-size: 13.5px;">
+                                            </div>
+                                            <div>
+                                                <button type="button" onclick="removePartnerRow({{ $i }}, 'partners')" style="background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 6px; padding: 7px 11px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-weight: 600;" title="Remove this partner">
+                                                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                    <span>Remove</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        @endfor
+                                    </div>
+
+                                    <div style="margin-top: 16px; display: flex; justify-content: flex-start;">
+                                        <button type="button" onclick="addNewPartnerRow('partners')" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; font-size: 13px; border-radius: 6px; background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px dashed rgba(59, 130, 246, 0.4); cursor: pointer; font-weight: 600;">
+                                            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                            <span>+ Add Another Insurance Partner</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SAVE BUTTON BAR -->
+                            <div style="margin-top: 12px; margin-bottom: 40px; display: flex; justify-content: flex-end; gap: 16px;">
+                                <button type="submit" id="savePartnersCmsBtnBottom" class="btn-primary-action" style="padding: 14px 32px; font-size: 18px; border-radius: var(--radius-md); background: #059669;">
+                                    Publish Insurance Partners Changes Live &rarr;
+                                </button>
+                            </div>
+
+                        </div>
                     </form>
                 </div>
 
@@ -10104,6 +10999,208 @@
             });
         }
 
+        function previewPartnerFile(input, previewId) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById(previewId);
+                    if (preview) {
+                        preview.src = e.target.result;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewPartnerUrl(input, previewId) {
+            const preview = document.getElementById(previewId);
+            if (!preview) return;
+            const val = input.value.trim();
+            if (!val) return;
+            if (val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/')) {
+                preview.src = val;
+            } else {
+                preview.src = '{{ asset('') }}/' + val.replace(/^\/+/, '');
+            }
+        }
+
+        function removePartnerRow(index, formType) {
+            const row = document.getElementById('partner_row_' + formType + '_' + index);
+            const removedInput = document.getElementById('partner_removed_' + formType + '_' + index);
+            if (confirm('Are you sure you want to remove this carrier partner?')) {
+                if (removedInput) {
+                    removedInput.value = '1';
+                }
+                if (row) {
+                    const nameInput = row.querySelector('input[name="partner_' + index + '_name"]');
+                    if (nameInput) {
+                        nameInput.required = false;
+                    }
+                    row.style.transition = 'all 0.3s ease';
+                    row.style.opacity = '0';
+                    row.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        row.style.display = 'none';
+                    }, 300);
+                }
+                updatePartnerCountDisplay(formType);
+            }
+        }
+
+        function updatePartnerCountDisplay(formType) {
+            const container = document.getElementById('partners_container_' + formType);
+            if (!container) return;
+            const visibleRows = Array.from(container.children).filter(r => r.style.display !== 'none');
+            const display = document.getElementById('partner_count_display_' + formType);
+            if (display) {
+                display.textContent = visibleRows.length;
+            }
+        }
+
+        function addNewPartnerRow(formType) {
+            const container = document.getElementById('partners_container_' + formType);
+            const countInput = document.getElementById('partners_count_' + formType);
+            let currentCount = parseInt(countInput ? countInput.value : '10', 10) || 10;
+            const newIndex = currentCount + 1;
+            if (countInput) countInput.value = newIndex;
+
+            const row = document.createElement('div');
+            row.id = 'partner_row_' + formType + '_' + newIndex;
+            row.style.cssText = 'background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(59, 130, 246, 0.4); border-radius: 8px; padding: 14px 16px; display: grid; grid-template-columns: 36px 130px 1.2fr 1fr 1.2fr auto; gap: 14px; align-items: center; margin-bottom: 4px; animation: fadeIn 0.3s ease;';
+
+            row.innerHTML = `
+                <input type="hidden" name="partner_${newIndex}_removed" id="partner_removed_${formType}_${newIndex}" value="0">
+                <div style="text-align: center;">
+                    <input type="checkbox" name="partner_${newIndex}_active" value="1" checked style="width: 20px; height: 20px; accent-color: #0284c7; cursor: pointer;" title="Toggle Carrier Active">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+                    <div style="background: #ffffff; padding: 4px 8px; border-radius: 6px; display: flex; align-items: center; justify-content: center; height: 42px; width: 100%; box-sizing: border-box; overflow: hidden;">
+                        <img id="partner_preview_${formType}_${newIndex}" src="{{ asset('images/logo.png') }}" alt="Logo" style="max-height: 28px; max-width: 110px; object-fit: contain;">
+                    </div>
+                    <label class="partner-upload-btn" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 3px 8px; font-size: 11px; border-radius: 4px; background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.25); font-weight: 500; width: 100%; box-sizing: border-box;">
+                        <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        <span>Upload PC</span>
+                        <input type="file" name="partner_${newIndex}_file" accept="image/*,image/svg+xml" style="display: none;" onchange="previewPartnerFile(this, 'partner_preview_${formType}_${newIndex}')">
+                    </label>
+                </div>
+                <div>
+                    <label class="form-label" style="font-size: 11.5px; margin-bottom: 4px; color: #cbd5e1;">Carrier Name *</label>
+                    <input type="text" name="partner_${newIndex}_name" class="form-input" placeholder="e.g. Hartford, AIG..." required style="padding: 7px 10px; font-size: 13.5px;">
+                </div>
+                <div>
+                    <label class="form-label" style="font-size: 11.5px; margin-bottom: 4px; color: #cbd5e1;">Specialization Line</label>
+                    <input type="text" name="partner_${newIndex}_desc" class="form-input" placeholder="e.g. Commercial Lines" style="padding: 7px 10px; font-size: 13.5px;">
+                </div>
+                <div>
+                    <label class="form-label" style="font-size: 11.5px; margin-bottom: 4px; color: #cbd5e1;">Logo Asset Path / URL</label>
+                    <input type="text" name="partner_${newIndex}_logo" class="form-input" placeholder="images/partners/... or upload" oninput="previewPartnerUrl(this, 'partner_preview_${formType}_${newIndex}')" style="padding: 7px 10px; font-size: 13.5px;">
+                </div>
+                <div>
+                    <button type="button" onclick="removePartnerRow(${newIndex}, '${formType}')" style="background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 6px; padding: 7px 11px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-weight: 600;" title="Remove this partner">
+                        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        <span>Remove</span>
+                    </button>
+                </div>
+            `;
+
+            container.appendChild(row);
+            updatePartnerCountDisplay(formType);
+        }
+
+        function removeQuoteRow(index) {
+            const row = document.getElementById('quote_row_' + index);
+            const hiddenRemoved = document.getElementById('quote_removed_' + index);
+            if (!row) return;
+
+            const visibleRows = Array.from(document.querySelectorAll('#quotes_container > div')).filter(r => r.style.display !== 'none');
+            if (visibleRows.length <= 1) {
+                alert('You must keep at least 1 quote perspective. You can edit its text, or toggle the section off if you want to hide it completely.');
+                return;
+            }
+
+            if (confirm('Are you sure you want to remove this quote? Changes will take effect when you click Publish Changes Live.')) {
+                if (hiddenRemoved) {
+                    hiddenRemoved.value = '1';
+                }
+                const textArea = row.querySelector('textarea');
+                if (textArea) {
+                    textArea.required = false;
+                }
+                row.style.display = 'none';
+                updateQuotesCountDisplay();
+            }
+        }
+
+        function updateQuotesCountDisplay() {
+            const container = document.getElementById('quotes_container');
+            if (!container) return;
+            const visibleRows = Array.from(container.children).filter(r => r.style.display !== 'none');
+            const displaySpan = document.getElementById('quotes_count_display');
+            if (displaySpan) {
+                displaySpan.textContent = visibleRows.length;
+            }
+        }
+
+        function addNewQuoteRow() {
+            const container = document.getElementById('quotes_container');
+            const countInput = document.getElementById('quotes_count_home');
+            if (!container || !countInput) return;
+
+            let currentTotal = parseInt(countInput.value, 10) || 1;
+            const newIndex = currentTotal + 1;
+            countInput.value = newIndex;
+
+            const row = document.createElement('div');
+            row.id = 'quote_row_' + newIndex;
+            row.style.background = 'rgba(255, 255, 255, 0.03)';
+            row.style.border = '1px solid rgba(255, 255, 255, 0.08)';
+            row.style.borderLeft = '4px solid #3b82f6';
+            row.style.borderRadius = '8px';
+            row.style.padding = '18px 20px';
+
+            row.innerHTML = `
+                <input type="hidden" name="quote_${newIndex}_removed" id="quote_removed_${newIndex}" value="0">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 10px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="background: #1e3a8a; color: #93c5fd; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 4px;">Quote #<span class="quote-number-badge">${newIndex}</span></span>
+                        <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #cbd5e1; cursor: pointer;">
+                            <input type="checkbox" name="quote_${newIndex}_active" value="1" checked style="width: 17px; height: 17px; accent-color: #0284c7; cursor: pointer;">
+                            Active on Site
+                        </label>
+                    </div>
+                    <button type="button" onclick="removeQuoteRow(${newIndex})" style="background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        <span>Remove</span>
+                    </button>
+                </div>
+
+                <div class="form-group full" style="margin-bottom: 14px;">
+                    <label class="form-label" style="font-size: 13px; font-weight: 600; color: #e2e8f0;">Quote / Perspective Statement *</label>
+                    <textarea name="quote_${newIndex}_text" class="form-textarea" rows="2" placeholder="Enter prominent quote text..." style="font-size: 14px; line-height: 1.45;" required></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+                    <div>
+                        <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Author Name</label>
+                        <input type="text" name="quote_${newIndex}_author" class="form-input" placeholder="e.g. Marcel Gherkina" style="padding: 7px 10px; font-size: 13.5px;">
+                    </div>
+                    <div>
+                        <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Role / Affiliation</label>
+                        <input type="text" name="quote_${newIndex}_role" class="form-input" placeholder="e.g. Spokesperson, Surebound" style="padding: 7px 10px; font-size: 13.5px;">
+                    </div>
+                    <div>
+                        <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Verification Badge</label>
+                        <input type="text" name="quote_${newIndex}_badge" class="form-input" value="Verified Perspective" placeholder="e.g. Verified Perspective" style="padding: 7px 10px; font-size: 13.5px;">
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(row);
+            updateQuotesCountDisplay();
+            row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
         function saveHomeCms(e) {
             e.preventDefault();
             const btn1 = document.getElementById('saveHomeCmsBtn');
@@ -10127,7 +11224,15 @@
             .then(data => {
                 if (btn1) { btn1.innerHTML = '✓ Published Live!'; btn1.disabled = false; }
                 if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
-                alert('Success: Home Insurance page content has been updated and published live!');
+                if (data.partners) {
+                    for (const [k, v] of Object.entries(data.partners)) {
+                        const input = form.querySelector(`input[name="${k}"]`);
+                        if (input && input.type !== 'file' && input.type !== 'checkbox') {
+                            input.value = v;
+                        }
+                    }
+                }
+                alert('Success: Home page content, Brand Quotes, and Insurance Partners have been updated and published live!');
                 setTimeout(() => {
                     if (btn1) btn1.innerHTML = 'Publish Changes Live';
                     if (btn2) btn2.innerHTML = 'Publish Changes Live &rarr;';
@@ -10209,6 +11314,86 @@
                 if (btn1) { btn1.innerHTML = 'Publish Commercial Auto Live'; btn1.disabled = false; }
                 if (btn2) { btn2.innerHTML = 'Publish Commercial Auto Changes Live &rarr;'; btn2.disabled = false; }
                 alert('Error updating page: ' + err.message);
+            });
+        }
+
+        function saveContactCms(e) {
+            e.preventDefault();
+            const btn1 = document.getElementById('saveContactCmsBtn');
+            const btn2 = document.getElementById('saveContactCmsBtnBottom');
+            
+            if (btn1) { btn1.innerHTML = 'Saving...'; btn1.disabled = true; }
+            if (btn2) { btn2.innerHTML = 'Saving...'; btn2.disabled = true; }
+
+            const form = document.getElementById('contactCmsForm');
+            const formData = new FormData(form);
+
+            fetch('{{ route("admin.contact.update") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn1) { btn1.innerHTML = '✓ Published Live!'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
+                alert('Success: Contact page content has been updated and published live!');
+                setTimeout(() => {
+                    if (btn1) btn1.innerHTML = '<svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/></svg><span>Publish Contact Page Live</span>';
+                    if (btn2) btn2.innerHTML = 'Publish Contact Page Changes Live &rarr;';
+                }, 2500);
+            })
+            .catch(err => {
+                if (btn1) { btn1.innerHTML = 'Publish Contact Page Live'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = 'Publish Contact Page Changes Live &rarr;'; btn2.disabled = false; }
+                alert('Error updating contact page: ' + err.message);
+            });
+        }
+
+        function savePartnersCms(e) {
+            e.preventDefault();
+            const btn1 = document.getElementById('savePartnersCmsBtn');
+            const btn2 = document.getElementById('savePartnersCmsBtnBottom');
+            
+            if (btn1) { btn1.innerHTML = 'Saving...'; btn1.disabled = true; }
+            if (btn2) { btn2.innerHTML = 'Saving...'; btn2.disabled = true; }
+
+            const form = document.getElementById('partnersCmsForm');
+            const formData = new FormData(form);
+
+            fetch('{{ route("admin.partners.update") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn1) { btn1.innerHTML = '✓ Published Live!'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
+                if (data.content) {
+                    for (const [k, v] of Object.entries(data.content)) {
+                        const input = form.querySelector(`input[name="${k}"]`);
+                        if (input && input.type !== 'file' && input.type !== 'checkbox') {
+                            input.value = v;
+                        }
+                    }
+                }
+                alert('Success: Insurance Partners section has been updated and published live!');
+                setTimeout(() => {
+                    if (btn1) btn1.innerHTML = '<svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/></svg><span>Publish Partners Section Live</span>';
+                    if (btn2) btn2.innerHTML = 'Publish Insurance Partners Changes Live &rarr;';
+                }, 2500);
+            })
+            .catch(err => {
+                if (btn1) { btn1.innerHTML = 'Publish Partners Section Live'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = 'Publish Insurance Partners Changes Live &rarr;'; btn2.disabled = false; }
+                alert('Error updating insurance partners: ' + err.message);
             });
         }
 
@@ -12690,7 +13875,7 @@ function saveCoverageCms(e) {
     </script>
 
     <!-- Surebound Modal System & Admin Portal Script -->
-    <script src="{{ asset('js/surebound-modal.js') }}"></script>
+    <script src="{{ asset('js/surebound-modal.js') }}?v={{ file_exists(public_path('js/surebound-modal.js')) ? filemtime(public_path('js/surebound-modal.js')) : time() }}"></script>
     <script src="{{ asset('js/admin.js') }}"></script>
 </body>
 </html>

@@ -216,6 +216,8 @@ class AdminController extends Controller
         $supportContent = PageContent::getForPage('support', self::getDefaultSupportContent());
         $commercialAutoInsuranceContent = PageContent::getForPage('commercial-auto-insurance', self::getDefaultCommercialAutoInsuranceContent());
         $suretyBondContent = PageContent::getForPage('surety-bond', self::getDefaultSuretyBondContent());
+        $contactContent = PageContent::getForPage('contact', self::getDefaultContactContent());
+        $partnersContent = PageContent::getForPage('partners', self::getDefaultPartnersContent());
 
         $agencySignature = ApiSetting::where('key', 'agency_signature')->first()?->value ?? [
             'signatory_name' => 'Md Rezawl',
@@ -263,6 +265,7 @@ class AdminController extends Controller
             'autoInsuranceContent',
             'commercialAutoInsuranceContent',
             'suretyBondContent',
+            'contactContent',
             'lifeInsuranceContent',
             'healthInsuranceContent',
             'umbrellaInsuranceContent',
@@ -281,7 +284,8 @@ class AdminController extends Controller
             'communityContent',
             'articlesContent',
             'faqsContent',
-            'guidesContent'
+            'guidesContent',
+            'partnersContent'
         ));
     }
 
@@ -531,6 +535,15 @@ class AdminController extends Controller
             // CTA
             'cta_title' => 'Ready to protect your home with confidence?',
             'cta_subtitle' => 'Get a personalized home insurance quote tailored to your property in less than 2 minutes.',
+
+            // Brand Perspectives & Pull Quotes
+            'quotes_enabled' => '1',
+            'quotes_count' => '1',
+            'quote_1_text' => 'We believe that the advantages are so great that a shift to working on slack, or something like it, is inevitable.',
+            'quote_1_author' => 'Marcel Gherkina',
+            'quote_1_role' => 'Spokesperson, Surebound',
+            'quote_1_badge' => 'Verified Perspective',
+            'quote_1_active' => '1',
         ];
     }
 
@@ -558,13 +571,24 @@ class AdminController extends Controller
             $data['hero_image'] = 'images/'.$filename;
         }
 
+        // Save Insurance Partners configuration if submitted from Home CMS
+        if ($request->has('partner_1_name') || $request->has('partners_submitted')) {
+            $this->handlePartnersDataSave($request);
+        }
+
+        // Save Brand Quotes & Perspectives configuration if submitted from Home CMS
+        if ($request->has('quotes_submitted') || $request->has('quote_1_text') || $request->has('quotes_count')) {
+            $this->handleQuotesDataSave($request, $data);
+        }
+
         PageContent::setForPage('home-insurance', $data);
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Home Insurance page updated and published live successfully!',
+                'message' => 'Home page content and insurance partners updated and published live successfully!',
                 'content' => PageContent::getForPage('home-insurance', self::getDefaultHomeInsuranceContent()),
+                'partners' => PageContent::getForPage('partners', self::getDefaultPartnersContent()),
             ]);
         }
 
@@ -2712,10 +2736,130 @@ class AdminController extends Controller
     public static function getDefaultContactContent(): array
     {
         return [
-            'hero_eyebrow' => 'Contact Us',
-            'hero_title' => 'Get in Touch',
-            'hero_subtitle' => 'Our team is ready to assist you with your insurance needs.',
-            'hero_image' => 'images/liability_hero.jpg',
+            // 1. Hero Section
+            'hero_eyebrow' => 'DIRECT CLIENT ADVISORY & SUPPORT',
+            'hero_title' => 'Connect with a Licensed Advisor –<br>We\'re Here For You',
+            'hero_subtitle' => 'Whether you need customized policy guidance, rapid claims assistance, or billing adjustments, our credentialed advisors and underwriters are ready to help.',
+            'hero_image' => 'images/advisor-meeting-hires.jpg',
+            'hero_card_sub' => 'Direct Advisor Access',
+            'hero_card_label' => 'Avg. response under 15 mins',
+            'primary_phone' => '+1 813-214-1731',
+            'claims_phone' => '+1 813-214-1731',
+
+            // 2. Value Bar (4 Direct Channels)
+            'value_1_title' => '+1 813-214-1731',
+            'value_1_desc' => 'Client Care Desk • Mon–Fri, 8am–8pm EST • Direct policy support & endorsements.',
+            'value_1_phone' => '+1 813-214-1731',
+            'value_2_title' => '+1 813-214-1731',
+            'value_2_desc' => '24/7 Emergency Claims • Available 365 days a year with immediate adjuster dispatch.',
+            'value_2_phone' => '+1 813-214-1731',
+            'value_3_title' => '+1 813-214-1731',
+            'value_3_desc' => 'Commercial Desk • Mon–Fri, 8:30am–6pm EST • Business policies & surety bonding lines.',
+            'value_3_phone' => '+1 813-214-1731',
+            'value_4_title' => 'support@surebound.com',
+            'value_4_desc' => 'Digital Intake • Certified electronic correspondence • Inquiries answered in under 15 minutes.',
+            'value_4_email' => 'support@surebound.com',
+
+            // 3. Direct Communication Panel
+            'live_status_text' => 'Client Support Center: Online & Open Now',
+            'section_eyebrow' => 'DIRECT COMMUNICATION',
+            'section_title' => 'Talk with a Licensed Insurance Specialist',
+            'lead_desc' => 'At Surebound, you won\'t encounter robotic phone trees or overseas call centers. You will be connected directly with certified American underwriters and local advisors who take time to understand your unique liabilities, property assets, and family goals.',
+
+            // Channel 1
+            'channel_1_title' => 'Policy & Account Service',
+            'channel_1_badge' => 'Mon–Fri, 8am–8pm EST',
+            'channel_1_value' => '+1 813-214-1731',
+            'channel_1_sub' => 'Policy renewals, endorsements, deductible adjustments & billing.',
+
+            // Channel 2
+            'channel_2_title' => 'Emergency Claims Hotline',
+            'channel_2_badge' => '24/7/365 Rapid Response',
+            'channel_2_value' => '+1 813-214-1731',
+            'channel_2_sub' => 'Immediate first-notice-of-loss intake and emergency adjuster dispatch.',
+
+            // Channel 3
+            'channel_3_title' => 'Commercial & Surety Desk',
+            'channel_3_badge' => 'Mon–Fri, 8:30am–6pm EST',
+            'channel_3_value' => '+1 813-214-1731',
+            'channel_3_sub' => 'Commercial Auto, General Liability, BOP & Treasury-listed bonds.',
+
+            // Channel 4
+            'channel_4_title' => 'Official Inquiries & Documentation',
+            'channel_4_badge' => 'Average Reply: < 15 mins',
+            'channel_4_value' => 'support@surebound.com',
+            'channel_4_sub' => 'Proof of insurance, escrow requests, loss payee forms & certificates.',
+
+            // Corporate HQ Feature Box
+            'hq_title' => 'Corporate Headquarters',
+            'hq_address' => '123 Surebound Way, Suite 400<br>Chicago, Illinois 60601',
+            'hq_hours' => 'Mon–Fri 8:30 AM – 5:30 PM CST • Walk-ins & scheduled visits',
+
+            // 4. Form Section
+            'form_title' => 'Send a Secure Message',
+            'form_subtitle' => 'Please provide your inquiry details below. Our routing system will immediately connect your message to the appropriate licensed underwriter or advisor.',
+            'form_button_text' => 'Send Message to Advisor',
+            'form_security_badge' => '256-Bit SSL Encrypted • Strictly Confidential Under State & Federal Insurance Privacy Regulations',
+
+            // 5. Regional Hubs
+            'offices_eyebrow' => 'LOCAL ROOTS • NATIONWIDE PRESENCE',
+            'offices_title' => 'Our Regional Underwriting Hubs',
+            'offices_subtitle' => 'Meet face-to-face with credentialed advisors at our regional service centers or schedule an on-site commercial risk audit.',
+
+            'office_1_badge' => 'Corporate HQ',
+            'office_1_city' => 'Chicago, IL',
+            'office_1_address' => '123 Surebound Way, Suite 400<br>Chicago, IL 60601',
+            'office_1_phone' => '+1 813-214-1731',
+            'office_1_hours' => 'Mon–Fri: 8:30 AM – 5:30 PM CST<br>Midwest Underwriting Center',
+
+            'office_2_badge' => 'Northeast Hub',
+            'office_2_city' => 'New York, NY',
+            'office_2_address' => '45 Wall Street, 18th Floor<br>New York, NY 10005',
+            'office_2_phone' => '+1 813-214-1731',
+            'office_2_hours' => 'Mon–Fri: 8:00 AM – 6:00 PM EST<br>Commercial & Financial Risk',
+
+            'office_3_badge' => 'Southwest Hub',
+            'office_3_city' => 'Dallas, TX',
+            'office_3_address' => '2100 Ross Avenue, Suite 1200<br>Dallas, TX 75201',
+            'office_3_phone' => '+1 813-214-1731',
+            'office_3_hours' => 'Mon–Fri: 8:00 AM – 5:30 PM CST<br>Commercial Fleet & Property',
+
+            'office_4_badge' => 'Pacific Hub',
+            'office_4_city' => 'Los Angeles, CA',
+            'office_4_address' => '1999 Avenue of the Stars, Suite 1100<br>Los Angeles, CA 90067',
+            'office_4_phone' => '+1 813-214-1731',
+            'office_4_hours' => 'Mon–Fri: 8:30 AM – 6:00 PM PST<br>Personal & Luxury Estates',
+
+            // 6. Dedicated Advocacy Section
+            'guidance_eyebrow' => 'DEDICATED ADVOCACY',
+            'guidance_title' => 'Real Human Advisors.<br>Zero Robotic Runarounds.',
+            'guidance_text' => 'When unexpected emergencies or complex policy decisions arise, you shouldn\'t have to battle automated phone trees. At Surebound, every individual, family, and enterprise account is matched with dedicated licensed underwriters and claims specialists who know your account history by name.',
+
+            // 7. FAQs
+            'faq_eyebrow' => 'COMMON QUESTIONS',
+            'faq_title' => 'Client Support & Contact FAQs',
+            'faq_subtitle' => 'Everything you need to know about reaching your dedicated Surebound team.',
+
+            'faq_1_question' => 'How quickly will a licensed advisor respond to my message?',
+            'faq_1_answer' => 'Inquiries submitted through our online secure form during standard business hours (Monday through Friday, 8:00 AM – 8:00 PM EST) are typically routed and responded to by a licensed insurance underwriter within 15 minutes. Messages received outside standard business hours are answered early the following business morning. For immediate assistance, call us directly at +1 813-214-1731.',
+
+            'faq_2_question' => 'How do I report an urgent loss or file a claim after hours?',
+            'faq_2_answer' => 'Our emergency claims hotline (+1 813-214-1731) is staffed 24 hours a day, 7 days a week, 365 days a year. Whether you experience a vehicular collision, home pipe burst, severe storm roof damage, or commercial property incident, an emergency claims adjuster is always standing by to dispatch emergency mitigation crews and issue immediate living expense or repair authorizations.',
+
+            'faq_3_question' => 'Where should mortgage lenders or escrow agents send proof-of-insurance requests?',
+            'faq_3_answer' => 'Title companies, mortgage lenders, and escrow officers can send verification requests, mortgagee clause updates, and loss payee change notices directly to support@surebound.com. Include the insured policyholder\'s full name, property address, and loan number for automated same-day certificate issuance.',
+
+            'faq_4_question' => 'Can I update my coverage limits, vehicle details, or payment methods online?',
+            'faq_4_answer' => 'Yes. Existing Surebound policyholders can log into our secure User Client Portal to view policies, download auto ID cards, request policy endorsements, add vehicles or drivers, and submit one-time or recurring premium payments.',
+
+            'faq_5_question' => 'How do I schedule an in-person meeting at a regional office?',
+            'faq_5_answer' => 'You are welcome to visit any of our regional hubs in Chicago, New York, Dallas, or Los Angeles during normal business hours. For complex commercial liability audits, high-value asset consultations, or surety bonding lines, we recommend calling +1 813-214-1731 or submitting the contact form with your preferred date and time.',
+
+            // 8. Bottom CTA
+            'cta_title' => 'Looking for an immediate insurance rate?',
+            'cta_subtitle' => 'Get a personalized policy quote tailored to your vehicle, property, or business in under 2 minutes.',
+            'cta_phone' => '+1 813-214-1731',
+            'cta_button_text' => 'Start Instant Quote',
         ];
     }
 
@@ -2724,6 +2868,16 @@ class AdminController extends Controller
         $content = PageContent::getForPage('contact', self::getDefaultContactContent());
 
         return view('contact', compact('content'));
+    }
+
+    public function showPrivacy()
+    {
+        return view('privacy');
+    }
+
+    public function showTerms()
+    {
+        return view('terms');
     }
 
     public function updateContact(Request $request)
@@ -2748,6 +2902,222 @@ class AdminController extends Controller
         }
 
         return redirect()->to(route('admin.dashboard').'#contact-cms')->with('success', 'Contact page updated successfully!');
+    }
+
+    public function updatePartners(Request $request)
+    {
+        $this->handlePartnersDataSave($request);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Insurance Partners section updated and published live successfully!',
+                'content' => PageContent::getForPage('partners', self::getDefaultPartnersContent()),
+            ]);
+        }
+
+        return redirect()->to(route('admin.dashboard').'#tab-partners-cms')->with('success', 'Insurance Partners section updated successfully!');
+    }
+
+    /**
+     * Common handler for saving Insurance Partners data including local file uploads, edits, and deletions
+     */
+    protected function handlePartnersDataSave(Request $request): array
+    {
+        $partnersData = [];
+        $partnersData['section_enabled'] = $request->has('section_enabled') ? '1' : '0';
+        $partnersData['section_title'] = $request->input('section_title', 'Coverage Backed by Trusted Names');
+        $partnersData['section_subtitle'] = $request->input('section_subtitle', 'We work with leading insurance carriers to help you find the right coverage.');
+
+        // Scan all submitted partner indices
+        $partnerIndices = [];
+        foreach ($request->all() as $key => $val) {
+            if (preg_match('/^partner_(\d+)_name$/', $key, $matches)) {
+                $partnerIndices[] = (int) $matches[1];
+            }
+        }
+        $count = (int) $request->input('partners_count', 10);
+        for ($i = 1; $i <= $count; $i++) {
+            $partnerIndices[] = $i;
+        }
+        $partnerIndices = array_values(array_unique($partnerIndices));
+        sort($partnerIndices);
+
+        $savedIndex = 1;
+        $uploadDir = public_path('images/partners');
+        if (! is_dir($uploadDir)) {
+            @mkdir($uploadDir, 0755, true);
+        }
+
+        foreach ($partnerIndices as $i) {
+            // Check if explicitly marked as removed
+            if ($request->input("partner_{$i}_removed") === '1') {
+                continue;
+            }
+
+            $name = trim((string) $request->input("partner_{$i}_name", ''));
+            if ($name === '') {
+                continue;
+            }
+
+            $logo = (string) $request->input("partner_{$i}_logo", '');
+
+            // Handle local PC file upload
+            if ($request->hasFile("partner_{$i}_file")) {
+                $file = $request->file("partner_{$i}_file");
+                if ($file->isValid()) {
+                    $ext = strtolower($file->getClientOriginalExtension() ?: 'png');
+                    $filename = 'partner_'.$savedIndex.'_'.time().'_'.bin2hex(random_bytes(3)).'.'.$ext;
+                    $file->move($uploadDir, $filename);
+                    $logo = 'images/partners/'.$filename;
+
+                    $distDir = public_path('../dist/images/partners');
+                    if (is_dir($distDir)) {
+                        @copy($uploadDir.'/'.$filename, $distDir.'/'.$filename);
+                    }
+                }
+            }
+
+            $partnersData["partner_{$savedIndex}_name"] = $name;
+            $partnersData["partner_{$savedIndex}_desc"] = (string) $request->input("partner_{$i}_desc", '');
+            $partnersData["partner_{$savedIndex}_logo"] = $logo;
+            $partnersData["partner_{$savedIndex}_active"] = ($request->has("partner_{$i}_active") && $request->input("partner_{$i}_active") !== '0') ? '1' : '0';
+            $savedIndex++;
+        }
+
+        $partnersData['partners_count'] = (string) ($savedIndex - 1);
+
+        try {
+            // Remove previous partner keys to prevent ghost records when items are deleted
+            PageContent::where('page', 'partners')->where('key', 'like', 'partner_%')->delete();
+        } catch (\Throwable) {
+            // Safe fallback if table does not exist
+        }
+
+        PageContent::setForPage('partners', $partnersData);
+
+        return $partnersData;
+    }
+
+    /**
+     * Process, re-pack sequentially, and sanitize Brand Pull Quotes & Perspectives data from Home CMS
+     */
+    protected function handleQuotesDataSave(Request $request, array &$data): void
+    {
+        $quotesEnabled = $request->has('quotes_enabled') ? '1' : '0';
+
+        // Scan all submitted quote indices
+        $quoteIndices = [];
+        foreach ($request->all() as $key => $val) {
+            if (preg_match('/^quote_(\d+)_text$/', $key, $matches)) {
+                $quoteIndices[] = (int) $matches[1];
+            }
+        }
+        $count = (int) $request->input('quotes_count', 1);
+        for ($i = 1; $i <= $count; $i++) {
+            $quoteIndices[] = $i;
+        }
+        $quoteIndices = array_values(array_unique($quoteIndices));
+        sort($quoteIndices);
+
+        // Remove any quote keys currently in $data to prevent stale or duplicate entries
+        foreach (array_keys($data) as $k) {
+            if (str_starts_with($k, 'quote_') || $k === 'quotes_count' || $k === 'quotes_enabled' || $k === 'quotes_submitted') {
+                unset($data[$k]);
+            }
+        }
+
+        $savedIndex = 1;
+        foreach ($quoteIndices as $i) {
+            // Check if explicitly marked as removed
+            if ($request->input("quote_{$i}_removed") === '1') {
+                continue;
+            }
+
+            $text = trim((string) $request->input("quote_{$i}_text", ''));
+            if ($text === '') {
+                continue;
+            }
+
+            $data["quote_{$savedIndex}_text"] = $text;
+            $data["quote_{$savedIndex}_author"] = trim((string) $request->input("quote_{$i}_author", ''));
+            $data["quote_{$savedIndex}_role"] = trim((string) $request->input("quote_{$i}_role", ''));
+            $data["quote_{$savedIndex}_badge"] = trim((string) $request->input("quote_{$i}_badge", ''));
+            $data["quote_{$savedIndex}_active"] = ($request->has("quote_{$i}_active") && $request->input("quote_{$i}_active") !== '0') ? '1' : '0';
+            $savedIndex++;
+        }
+
+        $finalCount = $savedIndex - 1;
+        $data['quotes_count'] = (string) $finalCount;
+        $data['quotes_enabled'] = $quotesEnabled;
+
+        try {
+            // Remove previous quote keys to prevent ghost records when items are deleted
+            PageContent::where('page', 'home-insurance')->where('key', 'like', 'quote_%')->delete();
+        } catch (\Throwable) {
+            // Safe fallback
+        }
+    }
+
+    public static function getDefaultPartnersContent(): array
+    {
+        return [
+            'section_enabled' => '1',
+            'partners_count' => '10',
+            'section_badge' => 'TRUSTED CARRIER NETWORK',
+            'section_title' => 'Coverage Backed by Trusted Names',
+            'section_subtitle' => 'We work with leading insurance carriers to help you find the right coverage.',
+
+            'partner_1_name' => 'Travelers',
+            'partner_1_logo' => 'images/partners/travelers.svg',
+            'partner_1_desc' => 'Property & Casualty Specialist',
+            'partner_1_active' => '1',
+
+            'partner_2_name' => 'Progressive',
+            'partner_2_logo' => 'images/partners/progressive.svg',
+            'partner_2_desc' => 'Auto & Commercial Vehicle',
+            'partner_2_active' => '1',
+
+            'partner_3_name' => 'Liberty Mutual',
+            'partner_3_logo' => 'images/partners/liberty-mutual.svg',
+            'partner_3_desc' => 'Comprehensive Personal & Commercial',
+            'partner_3_active' => '1',
+
+            'partner_4_name' => 'Nationwide',
+            'partner_4_logo' => 'images/partners/nationwide.svg',
+            'partner_4_desc' => 'Mutual Insurance & Financial Protection',
+            'partner_4_active' => '1',
+
+            'partner_5_name' => 'Chubb',
+            'partner_5_logo' => 'images/partners/chubb.svg',
+            'partner_5_desc' => 'High-Value Property & Executive Protection',
+            'partner_5_active' => '1',
+
+            'partner_6_name' => 'The Hartford',
+            'partner_6_logo' => 'images/partners/the-hartford.svg',
+            'partner_6_desc' => 'Small Business & Workers Compensation',
+            'partner_6_active' => '1',
+
+            'partner_7_name' => 'State Farm',
+            'partner_7_logo' => 'images/partners/state-farm.svg',
+            'partner_7_desc' => 'P&C and Life Insurance Network',
+            'partner_7_active' => '1',
+
+            'partner_8_name' => 'Allstate',
+            'partner_8_logo' => 'images/partners/allstate.svg',
+            'partner_8_desc' => 'Personal & Business Property Lines',
+            'partner_8_active' => '1',
+
+            'partner_9_name' => 'CNA',
+            'partner_9_logo' => 'images/partners/cna.svg',
+            'partner_9_desc' => 'Commercial Underwriting & Liability',
+            'partner_9_active' => '1',
+
+            'partner_10_name' => 'Berkshire Hathaway GUARD',
+            'partner_10_logo' => 'images/partners/berkshire-hathaway-guard.svg',
+            'partner_10_desc' => 'Commercial Lines & Workers Comp',
+            'partner_10_active' => '1',
+        ];
     }
 
     /**

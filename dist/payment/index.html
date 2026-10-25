@@ -1,0 +1,870 @@
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Coverage Cards Auto-scroll logic for mobile
+            const coverageGrid = document.querySelector('.coverage-cards-grid');
+            const coverageDots = document.querySelectorAll('.coverage-pagination-dots .dot');
+            
+            if (coverageGrid && coverageDots.length > 0) {
+                let covIndex = 0;
+                const totalCovCards = coverageDots.length; // 3 cards
+                let covAutoSlideInterval;
+                let covInteracting = false;
+
+                const updateCovDots = (index) => {
+                    coverageDots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                };
+
+                const slideCovTo = (index) => {
+                    const firstCard = coverageGrid.querySelector('.coverage-card');
+                    if(firstCard) {
+                        const cardWidth = firstCard.offsetWidth + 16; // width + gap
+                        coverageGrid.scrollTo({
+                            left: index * cardWidth,
+                            behavior: 'smooth'
+                        });
+                        updateCovDots(index);
+                    }
+                };
+
+                const startCovAutoSlide = () => {
+                    clearInterval(covAutoSlideInterval);
+                    covAutoSlideInterval = setInterval(() => {
+                        if (!covInteracting && window.innerWidth <= 768) {
+                            // On 50% width, max scroll index is totalCards - 2
+                            if (covIndex >= totalCovCards - 2) {
+                                covIndex = 0;
+                            } else {
+                                covIndex++;
+                            }
+                            slideCovTo(covIndex);
+                        }
+                    }, 3000);
+                };
+
+                const stopCovAutoSlide = () => {
+                    clearInterval(covAutoSlideInterval);
+                };
+
+                coverageGrid.addEventListener('scroll', () => {
+                    if (window.innerWidth <= 768) {
+                        const firstCard = coverageGrid.querySelector('.coverage-card');
+                        if (firstCard) {
+                            const scrollLeft = coverageGrid.scrollLeft;
+                            const cardWidth = firstCard.offsetWidth + 16;
+                            const newIndex = Math.round(scrollLeft / cardWidth);
+                            if (newIndex !== covIndex && newIndex < totalCovCards) {
+                                covIndex = newIndex;
+                                updateCovDots(covIndex);
+                            }
+                        }
+                    }
+                }, { passive: true });
+
+                coverageGrid.addEventListener('touchstart', () => { covInteracting = true; stopCovAutoSlide(); }, {passive: true});
+                coverageGrid.addEventListener('touchend', () => { 
+                    covInteracting = false; 
+                    setTimeout(startCovAutoSlide, 3000); 
+                }, {passive: true});
+                
+                startCovAutoSlide();
+            }
+        });
+    </script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Make a Payment | Surebound</title>
+    <meta name="description" content="Dependable insurance protection built around you. Get fast quotes and dedicated underwriter support for home, auto, commercial liability, and surety bonds.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="">
+
+
+<link rel="alternate" hreflang="en-US" href="">
+<link rel="alternate" hreflang="en-GB" href="">
+<link rel="alternate" hreflang="en-CA" href="">
+<link rel="alternate" hreflang="x-default" href="">
+
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@context": "https://schema.org",
+            "@type": "InsuranceAgency",
+            "name": "Surebound Insurance",
+            "url": "",
+            "logo": "/images/logo.png",
+            "image": "/images/hero-family.jpg",
+            "description": "Dependable insurance protection built around you. Home, auto, commercial liability, workers compensation, and surety bonds.",
+            "telephone": "+1-800-555-7873",
+            "priceRange": "$$",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "100 Wall Street, Suite 1400",
+                "addressLocality": "New York",
+                "addressRegion": "NY",
+                "postalCode": "10005",
+                "addressCountry": "US"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 40.7061,
+                "longitude": -74.0092
+            },
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday"
+                    ],
+                    "opens": "08:00",
+                    "closes": "18:00"
+                }
+            ],
+            "sameAs": [
+                "https://www.linkedin.com/company/surebound",
+                "https://twitter.com/SureboundIns"
+            ]
+        },
+        {
+            "@type": "WebSite",
+            "name": "Surebound Insurance",
+            "url": "",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "/articles?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    ]
+}
+</script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/icon.png">
+    
+    <!-- Google Fonts: Inter (Brand Guidelines 2026) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/css/surebound.css?v=1792911216">
+    <link rel="stylesheet" href="/css/surebound-modal.css?v=1792908857">
+    
+    <!-- Marketing Pixels & Social Meta Tags (Google, Meta/FB, LinkedIn, Twitter, TikTok) -->
+    <meta name="google-site-verification" content="google98420b98a0f81d83a">
+                <meta name="facebook-domain-verification" content="meta981048fbverificationtoken">
+    
+    
+    
+    <meta property="og:site_name" content="Surebound Insurance">
+    <meta property="og:title" content="Surebound Insurance – Premier Home, Auto &amp; Business Coverage">
+    <meta property="og:description" content="Dependable insurance protection engineered around your family and business. Fast quotes, claims service, and dedicated agent support.">
+    <meta property="og:image" content="/images/logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+
+    <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:site" content="@SureboundIns">
+        <meta name="twitter:creator" content="@SureboundIns">
+        <meta name="twitter:title" content="Surebound Insurance – Premier Home, Auto &amp; Business Coverage">
+    <meta name="twitter:description" content="Dependable insurance protection engineered around your family and business. Fast quotes, claims service, and dedicated agent support.">
+    <meta name="twitter:image" content="/images/logo.png">
+
+    
+            <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-SB89240');</script>
+        <!-- End Google Tag Manager -->
+    
+    
+            <!-- Google tag (gtag.js) GA4 -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SB9824X891"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SB9824X891', {
+                'send_page_view': true,
+                'cookie_flags': 'SameSite=None;Secure'
+            });
+                            gtag('config', 'AW-1094829104');
+                    </script>
+    
+    
+            <!-- Meta Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '982401859102941');
+            fbq('track', 'PageView');
+        </script>
+        <!-- End Meta Pixel Code -->
+    
+    
+            <!-- LinkedIn Insight Tag -->
+        <script type="text/javascript">
+            _linkedin_partner_id = "6849201";
+            window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+            window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+            (function(l) {
+            if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+            window.lintrk.q=[]}
+            var s = document.getElementsByTagName("script")[0];
+            var b = document.createElement("script");
+            b.type = "text/javascript";b.async = true;
+            b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+            s.parentNode.insertBefore(b, s);})(window.lintrk);
+        </script>
+        <!-- End LinkedIn Insight Tag -->
+    
+    
+            <!-- Twitter / X conversion tracking -->
+        <script>
+            !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+            },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+            a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+            twq('config','tw-o9842-10492');
+            twq('track','PageView');
+        </script>
+        <!-- End Twitter / X conversion tracking -->
+    
+    
+            <!-- TikTok Pixel Code -->
+        <script>
+            !function (w, d, t) {
+                w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+                var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+                ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+                ttq.load('C982401849102A9');
+                ttq.page();
+            }(window, document, 'ttq');
+        </script>
+        <!-- End TikTok Pixel Code -->
+    
+    
+            <!-- Surebound Custom Marketing Header Scripts -->
+<script>
+  window.sureboundTrackingLoaded = true;
+</script>
+    </head>
+<body>
+    <!-- Marketing Body Tags & Fallbacks (GTM, Meta, LinkedIn noscript) -->
+    <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-SB89240"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    
+    
+            <!-- Meta Pixel (noscript) -->
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=982401859102941&ev=PageView&noscript=1"
+        /></noscript>
+    
+    
+            <!-- LinkedIn Insight Tag (noscript) -->
+        <noscript>
+            <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=6849201&fmt=gif" />
+        </noscript>
+    
+    
+            <!-- Surebound Custom Marketing Body Scripts -->
+    
+    <!-- ==========================================
+         MAIN HEADER
+         ========================================== -->
+    <header class="site-header" id="site-header">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <a href="" class="brand-logo-link">
+                    <img src="/images/logo.png" alt="Surebound" class="brand-logo-img">
+                </a>
+
+            </div>
+
+            <nav class="main-nav" id="main-nav">
+                <!-- Personal -->
+                <div class="nav-dropdown ">
+                    <a href="javascript:void(0)" class="nav-link ">
+                        <span>Personal</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </a>
+                    <div class="dropdown-flyout">
+                        <a href="/home-insurance" class="">
+                             Home Insurance
+                        </a>
+                        <a href="/auto-insurance" class="">
+                             Auto Insurance
+                        </a>
+                        <a href="/life-insurance" class="">
+                             Life Insurance
+                        </a>
+                        <a href="/health-insurance" class="">
+                             Health Insurance
+                        </a>
+                        <a href="/umbrella-insurance" class="">
+                             Umbrella Insurance
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Commercial -->
+                <div class="nav-dropdown ">
+                    <a href="javascript:void(0)" class="nav-link ">
+                        <span>Commercial</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </a>
+                    <div class="dropdown-flyout">
+                        <a href="/business-insurance" class="">
+                             Business Owner Policy (BOP)
+                        </a>
+                        <a href="/group-benefits" class="">
+                             Workers' Compensation
+                        </a>
+                        <a href="/liability-insurance" class="">
+                             General Liability
+                        </a>
+                        <a href="/property-insurance" class="">
+                             Property Coverage
+                        </a>
+                        <a href="/commercial-auto-insurance" class="">
+                             Commercial Auto
+                        </a>
+                        <a href="/surety-bond" class="">
+                             Surety Bond
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Coverage -->
+                <div class="nav-dropdown ">
+                    <a href="/coverage" class="nav-link ">
+                        Coverage
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </a>
+                    <div class="dropdown-flyout">
+                        <a href="/coverage" class="">
+                             All Coverage Solutions
+                        </a>
+                        <a href="/custom-quote" class="">
+                             Custom Tailored Plans
+                        </a>
+                        <a href="/compare" class="">
+                             Compare Policies
+                        </a>
+                    </div>
+                </div>
+
+                <!-- About Us -->
+                <div class="nav-dropdown ">
+                    <a href="javascript:void(0)" class="nav-link ">
+                        About Us
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </a>
+                    <div class="dropdown-flyout">
+                        <a href="/story" class="">
+                             Our Mission
+                        </a>
+                        <a href="/team" class="">
+                             Leadership Team
+                        </a>
+                        <a href="/careers" class="">
+                             Careers
+                        </a>
+                        <a href="/community" class="">
+                             Community Impact
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="nav-dropdown ">
+                    <a href="javascript:void(0)" class="nav-link ">
+                        Resources
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </a>
+                    <div class="dropdown-flyout">
+                        <a href="/articles" class="">
+                             Articles & Insights
+                        </a>
+                        <a href="/faqs" class="">
+                             Frequently Asked Questions
+                        </a>
+                        <a href="/guides" class="">
+                             Insurance Guides
+                        </a>
+                        <a href="/claims">Claims Help Center</a>
+                    </div>
+                </div>
+            </nav>
+
+            <a href="javascript:void(0)" onclick="openQuoteModal()" class="btn-header-quote">
+                <span>Get a Quote</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+            </a>
+
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         PAGE CONTENT
+         ========================================== -->
+    <main>
+        
+    <!-- ==========================================
+         HERO SECTION (DYNAMIC CMS REPLICA)
+         ========================================== -->
+    <section class="hero-section">
+        <div class="hero-photo-bleed">
+            <img 
+                src="/images/home_insurance_hero.jpg" 
+                alt="Make a Payment" 
+                class="hero-photo-img"
+            >
+            <div class="hero-photo-fade-right"></div>
+            <div class="hero-photo-tint"></div>
+        </div>
+
+        <div class="container hero-container">
+            <div class="hero-content">
+                <p class="hero-eyebrow">Payments</p>
+                <h1 class="hero-title">Make a Payment</h1>
+                <p class="hero-subtitle">
+                    Securely pay your premium online.
+                </p>
+                <div class="hero-buttons">
+                    <a href="/dashboard/payments" class="btn-primary-hero">
+                        <span>Pay Now</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="17" height="17">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENT SECTION -->
+    <section class="coverage-section" id="payment-options">
+        <div class="container">
+            <p class="section-eyebrow">PAYMENT METHODS</p>
+            <h2 class="section-title">Flexible payment options for your convenience</h2>
+            <p class="section-subtitle">We offer a variety of payment methods to make managing your insurance policy as easy as possible. Choose the option that works best for you and your budget.</p>
+            
+            <div class="coverage-cards-grid">
+                <!-- 1. Online Bill Pay -->
+                <div class="coverage-card" onclick="window.location.href='/dashboard/payments'" style="cursor: pointer;">
+                    <div>
+                        <div class="coverage-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                            </svg>
+                        </div>
+                        <h3 class="coverage-card-title">Online Bill Pay</h3>
+                        <p class="coverage-card-desc">Pay your bill instantly using your bank account, credit card, or digital wallet through our secure portal.</p>
+                    </div>
+                    <span class="coverage-card-arrow">&rarr;</span>
+                </div>
+
+                <!-- 2. AutoPay -->
+                <div class="coverage-card">
+                    <div>
+                        <div class="coverage-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                            </svg>
+                        </div>
+                        <h3 class="coverage-card-title">AutoPay</h3>
+                        <p class="coverage-card-desc">Set it and forget it. Enroll in AutoPay to have your premium automatically deducted on your due date.</p>
+                    </div>
+                    <span class="coverage-card-arrow">&rarr;</span>
+                </div>
+
+                <!-- 3. Pay by Phone -->
+                <div class="coverage-card">
+                    <div>
+                        <div class="coverage-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.896-1.596-5.273-3.974-6.869-6.87l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                            </svg>
+                        </div>
+                        <h3 class="coverage-card-title">Pay by Phone</h3>
+                        <p class="coverage-card-desc">Call our automated payment line 24/7 to make a payment over the phone securely.</p>
+                    </div>
+                    <span class="coverage-card-arrow">&rarr;</span>
+                </div>
+            </div>
+            
+            <!-- Carousel Dots for Mobile -->
+            <div class="coverage-pagination-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         PAYMENT SECURITY SECTION (WITH IMAGE)
+         ========================================== -->
+    <section class="simpler-section">
+        <div class="container">
+            <div class="simpler-grid">
+                <!-- Left: Photo -->
+                <div class="simpler-image-frame">
+                    <img 
+                        src="/images/payment-security-card.jpg" 
+                        alt="Secure Payments with Surebound" 
+                        class="simpler-image"
+                    >
+                </div>
+
+                <!-- Right: Content -->
+                <div class="simpler-content">
+                    <p class="simpler-eyebrow">SECURE & RELIABLE</p>
+                    <h2 class="simpler-title">Your Data Security is Our Top Priority</h2>
+                    <p class="simpler-paragraph">
+                        We use industry-leading encryption and security protocols to ensure that your payment information is always protected. Whether you are paying online or setting up AutoPay, you can trust that your transactions with Surebound are safe, seamless, and completely secure.
+                    </p>
+                    <a href="/faqs" class="btn-learn-more">
+                        <span>Payment FAQs</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- ==========================================
+         SITE FOOTER
+         ========================================== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-main-grid">
+                <!-- Col 1: Brand & Bio -->
+                <div class="footer-brand-col">
+                    <a href="" aria-label="Surebound Home" style="display:inline-block;">
+                        <img src="/images/logo.png" alt="Surebound" class="footer-logo-img">
+                    </a>
+                    <p class="footer-brand-desc">
+                        We provide trusted insurance solutions for individuals, families and businesses. Because your tomorrow matters.
+                    </p>
+                </div>
+
+                <!-- Col 2: Coverage -->
+                <div class="footer-nav-col">
+                    <h4>Coverage</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="/home-insurance">Home Insurance</a></li>
+                        <li><a href="/auto-insurance">Auto Insurance</a></li>
+                        <li><a href="/life-insurance">Life Insurance</a></li>
+                        <li><a href="/health-insurance">Health Insurance</a></li>
+                        <li><a href="/umbrella-insurance">Umbrella Insurance</a></li>
+                        <li><a href="/business-insurance">Business Insurance</a></li>
+                        <li><a href="/commercial-auto-insurance">Commercial Auto</a></li>
+                        <li><a href="/surety-bond">Surety Bond</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Company -->
+                <div class="footer-nav-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="/story">About Us</a></li>
+                        <li><a href="/team">Our Team</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/community">News &amp; Updates</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Resources -->
+                <div class="footer-nav-col">
+                    <h4>Resources</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="/articles">Articles &amp; Insights</a></li>
+                        <li><a href="/faqs">FAQs</a></li>
+                        <li><a href="/guides">Insurance Guide</a></li>
+                        <li><a href="/claims">Claims Center</a></li>
+                        <li><a href="/compare">Agent Resources</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 5: Support -->
+                <div class="footer-nav-col">
+                    <h4>Support</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="/claims">Claims</a></li>
+                        <li><a href="/payment">Make a Payment</a></li>
+                        <li><a href="/login">Sign In</a></li>
+                        <li><a href="/register">Create Account</a></li>
+                        <li><a href="/admin">Agent Portal</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom-bar">
+                <div class="footer-bottom-links">
+                    <a href="/privacy">Privacy Policy</a> &nbsp;|&nbsp;
+                    <a href="/terms">Terms of Service</a> &nbsp;|&nbsp;
+                    <span>&copy; 2026 Surebound. All rights reserved.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         INTERACTIVE GET A QUOTE MODAL
+         ========================================== -->
+    <div class="modal-overlay" id="quoteModal">
+        <div class="modal-box">
+            <button class="modal-close-btn" onclick="closeQuoteModal()" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <h3>Get Your Free Quote</h3>
+                <p>Tailored coverage with great rates in less than 2 minutes.</p>
+            </div>
+            <form onsubmit="handleQuoteSubmit(event)">
+                <div class="modal-form-group">
+                    <label for="coverage-type">Select Insurance Type</label>
+                    <select id="coverage-type" required>
+                        <optgroup label="Personal Lines">
+                            <option value="Home Insurance">Home Insurance</option>
+                            <option value="Auto Insurance">Auto Insurance</option>
+                            <option value="Life Insurance">Life Insurance</option>
+                            <option value="Health Insurance">Health Insurance</option>
+                            <option value="Umbrella Insurance">Umbrella Insurance</option>
+                        </optgroup>
+                        <optgroup label="Commercial Lines">
+                            <option value="Business Owner Policy">Business Owner Policy (BOP)</option>
+                            <option value="Workers' Compensation">Workers' Compensation</option>
+                            <option value="General Liability">General Liability</option>
+                            <option value="Commercial Property Coverage">Property Coverage</option>
+                            <option value="Commercial Auto">Commercial Auto</option>
+                            <option value="Surety Bond">Surety Bond</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="modal-form-group">
+                    <label for="quote-name">Full Name</label>
+                    <input type="text" id="quote-name" placeholder="John Doe" required>
+                </div>
+                <div class="modal-form-group">
+                    <label for="quote-email">Email Address</label>
+                    <input type="email" id="quote-email" placeholder="john@example.com" required>
+                </div>
+                <div class="modal-form-group">
+                    <label for="quote-phone">Phone Number</label>
+                    <input type="tel" id="quote-phone" placeholder="(555) 000-0000" required>
+                </div>
+                <div class="modal-form-group">
+                    <label for="quote-zip">ZIP / Postal Code</label>
+                    <input type="text" id="quote-zip" placeholder="e.g. 90210" required>
+                </div>
+                <button type="submit" class="btn-submit-modal" id="submitQuoteBtn">
+                    View Instant Quote Estimate &rarr;
+                </button>
+            </form>
+            <div id="quoteSuccessMessage" style="display:none; margin-top:16px; padding:12px; background:#e8f4fc; border-radius:8px; color:#1255db; text-align:center; font-weight:600; font-size: 16px;">
+                ✓ Request received! An agent is matching the best plan for you right now.
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Sticky Header scroll elevation
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('site-header');
+            if (header) {
+                if (window.scrollY > 15) {
+                    header.classList.add('is-sticky');
+                } else {
+                    header.classList.remove('is-sticky');
+                }
+            }
+        }, { passive: true });
+
+        function openQuoteModal(type) {
+            if (type) {
+                const select = document.getElementById('coverage-type');
+                if (select) {
+                    const search = type.toLowerCase().trim();
+                    for (let i = 0; i < select.options.length; i++) {
+                        const optVal = select.options[i].value.toLowerCase();
+                        const optText = select.options[i].text.toLowerCase();
+                        if (optVal.includes(search) || optText.includes(search) || search.includes(optVal)) {
+                            select.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            }
+            const modal = document.getElementById('quoteModal');
+            if (modal) modal.classList.add('active');
+        }
+
+        function closeQuoteModal() {
+            const modal = document.getElementById('quoteModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('quoteModal');
+            if (e.target === modal) {
+                closeQuoteModal();
+            }
+        });
+
+        function handleQuoteSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitQuoteBtn');
+            const msg = document.getElementById('quoteSuccessMessage');
+            const name = document.getElementById('quote-name')?.value || '';
+            const email = document.getElementById('quote-email')?.value || '';
+            const phone = document.getElementById('quote-phone')?.value || '';
+            const zip = document.getElementById('quote-zip')?.value || '';
+            const typeSelect = document.getElementById('coverage-type');
+            let type = 'home';
+            if (typeSelect) {
+                const val = typeSelect.value.toLowerCase();
+                if (val.includes('workers')) type = 'workers_comp';
+                else if (val.includes('general liability') || val.includes('liability')) type = 'general_liability';
+                else if (val.includes('surety')) type = 'surety_bond';
+                else if (val.includes('commercial auto')) type = 'commercial_auto';
+                else if (val.includes('commercial property') || val.includes('property coverage')) type = 'commercial_property';
+                else if (val.includes('business owner') || val.includes('bop')) type = 'bop';
+                else if (val.includes('health')) type = 'health';
+                else if (val.includes('life')) type = 'life';
+                else if (val.includes('umbrella')) type = 'umbrella';
+                else if (val.includes('auto')) type = 'auto';
+                else if (val.includes('property')) type = 'property';
+                else if (val.includes('business')) type = 'bop';
+                else type = 'home';
+            }
+
+            btn.innerHTML = 'Connecting Underwriting Database...';
+            btn.disabled = true;
+
+            fetch('/quotes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ name, email, phone, zip, type })
+            })
+            .then(r => r.json())
+            .then(data => {
+                btn.style.display = 'none';
+                msg.textContent = '✓ Quote Request #' + (data.quote_ref || 'Received') + ' saved! An underwriter is matching your rates.';
+                msg.style.display = 'block';
+                setTimeout(() => {
+                    closeQuoteModal();
+                    btn.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerHTML = 'View Instant Quote Estimate &rarr;';
+                    msg.style.display = 'none';
+                }, 2600);
+            })
+            .catch(() => {
+                btn.style.display = 'none';
+                msg.textContent = '✓ Request received! An agent is matching the best plan for you right now.';
+                msg.style.display = 'block';
+                setTimeout(() => {
+                    closeQuoteModal();
+                    btn.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerHTML = 'View Instant Quote Estimate &rarr;';
+                    msg.style.display = 'none';
+                }, 2200);
+            });
+        }
+
+        // Mobile menu toggle with accordion support
+        const toggleBtn = document.getElementById('mobile-toggle');
+        const mainNav = document.getElementById('main-nav');
+        if (toggleBtn && mainNav) {
+            toggleBtn.addEventListener('click', () => {
+                const isOpen = mainNav.classList.toggle('is-open');
+                toggleBtn.classList.toggle('is-active', isOpen);
+                document.body.classList.toggle('mobile-menu-open', isOpen);
+            });
+
+            // Handle mobile accordion dropdowns
+            mainNav.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+                const link = dropdown.querySelector('.nav-link');
+                if (link) {
+                    link.addEventListener('click', (e) => {
+                        if (window.innerWidth <= 860) {
+                            e.preventDefault();
+                            // Toggle this dropdown and close others
+                            const wasActive = dropdown.classList.contains('active-mobile');
+                            mainNav.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('active-mobile'));
+                            if (!wasActive) {
+                                dropdown.classList.add('active-mobile');
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Close mobile menu when clicking any sub-link
+            mainNav.querySelectorAll('.dropdown-flyout a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mainNav.classList.remove('is-open');
+                    toggleBtn.classList.remove('is-active');
+                    document.body.classList.remove('mobile-menu-open');
+                });
+            });
+        }
+    </script>
+
+    <script src="/js/surebound-modal.js"></script>
+    </body>
+</html>

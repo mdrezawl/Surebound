@@ -218,60 +218,78 @@
     background: #e2e8f0;
 }
 
-/* Confirm / Primary Buttons */
+/* Confirm / Primary / Got It Buttons */
 .sb-modal-btn-confirm {
-    border: none;
-    color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    border: none !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    font-weight: 600;
+}
+.sb-modal-btn-confirm:hover {
+    background: linear-gradient(135deg, #0369a1 0%, #075985 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.45);
+}
+
+.sb-modal-card.type-info .sb-modal-btn-confirm,
+.sb-modal-card.type-primary .sb-modal-btn-confirm {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+.sb-modal-card.type-info .sb-modal-btn-confirm:hover,
+.sb-modal-card.type-primary .sb-modal-btn-confirm:hover {
+    background: linear-gradient(135deg, #0369a1 0%, #075985 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.45);
 }
 
 .sb-modal-card.type-success .sb-modal-btn-confirm {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
-    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.28);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
 }
 .sb-modal-card.type-success .sb-modal-btn-confirm:hover {
-    background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+    background: linear-gradient(135deg, #047857 0%, #065f46 100%) !important;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35);
-}
-
-.sb-modal-card.type-primary .sb-modal-btn-confirm {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
-}
-.sb-modal-card.type-primary .sb-modal-btn-confirm:hover {
-    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+    box-shadow: 0 6px 18px rgba(5, 150, 105, 0.45);
 }
 
 .sb-modal-card.type-warning .sb-modal-btn-confirm {
-    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.28);
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
 }
 .sb-modal-card.type-warning .sb-modal-btn-confirm:hover {
-    background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+    background: linear-gradient(135deg, #b45309 0%, #92400e 100%) !important;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(217, 119, 6, 0.35);
+    box-shadow: 0 6px 18px rgba(217, 119, 6, 0.45);
 }
 
 .sb-modal-card.type-danger .sb-modal-btn-confirm {
-    background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
-    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.28);
+    background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
 }
 .sb-modal-card.type-danger .sb-modal-btn-confirm:hover {
-    background: linear-gradient(135deg, #be123c 0%, #9f1239 100%);
+    background: linear-gradient(135deg, #be123c 0%, #9f1239 100%) !important;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35);
+    box-shadow: 0 6px 18px rgba(225, 29, 72, 0.45);
 }
 
 .sb-modal-btn:active {
     transform: translateY(0) scale(0.98) !important;
 }
 
-/* Single button mode (Alert) */
+/* Single button mode (Alert / Got it) */
 .sb-modal-actions.single-btn .sb-modal-btn {
     width: 100%;
+    height: 48px;
+    font-size: 1.025rem;
+    font-weight: 700;
+    letter-spacing: 0.015em;
+    border-radius: 12px;
 }
 
 /* ==========================================================================

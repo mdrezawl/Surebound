@@ -310,10 +310,27 @@
 
     // Seamless monkey patch for window.alert so no legacy alert can show native dialog
     window.alert = function(msg) {
+        const text = String(msg || '');
+        const isSuccess = /success|published|updated|saved|completed/i.test(text);
+        const isError = /error|failed|invalid/i.test(text);
+        const isWarning = /warning|caution/i.test(text);
+        let type = 'info';
+        let title = 'Surebound Notice';
+        if (isSuccess) {
+            type = 'success';
+            title = 'Success';
+        } else if (isError) {
+            type = 'danger';
+            title = 'Notice';
+        } else if (isWarning) {
+            type = 'warning';
+            title = 'Notice';
+        }
+
         return alert({
-            title: 'Surebound Notice',
-            message: String(msg || ''),
-            type: 'info',
+            title: title,
+            message: text,
+            type: type,
             buttonText: 'Got it'
         });
     };
