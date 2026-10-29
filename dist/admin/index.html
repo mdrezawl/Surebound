@@ -93,7 +93,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"/>
                     </svg>
                     <span>Quote Requests</span>
-                    <span class="nav-badge" id="quotesCountBadge">6</span>
+                    <span class="nav-badge" id="quotesCountBadge">7</span>
                 </a>
 
                 <a class="sidebar-link" data-tab="policies">
@@ -624,12 +624,12 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="metric-value" id="kpiPendingQuotes">4</div>
+                            <div class="metric-value" id="kpiPendingQuotes">5</div>
                             <div class="metric-bottom">
                                 <span class="metric-trend up" style="background: #fffbeb; color: #b45309;">
-                                    3 Urgent
+                                    4 Urgent
                                 </span>
-                                <span class="metric-context">of 6 total inquiries</span>
+                                <span class="metric-context">of 7 total inquiries</span>
                             </div>
                         </div>
 
@@ -772,7 +772,7 @@
                                 <div class="card-subtitle">Real-time submissions from website and agent intake</div>
                             </div>
                             <button class="btn-secondary" onclick="document.querySelector('[data-tab=quotes]').click()">
-                                View All (6)
+                                View All (7)
                             </button>
                         </div>
                         <div class="table-container">
@@ -788,6 +788,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                                                        <tr>
+                                        <td>
+                                            <div style="font-weight: 700; color: var(--text-primary);">IT BD WEB IT BD WEB</div>
+                                            <div style="font-size: 0.875rem; color: var(--text-muted);">help.rezawl7@gmail.com &bull; 01771600778</div>
+                                        </td>
+                                        <td><span class="category-badge home">Homeowners Insurance</span></td>
+                                        <td>
+                                            <div style="font-weight: 700;">$500,000 Standard Tier</div>
+                                            <div style="font-size: 0.875rem; color: var(--sb-emerald-600); font-weight: 600;">$1809 / yr</div>
+                                        </td>
+                                        <td><span style="font-size: 0.9375rem;">ZIP: 1200</span></td>
+                                        <td><span style="font-size: 0.875rem; color: var(--text-muted);">Oct 29, 2026</span></td>
+                                        <td><span class="status-pill new">New</span></td>
+                                    </tr>
                                                                         <tr>
                                         <td>
                                             <div style="font-weight: 700; color: var(--text-primary);">IT BD WEB IT BD WEB</div>
@@ -843,20 +857,6 @@
                                         <td><span style="font-size: 0.9375rem;">Lake Austin Marina, TX</span></td>
                                         <td><span style="font-size: 0.875rem; color: var(--text-muted);">Oct 14, 2026</span></td>
                                         <td><span class="status-pill converted">Converted</span></td>
-                                    </tr>
-                                                                        <tr>
-                                        <td>
-                                            <div style="font-weight: 700; color: var(--text-primary);">IT BD WEB IT BD WEB</div>
-                                            <div style="font-size: 0.875rem; color: var(--text-muted);">rezawl71@gmail.com &bull; +8801771600778</div>
-                                        </td>
-                                        <td><span class="category-badge umbrella">Excess Umbrella &amp; Worldwide Liability</span></td>
-                                        <td>
-                                            <div style="font-weight: 700;">$5,000,000 Excess Coverage</div>
-                                            <div style="font-size: 0.875rem; color: var(--sb-emerald-600); font-weight: 600;">$1,850.00 / yr</div>
-                                        </td>
-                                        <td><span style="font-size: 0.9375rem;">Austin, TX 78701</span></td>
-                                        <td><span style="font-size: 0.875rem; color: var(--text-muted);">Oct 14, 2026</span></td>
-                                        <td><span class="status-pill reviewing">Reviewing</span></td>
                                     </tr>
                                                                     </tbody>
                             </table>
@@ -10646,12 +10646,12 @@
 
                         <div class="form-group">
                             <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Issue Date *</label>
-                            <input type="date" name="issue_date" class="form-input" required value="2026-10-25">
+                            <input type="date" name="issue_date" class="form-input" required value="2026-10-29">
                         </div>
 
                         <div class="form-group">
                             <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Payment Due Date *</label>
-                            <input type="date" name="due_date" class="form-input" required value="2026-11-24">
+                            <input type="date" name="due_date" class="form-input" required value="2026-11-28">
                         </div>
                     </div>
 
@@ -11004,12 +11004,12 @@
                     <div class="form-grid" style="margin-bottom: 18px;">
                         <div class="form-group">
                             <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Effective Inception Date</label>
-                            <input type="date" name="effective_date" class="form-input" value="2026-10-25">
+                            <input type="date" name="effective_date" class="form-input" value="2026-10-29">
                         </div>
 
                         <div class="form-group">
                             <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Policy Renewal / Expiration Date</label>
-                            <input type="date" name="renewal_date" class="form-input" value="2027-10-25">
+                            <input type="date" name="renewal_date" class="form-input" value="2027-10-29">
                         </div>
 
                         <div class="form-group">
@@ -11364,7 +11364,7 @@
                     <div class="form-grid" style="margin-bottom: 18px;">
                         <div class="form-group">
                             <label class="form-label" style="font-weight: 600; margin-bottom: 6px;">Date of Loss / Occurrence *</label>
-                            <input type="date" name="incident_date" id="claim_incident_date" class="form-input" required value="2026-10-25">
+                            <input type="date" name="incident_date" id="claim_incident_date" class="form-input" required value="2026-10-29">
                         </div>
 
                         <div class="form-group">
@@ -12230,7 +12230,7 @@
     </div>
 
     <script>
-        window.__SUREBOUND_DB_QUOTES__ = [{"id":6,"quote_ref":"Q-40979","name":"IT BD WEB IT BD WEB","email":"help.rezawl71@gmail.com","phone":"01771600778","type":"home","type_label":"Homeowners Insurance","coverage":"$500,000 Standard Tier","premium":"$1849 \/ yr","location":"ZIP: 1200","zip_code":"1200","status":"new","notes":"Generated via website quote widget.","created_at":"2026-10-25T07:10:07.000000Z","updated_at":"2026-10-25T07:10:07.000000Z"},{"id":5,"quote_ref":"Q-70524","name":"Marcus Vance","email":"marcus@evergreenfreight.com","phone":"555-789-0123","type":"commercial_auto","type_label":"Commercial Auto Insurance","coverage":"High-Limit Enterprise Guard ($5M CSL + Umbrella)","premium":"$1222 \/ yr","location":"ZIP: 75001","zip_code":"75001","status":"new","notes":"Company: Evergreen Freight LLC | Fleet Size: 6-15 Vehicles | Vehicle Type: Box Trucks \/ Straight Trucks","created_at":"2026-10-17T21:26:35.000000Z","updated_at":"2026-10-17T21:26:35.000000Z"},{"id":4,"quote_ref":"SB-Q-89021","name":"IT BD WEB IT BD WEB","email":"rezawl71@gmail.com","phone":"+8801771600778","type":"home","type_label":"Fine Jewelry \u0026 Valuables Scheduled Floater","coverage":"$150,000 Agreed Valuation (Zero Deductible)","premium":"$980.00 \/ yr","location":"Austin, TX 78701","zip_code":"78701","status":"new","notes":"GIA appraisal certificates uploaded by customer. Awaiting senior underwriter rate binding.","created_at":"2026-10-14T18:55:08.000000Z","updated_at":"2026-10-14T18:55:08.000000Z"},{"id":3,"quote_ref":"SB-Q-31904","name":"IT BD WEB IT BD WEB","email":"rezawl71@gmail.com","phone":"+8801771600778","type":"home","type_label":"Luxury Watercraft \u0026 Marine Hull","coverage":"$350,000 Agreed Hull Value","premium":"$2,100.00 \/ yr","location":"Lake Austin Marina, TX","zip_code":"78734","status":"converted","notes":"Customer accepted quote proposal on Oct 01, 2026. Successfully bound and issued under active policy schedule.","created_at":"2026-10-14T18:55:08.000000Z","updated_at":"2026-10-14T18:55:08.000000Z"},{"id":2,"quote_ref":"SB-Q-55102","name":"IT BD WEB IT BD WEB","email":"rezawl71@gmail.com","phone":"+8801771600778","type":"umbrella","type_label":"Excess Umbrella \u0026 Worldwide Liability","coverage":"$5,000,000 Excess Coverage","premium":"$1,850.00 \/ yr","location":"Austin, TX 78701","zip_code":"78701","status":"reviewing","notes":"Actuarial underwriter evaluating underlying primary auto \u0026 homeowners limit verifications. Proposal scheduled within 24 hours.","created_at":"2026-10-14T18:55:08.000000Z","updated_at":"2026-10-14T18:55:08.000000Z"},{"id":1,"quote_ref":"SB-Q-74892","name":"IT BD WEB IT BD WEB","email":"rezawl71@gmail.com","phone":"+8801771600778","type":"business","type_label":"Cyber Security, Ransomware \u0026 Data Breach","coverage":"$1,000,000 Aggregate \/ $25,000 Deductible","premium":"$1,420.00 \/ yr","location":"Austin, TX 78701","zip_code":"78701","status":"converted","notes":"Underwriter proposal completed with Lloyd\u0027s Syndicate. Includes ransomware negotiation reimbursement, forensic investigation coverage, and business interruption extra expense.","created_at":"2026-10-14T18:55:08.000000Z","updated_at":"2026-10-15T14:45:02.000000Z"}];
+        window.__SUREBOUND_DB_QUOTES__ = [{"id":7,"quote_ref":"Q-54907","name":"IT BD WEB IT BD WEB","email":"help.rezawl7@gmail.com","phone":"01771600778","type":"home","type_label":"Homeowners Insurance","coverage":"$500,000 Standard Tier","premium":"$1809 \/ yr","location":"ZIP: 1200","zip_code":"1200","status":"new","notes":"Generated via website quote widget.","created_at":"2026-10-29T16:00:28.000000Z","updated_at":"2026-10-29T16:00:28.000000Z"},{"id":6,"quote_ref":"Q-40979","name":"IT BD WEB IT BD WEB","email":"help.rezawl71@gmail.com","phone":"01771600778","type":"home","type_label":"Homeowners Insurance","coverage":"$500,000 Standard Tier","premium":"$1849 \/ yr","location":"ZIP: 1200","zip_code":"1200","status":"new","notes":"Generated via website quote widget.","created_at":"2026-10-25T07:10:07.000000Z","updated_at":"2026-10-25T07:10:07.000000Z"},{"id":5,"quote_ref":"Q-70524","name":"Marcus Vance","email":"marcus@evergreenfreight.com","phone":"555-789-0123","type":"commercial_auto","type_label":"Commercial Auto Insurance","coverage":"High-Limit Enterprise Guard ($5M CSL + Umbrella)","premium":"$1222 \/ yr","location":"ZIP: 75001","zip_code":"75001","status":"new","notes":"Company: Evergreen Freight LLC | Fleet Size: 6-15 Vehicles | Vehicle Type: Box Trucks \/ Straight Trucks","created_at":"2026-10-17T21:26:35.000000Z","updated_at":"2026-10-17T21:26:35.000000Z"},{"id":4,"quote_ref":"SB-Q-89021","name":"IT BD WEB IT BD WEB","email":"rezawl71@gmail.com","phone":"+8801771600778","type":"home","type_label":"Fine Jewelry \u0026 Valuables Scheduled Floater","coverage":"$150,000 Agreed Valuation (Zero Deductible)","premium":"$980.00 \/ yr","location":"Austin, TX 78701","zip_code":"78701","status":"new","notes":"GIA appraisal certificates uploaded by customer. Awaiting senior underwriter rate binding.","created_at":"2026-10-14T18:55:08.000000Z","updated_at":"2026-10-14T18:55:08.000000Z"},{"id":3,"quote_ref":"SB-Q-31904","name":"IT BD WEB IT BD WEB","email":"rezawl71@gmail.com","phone":"+8801771600778","type":"home","type_label":"Luxury Watercraft \u0026 Marine Hull","coverage":"$350,000 Agreed Hull Value","premium":"$2,100.00 \/ yr","location":"Lake Austin Marina, TX","zip_code":"78734","status":"converted","notes":"Customer accepted quote proposal on Oct 01, 2026. Successfully bound and issued under active policy schedule.","created_at":"2026-10-14T18:55:08.000000Z","updated_at":"2026-10-14T18:55:08.000000Z"},{"id":2,"quote_ref":"SB-Q-55102","name":"IT BD WEB IT BD WEB","email":"rezawl71@gmail.com","phone":"+8801771600778","type":"umbrella","type_label":"Excess Umbrella \u0026 Worldwide Liability","coverage":"$5,000,000 Excess Coverage","premium":"$1,850.00 \/ yr","location":"Austin, TX 78701","zip_code":"78701","status":"reviewing","notes":"Actuarial underwriter evaluating underlying primary auto \u0026 homeowners limit verifications. Proposal scheduled within 24 hours.","created_at":"2026-10-14T18:55:08.000000Z","updated_at":"2026-10-14T18:55:08.000000Z"},{"id":1,"quote_ref":"SB-Q-74892","name":"IT BD WEB IT BD WEB","email":"rezawl71@gmail.com","phone":"+8801771600778","type":"business","type_label":"Cyber Security, Ransomware \u0026 Data Breach","coverage":"$1,000,000 Aggregate \/ $25,000 Deductible","premium":"$1,420.00 \/ yr","location":"Austin, TX 78701","zip_code":"78701","status":"converted","notes":"Underwriter proposal completed with Lloyd\u0027s Syndicate. Includes ransomware negotiation reimbursement, forensic investigation coverage, and business interruption extra expense.","created_at":"2026-10-14T18:55:08.000000Z","updated_at":"2026-10-15T14:45:02.000000Z"}];
         window.__SUREBOUND_DB_POLICIES__ = [{"id":5,"user_id":10,"policy_number":"SB-BUS-107647","holder_name":"IT BD WEB IT BD WEB","holder_email":"rezawl71@gmail.com","holder_phone":"+8801771600778","type":"business","type_label":"Homeowners Deluxe","carrier":"Surebound Mutual Underwriting Co.","insured_item":"Primary Named Insured Asset (Austin, TX 78701)","coverage_limit":"$1,000,000 Aggregate \/ $25,000 Deductible","deductible":"$1,000 per occurrence","annual_premium":"$1,420.00 \/ yr","billing_frequency":"Annual","effective_date":"2026-10-15T00:00:00.000000Z","renewal_date":"2027-10-15T00:00:00.000000Z","status":"active","coverage_details":null,"policy_document":null,"notes":null,"created_at":"2026-10-15T14:45:02.000000Z","updated_at":"2026-10-15T14:45:02.000000Z"},{"id":4,"user_id":10,"policy_number":"SB-BUS-105829","holder_name":"IT BD WEB IT BD WEB","holder_email":"rezawl71@gmail.com","holder_phone":"+8801771600778","type":"business","type_label":"Commercial Business Owner Policy (BOP)","carrier":"Surebound Syndicate \u0026 The Hartford","insured_item":"Corporate Office Suite - 1200 Tech Ridge Blvd, Ste 400","coverage_limit":"$2,000,000","deductible":"$2,500 General Property Deductible","annual_premium":"$3,400.00","billing_frequency":"quarterly","effective_date":"2026-06-14T00:00:00.000000Z","renewal_date":"2027-06-14T00:00:00.000000Z","status":"active","coverage_details":{"General Liability Aggregate":"$2,000,000","Business Personal Property":"$500,000","Business Interruption \u0026 Extra Expense":"12 Months Actual Loss Sustained","Cyber Extortion \u0026 Ransomware":"$1,000,000","Data Breach Response \u0026 Notification":"$500,000"},"policy_document":null,"notes":"Annual risk assessment verified. SOC2 Type II certified cloud infrastructure endorsement.","created_at":"2026-10-14T18:14:33.000000Z","updated_at":"2026-10-14T18:14:33.000000Z"},{"id":3,"user_id":10,"policy_number":"SB-UMB-739104","holder_name":"IT BD WEB IT BD WEB","holder_email":"rezawl71@gmail.com","holder_phone":"+8801771600778","type":"umbrella","type_label":"Personal \u0026 Excess Umbrella Liability","carrier":"Surebound Syndicate \u0026 Chubb Premier","insured_item":"Worldwide Excess Liability Protection","coverage_limit":"$3,000,000","deductible":"$0 Self-Insured Retention (SIR)","annual_premium":"$890.00","billing_frequency":"annual","effective_date":"2026-08-14T00:00:00.000000Z","renewal_date":"2027-08-14T00:00:00.000000Z","status":"active","coverage_details":{"Excess Bodily Injury \u0026 Property Damage":"$3,000,000","Personal Injury \u0026 Libel \/ Slander":"$3,000,000","Defense Legal Costs":"Covered Outside Policy Limits","Worldwide Territorial Scope":"Global Coverage 24\/7"},"policy_document":null,"notes":"Underlying homeowners and auto liability limits certified and verified.","created_at":"2026-10-14T18:14:33.000000Z","updated_at":"2026-10-14T18:14:33.000000Z"},{"id":2,"user_id":10,"policy_number":"SB-AUT-492015","holder_name":"IT BD WEB IT BD WEB","holder_email":"rezawl71@gmail.com","holder_phone":"+8801771600778","type":"auto","type_label":"Executive Auto Comprehensive \u0026 Collision","carrier":"Surebound Syndicate \u0026 Progressive","insured_item":"2024 Tesla Model S Plaid \u0026 2023 Porsche 911 GT3","coverage_limit":"$500,000 CSL","deductible":"$500 Collision \/ $250 Comprehensive","annual_premium":"$2,140.00","billing_frequency":"semi-annual","effective_date":"2026-09-14T00:00:00.000000Z","renewal_date":"2027-09-14T00:00:00.000000Z","status":"active","coverage_details":{"Combined Single Limit (Bodily Injury \u0026 Property)":"$500,000","Uninsured \/ Underinsured Motorist":"$500,000","Comprehensive (Other than Collision)":"Actual Cash Value ($250 ded)","Collision Protection":"Full Replacement Cost ($500 ded)","Roadside Assistance \u0026 Towing":"Included (Premier 100 miles)","Rental Vehicle Reimbursement":"$100 \/ day (up to $3,000 max)","OEM Replacement Parts Endorsement":"Active","Full Glass Repair Waiver":"$0 Deductible"},"policy_document":null,"notes":"Multi-vehicle safe driver telematics discount verified (Score: 96\/100).","created_at":"2026-10-14T18:14:33.000000Z","updated_at":"2026-10-14T18:14:33.000000Z"},{"id":1,"user_id":10,"policy_number":"SB-HOM-883921","holder_name":"IT BD WEB IT BD WEB","holder_email":"rezawl71@gmail.com","holder_phone":"+8801771600778","type":"home","type_label":"Homeowners Comprehensive (HO-5)","carrier":"Surebound Syndicate \u0026 Travelers","insured_item":"742 Evergreen Terrace, Austin, TX 78701","coverage_limit":"$1,450,000","deductible":"$1,000 All Perils \/ 1% Wind \u0026 Hail","annual_premium":"$2,850.00","billing_frequency":"annual","effective_date":"2026-07-14T00:00:00.000000Z","renewal_date":"2027-07-14T00:00:00.000000Z","status":"active","coverage_details":{"Dwelling (Coverage A)":"$1,450,000","Other Structures (Coverage B)":"$145,000","Personal Property (Coverage C)":"$725,000","Loss of Use (Coverage D)":"$290,000","Personal Liability (Coverage E)":"$1,000,000","Medical Payments to Others":"$10,000","Water Backup \u0026 Sump Overflow":"$50,000","Equipment Breakdown":"$100,000"},"policy_document":null,"notes":"High-value architectural dwelling with smart water shutoff and central station fire \u0026 burglary alarm discount applied.","created_at":"2026-10-14T18:14:33.000000Z","updated_at":"2026-10-14T18:14:33.000000Z"}];
         window.__SUREBOUND_DB_CLAIMS__ = [{"id":3,"claim_number":"CLM-2026-10543","policy_number":"SB-BUS-105829","claimant_name":"IT BD WEB IT BD WEB","claimant_email":"rezawl71@gmail.com","claimant_phone":"+8801771600778","incident_date":"2026-08-15T00:00:00.000000Z","incident_type":"Severe Hail \u0026 Windstorm Loss","incident_location":"Corporate Suite - 1200 Tech Ridge Blvd, Austin, TX","incident_description":"Severe convective storm producing 2-inch hail resulting in commercial roof membrane punctures and rooftop HVAC condenser fin crushing.","estimated_loss":"$32,000.00","assigned_adjuster":"Michael Vance (Executive Field Investigator)","priority":"high","status":"paid","adjuster_notes":"Settlement draft $32,000.00 disbursed via FedNow wire to contractor escrow account. Proof of satisfaction signed.","created_at":"2026-10-14T18:33:22.000000Z","updated_at":"2026-10-14T18:33:22.000000Z"},{"id":2,"claim_number":"CLM-2026-72910","policy_number":"SB-AUT-492015","claimant_name":"IT BD WEB IT BD WEB","claimant_email":"rezawl71@gmail.com","claimant_phone":"+8801771600778","incident_date":"2026-09-19T00:00:00.000000Z","incident_type":"Vehicle Collision \/ Rear Bumper Impact","incident_location":"I-35 Northbound at 6th Street Exit, Austin, TX","incident_description":"Low speed rear-end collision at traffic signal during evening commute. Rear bumper, carbon fiber diffuser, and parking sonar sensors damaged. No injuries reported.","estimated_loss":"$4,750.00","assigned_adjuster":"Sarah Jenkins (Auto Physical Damage Appraiser)","priority":"normal","status":"approved","adjuster_notes":"Certified OEM collision center repair estimate verified and authorized for direct settlement.","created_at":"2026-10-14T18:33:22.000000Z","updated_at":"2026-10-14T18:33:22.000000Z"},{"id":1,"claim_number":"CLM-2026-48192","policy_number":"SB-HOM-883921","claimant_name":"IT BD WEB IT BD WEB","claimant_email":"rezawl71@gmail.com","claimant_phone":"+8801771600778","incident_date":"2026-10-02T00:00:00.000000Z","incident_type":"Water Damage \u0026 Plumbing Rupture","incident_location":"742 Evergreen Terrace, Austin, TX 78701","incident_description":"Sudden upstairs master bathroom pressurized supply line rupture causing ceiling dry-wall collapse, master bedroom floor flooding, and insulation saturation.","estimated_loss":"$18,500.00","assigned_adjuster":"David Miller (Senior Property Adjuster)","priority":"urgent","status":"reviewing","adjuster_notes":"Emergency water mitigation contractor dispatched. Moisture logs and 3D Matterport scan received.","created_at":"2026-10-14T18:33:22.000000Z","updated_at":"2026-10-14T18:33:22.000000Z"}];
         window.__SUREBOUND_DB_AGENTS__ = [];

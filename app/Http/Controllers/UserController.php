@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewQuoteAlert;
 use App\Models\Claim;
 use App\Models\Invoice;
 use App\Models\PageContent;
@@ -17,6 +18,8 @@ use Database\Seeders\SupportTicketSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -306,6 +309,15 @@ class UserController extends Controller
             'status' => 'new',
             'notes' => $validated['notes'] ?: 'Customer requested quote via dashboard portal.',
         ]);
+
+        try {
+            $adminRecipient = config('mail.admin_quote_recipient', 'karry@sureboundinsurance.com');
+            if (! empty($adminRecipient)) {
+                Mail::to($adminRecipient)->send(new NewQuoteAlert($quote));
+            }
+        } catch (\Throwable $e) {
+            Log::error('Quote notification email dispatch failed: '.$e->getMessage());
+        }
 
         return redirect()->route('user.quote')->with('success', 'Quote inquiry #'.$quote->quote_ref.' for '.$label.' submitted successfully! An underwriter is reviewing your file.');
     }

@@ -115,4 +115,14 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Quote Alert Admin Recipient
+    |--------------------------------------------------------------------------
+    |
+    | Destination address where quote inquiries will be delivered instantly.
+    |
+    */
+    'admin_quote_recipient' => env('ADMIN_QUOTE_EMAIL', 'karry@sureboundinsurance.com'),
+
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewQuoteAlert;
 use App\Models\ApiSetting;
 use App\Models\Claim;
 use App\Models\Invoice;
@@ -13,6 +14,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -459,6 +462,15 @@ class AdminController extends Controller
             'status' => 'new',
             'notes' => $notesStr,
         ]);
+
+        try {
+            $adminRecipient = config('mail.admin_quote_recipient', 'karry@sureboundinsurance.com');
+            if (! empty($adminRecipient)) {
+                Mail::to($adminRecipient)->send(new NewQuoteAlert($quote));
+            }
+        } catch (\Throwable $e) {
+            Log::error('Quote notification email dispatch failed: '.$e->getMessage());
+        }
 
         return response()->json([
             'success' => true,
