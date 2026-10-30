@@ -37,7 +37,7 @@
                 </div>
                 <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;">
                     <span style="color: #94a3b8;">Headquarters / Location:</span>
-                    <span style="font-weight: 600; color: #f8fafc;">Dallas, Texas (USA Registered Desk)</span>
+                    <span style="font-weight: 600; color: #f8fafc;">Tampa, Florida</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;">
                     <span style="color: #94a3b8;">Official Support Email:</span>

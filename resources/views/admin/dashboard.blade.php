@@ -6601,7 +6601,7 @@
                                         <div class="form-group full" style="background: rgba(255, 255, 255, 0.03); padding: 16px; border-radius: 8px; border: 1px dashed rgba(255, 255, 255, 0.2);">
                                             <label class="form-label" style="font-weight: 600; color: #34d399;">Hero Background Photo Upload</label>
                                             <div style="display: flex; gap: 16px; align-items: center; margin-top: 8px;">
-                                                <img id="heroImagePreview_contact" src="{{ asset($contactContent['hero_image'] ?? 'images/advisor-meeting-hires.jpg') }}" style="width: 140px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+                                                <img id="heroImagePreview_contact" src="{{ asset($contactContent['hero_image'] ?? 'images/tampa_advisor_meeting.jpg') }}" style="width: 140px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
                                                 <div style="flex: 1;">
                                                     <input type="file" name="hero_image_file" accept="image/*" class="form-input" style="padding: 8px;" onchange="previewImage(this, 'heroImagePreview_contact')">
                                                     <small style="color: #94a3b8; display: block; margin-top: 6px;">Select an image file (JPG, PNG, WEBP) to update the contact hero photo live.</small>
@@ -6693,7 +6693,7 @@
                             <!-- 3. DIRECT COMMUNICATION CHANNELS & HQ HIGHLIGHT -->
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">3. Direct Communication Channels &amp; Corporate Headquarters Box</div>
+                                    <div class="card-title">3. Direct Communication Channels &amp; Tampa Office Box</div>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-grid">
@@ -6786,17 +6786,17 @@
                                             <input type="text" name="channel_4_sub" class="form-input" value="{{ $contactContent['channel_4_sub'] ?? '' }}" required>
                                         </div>
 
-                                        <!-- Corporate HQ Box -->
+                                        <!-- Tampa Office Box -->
                                         <div class="form-group">
-                                            <label class="form-label" style="font-weight: 700; color: #fbbf24;">HQ Card: Title</label>
+                                            <label class="form-label" style="font-weight: 700; color: #fbbf24;">Tampa Office Card: Title</label>
                                             <input type="text" name="hq_title" class="form-input" value="{{ $contactContent['hq_title'] ?? '' }}" required>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">HQ Card: Visiting Hours</label>
+                                            <label class="form-label">Office Card: Visiting Hours</label>
                                             <input type="text" name="hq_hours" class="form-input" value="{{ $contactContent['hq_hours'] ?? '' }}" required>
                                         </div>
                                         <div class="form-group full">
-                                            <label class="form-label">HQ Card: Street Address (HTML &lt;br&gt; allowed)</label>
+                                            <label class="form-label">Office Card: Location / Address (HTML allowed)</label>
                                             <input type="text" name="hq_address" class="form-input" value="{{ $contactContent['hq_address'] ?? '' }}" required>
                                         </div>
                                     </div>
@@ -6830,128 +6830,7 @@
                                 </div>
                             </div>
 
-                            <!-- 5. REGIONAL UNDERWRITING HUBS -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">5. Regional Underwriting Hubs (4 Locations)</div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-grid">
-                                        <div class="form-group">
-                                            <label class="form-label">Hubs Section Eyebrow</label>
-                                            <input type="text" name="offices_eyebrow" class="form-input" value="{{ $contactContent['offices_eyebrow'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Hubs Section Title</label>
-                                            <input type="text" name="offices_title" class="form-input" value="{{ $contactContent['offices_title'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group full">
-                                            <label class="form-label">Hubs Section Subtitle</label>
-                                            <input type="text" name="offices_subtitle" class="form-input" value="{{ $contactContent['offices_subtitle'] ?? '' }}" required>
-                                        </div>
 
-                                        <!-- Office 1 -->
-                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
-                                            <span style="font-weight: 700; color: #34d399; font-size: 15px;">Office Location 1</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Badge</label>
-                                            <input type="text" name="office_1_badge" class="form-input" value="{{ $contactContent['office_1_badge'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">City, State</label>
-                                            <input type="text" name="office_1_city" class="form-input" value="{{ $contactContent['office_1_city'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Direct Phone</label>
-                                            <input type="text" name="office_1_phone" class="form-input" value="{{ $contactContent['office_1_phone'] ?? '+1 813-214-1731' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Street Address (HTML allowed)</label>
-                                            <input type="text" name="office_1_address" class="form-input" value="{{ $contactContent['office_1_address'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group full">
-                                            <label class="form-label">Operating Hours &amp; Focus</label>
-                                            <input type="text" name="office_1_hours" class="form-input" value="{{ $contactContent['office_1_hours'] ?? '' }}" required>
-                                        </div>
-
-                                        <!-- Office 2 -->
-                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
-                                            <span style="font-weight: 700; color: #34d399; font-size: 15px;">Office Location 2</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Badge</label>
-                                            <input type="text" name="office_2_badge" class="form-input" value="{{ $contactContent['office_2_badge'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">City, State</label>
-                                            <input type="text" name="office_2_city" class="form-input" value="{{ $contactContent['office_2_city'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Direct Phone</label>
-                                            <input type="text" name="office_2_phone" class="form-input" value="{{ $contactContent['office_2_phone'] ?? '+1 813-214-1731' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Street Address (HTML allowed)</label>
-                                            <input type="text" name="office_2_address" class="form-input" value="{{ $contactContent['office_2_address'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group full">
-                                            <label class="form-label">Operating Hours &amp; Focus</label>
-                                            <input type="text" name="office_2_hours" class="form-input" value="{{ $contactContent['office_2_hours'] ?? '' }}" required>
-                                        </div>
-
-                                        <!-- Office 3 -->
-                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
-                                            <span style="font-weight: 700; color: #34d399; font-size: 15px;">Office Location 3</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Badge</label>
-                                            <input type="text" name="office_3_badge" class="form-input" value="{{ $contactContent['office_3_badge'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">City, State</label>
-                                            <input type="text" name="office_3_city" class="form-input" value="{{ $contactContent['office_3_city'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Direct Phone</label>
-                                            <input type="text" name="office_3_phone" class="form-input" value="{{ $contactContent['office_3_phone'] ?? '+1 813-214-1731' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Street Address (HTML allowed)</label>
-                                            <input type="text" name="office_3_address" class="form-input" value="{{ $contactContent['office_3_address'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group full">
-                                            <label class="form-label">Operating Hours &amp; Focus</label>
-                                            <input type="text" name="office_3_hours" class="form-input" value="{{ $contactContent['office_3_hours'] ?? '' }}" required>
-                                        </div>
-
-                                        <!-- Office 4 -->
-                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
-                                            <span style="font-weight: 700; color: #34d399; font-size: 15px;">Office Location 4</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Badge</label>
-                                            <input type="text" name="office_4_badge" class="form-input" value="{{ $contactContent['office_4_badge'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">City, State</label>
-                                            <input type="text" name="office_4_city" class="form-input" value="{{ $contactContent['office_4_city'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Direct Phone</label>
-                                            <input type="text" name="office_4_phone" class="form-input" value="{{ $contactContent['office_4_phone'] ?? '+1 813-214-1731' }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Street Address (HTML allowed)</label>
-                                            <input type="text" name="office_4_address" class="form-input" value="{{ $contactContent['office_4_address'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group full">
-                                            <label class="form-label">Operating Hours &amp; Focus</label>
-                                            <input type="text" name="office_4_hours" class="form-input" value="{{ $contactContent['office_4_hours'] ?? '' }}" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <!-- 6. DEDICATED ADVOCACY GUIDANCE SECTION -->
                             <div class="card">
@@ -6979,7 +6858,7 @@
                             <!-- 7. CONTACT & SUPPORT FAQS -->
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">7. Contact &amp; Support FAQs (5 Items)</div>
+                                    <div class="card-title">5. Contact &amp; Support FAQs (4 Items)</div>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-grid">
@@ -7036,15 +6915,7 @@
                                             <textarea name="faq_4_answer" class="form-input" rows="3" required>{{ $contactContent['faq_4_answer'] ?? '' }}</textarea>
                                         </div>
 
-                                        <!-- FAQ 5 -->
-                                        <div class="form-group full" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
-                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Question 5</label>
-                                            <input type="text" name="faq_5_question" class="form-input" value="{{ $contactContent['faq_5_question'] ?? '' }}" required>
-                                        </div>
-                                        <div class="form-group full">
-                                            <label class="form-label">Answer 5 (HTML allowed)</label>
-                                            <textarea name="faq_5_answer" class="form-input" rows="3" required>{{ $contactContent['faq_5_answer'] ?? '' }}</textarea>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>

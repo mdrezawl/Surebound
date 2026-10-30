@@ -11,8 +11,8 @@
         <!-- Right side full bleed photo with seamless alpha mask & right royal blue gradient -->
         <div class="hero-photo-bleed">
             <img 
-                src="{{ asset($content['hero_image'] ?? 'images/advisor-meeting-hires.jpg') }}" 
-                alt="Direct Client Advisory and Insurance Support" 
+                src="{{ asset($content['hero_image'] ?? 'images/tampa_advisor_meeting.jpg') }}" 
+                alt="Direct Client Advisory and Insurance Support in Tampa, Florida" 
                 class="hero-photo-img"
             >
             <div class="hero-photo-fade-right"></div>
@@ -210,7 +210,7 @@
                         </a>
                     </div>
 
-                    <!-- Corporate HQ Highlight Box -->
+                    <!-- Tampa Office Location Box -->
                     <div class="contact-hq-card">
                         <div class="contact-hq-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -219,13 +219,13 @@
                             </svg>
                         </div>
                         <div class="contact-hq-content">
-                            <h4>{!! $content['hq_title'] ?? 'Corporate Headquarters' !!}</h4>
-                            <p>{!! $content['hq_address'] ?? '123 Surebound Way, Suite 400<br>Chicago, Illinois 60601' !!}</p>
+                            <h4>{!! $content['hq_title'] ?? 'Tampa Office' !!}</h4>
+                            <p>{!! $content['hq_address'] ?? 'Tampa, Florida' !!}</p>
                             <div class="contact-hq-hours">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="14" height="14">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
-                                <span>{!! $content['hq_hours'] ?? 'Mon–Fri 8:30 AM – 5:30 PM CST • Walk-ins & scheduled visits' !!}</span>
+                                <span>{!! $content['hq_hours'] ?? 'Mon–Fri 8:30 AM – 5:30 PM EST' !!}</span>
                             </div>
                         </div>
                     </div>
@@ -425,92 +425,6 @@
         </div>
     </section>
 
-    <!-- ==========================================
-         REGIONAL ADVISORY OFFICES SECTION
-         ========================================== -->
-    <section class="offices-section" id="regional-offices">
-        <div class="container">
-            <p class="section-eyebrow" style="text-align: center;">{!! $content['offices_eyebrow'] ?? 'LOCAL ROOTS &bull; NATIONWIDE PRESENCE' !!}</p>
-            <h2 class="section-title" style="text-align: center;">{!! $content['offices_title'] ?? 'Our Regional Underwriting Hubs' !!}</h2>
-            <p class="section-subtitle" style="text-align: center; max-width: 680px; margin: 0 auto;">
-                {{ $content['offices_subtitle'] ?? 'Meet face-to-face with credentialed advisors at our regional service centers or schedule an on-site commercial risk audit.' }}
-            </p>
-
-            <div class="offices-grid">
-                <!-- 1. Chicago HQ -->
-                <div class="office-card">
-                    <span class="office-badge">{{ $content['office_1_badge'] ?? 'Corporate HQ' }}</span>
-                    <h3 class="office-city">{{ $content['office_1_city'] ?? 'Chicago, IL' }}</h3>
-                    <p class="office-address">
-                        {!! $content['office_1_address'] ?? '123 Surebound Way, Suite 400<br>Chicago, IL 60601' !!}
-                    </p>
-                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $content['office_1_phone'] ?? '+18132141731') }}" class="office-phone">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-                        </svg>
-                        {{ $content['office_1_phone'] ?? '+1 813-214-1731' }}
-                    </a>
-                    <div class="office-hours">
-                        {!! $content['office_1_hours'] ?? 'Mon–Fri: 8:30 AM – 5:30 PM CST<br>Midwest Underwriting Center' !!}
-                    </div>
-                </div>
-
-                <!-- 2. New York Financial District -->
-                <div class="office-card">
-                    <span class="office-badge">{{ $content['office_2_badge'] ?? 'Northeast Hub' }}</span>
-                    <h3 class="office-city">{{ $content['office_2_city'] ?? 'New York, NY' }}</h3>
-                    <p class="office-address">
-                        {!! $content['office_2_address'] ?? '45 Wall Street, 18th Floor<br>New York, NY 10005' !!}
-                    </p>
-                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $content['office_2_phone'] ?? '+18132141731') }}" class="office-phone">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-                        </svg>
-                        {{ $content['office_2_phone'] ?? '+1 813-214-1731' }}
-                    </a>
-                    <div class="office-hours">
-                        {!! $content['office_2_hours'] ?? 'Mon–Fri: 8:00 AM – 6:00 PM EST<br>Commercial &amp; Financial Risk' !!}
-                    </div>
-                </div>
-
-                <!-- 3. Dallas Regional Office -->
-                <div class="office-card">
-                    <span class="office-badge">{{ $content['office_3_badge'] ?? 'Southwest Hub' }}</span>
-                    <h3 class="office-city">{{ $content['office_3_city'] ?? 'Dallas, TX' }}</h3>
-                    <p class="office-address">
-                        {!! $content['office_3_address'] ?? '2100 Ross Avenue, Suite 1200<br>Dallas, TX 75201' !!}
-                    </p>
-                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $content['office_3_phone'] ?? '+18132141731') }}" class="office-phone">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-                        </svg>
-                        {{ $content['office_3_phone'] ?? '+1 813-214-1731' }}
-                    </a>
-                    <div class="office-hours">
-                        {!! $content['office_3_hours'] ?? 'Mon–Fri: 8:00 AM – 5:30 PM CST<br>Commercial Fleet &amp; Property' !!}
-                    </div>
-                </div>
-
-                <!-- 4. Los Angeles Regional Office -->
-                <div class="office-card">
-                    <span class="office-badge">{{ $content['office_4_badge'] ?? 'Pacific Hub' }}</span>
-                    <h3 class="office-city">{{ $content['office_4_city'] ?? 'Los Angeles, CA' }}</h3>
-                    <p class="office-address">
-                        {!! $content['office_4_address'] ?? '1999 Avenue of the Stars, Suite 1100<br>Los Angeles, CA 90067' !!}
-                    </p>
-                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $content['office_4_phone'] ?? '+18132141731') }}" class="office-phone">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-                        </svg>
-                        {{ $content['office_4_phone'] ?? '+1 813-214-1731' }}
-                    </a>
-                    <div class="office-hours">
-                        {!! $content['office_4_hours'] ?? 'Mon–Fri: 8:30 AM – 6:00 PM PST<br>Personal &amp; Luxury Estates' !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- ==========================================
          HUMAN ADVOCACY GUIDANCE SECTION
@@ -521,8 +435,8 @@
                 <!-- Left: Corporate team meeting photo -->
                 <div class="simpler-image-frame">
                     <img 
-                        src="{{ asset('images/corporate_team_meeting.jpg') }}" 
-                        alt="Surebound Executive Leadership and Senior Underwriters in Client Advisory Session" 
+                        src="{{ asset($content['team_image'] ?? 'images/tampa_team_meeting.jpg') }}" 
+                        alt="Surebound Executive Leadership and Senior Underwriters – Tampa, Florida" 
                         class="simpler-image"
                     >
                 </div>
@@ -607,16 +521,6 @@
                     </div>
                 </div>
 
-                <!-- Q5 -->
-                <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>{{ $content['faq_5_question'] ?? 'How do I schedule an in-person meeting at a regional office?' }}</span>
-                        <div class="faq-icon">+</div>
-                    </button>
-                    <div class="faq-answer">
-                        {!! $content['faq_5_answer'] ?? 'You are welcome to visit any of our regional hubs in Chicago, New York, Dallas, or Los Angeles during normal business hours. For complex commercial liability audits, high-value asset consultations, or surety bonding lines, we recommend calling +1 813-214-1731 or submitting the contact form above with your preferred date and time to reserve a dedicated conference room with our senior underwriters.' !!}
-                    </div>
-                </div>
             </div>
         </div>
     </section>

@@ -2586,6 +2586,7 @@ button {
    Executive Leadership & Perspectives Showcase
    ========================================================= */
 .pull-quote-section {
+  display: none !important;
   padding: 86px 0;
   background: radial-gradient(1100px 520px at 50% -10%, #eaf2fd 0%, #f7fafe 55%, #ffffff 100%);
   position: relative;

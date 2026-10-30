@@ -348,7 +348,7 @@
     @endphp
 
     @if($quotesEnabled && count($quotesList) > 0)
-    <section class="pull-quote-section" id="pull-quote-section">
+    <section class="pull-quote-section" id="pull-quote-section" style="display: none;">
         <div class="container pull-quote-container">
             @if(count($quotesList) === 1)
                 {{-- Single Quote: Fixed and static without slider controls --}}

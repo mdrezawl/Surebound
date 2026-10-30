@@ -224,8 +224,8 @@
                 <!-- Left: House photo -->
                 <div class="simpler-image-frame">
                     <img 
-                        src="{{ asset('images/corporate_team_meeting.jpg') }}" 
-                        alt="Corporate team working together" 
+                        src="{{ asset('images/tampa_team_meeting.jpg') }}" 
+                        alt="Surebound underwriting leadership team in Tampa, Florida" 
                         class="simpler-image"
                     >
                 </div>

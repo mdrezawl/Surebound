@@ -2752,7 +2752,7 @@ class AdminController extends Controller
             'hero_eyebrow' => 'DIRECT CLIENT ADVISORY & SUPPORT',
             'hero_title' => 'Connect with a Licensed Advisor –<br>We\'re Here For You',
             'hero_subtitle' => 'Whether you need customized policy guidance, rapid claims assistance, or billing adjustments, our credentialed advisors and underwriters are ready to help.',
-            'hero_image' => 'images/advisor-meeting-hires.jpg',
+            'hero_image' => 'images/tampa_advisor_meeting.jpg',
             'hero_card_sub' => 'Direct Advisor Access',
             'hero_card_label' => 'Avg. response under 15 mins',
             'primary_phone' => '+1 813-214-1731',
@@ -2802,45 +2802,16 @@ class AdminController extends Controller
             'channel_4_value' => 'support@surebound.com',
             'channel_4_sub' => 'Proof of insurance, escrow requests, loss payee forms & certificates.',
 
-            // Corporate HQ Feature Box
-            'hq_title' => 'Corporate Headquarters',
-            'hq_address' => '123 Surebound Way, Suite 400<br>Chicago, Illinois 60601',
-            'hq_hours' => 'Mon–Fri 8:30 AM – 5:30 PM CST • Walk-ins & scheduled visits',
+            // Tampa Office Feature Box
+            'hq_title' => 'Tampa Office',
+            'hq_address' => 'Tampa, Florida',
+            'hq_hours' => 'Mon–Fri 8:30 AM – 5:30 PM EST',
 
             // 4. Form Section
             'form_title' => 'Send a Secure Message',
             'form_subtitle' => 'Please provide your inquiry details below. Our routing system will immediately connect your message to the appropriate licensed underwriter or advisor.',
             'form_button_text' => 'Send Message to Advisor',
             'form_security_badge' => '256-Bit SSL Encrypted • Strictly Confidential Under State & Federal Insurance Privacy Regulations',
-
-            // 5. Regional Hubs
-            'offices_eyebrow' => 'LOCAL ROOTS • NATIONWIDE PRESENCE',
-            'offices_title' => 'Our Regional Underwriting Hubs',
-            'offices_subtitle' => 'Meet face-to-face with credentialed advisors at our regional service centers or schedule an on-site commercial risk audit.',
-
-            'office_1_badge' => 'Corporate HQ',
-            'office_1_city' => 'Chicago, IL',
-            'office_1_address' => '123 Surebound Way, Suite 400<br>Chicago, IL 60601',
-            'office_1_phone' => '+1 813-214-1731',
-            'office_1_hours' => 'Mon–Fri: 8:30 AM – 5:30 PM CST<br>Midwest Underwriting Center',
-
-            'office_2_badge' => 'Northeast Hub',
-            'office_2_city' => 'New York, NY',
-            'office_2_address' => '45 Wall Street, 18th Floor<br>New York, NY 10005',
-            'office_2_phone' => '+1 813-214-1731',
-            'office_2_hours' => 'Mon–Fri: 8:00 AM – 6:00 PM EST<br>Commercial & Financial Risk',
-
-            'office_3_badge' => 'Southwest Hub',
-            'office_3_city' => 'Dallas, TX',
-            'office_3_address' => '2100 Ross Avenue, Suite 1200<br>Dallas, TX 75201',
-            'office_3_phone' => '+1 813-214-1731',
-            'office_3_hours' => 'Mon–Fri: 8:00 AM – 5:30 PM CST<br>Commercial Fleet & Property',
-
-            'office_4_badge' => 'Pacific Hub',
-            'office_4_city' => 'Los Angeles, CA',
-            'office_4_address' => '1999 Avenue of the Stars, Suite 1100<br>Los Angeles, CA 90067',
-            'office_4_phone' => '+1 813-214-1731',
-            'office_4_hours' => 'Mon–Fri: 8:30 AM – 6:00 PM PST<br>Personal & Luxury Estates',
 
             // 6. Dedicated Advocacy Section
             'guidance_eyebrow' => 'DEDICATED ADVOCACY',
@@ -2863,9 +2834,6 @@ class AdminController extends Controller
 
             'faq_4_question' => 'Can I update my coverage limits, vehicle details, or payment methods online?',
             'faq_4_answer' => 'Yes. Existing Surebound policyholders can log into our secure User Client Portal to view policies, download auto ID cards, request policy endorsements, add vehicles or drivers, and submit one-time or recurring premium payments.',
-
-            'faq_5_question' => 'How do I schedule an in-person meeting at a regional office?',
-            'faq_5_answer' => 'You are welcome to visit any of our regional hubs in Chicago, New York, Dallas, or Los Angeles during normal business hours. For complex commercial liability audits, high-value asset consultations, or surety bonding lines, we recommend calling +1 813-214-1731 or submitting the contact form with your preferred date and time.',
 
             // 8. Bottom CTA
             'cta_title' => 'Looking for an immediate insurance rate?',

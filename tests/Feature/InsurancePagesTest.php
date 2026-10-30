@@ -354,7 +354,7 @@ class InsurancePagesTest extends TestCase
             'primary_phone' => '+1 813-214-1731',
             'channel_1_title' => 'Executive Client Desk',
             'channel_1_value' => '+1 813-214-1731',
-            'office_1_city' => 'Chicago Headquarters, IL',
+            'hq_title' => 'Tampa Advisory Headquarters',
         ]);
 
         $response->assertStatus(200);
@@ -365,7 +365,7 @@ class InsurancePagesTest extends TestCase
         $publicResponse->assertSee('CUSTOM CONTACT EYEBROW');
         $publicResponse->assertSee('Speak With A Senior Partner Now');
         $publicResponse->assertSee('Executive Client Desk');
-        $publicResponse->assertSee('Chicago Headquarters, IL');
+        $publicResponse->assertSee('Tampa Advisory Headquarters');
         $publicResponse->assertSee('+1 813-214-1731');
     }
 
