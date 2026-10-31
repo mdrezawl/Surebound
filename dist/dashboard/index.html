@@ -97,10 +97,10 @@
                     <div class="notify-dot"></div>
                 </div>
                 
-                <div class="header-profile" id="profileDropdownBtn">
-                    <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Profile avatar">
+                <div class="header-profile" id="profileDropdownBtn" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="User profile and settings">
+                    <img src="https://ui-avatars.com/api/?name=User&background=1d4ed8&color=ffffff&bold=true" alt="Profile avatar">
                     <div class="header-profile-info">
-                        <span class="header-profile-name">Md Rejawl</span>
+                        <span class="header-profile-name">User</span>
                         <span class="header-profile-role">Policy Holder</span>
                     </div>
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #64748b;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -136,9 +136,9 @@
             <!-- HERO -->
             <div class="hero-banner">
                 <div class="hero-content">
-                    <div class="hero-greeting">Hello, Md 👋</div>
-                    <h1 class="hero-title">Welcome back!</h1>
-                    <p class="hero-subtitle">Here's an overview of your insurance journey. Manage your policies, make payments, and get the support you need &mdash; all in one place.</p>
+                    <div class="hero-greeting">Hello, User 👋</div>
+                    <h1 class="hero-title">Welcome to Surebound!</h1>
+                    <p class="hero-subtitle">Get started on your insurance journey. Choose your coverage, request underwriting proposals, and manage your policies &mdash; all in one place.</p>
                     
                     <div class="hero-stats">
                         <div class="hero-stat">
@@ -146,7 +146,7 @@
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             </div>
                             <div class="hero-stat-info">
-                                <span class="hero-stat-val">5</span>
+                                <span class="hero-stat-val">0</span>
                                 <span class="hero-stat-label">Active Policies</span>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                             </div>
                             <div class="hero-stat-info">
-                                <span class="hero-stat-val">1</span>
+                                <span class="hero-stat-val">0</span>
                                 <span class="hero-stat-label">Claims (In Progress)</span>
                             </div>
                         </div>
@@ -164,11 +164,101 @@
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             </div>
                             <div class="hero-stat-info">
-                                <span class="hero-stat-val">2</span>
+                                <span class="hero-stat-val">0</span>
                                 <span class="hero-stat-label">Upcoming Payments</span>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- STEP-BY-STEP ONBOARDING GUIDE FOR FRESH ACCOUNTS -->
+            <div class="dashboard-section onboarding-guide-card" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-sm); margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px;">
+                    <div>
+                        <div style="display: inline-flex; align-items: center; gap: 6px; background: #eff6ff; color: #1d4ed8; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <span>Getting Started Guide</span>
+                        </div>
+                        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--brand-navy); margin: 0;">Get Protected in 3 Simple Steps</h2>
+                        <p style="font-size: 0.875rem; color: var(--text-muted); margin: 4px 0 0;">Follow this step-by-step roadmap to customize your insurance coverage and activate your policy.</p>
+                    </div>
+                    <div style="font-size: 0.8125rem; font-weight: 600; padding: 6px 14px; border-radius: 20px; background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8;">
+                        Step 1 of 3 &bull; Ready to Begin
+                    </div>
+                </div>
+
+                <div class="onboarding-steps-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                    
+                    <!-- STEP 1 -->
+                    <div class="step-card" style="background: #ffffff; border: 1.5px solid #3b82f6; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <span style="width: 32px; height: 32px; border-radius: 50%; background: #3b82f6; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 800;">
+                                    1
+                                </span>
+                                <span style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: #1d4ed8; background: #eff6ff; padding: 2px 8px; border-radius: 4px;">
+                                    Start Here
+                                </span>
+                            </div>
+                            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--brand-navy); margin: 0 0 6px;">1. Request a Quote</h3>
+                            <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 16px;">
+                                Select coverage (Home, Auto, Business, etc.) and tell us your coverage requirements for tailored rates.
+                            </p>
+                        </div>
+                        <div>
+                            <a href="/dashboard/quote" style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 8px 12px; background: #1d4ed8; color: #ffffff; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 4px rgba(29, 78, 216, 0.2);">
+                                <span>Get Your First Quote &rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2 -->
+                    <div class="step-card" style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <span style="width: 32px; height: 32px; border-radius: 50%; background: #94a3b8; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 800;">
+                                    2
+                                </span>
+                                <span style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: #64748b; background: #f1f5f9; padding: 2px 8px; border-radius: 4px;">
+                                    Next Step
+                                </span>
+                            </div>
+                            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--brand-navy); margin: 0 0 6px;">2. Underwriting Review</h3>
+                            <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 16px;">
+                                Licensed advisors inspect risk schedules, apply multi-policy bundle discounts, and prepare an actuarial proposal.
+                            </p>
+                        </div>
+                        <div>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 8px 12px; background: #f8fafc; color: #64748b; border: 1px dashed #cbd5e1; border-radius: 6px; font-size: 0.8125rem; font-weight: 500;">
+                                <span>Fast 24-hr turnaround</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3 -->
+                    <div class="step-card" style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <span style="width: 32px; height: 32px; border-radius: 50%; background: #94a3b8; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 800;">
+                                    3
+                                </span>
+                                <span style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: #64748b; background: #f1f5f9; padding: 2px 8px; border-radius: 4px;">
+                                    Final Step
+                                </span>
+                            </div>
+                            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--brand-navy); margin: 0 0 6px;">3. Bind &amp; Active Protection</h3>
+                            <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 16px;">
+                                Accept your proposal to issue policy numbers, download digital ID cards, print ACORD certificates, and enjoy 24/7 coverage.
+                            </p>
+                        </div>
+                        <div>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 8px 12px; background: #f8fafc; color: #64748b; border: 1px dashed #cbd5e1; border-radius: 6px; font-size: 0.8125rem; font-weight: 500;">
+                                <span>Instant Digital ID Cards</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -250,136 +340,7 @@
                     </a>
                 </div>
             </div>
-            
-            <!-- MY POLICIES -->
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">My Policies</h2>
-                        <p class="section-subtitle">View and manage your active and past insurance policies.</p>
-                    </div>
-                    <a href="/dashboard/policies" class="view-all">View All Policies &rarr;</a>
-                </div>
-                
-                <div class="table-card">
-                    <div class="table-responsive">
-                        <table class="policies-table">
-                            <thead>
-                                <tr>
-                                    <th>Policy No.</th>
-                                    <th>Type</th>
-                                    <th>Coverage</th>
-                                    <th>Status</th>
-                                    <th>Renewal Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                                                <tr>
-                                    <td>
-                                        <div class="policy-id-cell">
-                                            <div class="policy-icon-small">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                            </div>
-                                            <span style="font-family: monospace; font-weight: 700;">SB-BUS-107647</span>
-                                        </div>
-                                    </td>
-                                    <td>Homeowners Deluxe</td>
-                                    <td>
-                                        <div class="coverage-details">
-                                            <span>$1,000,000 Aggregate / $25,000 Deductible</span>
-                                            <span>($1,420.00 / yr)</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status-badge active">Active</span></td>
-                                    <td>Oct 15, 2027</td>
-                                    <td><a href="/dashboard/policies" class="action-link">View Details &rarr;</a></td>
-                                </tr>
-                                                                <tr>
-                                    <td>
-                                        <div class="policy-id-cell">
-                                            <div class="policy-icon-small">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                            </div>
-                                            <span style="font-family: monospace; font-weight: 700;">SB-BUS-105829</span>
-                                        </div>
-                                    </td>
-                                    <td>Commercial Business Owner Policy (BOP)</td>
-                                    <td>
-                                        <div class="coverage-details">
-                                            <span>$2,000,000</span>
-                                            <span>($3,400.00)</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status-badge active">Active</span></td>
-                                    <td>Jun 14, 2027</td>
-                                    <td><a href="/dashboard/policies" class="action-link">View Details &rarr;</a></td>
-                                </tr>
-                                                                <tr>
-                                    <td>
-                                        <div class="policy-id-cell">
-                                            <div class="policy-icon-small">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                            </div>
-                                            <span style="font-family: monospace; font-weight: 700;">SB-UMB-739104</span>
-                                        </div>
-                                    </td>
-                                    <td>Personal &amp; Excess Umbrella Liability</td>
-                                    <td>
-                                        <div class="coverage-details">
-                                            <span>$3,000,000</span>
-                                            <span>($890.00)</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status-badge active">Active</span></td>
-                                    <td>Aug 14, 2027</td>
-                                    <td><a href="/dashboard/policies" class="action-link">View Details &rarr;</a></td>
-                                </tr>
-                                                                <tr>
-                                    <td>
-                                        <div class="policy-id-cell">
-                                            <div class="policy-icon-small">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                            </div>
-                                            <span style="font-family: monospace; font-weight: 700;">SB-AUT-492015</span>
-                                        </div>
-                                    </td>
-                                    <td>Executive Auto Comprehensive &amp; Collision</td>
-                                    <td>
-                                        <div class="coverage-details">
-                                            <span>$500,000 CSL</span>
-                                            <span>($2,140.00)</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status-badge active">Active</span></td>
-                                    <td>Sep 14, 2027</td>
-                                    <td><a href="/dashboard/policies" class="action-link">View Details &rarr;</a></td>
-                                </tr>
-                                                                <tr>
-                                    <td>
-                                        <div class="policy-id-cell">
-                                            <div class="policy-icon-small">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                            </div>
-                                            <span style="font-family: monospace; font-weight: 700;">SB-HOM-883921</span>
-                                        </div>
-                                    </td>
-                                    <td>Homeowners Comprehensive (HO-5)</td>
-                                    <td>
-                                        <div class="coverage-details">
-                                            <span>$1,450,000</span>
-                                            <span>($2,850.00)</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status-badge active">Active</span></td>
-                                    <td>Jul 14, 2027</td>
-                                    <td><a href="/dashboard/policies" class="action-link">View Details &rarr;</a></td>
-                                </tr>
-                                                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
         
@@ -390,22 +351,22 @@
             <div class="profile-card">
                 <div class="profile-header-bg"></div>
                 <div class="profile-content">
-                    <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Profile" class="profile-avatar">
-                    <h2 class="profile-name">Md Rejawl</h2>
+                    <img src="https://ui-avatars.com/api/?name=User&background=1d4ed8&color=ffffff&bold=true" alt="Profile" class="profile-avatar">
+                    <h2 class="profile-name">User</h2>
                     <span class="profile-role">Primary Policyholder</span>
                     
                     <div class="profile-details">
                         <div class="profile-detail-item">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            <span>client@surebound.com</span>
+                            <span>Not provided</span>
                         </div>
                         <div class="profile-detail-item">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                            <span>+880 9612 345678</span>
+                            <span>Not provided</span>
                         </div>
                         <div class="profile-detail-item">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            <span>Austin, Texas</span>
+                            <span>Location not set</span>
                         </div>
                     </div>
                     
@@ -481,6 +442,52 @@
         
     </div>
 
+    <!-- FULLWIDTH SECTION: MY POLICIES (PLACED BELOW NEED HELP & RIGHT SIDEBAR) -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">My Policies</h2>
+                <p class="section-subtitle">View and manage your active and past insurance policies.</p>
+            </div>
+            <a href="/dashboard/policies" class="view-all">View All Policies &rarr;</a>
+        </div>
+        
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="policies-table">
+                    <thead>
+                        <tr>
+                            <th>Policy No.</th>
+                            <th>Type</th>
+                            <th>Coverage</th>
+                            <th>Status</th>
+                            <th>Renewal Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6" style="padding: 48px 24px; text-align: center; background: #fafbfc;">
+                                <div style="max-width: 440px; margin: 0 auto;">
+                                    <div style="width: 48px; height: 48px; border-radius: 50%; background: #eff6ff; color: #1d4ed8; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                    </div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--brand-navy); margin: 0 0 6px;">No Active Policies Yet</h4>
+                                    <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 16px;">
+                                        Your account is fresh and ready. Request an insurance quote above or browse categories below to bind your first policy.
+                                    </p>
+                                    <a href="/dashboard/quote" style="display: inline-flex; align-items: center; gap: 6px; background: var(--brand-blue); color: #ffffff; padding: 9px 18px; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 4px rgba(29, 78, 216, 0.2);">
+                                        <span>Request a Quote &rarr;</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <!-- FULLWIDTH BOTTOM SECTION: PLACED BELOW NEED HELP & MY POLICIES -->
     <div class="bottom-widgets-section">
         <div class="bottom-widgets">
@@ -505,25 +512,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                                                        <tr>
-                                <td><strong style="color: var(--brand-navy); font-family: monospace;">CLM-2026-10543</strong></td>
-                                <td><span style="font-family: monospace; color: var(--brand-blue);">SB-BUS-105829</span></td>
-                                <td style="color: var(--text-muted);">Oct 14, 2026</td>
-                                <td style="text-align: right;"><span class="status-badge paid">Paid</span></td>
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 24px; color: var(--text-muted);">
+                                    No claims on record.
+                                </td>
                             </tr>
-                                                        <tr>
-                                <td><strong style="color: var(--brand-navy); font-family: monospace;">CLM-2026-72910</strong></td>
-                                <td><span style="font-family: monospace; color: var(--brand-blue);">SB-AUT-492015</span></td>
-                                <td style="color: var(--text-muted);">Oct 14, 2026</td>
-                                <td style="text-align: right;"><span class="status-badge approved">Approved</span></td>
-                            </tr>
-                                                        <tr>
-                                <td><strong style="color: var(--brand-navy); font-family: monospace;">CLM-2026-48192</strong></td>
-                                <td><span style="font-family: monospace; color: var(--brand-blue);">SB-HOM-883921</span></td>
-                                <td style="color: var(--text-muted);">Oct 14, 2026</td>
-                                <td style="text-align: right;"><span class="status-badge reviewing">Reviewing</span></td>
-                            </tr>
-                                                    </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -538,23 +532,10 @@
                     <a href="/dashboard/payments" class="view-all" style="font-size: 0.875rem;">View Payments &rarr;</a>
                 </div>
                 <div class="timeline-list">
-                                                                                        <div class="timeline-item">
-                            <div class="timeline-icon purple"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                            <div class="timeline-content">
-                                <div class="timeline-title">Payment successful</div>
-                                <div class="timeline-desc">$2,450.00 paid for invoice #INV-2026-002.</div>
-                            </div>
-                            <div class="timeline-date" style="font-size: 0.75rem; color: var(--text-muted);">Sep 09, 2026</div>
-                        </div>
-                                                <div class="timeline-item">
-                            <div class="timeline-icon purple"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                            <div class="timeline-content">
-                                <div class="timeline-title">Payment successful</div>
-                                <div class="timeline-desc">$2,850.00 paid for invoice #INV-2026-001.</div>
-                            </div>
-                            <div class="timeline-date" style="font-size: 0.75rem; color: var(--text-muted);">Aug 11, 2026</div>
-                        </div>
-                                                            </div>
+                    <div style="padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.875rem;">
+                        No recent payment activity recorded yet.
+                    </div>
+                </div>
             </div>
 
             <!-- Widget 3: Helpful Resources -->
@@ -652,13 +633,35 @@
 
         if (profileBtn && dropdownMenu) {
             profileBtn.addEventListener('click', function(e) {
-                dropdownMenu.classList.toggle('show');
+                if (e.target.closest('#profileDropdownMenu')) {
+                    return;
+                }
                 e.stopPropagation();
+                const isOpen = dropdownMenu.classList.toggle('show');
+                profileBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            profileBtn.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    if (!e.target.closest('#profileDropdownMenu')) {
+                        e.preventDefault();
+                        const isOpen = dropdownMenu.classList.toggle('show');
+                        profileBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    }
+                }
             });
 
             document.addEventListener('click', function(e) {
                 if (!profileBtn.contains(e.target)) {
                     dropdownMenu.classList.remove('show');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && dropdownMenu.classList.contains('show')) {
+                    dropdownMenu.classList.remove('show');
+                    profileBtn.setAttribute('aria-expanded', 'false');
                 }
             });
         }

@@ -718,4 +718,54 @@ class InsurancePagesTest extends TestCase
         $publicResponse->assertDontSee('pull-quote-section');
         $publicResponse->assertDontSee('Hidden Author');
     }
+
+    public function test_public_quote_submission_records_coverage_amount_and_source_page(): void
+    {
+        $response = $this->postJson(route('quotes.store'), [
+            'name' => 'Alice Commercial',
+            'email' => 'alice@enterprise.com',
+            'phone' => '(206) 555-0199',
+            'zip' => '98101',
+            'type' => 'bop',
+            'coverage_amount' => '$1,000,000 BOP Commercial Standard',
+            'source_page' => '/business-insurance#coverage-options',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['success' => true]);
+
+        $this->assertDatabaseHas('quotes', [
+            'name' => 'Alice Commercial',
+            'email' => 'alice@enterprise.com',
+            'type' => 'bop',
+            'coverage' => '$1,000,000 BOP Commercial Standard',
+        ]);
+
+        $saved = Quote::where('email', 'alice@enterprise.com')->first();
+        $this->assertNotNull($saved);
+        $this->assertStringContainsString('Source Page: /business-insurance#coverage-options', $saved->notes);
+        $this->assertStringContainsString('Requested Amount/Limit: $1,000,000 BOP Commercial Standard', $saved->notes);
+    }
+
+    public function test_public_quote_submission_supports_custom_amount_and_property_lines(): void
+    {
+        $response = $this->postJson(route('quotes.store'), [
+            'name' => 'Bob Real Estate',
+            'email' => 'bob@propertyholdings.com',
+            'phone' => '(206) 555-0288',
+            'zip' => '98104',
+            'type' => 'commercial_property',
+            'coverage_amount' => 'Custom: $3,500,000 Multi-Building',
+            'source_page' => '/property-insurance',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['success' => true]);
+
+        $this->assertDatabaseHas('quotes', [
+            'email' => 'bob@propertyholdings.com',
+            'type' => 'commercial_property',
+            'coverage' => 'Custom: $3,500,000 Multi-Building',
+        ]);
+    }
 }

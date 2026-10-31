@@ -458,4 +458,17 @@ class UserPortalPagesTest extends TestCase
         $response->assertSee('toggleUserSidebar()', false);
         $response->assertSee('closeUserSidebar()', false);
     }
+
+    public function test_dashboard_renders_profile_dropdown_with_accessible_controls(): void
+    {
+        $response = $this->actingAs($this->user)->get('/dashboard');
+
+        $response->assertStatus(200);
+        $response->assertSee('id="profileDropdownBtn"', false);
+        $response->assertSee('id="profileDropdownMenu"', false);
+        $response->assertSee('role="button"', false);
+        $response->assertSee('aria-haspopup="true"', false);
+        $response->assertSee(route('user.settings'));
+        $response->assertSee(route('logout'));
+    }
 }

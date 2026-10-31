@@ -153,6 +153,14 @@
                     <span>Brand Guidelines</span>
                 </a>
 
+                <a class="sidebar-link" data-tab="contact-info">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                    </svg>
+                    <span>Website Contact Info</span>
+                    <span class="nav-badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8;">HOTLINES</span>
+                </a>
+
                 <div class="nav-section-title">Billing &amp; API Integrations</div>
 
                 <a class="sidebar-link" data-tab="invoices">
@@ -1937,6 +1945,363 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- ========================================================
+                     TAB: WEBSITE CONTACT INFO & HOTLINES MANAGER
+                     ======================================================== -->
+                <div class="tab-pane" id="tab-contact-info">
+                    <form id="contactInfoForm" onsubmit="saveContactInfo(event)">
+                        @csrf
+                        <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                            <div class="view-title-group">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                                    <h1 style="margin: 0; font-size: 1.625rem; font-weight: 800; color: var(--text-primary);">Website Contact Information &amp; Hotlines</h1>
+                                    <span class="nav-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; border-radius: 9999px;">GLOBAL LIVE SYNC</span>
+                                </div>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.9375rem;">Centralized control panel for updating all public phone numbers, 24/7 disaster hotlines, office addresses, emails, and underwriter concierge details live across the website.</p>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                                <a href="{{ route('contact') }}" target="_blank" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 600;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                    View Live Contact Page
+                                </a>
+                                <button type="submit" id="saveContactInfoBtnTop" class="btn-primary-action" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; font-size: 0.9375rem; font-weight: 700; background: #059669;">
+                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    <span>Publish All Contact Info Live</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Live Status Banner -->
+                        <div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(16, 185, 129, 0.08)); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(37, 99, 235, 0.2); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                                    📡
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.9375rem; font-weight: 700; color: #60a5fa;">Multi-Channel Unified Contact System</div>
+                                    <div style="font-size: 0.8125rem; color: #94a3b8;">Changes made here instantly propagate to the Website Header, Footer, Home Page CTA, Contact Page, and the Client Portal.</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 16px; align-items: center; font-size: 0.8125rem;">
+                                <span style="display: inline-flex; align-items: center; gap: 6px; color: #34d399; font-weight: 600;">
+                                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                                    Header &amp; Footer Synced
+                                </span>
+                                <span style="display: inline-flex; align-items: center; gap: 6px; color: #60a5fa; font-weight: 600;">
+                                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #3b82f6; display: inline-block;"></span>
+                                    24/7 Hotline Routed
+                                </span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1200px;">
+
+                            <!-- CARD 1: PRIMARY WEBSITE & HEADER/FOOTER CONTACT -->
+                            <div class="card" style="border-top: 3px solid #3b82f6;">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; display: flex; align-items: center; justify-content: center; font-size: 1.125rem;">
+                                            📞
+                                        </div>
+                                        <div>
+                                            <div class="card-title" style="margin: 0; font-size: 1.125rem;">1. Primary Website &amp; Client Advisory Lines</div>
+                                            <small style="color: var(--text-muted); font-size: 0.8125rem;">Main customer phone numbers, official email addresses, and general operating hours</small>
+                                        </div>
+                                    </div>
+                                    <span class="nav-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">HEADER / FOOTER</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Main Client Advisory Phone *</label>
+                                            <input type="text" name="primary_phone" class="form-input" value="{{ $siteContact['primary_phone'] ?? '+1 813-214-1731' }}" required placeholder="+1 813-214-1731">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Primary phone displayed on the header, footer, homepage, and contact hero.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Phone Tagline / Advisory Label</label>
+                                            <input type="text" name="primary_phone_label" class="form-input" value="{{ $siteContact['primary_phone_label'] ?? 'Toll-Free Client Advisory' }}" placeholder="e.g. Toll-Free Client Advisory">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Shown alongside the phone number in callouts and privacy notices.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">General Operating Schedule / Hours</label>
+                                            <input type="text" name="primary_hours" class="form-input" value="{{ $siteContact['primary_hours'] ?? 'Mon–Fri: 8:00 AM – 8:00 PM EST' }}" placeholder="Mon–Fri: 8:00 AM – 8:00 PM EST">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Public business hours for general telephone support.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">General Client Support Email *</label>
+                                            <input type="email" name="support_email" class="form-input" value="{{ $siteContact['support_email'] ?? 'support@surebound.com' }}" required placeholder="support@surebound.com">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Main electronic intake email for policy changes and questions.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Billing &amp; Escrow Accounts Email</label>
+                                            <input type="email" name="billing_email" class="form-input" value="{{ $siteContact['billing_email'] ?? 'billing@surebound.com' }}" placeholder="billing@surebound.com">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">For mortgage escrows, premium payments, and invoice verifications.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">First Notice of Loss (FNOL) Claims Email</label>
+                                            <input type="email" name="claims_email" class="form-input" value="{{ $siteContact['claims_email'] ?? 'claims@surebound.com' }}" placeholder="claims@surebound.com">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">For incident photo uploads, police reports, and repair estimates.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">WhatsApp &amp; Direct Messaging Hotline</label>
+                                            <input type="text" name="whatsapp_phone" class="form-input" value="{{ $siteContact['whatsapp_phone'] ?? '+1 813-214-1731' }}" placeholder="+1 813-214-1731">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Optional WhatsApp line for rapid electronic messaging.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Live Center Status Badge Text</label>
+                                            <input type="text" name="live_chat_status" class="form-input" value="{{ $siteContact['live_chat_status'] ?? 'Client Support Center: Online & Open Now' }}" placeholder="e.g. Client Support Center: Online & Open Now">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Live indicator text shown atop the Contact page channels.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CARD 2: DEPARTMENTAL LINES & EMERGENCY HOTLINES -->
+                            <div class="card" style="border-top: 3px solid #ef4444;">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(239, 68, 68, 0.15); color: #ef4444; display: flex; align-items: center; justify-content: center; font-size: 1.125rem;">
+                                            🚨
+                                        </div>
+                                        <div>
+                                            <div class="card-title" style="margin: 0; font-size: 1.125rem;">2. Departmental Direct Lines &amp; Emergency Hotlines</div>
+                                            <small style="color: var(--text-muted); font-size: 0.8125rem;">Dedicated emergency claims dispatch, commercial desks, roadside towing, and cyber breach lines</small>
+                                        </div>
+                                    </div>
+                                    <span class="nav-badge" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">24/7/365</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #ef4444;">24/7 National Emergency Claims Hotline *</label>
+                                            <input type="text" name="claims_phone" class="form-input" value="{{ $siteContact['claims_phone'] ?? '+1 813-214-1731' }}" required placeholder="+1 813-214-1731 or 1-800-555-5677">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Available 24 hours a day for immediate vehicular, property, and flood loss intake.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Claims Availability Badge</label>
+                                            <input type="text" name="claims_phone_badge" class="form-input" value="{{ $siteContact['claims_phone_badge'] ?? '24/7/365 Rapid Response' }}" placeholder="e.g. 24/7/365 Rapid Response">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Badge shown next to the emergency claims line on the contact page.</small>
+                                        </div>
+
+                                        <div class="form-group full">
+                                            <label class="form-label">Emergency Claims SLA / Subtitle</label>
+                                            <input type="text" name="claims_subtitle" class="form-input" value="{{ $siteContact['claims_subtitle'] ?? 'Immediate first-notice-of-loss intake & emergency adjuster dispatch' }}" placeholder="e.g. Immediate first-notice-of-loss intake & emergency adjuster dispatch">
+                                        </div>
+
+                                        <!-- Commercial Desk -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #38bdf8;">Commercial &amp; Surety Desk Phone</label>
+                                            <input type="text" name="commercial_phone" class="form-input" value="{{ $siteContact['commercial_phone'] ?? '+1 813-214-1731' }}" placeholder="+1 813-214-1731">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Direct line for Commercial Auto, General Liability, BOP, &amp; Surety Bonds.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Commercial Desk Hours</label>
+                                            <input type="text" name="commercial_hours" class="form-input" value="{{ $siteContact['commercial_hours'] ?? 'Mon–Fri, 8:30am–6:00pm EST' }}" placeholder="Mon–Fri, 8:30am–6:00pm EST">
+                                        </div>
+
+                                        <!-- Client Care Desk -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Client Care &amp; Policy Endorsements Phone</label>
+                                            <input type="text" name="client_care_phone" class="form-input" value="{{ $siteContact['client_care_phone'] ?? '+1 813-214-1731' }}" placeholder="+1 813-214-1731">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Policy endorsements, adding drivers/vehicles, and deductible changes.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Client Care Hours</label>
+                                            <input type="text" name="client_care_hours" class="form-input" value="{{ $siteContact['client_care_hours'] ?? 'Mon–Fri, 8:00am–8:00pm EST' }}" placeholder="Mon–Fri, 8:00am–8:00pm EST">
+                                        </div>
+
+                                        <!-- Roadside & Cyber -->
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #fbbf24;">24/7 Roadside Assistance &amp; Towing Hotline</label>
+                                            <input type="text" name="roadside_phone" class="form-input" value="{{ $siteContact['roadside_phone'] ?? '1-800-555-TOWS' }}" placeholder="1-800-555-TOWS">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Emergency flat tire, towing, battery jump, and winching dispatch line.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #a855f7;">Cyber Incident &amp; Ransomware Line</label>
+                                            <input type="text" name="cyber_phone" class="form-input" value="{{ $siteContact['cyber_phone'] ?? '1-888-SURE-CYBER' }}" placeholder="1-888-SURE-CYBER">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Immediate breach forensic response and ransom negotiation line.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CARD 3: HEADQUARTERS & REGIONAL BRANCH OFFICE LOCATIONS -->
+                            <div class="card" style="border-top: 3px solid #f59e0b;">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(245, 158, 11, 0.15); color: #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 1.125rem;">
+                                            🏢
+                                        </div>
+                                        <div>
+                                            <div class="card-title" style="margin: 0; font-size: 1.125rem;">3. Headquarters &amp; Regional Branch Locations</div>
+                                            <small style="color: var(--text-muted); font-size: 0.8125rem;">Corporate headquarters in Tampa, Florida and regional branch offices</small>
+                                        </div>
+                                    </div>
+                                    <span class="nav-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">PHYSICAL OFFICES</span>
+                                </div>
+                                <div class="card-body">
+                                    <div style="margin-bottom: 20px;">
+                                        <h4 style="font-size: 0.9375rem; font-weight: 700; color: #38bdf8; margin: 0 0 12px; display: flex; align-items: center; gap: 8px;">
+                                            <span>📍 Corporate Headquarters (Tampa, Florida)</span>
+                                        </h4>
+                                        <div class="form-grid">
+                                            <div class="form-group">
+                                                <label class="form-label">Headquarters Name / Title *</label>
+                                                <input type="text" name="hq_title" class="form-input" value="{{ $siteContact['hq_title'] ?? 'Tampa Headquarters' }}" required placeholder="Tampa Headquarters">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">Office Visiting Hours</label>
+                                                <input type="text" name="hq_hours" class="form-input" value="{{ $siteContact['hq_hours'] ?? 'Mon–Fri: 8:30 AM – 5:30 PM EST' }}" placeholder="Mon–Fri: 8:30 AM – 5:30 PM EST">
+                                            </div>
+
+                                            <div class="form-group full">
+                                                <label class="form-label" style="font-weight: 700; color: #38bdf8;">Full Street &amp; Suite Address *</label>
+                                                <input type="text" name="hq_address" class="form-input" value="{{ $siteContact['hq_address'] ?? '100 N Tampa St, Suite 2500, Tampa, FL 33602' }}" required placeholder="100 N Tampa St, Suite 2500, Tampa, FL 33602">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px;">Displayed in the footer, contact page, and terms of service.</small>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">City</label>
+                                                <input type="text" name="hq_city" class="form-input" value="{{ $siteContact['hq_city'] ?? 'Tampa' }}" placeholder="Tampa">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">State</label>
+                                                <input type="text" name="hq_state" class="form-input" value="{{ $siteContact['hq_state'] ?? 'FL' }}" placeholder="FL">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">ZIP / Postal Code</label>
+                                                <input type="text" name="hq_zip" class="form-input" value="{{ $siteContact['hq_zip'] ?? '33602' }}" placeholder="33602">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">Local Desk Phone</label>
+                                                <input type="text" name="hq_phone" class="form-input" value="{{ $siteContact['hq_phone'] ?? '+1 813-214-1731' }}" placeholder="+1 813-214-1731">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr style="border: none; border-top: 1px dashed var(--border-light); margin: 24px 0;">
+
+                                    <!-- Regional Branch Desk -->
+                                    <div style="margin-bottom: 20px;">
+                                        <h4 style="font-size: 0.9375rem; font-weight: 700; color: #34d399; margin: 0 0 12px; display: flex; align-items: center; gap: 8px;">
+                                            <span>🌏 Regional Office Desk (Dhaka / Austin Regional Center)</span>
+                                        </h4>
+                                        <div class="form-grid">
+                                            <div class="form-group">
+                                                <label class="form-label">Regional Branch Title</label>
+                                                <input type="text" name="branch_title" class="form-input" value="{{ $siteContact['branch_title'] ?? 'Dhaka Regional Desk' }}" placeholder="Dhaka Regional Desk">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">Regional Visiting Hours</label>
+                                                <input type="text" name="branch_hours" class="form-input" value="{{ $siteContact['branch_hours'] ?? 'Sun–Thu: 9:00 AM – 6:00 PM BST' }}" placeholder="Sun–Thu: 9:00 AM – 6:00 PM BST">
+                                            </div>
+
+                                            <div class="form-group full">
+                                                <label class="form-label">Full Regional Physical Address</label>
+                                                <input type="text" name="branch_address" class="form-input" value="{{ $siteContact['branch_address'] ?? 'Level 14, Crystal Palace, Gulshan-2, Dhaka 1212' }}" placeholder="Level 14, Crystal Palace, Gulshan-2, Dhaka 1212">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">Direct Regional Phone</label>
+                                                <input type="text" name="branch_phone" class="form-input" value="{{ $siteContact['branch_phone'] ?? '+880 9612 345678' }}" placeholder="+880 9612 345678">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">Direct Regional Email</label>
+                                                <input type="email" name="branch_email" class="form-input" value="{{ $siteContact['branch_email'] ?? 'dhaka.desk@surebound.com' }}" placeholder="dhaka.desk@surebound.com">
+                                            </div>
+
+                                            <div class="form-group full">
+                                                <label class="form-label">Google Maps Directions / Embed URL</label>
+                                                <input type="text" name="map_link" class="form-input" value="{{ $siteContact['map_link'] ?? 'https://maps.google.com/?q=100+N+Tampa+St+Suite+2500+Tampa+FL+33602' }}" placeholder="https://maps.google.com/?q=...">
+                                                <small style="color: var(--text-muted); display: block; margin-top: 4px;">Clickable directions link for clients visiting physical offices.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CARD 4: PORTAL CONCIERGE & DEDICATED UNDERWRITER -->
+                            <div class="card" style="border-top: 3px solid #10b981;">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); color: #34d399; display: flex; align-items: center; justify-content: center; font-size: 1.125rem;">
+                                            🛡️
+                                        </div>
+                                        <div>
+                                            <div class="card-title" style="margin: 0; font-size: 1.125rem;">4. Client Portal Concierge &amp; Dedicated Underwriter</div>
+                                            <small style="color: var(--text-muted); font-size: 0.8125rem;">Direct advisor persona and personal extension shown to authenticated policyholders</small>
+                                        </div>
+                                    </div>
+                                    <span class="nav-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">CLIENT PORTAL</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 700; color: #34d399;">Underwriter Full Name *</label>
+                                            <input type="text" name="underwriter_name" class="form-input" value="{{ $siteContact['underwriter_name'] ?? 'Marcus Vance, CPCU' }}" required placeholder="Marcus Vance, CPCU">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Credentialed underwriter name displayed on policyholder dashboards.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Professional Title / Designation</label>
+                                            <input type="text" name="underwriter_title" class="form-input" value="{{ $siteContact['underwriter_title'] ?? 'Senior Underwriter & Risk Advisor' }}" placeholder="Senior Underwriter & Risk Advisor">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Direct Desk Extension / Phone</label>
+                                            <input type="text" name="underwriter_phone" class="form-input" value="{{ $siteContact['underwriter_phone'] ?? '(512) 555-0182' }}" placeholder="(512) 555-0182">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Direct advisor line allowing policyholders to bypass phone trees.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Direct Advisor Email</label>
+                                            <input type="email" name="underwriter_email" class="form-input" value="{{ $siteContact['underwriter_email'] ?? 'm.vance@surebound.com' }}" placeholder="m.vance@surebound.com">
+                                        </div>
+
+                                        <div class="form-group full">
+                                            <label class="form-label">Underwriter Office Hours</label>
+                                            <input type="text" name="underwriter_hours" class="form-input" value="{{ $siteContact['underwriter_hours'] ?? 'Mon – Fri • 8:00 AM – 6:00 PM CST' }}" placeholder="Mon – Fri • 8:00 AM – 6:00 PM CST">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- BOTTOM SUBMIT BAR -->
+                            <div style="margin-top: 12px; margin-bottom: 40px; display: flex; justify-content: flex-end; align-items: center; gap: 16px;">
+                                <span id="contactInfoStatusMessage" style="font-size: 0.875rem; font-weight: 600; color: #10b981; display: none;"></span>
+                                <button type="submit" id="saveContactInfoBtnBottom" class="btn-primary-action" style="padding: 14px 34px; font-size: 1rem; font-weight: 700; border-radius: var(--radius-md); background: #059669; display: inline-flex; align-items: center; gap: 10px;">
+                                    <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    <span>Publish All Contact Info Live &rarr;</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
 
                 <!-- ========================================================
@@ -6589,6 +6954,20 @@
                             </div>
                         </div>
 
+                        <!-- Global Contact Info Link Banner -->
+                        <div style="background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.25); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 1.25rem;">ℹ️</span>
+                                <div>
+                                    <strong style="color: #38bdf8; font-size: 0.875rem;">Need to update Global Hotlines, Office Addresses, or Departmental Direct Lines?</strong>
+                                    <div style="font-size: 0.8125rem; color: #94a3b8;">Use the dedicated Website Contact Info &amp; Hotlines option to update and sync info across the entire website at once.</div>
+                                </div>
+                            </div>
+                            <button type="button" onclick="document.querySelector('.sidebar-link[data-tab=\'contact-info\']')?.click()" class="btn-secondary" style="font-size: 0.8125rem; padding: 6px 14px; font-weight: 700; color: #38bdf8; border-color: rgba(14, 165, 233, 0.4);">
+                                Open Website Contact Info &rarr;
+                            </button>
+                        </div>
+
                         <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1100px;">
                             
                             <!-- 1. HERO SECTION -->
@@ -11221,6 +11600,51 @@
                 if (btn1) { btn1.innerHTML = 'Publish Contact Page Live'; btn1.disabled = false; }
                 if (btn2) { btn2.innerHTML = 'Publish Contact Page Changes Live &rarr;'; btn2.disabled = false; }
                 alert('Error updating contact page: ' + err.message);
+            });
+        }
+
+        function saveContactInfo(e) {
+            e.preventDefault();
+            const btn1 = document.getElementById('saveContactInfoBtnTop');
+            const btn2 = document.getElementById('saveContactInfoBtnBottom');
+            const statusMsg = document.getElementById('contactInfoStatusMessage');
+
+            if (btn1) { btn1.innerHTML = 'Saving...'; btn1.disabled = true; }
+            if (btn2) { btn2.innerHTML = 'Saving...'; btn2.disabled = true; }
+
+            const form = document.getElementById('contactInfoForm');
+            const formData = new FormData(form);
+
+            fetch('{{ route("admin.contact-info.update") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (btn1) { btn1.innerHTML = '✓ Published Live!'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = '✓ Published Live!'; btn2.disabled = false; }
+
+                if (statusMsg) {
+                    statusMsg.textContent = '✓ Saved and published live!';
+                    statusMsg.style.display = 'inline';
+                    setTimeout(() => { statusMsg.style.display = 'none'; }, 4000);
+                }
+
+                alert(data.message || 'Success: Website contact information, departmental direct lines, office locations, and emergency hotlines updated successfully!');
+
+                setTimeout(() => {
+                    if (btn1) btn1.innerHTML = '<svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/></svg><span>Publish All Contact Info Live</span>';
+                    if (btn2) btn2.innerHTML = '<svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/></svg><span>Publish All Contact Info Live &rarr;</span>';
+                }, 2500);
+            })
+            .catch(err => {
+                if (btn1) { btn1.innerHTML = 'Publish All Contact Info Live'; btn1.disabled = false; }
+                if (btn2) { btn2.innerHTML = 'Publish All Contact Info Live &rarr;'; btn2.disabled = false; }
+                alert('Error updating contact information: ' + err.message);
             });
         }
 

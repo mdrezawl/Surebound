@@ -28,8 +28,8 @@
                     {{ $content['hero_subtitle'] ?? 'Comprehensive homeowners insurance engineered to safeguard your structure, personal belongings, and loved ones — with dependable support whenever you need us.' }}
                 </p>
                 <div class="hero-buttons">
-                    <a href="javascript:void(0)" onclick="openQuoteModal('Property Insurance')" class="btn-primary-hero">
-                        <span>Get a Property Quote</span>
+                    <a href="javascript:void(0)" onclick="openQuoteModal('Business Owner Policy')" class="btn-primary-hero">
+                        <span>Get a Commercial Quote</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="17" height="17">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                         </svg>
@@ -76,7 +76,7 @@
 
             <div class="coverage-cards-grid">
                 <!-- 1. Dwelling & Roof Structure -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <div class="coverage-card" onclick="openQuoteModal('Business Owner Policy')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -90,7 +90,7 @@
                 </div>
 
                 <!-- 2. Personal Belongings -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <div class="coverage-card" onclick="openQuoteModal('Business Owner Policy')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,7 +104,7 @@
                 </div>
 
                 <!-- 3. Personal Liability -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <div class="coverage-card" onclick="openQuoteModal('Business Owner Policy')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -118,7 +118,7 @@
                 </div>
 
                 <!-- 4. Loss of Use / Living Expenses -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <div class="coverage-card" onclick="openQuoteModal('Business Owner Policy')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -132,7 +132,7 @@
                 </div>
 
                 <!-- 5. Other Structures -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <div class="coverage-card" onclick="openQuoteModal('Business Owner Policy')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -146,7 +146,7 @@
                 </div>
 
                 <!-- 6. Valuable Articles & Water Backup -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <div class="coverage-card" onclick="openQuoteModal('Business Owner Policy')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -237,7 +237,7 @@
                     <p class="simpler-paragraph">
                         {{ $content['guidance_text'] ?? 'Whether you are purchasing your first home, upgrading to a custom sanctuary, or protecting a family estate, Surebound eliminates insurance complexity. We calculate your home\'s unique replacement cost using regional building data so you get exact coverage without paying for unnecessary fluff.' }}
                     </p>
-                    <a href="javascript:void(0)" onclick="openQuoteModal('Property Insurance')" class="btn-learn-more">
+                    <a href="javascript:void(0)" onclick="openQuoteModal('Business Owner Policy')" class="btn-learn-more">
                         <span>Calculate Home Rate</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -383,8 +383,8 @@
                 <p>{{ $content['cta_subtitle'] ?? 'Get a personalized home insurance quote tailored to your property in less than 2 minutes.' }}</p>
             </div>
             <div class="cta-button-group">
-                <a href="javascript:void(0)" onclick="openQuoteModal('Property Insurance')" class="btn-cta-white">
-                    <span>Get a Property Quote</span>
+                <a href="javascript:void(0)" onclick="openQuoteModal('Business Owner Policy')" class="btn-cta-white">
+                    <span>Get a Commercial Quote</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>

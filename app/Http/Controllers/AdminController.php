@@ -20,6 +20,19 @@ use Illuminate\Support\Facades\Mail;
 class AdminController extends Controller
 {
     /**
+     * In-memory cache for consolidated website contact info
+     */
+    public static ?array $siteContactCache = null;
+
+    /**
+     * Clear the cached site contact information
+     */
+    public static function clearSiteContactCache(): void
+    {
+        self::$siteContactCache = null;
+    }
+
+    /**
      * Display the Executive Admin Portal with Real Database Records
      */
     public function index()
@@ -220,6 +233,7 @@ class AdminController extends Controller
         $commercialAutoInsuranceContent = PageContent::getForPage('commercial-auto-insurance', self::getDefaultCommercialAutoInsuranceContent());
         $suretyBondContent = PageContent::getForPage('surety-bond', self::getDefaultSuretyBondContent());
         $contactContent = PageContent::getForPage('contact', self::getDefaultContactContent());
+        $siteContact = self::getSiteContactInfo();
         $partnersContent = PageContent::getForPage('partners', self::getDefaultPartnersContent());
 
         $agencySignature = ApiSetting::where('key', 'agency_signature')->first()?->value ?? [
@@ -234,6 +248,7 @@ class AdminController extends Controller
             'claims',
             'supportTickets',
             'supportContent',
+            'siteContact',
             'agents',
             'invoices',
             'agencySignature',
@@ -398,6 +413,9 @@ class AdminController extends Controller
             'phone' => 'nullable|string|max:50',
             'zip' => 'required|string|max:20',
             'type' => 'nullable|string|max:50',
+            'coverage_amount' => 'nullable|string|max:255',
+            'amount' => 'nullable|string|max:255',
+            'source_page' => 'nullable|string|max:255',
             'company_name' => 'nullable|string|max:255',
             'fleet_size' => 'nullable|string|max:100',
             'vehicle_type' => 'nullable|string|max:100',
@@ -423,10 +441,19 @@ class AdminController extends Controller
             'commercial_auto' => 'Commercial Auto Insurance',
             'surety_bond' => 'Surety Bond',
             'surety' => 'Surety Bond',
+            'group_benefits' => 'Group Employee Benefits',
+            'specialty' => 'Specialty & Surplus Coverage',
+            'personal' => 'Personal Coverage',
             'cyber' => 'Cyber Security',
         ];
 
         $notesList = [];
+        if ($request->filled('source_page')) {
+            $notesList[] = 'Source Page: '.$request->input('source_page');
+        }
+        if ($request->filled('coverage_amount')) {
+            $notesList[] = 'Requested Amount/Limit: '.$request->input('coverage_amount');
+        }
         if ($request->filled('company_name')) {
             $notesList[] = 'Company: '.$request->input('company_name');
         }
@@ -446,7 +473,12 @@ class AdminController extends Controller
             ? implode(' | ', $notesList)
             : 'Generated via website quote widget.';
 
-        $coverage = $request->input('coverage_tier') ?: ($request->filled('bond_amount') ? 'Bond Limit: '.$request->input('bond_amount') : '$500,000 Standard Tier');
+        $selectedAmount = $request->input('coverage_amount')
+            ?: $request->input('amount')
+            ?: $request->input('coverage_tier')
+            ?: ($request->filled('bond_amount') ? 'Bond Limit: '.$request->input('bond_amount') : null);
+
+        $coverage = $selectedAmount ?: '$500,000 Standard Tier';
 
         $quote = Quote::create([
             'quote_ref' => 'Q-'.rand(10000, 99999),
@@ -2882,6 +2914,248 @@ class AdminController extends Controller
         }
 
         return redirect()->to(route('admin.dashboard').'#contact-cms')->with('success', 'Contact page updated successfully!');
+    }
+
+    /**
+     * Default key-value fallback content for global website contact information and hotlines
+     */
+    public static function getDefaultContactInfo(): array
+    {
+        return [
+            // 1. Primary Website & Header/Footer Contact
+            'primary_phone' => '+1 813-214-1731',
+            'primary_phone_label' => 'Toll-Free Client Advisory',
+            'primary_hours' => 'Mon–Fri: 8:00 AM – 8:00 PM EST',
+            'support_email' => 'support@surebound.com',
+            'billing_email' => 'billing@surebound.com',
+            'claims_email' => 'claims@surebound.com',
+            'whatsapp_phone' => '+1 813-214-1731',
+            'live_chat_status' => 'Available Mon–Fri 8:00 AM – 8:00 PM EST',
+
+            // 2. Departmental Lines & Hotlines
+            'claims_phone' => '+1 813-214-1731',
+            'claims_phone_badge' => '24/7/365 Emergency Loss Hotline',
+            'claims_subtitle' => 'Immediate First-Notice-of-Loss Intake & Emergency Dispatch',
+            'commercial_phone' => '+1 813-214-1731',
+            'commercial_hours' => 'Mon–Fri, 8:30am–6:00pm EST',
+            'commercial_email' => 'commercial@surebound.com',
+            'client_care_phone' => '+1 813-214-1731',
+            'client_care_hours' => 'Mon–Fri, 8:00am–8:00pm EST',
+            'roadside_phone' => '1-800-555-TOWS',
+            'cyber_phone' => '1-888-SURE-CYBER',
+
+            // 3. Physical Office Locations & Headquarters
+            'hq_title' => 'Tampa Headquarters',
+            'hq_address' => '100 N Tampa St, Suite 2500, Tampa, FL 33602',
+            'hq_city' => 'Tampa',
+            'hq_state' => 'FL',
+            'hq_zip' => '33602',
+            'hq_phone' => '+1 813-214-1731',
+            'hq_hours' => 'Mon–Fri: 8:30 AM – 5:30 PM EST',
+
+            'branch_title' => 'Dhaka Regional Desk',
+            'branch_address' => 'Level 14, Crystal Palace, Gulshan-2, Dhaka 1212',
+            'branch_city' => 'Dhaka',
+            'branch_state' => 'Dhaka',
+            'branch_zip' => '1212',
+            'branch_phone' => '+880 9612 345678',
+            'branch_email' => 'dhaka.desk@surebound.com',
+            'branch_hours' => 'Sun–Thu: 9:00 AM – 6:00 PM BST',
+            'map_link' => 'https://maps.google.com/?q=100+N+Tampa+St+Suite+2500+Tampa+FL+33602',
+
+            // 4. Policyholder Portal Concierge Underwriter
+            'underwriter_name' => 'Marcus Vance, CPCU',
+            'underwriter_title' => 'Senior Underwriter & Risk Advisor',
+            'underwriter_phone' => '(512) 555-0182',
+            'underwriter_email' => 'm.vance@surebound.com',
+            'underwriter_hours' => 'Mon – Fri • 8:00 AM – 6:00 PM CST',
+        ];
+    }
+
+    /**
+     * Get consolidated website contact info with backward-compatible fallback blending
+     */
+    public static function getSiteContactInfo(): array
+    {
+        if (! app()->runningUnitTests() && self::$siteContactCache !== null) {
+            return self::$siteContactCache;
+        }
+
+        $defaults = self::getDefaultContactInfo();
+        $stored = PageContent::getForPage('contact_info', []);
+
+        $contactStored = PageContent::getForPage('contact', []);
+        $supportStored = PageContent::getForPage('support', []);
+
+        $merged = array_merge($defaults, $stored);
+
+        // Fallback blending if contact_info is empty
+        if (empty($stored)) {
+            if (! empty($contactStored['primary_phone'])) {
+                $merged['primary_phone'] = $contactStored['primary_phone'];
+            }
+            if (! empty($contactStored['claims_phone'])) {
+                $merged['claims_phone'] = $contactStored['claims_phone'];
+            }
+            if (! empty($contactStored['channel_4_value'])) {
+                $merged['support_email'] = $contactStored['channel_4_value'];
+            }
+            if (! empty($contactStored['hq_title'])) {
+                $merged['hq_title'] = $contactStored['hq_title'];
+            }
+            if (! empty($contactStored['hq_address'])) {
+                $merged['hq_address'] = $contactStored['hq_address'];
+            }
+            if (! empty($contactStored['hq_hours'])) {
+                $merged['hq_hours'] = $contactStored['hq_hours'];
+            }
+
+            if (! empty($supportStored['support_phone'])) {
+                $merged['primary_phone'] = $supportStored['support_phone'];
+            }
+            if (! empty($supportStored['support_email'])) {
+                $merged['support_email'] = $supportStored['support_email'];
+            }
+            if (! empty($supportStored['emergency_phone'])) {
+                $merged['claims_phone'] = $supportStored['emergency_phone'];
+            }
+            if (! empty($supportStored['roadside_phone'])) {
+                $merged['roadside_phone'] = $supportStored['roadside_phone'];
+            }
+            if (! empty($supportStored['cyber_phone'])) {
+                $merged['cyber_phone'] = $supportStored['cyber_phone'];
+            }
+            if (! empty($supportStored['underwriter_name'])) {
+                $merged['underwriter_name'] = $supportStored['underwriter_name'];
+            }
+            if (! empty($supportStored['underwriter_title'])) {
+                $merged['underwriter_title'] = $supportStored['underwriter_title'];
+            }
+            if (! empty($supportStored['underwriter_phone'])) {
+                $merged['underwriter_phone'] = $supportStored['underwriter_phone'];
+            }
+            if (! empty($supportStored['underwriter_email'])) {
+                $merged['underwriter_email'] = $supportStored['underwriter_email'];
+            }
+            if (! empty($supportStored['underwriter_hours'])) {
+                $merged['underwriter_hours'] = $supportStored['underwriter_hours'];
+            }
+            if (! empty($supportStored['office_address'])) {
+                $merged['branch_address'] = $supportStored['office_address'];
+            }
+        }
+
+        self::$siteContactCache = $merged;
+
+        return self::$siteContactCache;
+    }
+
+    /**
+     * Update website contact information, direct lines, office locations, and hotlines
+     */
+    public function updateContactInfo(Request $request)
+    {
+        $validated = $request->validate([
+            // Primary & Digital
+            'primary_phone' => 'required|string|max:50',
+            'primary_phone_label' => 'nullable|string|max:100',
+            'primary_hours' => 'nullable|string|max:150',
+            'support_email' => 'required|email|max:100',
+            'billing_email' => 'nullable|email|max:100',
+            'claims_email' => 'nullable|email|max:100',
+            'whatsapp_phone' => 'nullable|string|max:50',
+            'live_chat_status' => 'nullable|string|max:150',
+
+            // Departmental Hotlines
+            'claims_phone' => 'required|string|max:50',
+            'claims_phone_badge' => 'nullable|string|max:100',
+            'claims_subtitle' => 'nullable|string|max:255',
+            'commercial_phone' => 'nullable|string|max:50',
+            'commercial_hours' => 'nullable|string|max:150',
+            'commercial_email' => 'nullable|email|max:100',
+            'client_care_phone' => 'nullable|string|max:50',
+            'client_care_hours' => 'nullable|string|max:150',
+            'roadside_phone' => 'nullable|string|max:50',
+            'cyber_phone' => 'nullable|string|max:50',
+
+            // Office Locations
+            'hq_title' => 'required|string|max:150',
+            'hq_address' => 'required|string|max:255',
+            'hq_city' => 'nullable|string|max:100',
+            'hq_state' => 'nullable|string|max:100',
+            'hq_zip' => 'nullable|string|max:20',
+            'hq_phone' => 'nullable|string|max:50',
+            'hq_hours' => 'nullable|string|max:150',
+
+            'branch_title' => 'nullable|string|max:150',
+            'branch_address' => 'nullable|string|max:255',
+            'branch_city' => 'nullable|string|max:100',
+            'branch_state' => 'nullable|string|max:100',
+            'branch_zip' => 'nullable|string|max:20',
+            'branch_phone' => 'nullable|string|max:50',
+            'branch_email' => 'nullable|email|max:100',
+            'branch_hours' => 'nullable|string|max:150',
+            'map_link' => 'nullable|string|max:500',
+
+            // Underwriter Concierge
+            'underwriter_name' => 'required|string|max:100',
+            'underwriter_title' => 'nullable|string|max:150',
+            'underwriter_phone' => 'nullable|string|max:50',
+            'underwriter_email' => 'nullable|email|max:100',
+            'underwriter_hours' => 'nullable|string|max:150',
+        ]);
+
+        PageContent::setForPage('contact_info', $validated);
+
+        // Sync with contact page content
+        PageContent::setForPage('contact', [
+            'primary_phone' => $validated['primary_phone'],
+            'claims_phone' => $validated['claims_phone'],
+            'value_1_title' => $validated['client_care_phone'] ?? $validated['primary_phone'],
+            'value_1_phone' => $validated['client_care_phone'] ?? $validated['primary_phone'],
+            'value_2_title' => $validated['claims_phone'],
+            'value_2_phone' => $validated['claims_phone'],
+            'value_3_title' => $validated['commercial_phone'] ?? $validated['primary_phone'],
+            'value_3_phone' => $validated['commercial_phone'] ?? $validated['primary_phone'],
+            'value_4_title' => $validated['support_email'],
+            'value_4_email' => $validated['support_email'],
+            'channel_1_value' => $validated['client_care_phone'] ?? $validated['primary_phone'],
+            'channel_2_value' => $validated['claims_phone'],
+            'channel_3_value' => $validated['commercial_phone'] ?? $validated['primary_phone'],
+            'channel_4_value' => $validated['support_email'],
+            'hq_title' => $validated['hq_title'],
+            'hq_address' => $validated['hq_address'],
+            'hq_hours' => $validated['hq_hours'] ?? '',
+            'cta_phone' => $validated['primary_phone'],
+        ]);
+
+        // Sync with user portal support page content
+        PageContent::setForPage('support', [
+            'support_phone' => $validated['primary_phone'],
+            'support_email' => $validated['support_email'],
+            'emergency_phone' => $validated['claims_phone'],
+            'emergency_subtitle' => $validated['claims_subtitle'] ?? '',
+            'roadside_phone' => $validated['roadside_phone'] ?? '',
+            'cyber_phone' => $validated['cyber_phone'] ?? '',
+            'underwriter_name' => $validated['underwriter_name'],
+            'underwriter_title' => $validated['underwriter_title'] ?? '',
+            'underwriter_phone' => $validated['underwriter_phone'] ?? '',
+            'underwriter_email' => $validated['underwriter_email'] ?? '',
+            'underwriter_hours' => $validated['underwriter_hours'] ?? '',
+            'office_address' => $validated['hq_address'],
+        ]);
+
+        self::clearSiteContactCache();
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Website contact information, direct departmental lines, office locations, and emergency hotlines updated successfully!',
+                'contact' => self::getSiteContactInfo(),
+            ]);
+        }
+
+        return redirect()->to(route('admin.dashboard').'#contact-info')->with('success', 'Website contact information updated successfully!');
     }
 
     public function updatePartners(Request $request)

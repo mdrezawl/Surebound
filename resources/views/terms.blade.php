@@ -319,8 +319,8 @@
                 <div class="legal-contact-callout">
                     <h4>Legal &amp; Policy Help</h4>
                     <p>Have questions regarding policy binders, terms, or underwriting conditions?</p>
-                    <a href="tel:+18132141731">📞 +1 813-214-1731</a><br>
-                    <a href="mailto:legal@surebound.com" style="margin-top:4px; display:inline-block;">✉️ legal@surebound.com</a>
+                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteContact['primary_phone'] ?? '+1 813-214-1731') }}">📞 {{ $siteContact['primary_phone'] ?? '+1 813-214-1731' }}</a><br>
+                    <a href="mailto:{{ $siteContact['support_email'] ?? 'support@surebound.com' }}" style="margin-top:4px; display:inline-block;">✉️ {{ $siteContact['support_email'] ?? 'support@surebound.com' }}</a>
                 </div>
             </aside>
 
@@ -419,9 +419,9 @@
                     <div class="legal-notice-box" style="background:#f8faff; border-color:#d7e4fa;">
                         <h4>Questions Regarding These Terms?</h4>
                         <p style="margin-bottom:6px;"><strong>Agency:</strong> Surebound Insurance Services LLC</p>
-                        <p style="margin-bottom:6px;"><strong>Advisory Phone:</strong> <a href="tel:+18132141731" style="color:#0b57d0; font-weight:700;">+1 813-214-1731</a></p>
-                        <p style="margin-bottom:6px;"><strong>Email:</strong> <a href="mailto:legal@surebound.com" style="color:#0b57d0;">legal@surebound.com</a></p>
-                        <p style="margin-bottom:0;"><strong>Corporate Address:</strong> 100 North Tampa Street, Suite 2400, Tampa, FL 33602</p>
+                        <p style="margin-bottom:6px;"><strong>Advisory Phone:</strong> <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteContact['primary_phone'] ?? '+1 813-214-1731') }}" style="color:#0b57d0; font-weight:700;">{{ $siteContact['primary_phone'] ?? '+1 813-214-1731' }}</a></p>
+                        <p style="margin-bottom:6px;"><strong>Email:</strong> <a href="mailto:{{ $siteContact['support_email'] ?? 'support@surebound.com' }}" style="color:#0b57d0;">{{ $siteContact['support_email'] ?? 'support@surebound.com' }}</a></p>
+                        <p style="margin-bottom:0;"><strong>Corporate Address:</strong> {{ $siteContact['hq_address'] ?? '100 North Tampa Street, Suite 2400, Tampa, FL 33602' }}</p>
                     </div>
                 </section>
             </main>

@@ -93,6 +93,39 @@ class PolicyManagementTest extends TestCase
         $response->assertSee('SB-AUT-881122');
         $response->assertSee('2024 Tesla Model S');
         $response->assertSee('Official Insurance Card');
+        $response->assertSee('qr-box');
+        $response->assertSee('verify/policy/SB-AUT-881122');
+    }
+
+    public function test_anyone_can_verify_active_policy_via_public_verification_endpoint(): void
+    {
+        $customer = $this->createCustomer();
+
+        $policy = Policy::create([
+            'user_id' => $customer->id,
+            'policy_number' => 'SB-VER-990011',
+            'holder_name' => 'Linda Croft',
+            'holder_email' => 'linda@example.com',
+            'type' => 'auto',
+            'type_label' => 'Standard Auto',
+            'carrier' => 'Surebound Mutual Underwriting Co.',
+            'insured_item' => 'Listed Insured Schedule on File',
+            'coverage_limit' => '$75,000 / $150,000',
+            'deductible' => '$1,000',
+            'annual_premium' => '$1,200.00',
+            'billing_frequency' => 'annual',
+            'effective_date' => '2026-10-04',
+            'renewal_date' => '2027-10-04',
+            'status' => 'active',
+        ]);
+
+        $response = $this->get(route('policy.verify', $policy->policy_number));
+
+        $response->assertStatus(200);
+        $response->assertSee('SB-VER-990011');
+        $response->assertSee('Linda Croft');
+        $response->assertSee('Valid Insurance Coverage In Force');
+        $response->assertSee('Texas Transportation Code');
     }
 
     public function test_admin_can_create_and_bind_new_policy(): void

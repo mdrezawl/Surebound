@@ -384,6 +384,45 @@ button {
   box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
 }
 
+/* Header Actions */
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-header-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-navy);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 14.5px;
+  font-weight: 600;
+  border: 1.5px solid rgba(11, 26, 72, 0.16);
+  background-color: transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-header-login:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(--color-sky-light);
+}
+
+.btn-header-login svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.2;
+}
+
+.mobile-nav-actions {
+  display: none;
+}
+
 /* Header Quote Button */
 .btn-header-quote {
   display: inline-flex;
@@ -391,9 +430,9 @@ button {
   gap: 6px;
   background-color: var(--color-primary);
   color: #ffffff;
-  padding: 11px 24px;
+  padding: 10px 22px;
   border-radius: var(--radius-pill);
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 600;
   letter-spacing: -0.2px;
   box-shadow: 0 3px 12px rgba(18, 85, 219, 0.28);
@@ -1805,6 +1844,7 @@ button {
     height: 28px;
   }
 
+  .header-actions,
   .btn-header-quote {
     display: none !important;
   }
@@ -1879,6 +1919,58 @@ button {
   .dropdown-flyout a {
     padding: 8px 18px;
     font-size: 15px;
+  }
+
+  .mobile-nav-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #eef2f6;
+  }
+
+  .btn-mobile-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-navy);
+    border: 1.5px solid rgba(11, 26, 72, 0.16);
+    background: transparent;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-mobile-login:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background-color: var(--color-sky-light);
+  }
+
+  .btn-mobile-quote {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--color-primary);
+    text-decoration: none;
+    box-shadow: 0 3px 12px rgba(18, 85, 219, 0.25);
+    transition: all 0.2s ease;
+  }
+
+  .btn-mobile-quote:hover {
+    background-color: var(--color-primary-hover);
+    color: #ffffff;
   }
 
   /* Hero Section (Compact side-by-side layout for mobile) */

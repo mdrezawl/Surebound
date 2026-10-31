@@ -97,11 +97,11 @@
                     <div class="notify-dot"></div>
                 </div>
                 
-                <div class="header-profile" id="profileDropdownBtn">
-                    <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Profile avatar">
+                <div class="header-profile" id="profileDropdownBtn" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="User profile and settings">
+                    <img src="{{ Auth::user()?->avatar ? asset(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name ?? 'User').'&background=1d4ed8&color=ffffff&bold=true' }}" alt="{{ Auth::user()->name ?? 'User' }}">
                     <div class="header-profile-info">
-                        <span class="header-profile-name">{{ Auth::user()->name ?? 'Md Rejawl' }}</span>
-                        <span class="header-profile-role">Policy Holder</span>
+                        <span class="header-profile-name">{{ Auth::user()->name ?? 'User' }}</span>
+                        <span class="header-profile-role">{{ Auth::user()?->title ?: 'Policy Holder' }}</span>
                     </div>
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #64748b;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     
@@ -180,13 +180,35 @@
 
         if (profileBtn && dropdownMenu) {
             profileBtn.addEventListener('click', function(e) {
-                dropdownMenu.classList.toggle('show');
+                if (e.target.closest('#profileDropdownMenu')) {
+                    return;
+                }
                 e.stopPropagation();
+                const isOpen = dropdownMenu.classList.toggle('show');
+                profileBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            profileBtn.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    if (!e.target.closest('#profileDropdownMenu')) {
+                        e.preventDefault();
+                        const isOpen = dropdownMenu.classList.toggle('show');
+                        profileBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    }
+                }
             });
 
             document.addEventListener('click', function(e) {
                 if (!profileBtn.contains(e.target)) {
                     dropdownMenu.classList.remove('show');
+                    profileBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && dropdownMenu.classList.contains('show')) {
+                    dropdownMenu.classList.remove('show');
+                    profileBtn.setAttribute('aria-expanded', 'false');
                 }
             });
         }

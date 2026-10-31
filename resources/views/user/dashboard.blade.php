@@ -13,9 +13,9 @@
             <!-- HERO -->
             <div class="hero-banner">
                 <div class="hero-content">
-                    <div class="hero-greeting">Hello, {{ explode(' ', Auth::user()->name ?? 'Md Rejawl')[0] }} 👋</div>
-                    <h1 class="hero-title">Welcome back!</h1>
-                    <p class="hero-subtitle">Here's an overview of your insurance journey. Manage your policies, make payments, and get the support you need &mdash; all in one place.</p>
+                    <div class="hero-greeting">Hello, {{ explode(' ', Auth::user()->name ?? 'User')[0] }} 👋</div>
+                    <h1 class="hero-title">{{ $policies->isEmpty() ? 'Welcome to Surebound!' : 'Welcome back!' }}</h1>
+                    <p class="hero-subtitle">{{ $policies->isEmpty() ? 'Get started on your insurance journey. Choose your coverage, request underwriting proposals, and manage your policies — all in one place.' : 'Here\'s an overview of your insurance journey. Manage your policies, make payments, and get the support you need — all in one place.' }}</p>
                     
                     <div class="hero-stats">
                         <div class="hero-stat">
@@ -48,6 +48,124 @@
                     </div>
                 </div>
             </div>
+
+            @if($policies->isEmpty())
+            <!-- STEP-BY-STEP ONBOARDING GUIDE FOR FRESH ACCOUNTS -->
+            <div class="dashboard-section onboarding-guide-card" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-sm); margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px;">
+                    <div>
+                        <div style="display: inline-flex; align-items: center; gap: 6px; background: #eff6ff; color: #1d4ed8; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <span>Getting Started Guide</span>
+                        </div>
+                        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--brand-navy); margin: 0;">Get Protected in 3 Simple Steps</h2>
+                        <p style="font-size: 0.875rem; color: var(--text-muted); margin: 4px 0 0;">Follow this step-by-step roadmap to customize your insurance coverage and activate your policy.</p>
+                    </div>
+                    <div style="font-size: 0.8125rem; font-weight: 600; padding: 6px 14px; border-radius: 20px; {{ $quotes->isNotEmpty() && $quotes->where('status', 'quoted')->isNotEmpty() ? 'background: #ecfdf5; border: 1px solid #a7f3d0; color: #059669;' : ($quotes->isNotEmpty() ? 'background: #fffbeb; border: 1px solid #fde68a; color: #d97706;' : 'background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8;') }}">
+                        @if($quotes->isNotEmpty() && $quotes->where('status', 'quoted')->isNotEmpty())
+                            Step 2 Completed &bull; Proposal Ready
+                        @elseif($quotes->isNotEmpty())
+                            Step 1 Completed &bull; In Underwriting Review
+                        @else
+                            Step 1 of 3 &bull; Ready to Begin
+                        @endif
+                    </div>
+                </div>
+
+                <div class="onboarding-steps-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                    
+                    <!-- STEP 1 -->
+                    <div class="step-card" style="background: {{ $quotes->isNotEmpty() ? '#f8fafc' : '#ffffff' }}; border: 1.5px solid {{ $quotes->isNotEmpty() ? '#10b981' : '#3b82f6' }}; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <span style="width: 32px; height: 32px; border-radius: 50%; background: {{ $quotes->isNotEmpty() ? '#10b981' : '#3b82f6' }}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 800;">
+                                    @if($quotes->isNotEmpty())
+                                        ✓
+                                    @else
+                                        1
+                                    @endif
+                                </span>
+                                <span style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: {{ $quotes->isNotEmpty() ? '#059669' : '#1d4ed8' }}; background: {{ $quotes->isNotEmpty() ? '#ecfdf5' : '#eff6ff' }}; padding: 2px 8px; border-radius: 4px;">
+                                    {{ $quotes->isNotEmpty() ? 'Submitted' : 'Start Here' }}
+                                </span>
+                            </div>
+                            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--brand-navy); margin: 0 0 6px;">1. Request a Quote</h3>
+                            <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 16px;">
+                                Select coverage (Home, Auto, Business, etc.) and tell us your coverage requirements for tailored rates.
+                            </p>
+                        </div>
+                        <div>
+                            @if($quotes->isNotEmpty())
+                                <a href="{{ route('user.quote') }}" style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 8px 12px; background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; text-decoration: none;">
+                                    <span>View Your Quotes ({{ $quotes->count() }}) &rarr;</span>
+                                </a>
+                            @else
+                                <a href="{{ route('user.quote') }}" style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 8px 12px; background: #1d4ed8; color: #ffffff; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 4px rgba(29, 78, 216, 0.2);">
+                                    <span>Get Your First Quote &rarr;</span>
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- STEP 2 -->
+                    <div class="step-card" style="background: #ffffff; border: 1.5px solid {{ $quotes->where('status', 'quoted')->isNotEmpty() ? '#10b981' : ($quotes->isNotEmpty() ? '#f59e0b' : '#e2e8f0') }}; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <span style="width: 32px; height: 32px; border-radius: 50%; background: {{ $quotes->where('status', 'quoted')->isNotEmpty() ? '#10b981' : ($quotes->isNotEmpty() ? '#f59e0b' : '#94a3b8') }}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 800;">
+                                    @if($quotes->where('status', 'quoted')->isNotEmpty())
+                                        ✓
+                                    @else
+                                        2
+                                    @endif
+                                </span>
+                                <span style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: {{ $quotes->where('status', 'quoted')->isNotEmpty() ? '#059669' : ($quotes->isNotEmpty() ? '#d97706' : '#64748b') }}; background: {{ $quotes->where('status', 'quoted')->isNotEmpty() ? '#ecfdf5' : ($quotes->isNotEmpty() ? '#fffbeb' : '#f1f5f9') }}; padding: 2px 8px; border-radius: 4px;">
+                                    {{ $quotes->where('status', 'quoted')->isNotEmpty() ? 'Proposal Ready' : ($quotes->isNotEmpty() ? 'Reviewing' : 'Next Step') }}
+                                </span>
+                            </div>
+                            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--brand-navy); margin: 0 0 6px;">2. Underwriting Review</h3>
+                            <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 16px;">
+                                Licensed advisors inspect risk schedules, apply multi-policy bundle discounts, and prepare an actuarial proposal.
+                            </p>
+                        </div>
+                        <div>
+                            @if($quotes->where('status', 'quoted')->isNotEmpty())
+                                <a href="{{ route('user.quote') }}" style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 8px 12px; background: #059669; color: #ffffff; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; text-decoration: none;">
+                                    <span>Review Proposal &rarr;</span>
+                                </a>
+                            @else
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 8px 12px; background: #f8fafc; color: #64748b; border: 1px dashed #cbd5e1; border-radius: 6px; font-size: 0.8125rem; font-weight: 500;">
+                                    <span>Fast 24-hr turnaround</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- STEP 3 -->
+                    <div class="step-card" style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <span style="width: 32px; height: 32px; border-radius: 50%; background: #94a3b8; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 800;">
+                                    3
+                                </span>
+                                <span style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: #64748b; background: #f1f5f9; padding: 2px 8px; border-radius: 4px;">
+                                    Final Step
+                                </span>
+                            </div>
+                            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--brand-navy); margin: 0 0 6px;">3. Bind &amp; Active Protection</h3>
+                            <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 16px;">
+                                Accept your proposal to issue policy numbers, download digital ID cards, print ACORD certificates, and enjoy 24/7 coverage.
+                            </p>
+                        </div>
+                        <div>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 8px 12px; background: #f8fafc; color: #64748b; border: 1px dashed #cbd5e1; border-radius: 6px; font-size: 0.8125rem; font-weight: 500;">
+                                <span>Instant Digital ID Cards</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            @endif
 
             <!-- FIND RIGHT COVERAGE -->
             <div class="dashboard-section">
@@ -127,64 +245,6 @@
                     </a>
                 </div>
             </div>
-            
-            <!-- MY POLICIES -->
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">My Policies</h2>
-                        <p class="section-subtitle">View and manage your active and past insurance policies.</p>
-                    </div>
-                    <a href="{{ route('user.policies') }}" class="view-all">View All Policies &rarr;</a>
-                </div>
-                
-                <div class="table-card">
-                    <div class="table-responsive">
-                        <table class="policies-table">
-                            <thead>
-                                <tr>
-                                    <th>Policy No.</th>
-                                    <th>Type</th>
-                                    <th>Coverage</th>
-                                    <th>Status</th>
-                                    <th>Renewal Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($policies as $p)
-                                <tr>
-                                    <td>
-                                        <div class="policy-id-cell">
-                                            <div class="policy-icon-small">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                            </div>
-                                            <span style="font-family: monospace; font-weight: 700;">{{ $p->policy_number }}</span>
-                                        </div>
-                                    </td>
-                                    <td>{{ $p->type_label ?: ucfirst($p->type) }}</td>
-                                    <td>
-                                        <div class="coverage-details">
-                                            <span>{{ $p->coverage_limit }}</span>
-                                            <span>({{ $p->annual_premium }})</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status-badge {{ $p->status }}">{{ ucfirst($p->status) }}</span></td>
-                                    <td>{{ $p->renewal_date ? \Carbon\Carbon::parse($p->renewal_date)->format('M d, Y') : 'N/A' }}</td>
-                                    <td><a href="{{ route('user.policies') }}" class="action-link">View Details &rarr;</a></td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="6" style="text-align: center; padding: 32px; color: var(--text-muted);">
-                                        No active policies found. You can request a quote to bind new coverage.
-                                    </td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
 
         </div>
         
@@ -195,22 +255,22 @@
             <div class="profile-card">
                 <div class="profile-header-bg"></div>
                 <div class="profile-content">
-                    <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Profile" class="profile-avatar">
-                    <h2 class="profile-name">{{ Auth::user()->name ?? 'Md Rejawl' }}</h2>
+                    <img src="{{ Auth::user()?->avatar ? asset(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name ?? 'User').'&background=1d4ed8&color=ffffff&bold=true' }}" alt="{{ Auth::user()->name ?? 'User' }}" class="profile-avatar">
+                    <h2 class="profile-name">{{ Auth::user()->name ?? 'User' }}</h2>
                     <span class="profile-role">{{ Auth::user()?->title ?: 'Primary Policyholder' }}</span>
                     
                     <div class="profile-details">
                         <div class="profile-detail-item">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            <span>{{ Auth::user()?->email ?? 'client@surebound.com' }}</span>
+                            <span>{{ Auth::user()?->email ?? 'Not provided' }}</span>
                         </div>
                         <div class="profile-detail-item">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                            <span>{{ Auth::user()?->phone ?: '+880 9612 345678' }}</span>
+                            <span>{{ Auth::user()?->phone ?: 'Not provided' }}</span>
                         </div>
                         <div class="profile-detail-item">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            <span>{{ Auth::user()?->city ? Auth::user()->city.', '.Auth::user()->state : 'Austin, Texas' }}</span>
+                            <span>{{ Auth::user()?->city ? (Auth::user()?->state ? Auth::user()->city.', '.Auth::user()->state : Auth::user()->city) : 'Location not set' }}</span>
                         </div>
                     </div>
                     
@@ -284,6 +344,75 @@
             
         </aside>
         
+    </div>
+
+    <!-- FULLWIDTH SECTION: MY POLICIES (PLACED BELOW NEED HELP & RIGHT SIDEBAR) -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">My Policies</h2>
+                <p class="section-subtitle">View and manage your active and past insurance policies.</p>
+            </div>
+            <a href="{{ route('user.policies') }}" class="view-all">View All Policies &rarr;</a>
+        </div>
+        
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="policies-table">
+                    <thead>
+                        <tr>
+                            <th>Policy No.</th>
+                            <th>Type</th>
+                            <th>Coverage</th>
+                            <th>Status</th>
+                            <th>Renewal Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($policies as $p)
+                        <tr>
+                            <td>
+                                <div class="policy-id-cell">
+                                    <div class="policy-icon-small">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    </div>
+                                    <span style="font-family: monospace; font-weight: 700;">{{ $p->policy_number }}</span>
+                                </div>
+                            </td>
+                            <td>{{ $p->type_label ?: ucfirst($p->type) }}</td>
+                            <td>
+                                <div class="coverage-details">
+                                    <span>{{ $p->coverage_limit }}</span>
+                                    <span>({{ $p->annual_premium }})</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge {{ $p->status }}">{{ ucfirst($p->status) }}</span></td>
+                            <td>{{ $p->renewal_date ? \Carbon\Carbon::parse($p->renewal_date)->format('M d, Y') : 'N/A' }}</td>
+                            <td><a href="{{ route('user.policies') }}" class="action-link">View Details &rarr;</a></td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" style="padding: 48px 24px; text-align: center; background: #fafbfc;">
+                                <div style="max-width: 440px; margin: 0 auto;">
+                                    <div style="width: 48px; height: 48px; border-radius: 50%; background: #eff6ff; color: #1d4ed8; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                    </div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--brand-navy); margin: 0 0 6px;">No Active Policies Yet</h4>
+                                    <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 16px;">
+                                        Your account is fresh and ready. Request an insurance quote above or browse categories below to bind your first policy.
+                                    </p>
+                                    <a href="{{ route('user.quote') }}" style="display: inline-flex; align-items: center; gap: 6px; background: var(--brand-blue); color: #ffffff; padding: 9px 18px; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 4px rgba(29, 78, 216, 0.2);">
+                                        <span>Request a Quote &rarr;</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- FULLWIDTH BOTTOM SECTION: PLACED BELOW NEED HELP & MY POLICIES -->

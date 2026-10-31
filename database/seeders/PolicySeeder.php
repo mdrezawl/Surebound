@@ -133,6 +133,30 @@ class PolicySeeder extends Seeder
                 ],
                 'notes' => 'Annual risk assessment verified. SOC2 Type II certified cloud infrastructure endorsement.',
             ],
+            [
+                'user_id' => $userId,
+                'policy_number' => 'SB-POL-51928',
+                'holder_name' => 'Linda Croft',
+                'holder_email' => 'linda.croft@surebound.com',
+                'holder_phone' => '(512) 840-2918',
+                'type' => 'auto',
+                'type_label' => 'Standard Auto',
+                'carrier' => 'Surebound Mutual Underwriting Co.',
+                'insured_item' => 'Listed Insured Schedule on File',
+                'coverage_limit' => '$75,000 / $150,000',
+                'deductible' => '$1,000',
+                'annual_premium' => '$850.00',
+                'billing_frequency' => 'annual',
+                'effective_date' => '2026-10-04',
+                'renewal_date' => '2027-10-04',
+                'status' => 'active',
+                'coverage_details' => [
+                    'Bodily Injury & Property Damage' => '$75,000 / $150,000',
+                    'Deductible' => '$1,000 Standard',
+                    'State' => 'Texas (TX)',
+                ],
+                'notes' => 'Official Texas proof of financial responsibility card issued.',
+            ],
         ];
 
         foreach ($policies as $data) {

@@ -48,5 +48,13 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('marketingConfig', $config ?? AdminController::getDefaultMarketingSettings());
         });
+
+        View::composer('*', function ($view) {
+            try {
+                $view->with('siteContact', AdminController::getSiteContactInfo());
+            } catch (\Throwable $e) {
+                $view->with('siteContact', AdminController::getDefaultContactInfo());
+            }
+        });
     }
 }

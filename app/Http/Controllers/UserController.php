@@ -10,11 +10,6 @@ use App\Models\Policy;
 use App\Models\Quote;
 use App\Models\SupportTicket;
 use App\Models\User;
-use Database\Seeders\ClaimSeeder;
-use Database\Seeders\InvoiceSeeder;
-use Database\Seeders\PolicySeeder;
-use Database\Seeders\QuoteSeeder;
-use Database\Seeders\SupportTicketSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -42,70 +37,37 @@ class UserController extends Controller
             ]);
         }
 
-        if (Policy::count() === 0) {
-            (new PolicySeeder)->run();
-        }
-        if (Claim::count() === 0) {
-            (new ClaimSeeder)->run();
-        }
-        if (Invoice::count() === 0) {
-            (new InvoiceSeeder)->run();
-        }
-        if (Quote::count() === 0) {
-            (new QuoteSeeder)->run();
-        }
-
         // Fetch customer specific policies
-        $polQuery = Policy::query();
-        if ($user->exists) {
-            $polQuery->where(function ($q) use ($user) {
+        $policies = collect();
+        if ($user && $user->exists) {
+            $policies = Policy::where(function ($q) use ($user) {
                 $q->where('user_id', $user->id)
-                    ->orWhere('holder_email', $user->email)
-                    ->orWhere('holder_name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $policies = $polQuery->orderBy('id', 'desc')->get();
-        if ($policies->isEmpty()) {
-            $policies = Policy::orderBy('id', 'desc')->get();
+                    ->orWhere('holder_email', $user->email);
+            })->orderBy('id', 'desc')->get();
         }
 
         // Fetch customer claims
-        $claimQuery = Claim::query();
-        if ($user->exists) {
-            $claimQuery->where(function ($q) use ($user) {
-                $q->where('claimant_email', $user->email)
-                    ->orWhere('claimant_name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $claims = $claimQuery->orderBy('id', 'desc')->get();
-        if ($claims->isEmpty()) {
-            $claims = Claim::orderBy('id', 'desc')->get();
+        $claims = collect();
+        if ($user && $user->exists) {
+            $claims = Claim::where('claimant_email', $user->email)
+                ->orderBy('id', 'desc')
+                ->get();
         }
 
         // Fetch customer quotes
-        $quoteQuery = Quote::query();
-        if ($user->exists) {
-            $quoteQuery->where(function ($q) use ($user) {
-                $q->where('email', $user->email)
-                    ->orWhere('name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $quotes = $quoteQuery->orderBy('id', 'desc')->get();
-        if ($quotes->isEmpty()) {
-            $quotes = Quote::orderBy('id', 'desc')->get();
+        $quotes = collect();
+        if ($user && $user->exists) {
+            $quotes = Quote::where('email', $user->email)
+                ->orderBy('id', 'desc')
+                ->get();
         }
 
         // Fetch customer invoices
-        $invQuery = Invoice::query();
-        if ($user->exists) {
-            $invQuery->where(function ($q) use ($user) {
-                $q->where('customer_email', $user->email)
-                    ->orWhere('customer_name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $invoices = $invQuery->orderBy('id', 'desc')->get();
-        if ($invoices->isEmpty()) {
-            $invoices = Invoice::orderBy('id', 'desc')->get();
+        $invoices = collect();
+        if ($user && $user->exists) {
+            $invoices = Invoice::where('customer_email', $user->email)
+                ->orderBy('id', 'desc')
+                ->get();
         }
 
         // Customer KPIs
@@ -146,26 +108,13 @@ class UserController extends Controller
             ]);
         }
 
-        // Auto-seed policies if database currently has none
-        if (Policy::count() === 0) {
-            (new PolicySeeder)->run();
-        }
-
         // Retrieve policies for current policyholder
-        $query = Policy::query();
-        if ($user->exists) {
-            $query->where(function ($q) use ($user) {
+        $policies = collect();
+        if ($user && $user->exists) {
+            $policies = Policy::where(function ($q) use ($user) {
                 $q->where('user_id', $user->id)
-                    ->orWhere('holder_email', $user->email)
-                    ->orWhere('holder_name', 'like', '%'.$user->name.'%');
-            });
-        }
-
-        $policies = $query->orderBy('id', 'desc')->get();
-
-        // If user has no specific policies yet, fallback to all bound policies so the demo and evaluation are complete
-        if ($policies->isEmpty()) {
-            $policies = Policy::orderBy('id', 'desc')->get();
+                    ->orWhere('holder_email', $user->email);
+            })->orderBy('id', 'desc')->get();
         }
 
         // Calculate Policyholder KPIs
@@ -219,6 +168,29 @@ class UserController extends Controller
         return view('user.policy-id-card', compact('policy'));
     }
 
+    /**
+     * Public Digital Proof of Insurance Verification
+     */
+    public function verifyPolicy(?string $policyNumber = null)
+    {
+        $policyNumber = $policyNumber ?: request()->query('number');
+        $policy = null;
+
+        if ($policyNumber !== null && trim($policyNumber) !== '') {
+            $cleanNumber = trim($policyNumber);
+            $variantO = str_replace('0', 'O', $cleanNumber);
+            $variant0 = str_replace('O', '0', $cleanNumber);
+
+            $policy = Policy::with('user')
+                ->where('policy_number', $cleanNumber)
+                ->orWhere('policy_number', $variantO)
+                ->orWhere('policy_number', $variant0)
+                ->first();
+        }
+
+        return view('policy-verify', compact('policy', 'policyNumber'));
+    }
+
     public function quote()
     {
         /** @var User|null $user */
@@ -227,20 +199,11 @@ class UserController extends Controller
             $user = User::where('role', 'user')->first() ?? User::first();
         }
 
-        if (Quote::count() === 0) {
-            (new QuoteSeeder)->run();
-        }
-
-        $query = Quote::query();
+        $quotes = collect();
         if ($user && $user->exists) {
-            $query->where(function ($q) use ($user) {
-                $q->where('email', $user->email)
-                    ->orWhere('name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $quotes = $query->orderBy('id', 'desc')->get();
-        if ($quotes->isEmpty()) {
-            $quotes = Quote::orderBy('id', 'desc')->get();
+            $quotes = Quote::where('email', $user->email)
+                ->orderBy('id', 'desc')
+                ->get();
         }
 
         $totalQuotesCount = $quotes->count();
@@ -424,34 +387,17 @@ class UserController extends Controller
             $user = User::where('role', 'user')->first() ?? User::first();
         }
 
-        if (Claim::count() === 0) {
-            (new ClaimSeeder)->run();
-        }
-
-        $query = Claim::query();
+        $claims = collect();
+        $policies = collect();
         if ($user && $user->exists) {
-            $query->where(function ($q) use ($user) {
-                $q->where('claimant_email', $user->email)
-                    ->orWhere('claimant_name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $claims = $query->orderBy('id', 'desc')->get();
-        if ($claims->isEmpty()) {
-            $claims = Claim::orderBy('id', 'desc')->get();
-        }
+            $claims = Claim::where('claimant_email', $user->email)
+                ->orderBy('id', 'desc')
+                ->get();
 
-        // Get policies for claim filing dropdown
-        $polQuery = Policy::query();
-        if ($user && $user->exists) {
-            $polQuery->where(function ($q) use ($user) {
+            $policies = Policy::where(function ($q) use ($user) {
                 $q->where('user_id', $user->id)
-                    ->orWhere('holder_email', $user->email)
-                    ->orWhere('holder_name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $policies = $polQuery->where('status', 'active')->orderBy('id', 'desc')->get();
-        if ($policies->isEmpty()) {
-            $policies = Policy::orderBy('id', 'desc')->get();
+                    ->orWhere('holder_email', $user->email);
+            })->where('status', 'active')->orderBy('id', 'desc')->get();
         }
 
         return view('user.claims', compact('user', 'claims', 'policies'));
@@ -503,36 +449,17 @@ class UserController extends Controller
             $user = User::where('role', 'user')->first() ?? User::first();
         }
 
-        if (Policy::count() === 0) {
-            (new PolicySeeder)->run();
-        }
-        if (Invoice::count() === 0) {
-            (new InvoiceSeeder)->run();
-        }
-
-        $polQuery = Policy::query();
+        $policies = collect();
+        $invoices = collect();
         if ($user && $user->exists) {
-            $polQuery->where(function ($q) use ($user) {
+            $policies = Policy::where(function ($q) use ($user) {
                 $q->where('user_id', $user->id)
-                    ->orWhere('holder_email', $user->email)
-                    ->orWhere('holder_name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $policies = $polQuery->orderBy('id', 'desc')->get();
-        if ($policies->isEmpty()) {
-            $policies = Policy::orderBy('id', 'desc')->get();
-        }
+                    ->orWhere('holder_email', $user->email);
+            })->orderBy('id', 'desc')->get();
 
-        $invQuery = Invoice::query();
-        if ($user && $user->exists) {
-            $invQuery->where(function ($q) use ($user) {
-                $q->where('customer_email', $user->email)
-                    ->orWhere('customer_name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $invoices = $invQuery->orderBy('id', 'desc')->get();
-        if ($invoices->isEmpty()) {
-            $invoices = Invoice::orderBy('id', 'desc')->get();
+            $invoices = Invoice::where('customer_email', $user->email)
+                ->orderBy('id', 'desc')
+                ->get();
         }
 
         return view('user.documents', compact('user', 'policies', 'invoices'));
@@ -591,20 +518,11 @@ class UserController extends Controller
             $user = User::where('role', 'user')->first() ?? User::first();
         }
 
-        if (Invoice::count() === 0) {
-            (new InvoiceSeeder)->run();
-        }
-
-        $invQuery = Invoice::query();
+        $invoices = collect();
         if ($user && $user->exists) {
-            $invQuery->where(function ($q) use ($user) {
-                $q->where('customer_email', $user->email)
-                    ->orWhere('customer_name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $invoices = $invQuery->orderBy('id', 'desc')->get();
-        if ($invoices->isEmpty()) {
-            $invoices = Invoice::orderBy('id', 'desc')->get();
+            $invoices = Invoice::where('customer_email', $user->email)
+                ->orderBy('id', 'desc')
+                ->get();
         }
 
         $totalInvoiced = $invoices->sum('total_amount');
@@ -658,21 +576,18 @@ class UserController extends Controller
             $user = User::where('role', 'user')->first() ?? User::first();
         }
 
-        if (SupportTicket::count() === 0) {
-            (new SupportTicketSeeder)->run();
-        }
-
-        $query = SupportTicket::query();
+        $tickets = collect();
+        $policies = collect();
         if ($user && $user->exists) {
-            $query->where(function ($q) use ($user) {
+            $tickets = SupportTicket::where(function ($q) use ($user) {
                 $q->where('user_id', $user->id)
-                    ->orWhere('email', $user->email)
-                    ->orWhere('name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $tickets = $query->orderBy('id', 'desc')->get();
-        if ($tickets->isEmpty()) {
-            $tickets = SupportTicket::orderBy('id', 'desc')->get();
+                    ->orWhere('email', $user->email);
+            })->orderBy('id', 'desc')->get();
+
+            $policies = Policy::where(function ($q) use ($user) {
+                $q->where('user_id', $user->id)
+                    ->orWhere('holder_email', $user->email);
+            })->where('status', 'active')->get();
         }
 
         $supportContent = PageContent::getForPage('support', AdminController::getDefaultSupportContent());
@@ -683,19 +598,6 @@ class UserController extends Controller
             'email' => $supportContent['underwriter_email'] ?? 'm.vance@surebound.com',
             'phone' => $supportContent['underwriter_phone'] ?? '(512) 555-0182',
         ]);
-
-        $polQuery = Policy::query();
-        if ($user && $user->exists) {
-            $polQuery->where(function ($q) use ($user) {
-                $q->where('user_id', $user->id)
-                    ->orWhere('holder_email', $user->email)
-                    ->orWhere('holder_name', 'like', '%'.$user->name.'%');
-            });
-        }
-        $policies = $polQuery->where('status', 'active')->get();
-        if ($policies->isEmpty()) {
-            $policies = Policy::all();
-        }
 
         $totalTickets = $tickets->count();
         $openTickets = $tickets->whereIn('status', ['open', 'in_progress'])->count();

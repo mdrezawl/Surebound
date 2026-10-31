@@ -317,6 +317,19 @@
             </div>
         @endforeach
 
+        @if($policies->isEmpty() && $invoices->isEmpty())
+            <div style="grid-column: 1 / -1; background: #ffffff; border-radius: var(--radius-md); padding: 60px 24px; text-align: center; border: 1px dashed var(--border-light);">
+                <div style="font-size: 3rem; margin-bottom: 12px;">📄</div>
+                <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 6px;">No Documents or Certificates Yet</h3>
+                <p style="font-size: 0.9375rem; color: var(--text-muted); max-width: 460px; margin: 0 auto 20px;">
+                    Your account currently has no bound policies or generated billing statements. Once a policy is active, all official Declaration sheets, DMV Proof ID cards, and certified ACORD certificates will be available here.
+                </p>
+                <a href="{{ route('user.quote') }}" style="display: inline-flex; align-items: center; gap: 8px; background: var(--brand-blue); color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-decoration: none;">
+                    Request an Insurance Quote &rarr;
+                </a>
+            </div>
+        @endif
+
     </div>
 
 </div>

@@ -70,6 +70,9 @@ Route::get('/terms', [AdminController::class, 'showTerms'])->name('terms');
 
 Route::post('/quotes', [AdminController::class, 'storePublicQuote'])->name('quotes.store');
 
+// Official Proof of Insurance Public Verification
+Route::get('/verify/policy/{policyNumber?}', [UserController::class, 'verifyPolicy'])->name('policy.verify');
+
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -135,6 +138,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/claims', [AdminController::class, 'updateClaims'])->name('admin.claims.update');
     Route::post('/admin/payment', [AdminController::class, 'updatePayment'])->name('admin.payment.update');
     Route::post('/admin/contact', [AdminController::class, 'updateContact'])->name('admin.contact.update');
+    Route::post('/admin/contact-info', [AdminController::class, 'updateContactInfo'])->name('admin.contact-info.update');
     Route::post('/admin/partners', [AdminController::class, 'updatePartners'])->name('admin.partners.update');
 
     // API Integrations (Claims API & US Payments)
