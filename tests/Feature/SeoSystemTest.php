@@ -88,11 +88,11 @@ class SeoSystemTest extends TestCase
         // Check robots directive
         $response->assertSee('<meta name="robots"', false);
 
-        // Check hreflang tags
+        // Check hreflang tags (US & x-default only; non-US GB/CA removed per Launch Audit)
         $response->assertSee('hreflang="en-US"', false);
-        $response->assertSee('hreflang="en-GB"', false);
-        $response->assertSee('hreflang="en-CA"', false);
         $response->assertSee('hreflang="x-default"', false);
+        $response->assertDontSee('hreflang="en-GB"', false);
+        $response->assertDontSee('hreflang="en-CA"', false);
 
         // Check JSON-LD schema is present and valid JSON
         $content = $response->getContent();

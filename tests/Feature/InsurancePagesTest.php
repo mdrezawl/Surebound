@@ -598,12 +598,10 @@ class InsurancePagesTest extends TestCase
 
     public function test_homepage_renders_single_quote_as_fixed_card_without_slider(): void
     {
-        // By default or with 1 quote, it must render as a static card and NOT render slider controls
+        // By default, fake testimonial Marcel Gherkina is removed from the public homepage per Launch Audit
         $response = $this->get('/');
         $response->assertStatus(200);
-        $response->assertSee('brand-pull-quote-card');
-        $response->assertSee('Marcel Gherkina');
-        $response->assertSee('Verified Perspective');
+        $response->assertDontSee('Marcel Gherkina');
         $response->assertDontSee('quote-slider-wrapper');
         $response->assertDontSee('quote-slider-track');
         $response->assertDontSee('quote-slider-controls');

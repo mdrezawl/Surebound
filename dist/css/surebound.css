@@ -1042,6 +1042,22 @@ button {
   aspect-ratio: 16 / 10;
 }
 
+/* Founder portrait framing */
+.simpler-image-frame-founder {
+  aspect-ratio: 472 / 541 !important;
+  max-width: 440px;
+  margin: 0 auto;
+  border-radius: 18px;
+  box-shadow: 0 16px 36px -6px rgba(11, 26, 72, 0.16), 0 0 0 1px rgba(11, 26, 72, 0.05);
+  background-color: #f1f5f9;
+}
+
+.simpler-image-frame-founder .simpler-image {
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 18px;
+}
+
 /* =========================================================
    7. INSURANCE MADE SIMPLER SECTION
    ========================================================= */
@@ -2355,6 +2371,12 @@ button {
 
   .simpler-image-frame {
     aspect-ratio: 16 / 9;
+  }
+
+  .simpler-image-frame-founder {
+    aspect-ratio: 472 / 541 !important;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   /* Why Choose - 2 Columns on Mobile */

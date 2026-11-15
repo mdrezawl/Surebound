@@ -41,11 +41,11 @@
                 </div>
                 <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;">
                     <span style="color: #94a3b8;">Official Support Email:</span>
-                    <span style="font-family: 'JetBrains Mono', monospace; color: #a7f3d0;">underwriting@surebound.com</span>
+                    <span style="font-family: 'JetBrains Mono', monospace; color: #a7f3d0;">support@sureboundinsurance.com</span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                     <span style="color: #94a3b8;">Corporate Service Areas:</span>
-                    <span style="font-weight: 600; color: #f8fafc;">United States, United Kingdom, Canada</span>
+                    <span style="font-weight: 600; color: #f8fafc;">Florida, United States</span>
                 </div>
             </div>
         </div>

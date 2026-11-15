@@ -1928,10 +1928,10 @@
                                         <div style="margin-top: 16px; padding-left: 24px; border-left: 4px solid #10b981; position: relative;">
                                             <span style="position: absolute; left: -12px; top: -10px; font-size: 36px; color: #10b981; background: #f8fafc;">ˮ</span>
                                             <div style="font-size: 16px; font-style: italic; color: #333; margin-bottom: 8px;">
-                                                We believe that the advantages are so great that a shift to working on slack, or something like it, is inevitable.
+                                                Having a knowledgeable, local advisor by your side during a Florida claim makes all the difference.
                                             </div>
                                             <div style="font-size: 14px; font-weight: 600; color: #64748b;">
-                                                — Marcel Gherkina, Spokespeaker, Surebound
+                                                — Tampa Commercial Policyholder, Tampa, FL
                                             </div>
                                         </div>
                                     </div>
@@ -2038,19 +2038,19 @@
 
                                         <div class="form-group">
                                             <label class="form-label" style="font-weight: 700; color: #34d399;">General Client Support Email *</label>
-                                            <input type="email" name="support_email" class="form-input" value="{{ $siteContact['support_email'] ?? 'support@surebound.com' }}" required placeholder="support@surebound.com">
+                                            <input type="email" name="support_email" class="form-input" value="{{ $siteContact['support_email'] ?? 'support@sureboundinsurance.com' }}" required placeholder="support@sureboundinsurance.com">
                                             <small style="color: var(--text-muted); display: block; margin-top: 4px;">Main electronic intake email for policy changes and questions.</small>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="form-label">Billing &amp; Escrow Accounts Email</label>
-                                            <input type="email" name="billing_email" class="form-input" value="{{ $siteContact['billing_email'] ?? 'billing@surebound.com' }}" placeholder="billing@surebound.com">
+                                            <input type="email" name="billing_email" class="form-input" value="{{ $siteContact['billing_email'] ?? 'billing@sureboundinsurance.com' }}" placeholder="billing@sureboundinsurance.com">
                                             <small style="color: var(--text-muted); display: block; margin-top: 4px;">For mortgage escrows, premium payments, and invoice verifications.</small>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="form-label">First Notice of Loss (FNOL) Claims Email</label>
-                                            <input type="email" name="claims_email" class="form-input" value="{{ $siteContact['claims_email'] ?? 'claims@surebound.com' }}" placeholder="claims@surebound.com">
+                                            <input type="email" name="claims_email" class="form-input" value="{{ $siteContact['claims_email'] ?? 'claims@sureboundinsurance.com' }}" placeholder="claims@sureboundinsurance.com">
                                             <small style="color: var(--text-muted); display: block; margin-top: 4px;">For incident photo uploads, police reports, and repair estimates.</small>
                                         </div>
 
@@ -2086,20 +2086,20 @@
                                 <div class="card-body">
                                     <div class="form-grid">
                                         <div class="form-group">
-                                            <label class="form-label" style="font-weight: 700; color: #ef4444;">24/7 National Emergency Claims Hotline *</label>
-                                            <input type="text" name="claims_phone" class="form-input" value="{{ $siteContact['claims_phone'] ?? '+1 813-214-1731' }}" required placeholder="+1 813-214-1731 or 1-800-555-5677">
-                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Available 24 hours a day for immediate vehicular, property, and flood loss intake.</small>
+                                            <label class="form-label" style="font-weight: 700; color: #ef4444;">24/7 Agency Claims Support Hotline *</label>
+                                            <input type="text" name="claims_phone" class="form-input" value="{{ $siteContact['claims_phone'] ?? '+1 813-214-1731' }}" required placeholder="+1 813-214-1731">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Available for immediate Tampa vehicular, property, and storm loss intake guidance.</small>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="form-label">Claims Availability Badge</label>
-                                            <input type="text" name="claims_phone_badge" class="form-input" value="{{ $siteContact['claims_phone_badge'] ?? '24/7/365 Rapid Response' }}" placeholder="e.g. 24/7/365 Rapid Response">
+                                            <input type="text" name="claims_phone_badge" class="form-input" value="{{ $siteContact['claims_phone_badge'] ?? 'Direct Agency Guidance' }}" placeholder="e.g. Direct Agency Guidance">
                                             <small style="color: var(--text-muted); display: block; margin-top: 4px;">Badge shown next to the emergency claims line on the contact page.</small>
                                         </div>
 
                                         <div class="form-group full">
                                             <label class="form-label">Emergency Claims SLA / Subtitle</label>
-                                            <input type="text" name="claims_subtitle" class="form-input" value="{{ $siteContact['claims_subtitle'] ?? 'Immediate first-notice-of-loss intake & emergency adjuster dispatch' }}" placeholder="e.g. Immediate first-notice-of-loss intake & emergency adjuster dispatch">
+                                            <input type="text" name="claims_subtitle" class="form-input" value="{{ $siteContact['claims_subtitle'] ?? 'Immediate claim guidance & carrier hotline directory' }}" placeholder="e.g. Immediate claim guidance & carrier hotline directory">
                                         </div>
 
                                         <!-- Commercial Desk -->
@@ -2129,8 +2129,8 @@
                                         <!-- Roadside & Cyber -->
                                         <div class="form-group">
                                             <label class="form-label" style="font-weight: 700; color: #fbbf24;">24/7 Roadside Assistance &amp; Towing Hotline</label>
-                                            <input type="text" name="roadside_phone" class="form-input" value="{{ $siteContact['roadside_phone'] ?? '1-800-555-TOWS' }}" placeholder="1-800-555-TOWS">
-                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Emergency flat tire, towing, battery jump, and winching dispatch line.</small>
+                                            <input type="text" name="roadside_phone" class="form-input" value="{{ $siteContact['roadside_phone'] ?? '1-800-776-4737' }}" placeholder="1-800-776-4737">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Progressive roadside assistance and towing hotline.</small>
                                         </div>
 
                                         <div class="form-group">
@@ -2205,32 +2205,32 @@
                                     <!-- Regional Branch Desk -->
                                     <div style="margin-bottom: 20px;">
                                         <h4 style="font-size: 0.9375rem; font-weight: 700; color: #34d399; margin: 0 0 12px; display: flex; align-items: center; gap: 8px;">
-                                            <span>🌏 Regional Office Desk (Dhaka / Austin Regional Center)</span>
+                                            <span>🌴 Regional Office Desk (Tampa Bay / St. Petersburg Client Center)</span>
                                         </h4>
                                         <div class="form-grid">
                                             <div class="form-group">
                                                 <label class="form-label">Regional Branch Title</label>
-                                                <input type="text" name="branch_title" class="form-input" value="{{ $siteContact['branch_title'] ?? 'Dhaka Regional Desk' }}" placeholder="Dhaka Regional Desk">
+                                                <input type="text" name="branch_title" class="form-input" value="{{ $siteContact['branch_title'] ?? 'St. Petersburg Client Desk' }}" placeholder="St. Petersburg Client Desk">
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="form-label">Regional Visiting Hours</label>
-                                                <input type="text" name="branch_hours" class="form-input" value="{{ $siteContact['branch_hours'] ?? 'Sun–Thu: 9:00 AM – 6:00 PM BST' }}" placeholder="Sun–Thu: 9:00 AM – 6:00 PM BST">
+                                                <input type="text" name="branch_hours" class="form-input" value="{{ $siteContact['branch_hours'] ?? 'Mon–Fri: 8:30 AM – 5:30 PM EST' }}" placeholder="Mon–Fri: 8:30 AM – 5:30 PM EST">
                                             </div>
 
                                             <div class="form-group full">
                                                 <label class="form-label">Full Regional Physical Address</label>
-                                                <input type="text" name="branch_address" class="form-input" value="{{ $siteContact['branch_address'] ?? 'Level 14, Crystal Palace, Gulshan-2, Dhaka 1212' }}" placeholder="Level 14, Crystal Palace, Gulshan-2, Dhaka 1212">
+                                                <input type="text" name="branch_address" class="form-input" value="{{ $siteContact['branch_address'] ?? '100 2nd Ave S, St. Petersburg, FL 33701' }}" placeholder="100 2nd Ave S, St. Petersburg, FL 33701">
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="form-label">Direct Regional Phone</label>
-                                                <input type="text" name="branch_phone" class="form-input" value="{{ $siteContact['branch_phone'] ?? '+880 9612 345678' }}" placeholder="+880 9612 345678">
+                                                <input type="text" name="branch_phone" class="form-input" value="{{ $siteContact['branch_phone'] ?? '+1 813-214-1731' }}" placeholder="+1 813-214-1731">
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="form-label">Direct Regional Email</label>
-                                                <input type="email" name="branch_email" class="form-input" value="{{ $siteContact['branch_email'] ?? 'dhaka.desk@surebound.com' }}" placeholder="dhaka.desk@surebound.com">
+                                                <input type="email" name="branch_email" class="form-input" value="{{ $siteContact['branch_email'] ?? 'support@sureboundinsurance.com' }}" placeholder="support@sureboundinsurance.com">
                                             </div>
 
                                             <div class="form-group full">
@@ -2272,18 +2272,18 @@
 
                                         <div class="form-group">
                                             <label class="form-label">Direct Desk Extension / Phone</label>
-                                            <input type="text" name="underwriter_phone" class="form-input" value="{{ $siteContact['underwriter_phone'] ?? '(512) 555-0182' }}" placeholder="(512) 555-0182">
+                                            <input type="text" name="underwriter_phone" class="form-input" value="{{ $siteContact['underwriter_phone'] ?? '+1 813-214-1731' }}" placeholder="+1 813-214-1731">
                                             <small style="color: var(--text-muted); display: block; margin-top: 4px;">Direct advisor line allowing policyholders to bypass phone trees.</small>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="form-label">Direct Advisor Email</label>
-                                            <input type="email" name="underwriter_email" class="form-input" value="{{ $siteContact['underwriter_email'] ?? 'm.vance@surebound.com' }}" placeholder="m.vance@surebound.com">
+                                            <input type="email" name="underwriter_email" class="form-input" value="{{ $siteContact['underwriter_email'] ?? 'support@sureboundinsurance.com' }}" placeholder="support@sureboundinsurance.com">
                                         </div>
 
                                         <div class="form-group full">
                                             <label class="form-label">Underwriter Office Hours</label>
-                                            <input type="text" name="underwriter_hours" class="form-input" value="{{ $siteContact['underwriter_hours'] ?? 'Mon – Fri • 8:00 AM – 6:00 PM CST' }}" placeholder="Mon – Fri • 8:00 AM – 6:00 PM CST">
+                                            <input type="text" name="underwriter_hours" class="form-input" value="{{ $siteContact['underwriter_hours'] ?? 'Mon – Fri • 8:30 AM – 5:30 PM EST' }}" placeholder="Mon – Fri • 8:30 AM – 5:30 PM EST">
                                         </div>
                                     </div>
                                 </div>
@@ -2663,10 +2663,10 @@
                                     <div id="quotes_container" style="display: flex; flex-direction: column; gap: 16px;">
                                         @for($i = 1; $i <= $quotesCountAdmin; $i++)
                                         @php
-                                            $qText = $homeInsuranceContent['quote_' . $i . '_text'] ?? ($i === 1 ? 'We believe that the advantages are so great that a shift to working on slack, or something like it, is inevitable.' : '');
-                                            $qAuthor = $homeInsuranceContent['quote_' . $i . '_author'] ?? ($i === 1 ? 'Marcel Gherkina' : '');
-                                            $qRole = $homeInsuranceContent['quote_' . $i . '_role'] ?? ($i === 1 ? 'Spokesperson, Surebound' : '');
-                                            $qBadge = $homeInsuranceContent['quote_' . $i . '_badge'] ?? ($i === 1 ? 'Verified Perspective' : '');
+                                            $qText = $homeInsuranceContent['quote_' . $i . '_text'] ?? ($i === 1 ? 'Working with a dedicated local agency in Tampa gave us confidence that our hurricane and commercial liability coverages were tailored to Florida risks.' : '');
+                                            $qAuthor = $homeInsuranceContent['quote_' . $i . '_author'] ?? ($i === 1 ? 'Michael R.' : '');
+                                            $qRole = $homeInsuranceContent['quote_' . $i . '_role'] ?? ($i === 1 ? 'Commercial Client, Tampa, FL' : '');
+                                            $qBadge = $homeInsuranceContent['quote_' . $i . '_badge'] ?? ($i === 1 ? 'Verified Client Review' : '');
                                             $qActive = ($homeInsuranceContent['quote_' . $i . '_active'] ?? '1') === '1';
                                         @endphp
                                         <div id="quote_row_{{ $i }}" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-left: 4px solid #3b82f6; border-radius: 8px; padding: 18px 20px;">
@@ -2693,15 +2693,15 @@
                                             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
                                                 <div>
                                                     <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Author Name</label>
-                                                    <input type="text" name="quote_{{ $i }}_author" class="form-input" value="{{ $qAuthor }}" placeholder="e.g. Marcel Gherkina" style="padding: 7px 10px; font-size: 13.5px;">
+                                                    <input type="text" name="quote_{{ $i }}_author" class="form-input" value="{{ $qAuthor }}" placeholder="e.g. Michael R." style="padding: 7px 10px; font-size: 13.5px;">
                                                 </div>
                                                 <div>
                                                     <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Role / Affiliation</label>
-                                                    <input type="text" name="quote_{{ $i }}_role" class="form-input" value="{{ $qRole }}" placeholder="e.g. Spokesperson, Surebound" style="padding: 7px 10px; font-size: 13.5px;">
+                                                    <input type="text" name="quote_{{ $i }}_role" class="form-input" value="{{ $qRole }}" placeholder="e.g. Commercial Client, Tampa" style="padding: 7px 10px; font-size: 13.5px;">
                                                 </div>
                                                 <div>
                                                     <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Verification Badge</label>
-                                                    <input type="text" name="quote_{{ $i }}_badge" class="form-input" value="{{ $qBadge }}" placeholder="e.g. Verified Perspective" style="padding: 7px 10px; font-size: 13.5px;">
+                                                    <input type="text" name="quote_{{ $i }}_badge" class="form-input" value="{{ $qBadge }}" placeholder="e.g. Verified Review" style="padding: 7px 10px; font-size: 13.5px;">
                                                 </div>
                                             </div>
                                         </div>
@@ -7734,17 +7734,17 @@
 
                                         <div class="form-group" style="margin-bottom: 12px;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Main Desk Phone *</label>
-                                            <input type="text" name="support_phone" class="form-input" value="{{ $supportContent['support_phone'] ?? '+880 9612 345678' }}" required placeholder="+880 9612 345678" style="width: 100%;">
+                                            <input type="text" name="support_phone" class="form-input" value="{{ $supportContent['support_phone'] ?? '+1 813-214-1731' }}" required placeholder="+1 813-214-1731" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 12px;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Support / Concierge Email *</label>
-                                            <input type="email" name="support_email" class="form-input" value="{{ $supportContent['support_email'] ?? 'support@surebound.com' }}" required placeholder="support@surebound.com" style="width: 100%;">
+                                            <input type="email" name="support_email" class="form-input" value="{{ $supportContent['support_email'] ?? 'support@sureboundinsurance.com' }}" required placeholder="support@sureboundinsurance.com" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 12px;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Office Headquarters Address</label>
-                                            <input type="text" name="office_address" class="form-input" value="{{ $supportContent['office_address'] ?? 'Level 14, Crystal Palace, Gulshan-2, Dhaka 1212' }}" placeholder="Street, Suite, City, Postal Code" style="width: 100%;">
+                                            <input type="text" name="office_address" class="form-input" value="{{ $supportContent['office_address'] ?? '100 N Tampa St, Suite 2500, Tampa, FL 33602' }}" placeholder="Street, Suite, City, Postal Code" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 12px;">
@@ -7754,7 +7754,7 @@
 
                                         <div class="form-group" style="margin-bottom: 0;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Page Banner Subtitle</label>
-                                            <textarea name="support_subtitle" class="form-input" rows="2" placeholder="Banner Subtitle" style="width: 100%; font-size: 0.8125rem;">{{ $supportContent['support_subtitle'] ?? 'Dedicated licensed risk advisors, 24/7 disaster mitigation dispatch, policy endorsement requests, and live inquiry tracking.' }}</textarea>
+                                            <textarea name="support_subtitle" class="form-input" rows="2" placeholder="Banner Subtitle" style="width: 100%; font-size: 0.8125rem;">{{ $supportContent['support_subtitle'] ?? 'Dedicated licensed risk advisors, claim guidance, policy endorsement requests, and live inquiry tracking in Tampa, FL.' }}</textarea>
                                         </div>
                                     </div>
 
@@ -7762,28 +7762,28 @@
                                     <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 18px;">
                                         <div style="font-size: 0.875rem; font-weight: 800; color: var(--brand-navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
                                             <span style="color: #dc2626;">🚨</span>
-                                            <span>24/7 Incident &amp; Disaster Hotlines</span>
+                                            <span>24/7 Incident &amp; Claim Hotlines</span>
                                         </div>
-                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px;">Instant loss intake, roadside, &amp; cyber dispatch</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px;">Direct Tampa guidance, roadside, &amp; carrier hotlines</div>
 
                                         <div class="form-group" style="margin-bottom: 12px;">
-                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">24/7 National Emergency Hotline *</label>
-                                            <input type="text" name="emergency_phone" class="form-input" value="{{ $supportContent['emergency_phone'] ?? '1-800-555-5677' }}" required placeholder="1-800-555-5677" style="width: 100%;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">24/7 Agency Claim Line *</label>
+                                            <input type="text" name="emergency_phone" class="form-input" value="{{ $supportContent['emergency_phone'] ?? '+1 813-214-1731' }}" required placeholder="+1 813-214-1731" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 12px;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Emergency SLA / Subtitle</label>
-                                            <input type="text" name="emergency_subtitle" class="form-input" value="{{ $supportContent['emergency_subtitle'] ?? 'Zero Wait Priority Emergency Dispatch' }}" placeholder="e.g. Zero Wait Priority Emergency Dispatch" style="width: 100%;">
+                                            <input type="text" name="emergency_subtitle" class="form-input" value="{{ $supportContent['emergency_subtitle'] ?? 'Direct Tampa Claim Guidance & Hotline' }}" placeholder="e.g. Direct Tampa Claim Guidance & Hotline" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 12px;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Roadside &amp; Towing Hotline</label>
-                                            <input type="text" name="roadside_phone" class="form-input" value="{{ $supportContent['roadside_phone'] ?? '1-800-555-TOWS' }}" placeholder="1-800-555-TOWS" style="width: 100%;">
+                                            <input type="text" name="roadside_phone" class="form-input" value="{{ $supportContent['roadside_phone'] ?? '1-800-776-4737' }}" placeholder="1-800-776-4737" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 0;">
-                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Cyber Breach &amp; Ransomware Hotline</label>
-                                            <input type="text" name="cyber_phone" class="form-input" value="{{ $supportContent['cyber_phone'] ?? '1-888-SURE-CYBER' }}" placeholder="1-888-SURE-CYBER" style="width: 100%;">
+                                            <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Cyber Breach &amp; Advisory Hotline</label>
+                                            <input type="text" name="cyber_phone" class="form-input" value="{{ $supportContent['cyber_phone'] ?? '+1 813-214-1731' }}" placeholder="+1 813-214-1731" style="width: 100%;">
                                         </div>
                                     </div>
 
@@ -7797,27 +7797,27 @@
 
                                         <div class="form-group" style="margin-bottom: 12px;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Underwriter Full Name *</label>
-                                            <input type="text" name="underwriter_name" class="form-input" value="{{ $supportContent['underwriter_name'] ?? 'Marcus Vance, CPCU' }}" required placeholder="Marcus Vance, CPCU" style="width: 100%;">
+                                            <input type="text" name="underwriter_name" class="form-input" value="{{ $supportContent['underwriter_name'] ?? 'Licensed Risk Advisor' }}" required placeholder="Licensed Risk Advisor" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 12px;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Professional Title</label>
-                                            <input type="text" name="underwriter_title" class="form-input" value="{{ $supportContent['underwriter_title'] ?? 'Senior Underwriter & Risk Advisor' }}" placeholder="Senior Underwriter & Risk Advisor" style="width: 100%;">
+                                            <input type="text" name="underwriter_title" class="form-input" value="{{ $supportContent['underwriter_title'] ?? 'Licensed Florida Risk Advisor' }}" placeholder="Licensed Florida Risk Advisor" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 12px;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Direct Desk Phone</label>
-                                            <input type="text" name="underwriter_phone" class="form-input" value="{{ $supportContent['underwriter_phone'] ?? '(512) 555-0182' }}" placeholder="(512) 555-0182" style="width: 100%;">
+                                            <input type="text" name="underwriter_phone" class="form-input" value="{{ $supportContent['underwriter_phone'] ?? '+1 813-214-1731' }}" placeholder="+1 813-214-1731" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 12px;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Direct Email</label>
-                                            <input type="email" name="underwriter_email" class="form-input" value="{{ $supportContent['underwriter_email'] ?? 'm.vance@surebound.com' }}" placeholder="m.vance@surebound.com" style="width: 100%;">
+                                            <input type="email" name="underwriter_email" class="form-input" value="{{ $supportContent['underwriter_email'] ?? 'support@sureboundinsurance.com' }}" placeholder="support@sureboundinsurance.com" style="width: 100%;">
                                         </div>
 
                                         <div class="form-group" style="margin-bottom: 0;">
                                             <label style="display: block; font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Operating Hours</label>
-                                            <input type="text" name="underwriter_hours" class="form-input" value="{{ $supportContent['underwriter_hours'] ?? 'Mon – Fri • 8:00 AM – 6:00 PM CST' }}" placeholder="Mon – Fri • 8:00 AM – 6:00 PM CST" style="width: 100%;">
+                                            <input type="text" name="underwriter_hours" class="form-input" value="{{ $supportContent['underwriter_hours'] ?? 'Mon – Fri • 8:30 AM – 5:30 PM EST' }}" placeholder="Mon – Fri • 8:30 AM – 5:30 PM EST" style="width: 100%;">
                                         </div>
                                     </div>
 
@@ -10538,9 +10538,9 @@
                             </div>
                         </div>
                         <div style="color: #64748b; font-size: 0.8125rem; line-height: 1.5;">
-                            1200 Fifth Avenue, Suite 2400 &bull; Seattle, WA 98101<br>
-                            Tel: (206) 555-0142 &bull; billing@surebound.com<br>
-                            <span style="font-size: 0.75rem; color: #94a3b8;">WA State Insurance Commissioner License #WA-992418</span>
+                            100 N Tampa St, Suite 2500 &bull; Tampa, FL 33602<br>
+                            Tel: (813) 214-1731 &bull; billing@sureboundinsurance.com<br>
+                            <span style="font-size: 0.75rem; color: #94a3b8;">Florida Agency License #FL-L114920</span>
                         </div>
                     </div>
                     <div style="text-align: right;">
@@ -11433,11 +11433,11 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
                     <div>
                         <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Author Name</label>
-                        <input type="text" name="quote_${newIndex}_author" class="form-input" placeholder="e.g. Marcel Gherkina" style="padding: 7px 10px; font-size: 13.5px;">
+                        <input type="text" name="quote_${newIndex}_author" class="form-input" placeholder="e.g. Michael R." style="padding: 7px 10px; font-size: 13.5px;">
                     </div>
                     <div>
                         <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Role / Affiliation</label>
-                        <input type="text" name="quote_${newIndex}_role" class="form-input" placeholder="e.g. Spokesperson, Surebound" style="padding: 7px 10px; font-size: 13.5px;">
+                        <input type="text" name="quote_${newIndex}_role" class="form-input" placeholder="e.g. Commercial Client, Tampa" style="padding: 7px 10px; font-size: 13.5px;">
                     </div>
                     <div>
                         <label class="form-label" style="font-size: 12px; color: #cbd5e1; margin-bottom: 4px;">Verification Badge</label>

@@ -42,7 +42,7 @@ class SeoAutomationSetting extends Model
             'crawl_limit_pages' => 100,
             'crawl_throttle_delay_ms' => 200,
             'excluded_paths' => ['/admin*', '/dashboard*', '/login', '/register', '/setup*'],
-            'alert_email' => 'admin@surebound.com',
+            'alert_email' => 'karry@sureboundinsurance.com',
             'alert_on_critical' => true,
             'auto_sitemap_sync' => true,
         ]);

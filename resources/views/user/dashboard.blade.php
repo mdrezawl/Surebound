@@ -335,9 +335,9 @@
                 <p>Our support team is available 24/7 to assist you.</p>
                 <div class="support-card-buttons">
                     <a href="{{ route('user.support') }}" class="btn-primary" style="text-decoration: none;">Chat Now</a>
-                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['support_phone'] ?? '+8809612345678') }}" class="btn-call" style="text-decoration: none;">
+                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['support_phone'] ?? '18132141731') }}" class="btn-call" style="text-decoration: none;">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        Call {{ $supportContent['support_phone'] ?? '+880 9612 345678' }}
+                        Call {{ $supportContent['support_phone'] ?? '(813) 214-1731' }}
                     </a>
                 </div>
             </div>

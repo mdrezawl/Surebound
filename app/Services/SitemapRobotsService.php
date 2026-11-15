@@ -103,6 +103,7 @@ class SitemapRobotsService
     public function getDefaultRobotsTxt(): string
     {
         $sitemapUrl = url('/sitemap.xml');
+        $llmsUrl = url('/llms.txt');
 
         return <<<TXT
 # Surebound Insurance – Advanced Robots Directives
@@ -117,31 +118,63 @@ Disallow: /setup/
 Disallow: /api/
 Allow: /
 
-# Googlebot Search Discovery
+# Google Search, Googlebot & Google AI Overviews
 User-agent: Googlebot
-Disallow: /admin/
-Disallow: /dashboard/
 Allow: /
 
-# AI Search Engine Discovery (Allowed for ChatGPT Search & Perplexity)
-User-agent: OAI-SearchBot
-Disallow: /admin/
-Disallow: /dashboard/
+User-agent: Googlebot-Image
 Allow: /
 
-User-agent: PerplexityBot
-Disallow: /admin/
-Disallow: /dashboard/
+User-agent: Google-Extended
 Allow: /
 
-# Model Training Crawlers (Configured separately from Search Discovery)
+# Microsoft Copilot & Bing Search
+User-agent: Bingbot
+Allow: /
+
+# Apple Intelligence & Siri Search
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# OpenAI ChatGPT, SearchGPT & Model Grounding
 User-agent: GPTBot
-Disallow: /admin/
-Disallow: /dashboard/
 Allow: /
 
-# Sitemaps
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic Claude & Claude Search
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Perplexity AI Grounded Search
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI & External Search
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Amazon Bedrock & Alexa Search
+User-agent: Amazonbot
+Allow: /
+
+# Cohere AI Search & Grounding
+User-agent: cohere-ai
+Allow: /
+
+# Sitemaps & Machine-Readable AI Manifests
 Sitemap: {$sitemapUrl}
+# LLMs.txt AI Manifest: {$llmsUrl}
 TXT;
     }
 

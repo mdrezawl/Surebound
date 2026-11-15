@@ -137,6 +137,11 @@ savePage('liability-insurance/index.html', $liabilityHtml);
 $groupBenefitsHtml = $adminController->showGroupBenefits()->render();
 savePage('group-benefits/index.html', $groupBenefitsHtml);
 
+if (method_exists($adminController, 'showWorkersCompensation')) {
+    $workersCompHtml = $adminController->showWorkersCompensation()->render();
+    savePage('workers-compensation/index.html', $workersCompHtml);
+}
+
 // 7. Login
 $emptyErrors = new ViewErrorBag;
 view()->share('errors', $emptyErrors);
@@ -148,13 +153,21 @@ $registerHtml = view('auth.register', ['errors' => $emptyErrors])->render();
 savePage('register/index.html', $registerHtml);
 
 // 9. User Dashboard
-$userController = app(UserController::class);
-$userDashboardHtml = $userController->dashboard()->render();
-savePage('dashboard/index.html', $userDashboardHtml);
+try {
+    $userController = app(UserController::class);
+    $userDashboardHtml = $userController->dashboard()->render();
+    savePage('dashboard/index.html', $userDashboardHtml);
+} catch (Throwable $e) {
+    echo 'Notice: Skipped user dashboard export (requires DB): '.$e->getMessage()."\n";
+}
 
 // 10. Admin Dashboard
-$adminHtml = $adminController->index()->render();
-savePage('admin/index.html', $adminHtml);
+try {
+    $adminHtml = $adminController->index()->render();
+    savePage('admin/index.html', $adminHtml);
+} catch (Throwable $e) {
+    echo 'Notice: Skipped admin dashboard export (requires DB): '.$e->getMessage()."\n";
+}
 
 // Copy public assets
 function copyFolder($src, $dst)
@@ -189,6 +202,12 @@ if (file_exists(__DIR__.'/public/favicon.ico')) {
 }
 if (file_exists(__DIR__.'/public/robots.txt')) {
     copy(__DIR__.'/public/robots.txt', $distDir.'/robots.txt');
+}
+if (file_exists(__DIR__.'/public/llms.txt')) {
+    copy(__DIR__.'/public/llms.txt', $distDir.'/llms.txt');
+}
+if (file_exists(__DIR__.'/public/llms-full.txt')) {
+    copy(__DIR__.'/public/llms-full.txt', $distDir.'/llms-full.txt');
 }
 
 echo "✓ Full dist export completed successfully!\n";

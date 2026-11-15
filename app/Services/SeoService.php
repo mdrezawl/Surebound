@@ -20,279 +20,289 @@ class SeoService
             [
                 'url_path' => '/',
                 'route_name' => 'home',
-                'seo_title' => 'Surebound Insurance – Premier Home, Auto & Business Coverage',
-                'meta_description' => 'Dependable insurance protection built around you. Get fast quotes and dedicated underwriter support for home, auto, commercial liability, and surety bonds.',
-                'focus_keyword' => 'insurance agency',
-                'secondary_keywords' => ['surebound insurance', 'commercial auto', 'homeowners insurance', 'surety bond'],
+                'seo_title' => 'Tampa, FL Insurance Agency | Surebound Insurance',
+                'meta_description' => 'Surebound Insurance is based in Tampa, Florida. Get help with home, auto, business and life insurance. Contact our team to request a quote.',
+                'focus_keyword' => 'Tampa FL Insurance Agency',
+                'secondary_keywords' => ['surebound insurance', 'tampa insurance agent', 'florida insurance agency', 'home and auto insurance tampa'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'Organization',
             ],
             [
                 'url_path' => '/home-insurance',
                 'route_name' => 'home-insurance',
-                'seo_title' => 'Homeowners Insurance – Structural & Personal Property Protection | Surebound',
-                'meta_description' => 'Protect your family safe haven with comprehensive homeowners coverage. Includes dwelling, personal property, liability, and weather hazard protection.',
-                'focus_keyword' => 'homeowners insurance',
-                'secondary_keywords' => ['home insurance quote', 'dwelling protection', 'property insurance'],
+                'seo_title' => 'Home Insurance in Tampa, FL | Surebound',
+                'meta_description' => 'Explore home insurance options in Tampa, Florida. Talk with Surebound about your property, coverage needs and the details needed to request a quote.',
+                'focus_keyword' => 'home insurance tampa fl',
+                'secondary_keywords' => ['florida homeowners insurance', 'dwelling protection', 'tampa hurricane deductibles'],
                 'search_intent' => 'transactional',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/auto-insurance',
                 'route_name' => 'auto-insurance',
-                'seo_title' => 'Auto Insurance Coverage – Collision, Comprehensive & Liability | Surebound',
-                'meta_description' => 'Tailored car insurance policies covering collision, bodily injury liability, comprehensive perils, and roadside assistance. Fast underwriter quotes.',
-                'focus_keyword' => 'auto insurance',
-                'secondary_keywords' => ['car insurance quote', 'vehicle coverage', 'collision coverage'],
+                'seo_title' => 'Auto Insurance in Tampa, FL | Surebound',
+                'meta_description' => 'Get reliable auto insurance coverage in Tampa, Florida. Compare collision, comprehensive, and liability options with Surebound Insurance.',
+                'focus_keyword' => 'auto insurance tampa fl',
+                'secondary_keywords' => ['car insurance tampa', 'florida auto coverage', 'collision comprehensive tampa'],
                 'search_intent' => 'transactional',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/commercial-auto-insurance',
                 'route_name' => 'commercial-auto-insurance',
-                'seo_title' => 'Commercial Auto Insurance – Fleet & Commercial Truck Coverage | Surebound',
-                'meta_description' => 'Specialized commercial vehicle insurance for delivery vans, contractor trucks, and enterprise fleets with high-limit liability and cargo protection.',
-                'focus_keyword' => 'commercial auto insurance',
-                'secondary_keywords' => ['fleet insurance', 'commercial vehicle coverage', 'business truck insurance'],
+                'seo_title' => 'Commercial Auto Insurance in Tampa | Surebound',
+                'meta_description' => 'Commercial auto and fleet insurance coverage for business vehicles in Tampa, Florida. Protect your drivers, trucks, and cargo with Surebound.',
+                'focus_keyword' => 'commercial auto insurance tampa',
+                'secondary_keywords' => ['fleet insurance florida', 'business vehicle coverage tampa', 'commercial truck insurance'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/surety-bond',
                 'route_name' => 'surety-bond',
-                'seo_title' => 'Surety Bonds – Contractor, License & Permit Bonds | Surebound',
-                'meta_description' => 'Fast bonding approval for contract performance, bid bonds, payment bonds, and court surety bonds backed by trusted surety underwriters.',
-                'focus_keyword' => 'surety bonds',
-                'secondary_keywords' => ['contractor bond', 'license and permit bond', 'performance bond'],
+                'seo_title' => 'Surety Bonds in Florida | Surebound Insurance',
+                'meta_description' => 'Contractor, license, and permit surety bonds in Florida. Request a fast bond quote with experienced underwriting assistance from Surebound.',
+                'focus_keyword' => 'surety bonds florida',
+                'secondary_keywords' => ['florida contractor bond', 'license and permit bond tampa', 'performance bonds'],
                 'search_intent' => 'transactional',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/life-insurance',
                 'route_name' => 'life-insurance',
-                'seo_title' => 'Term & Whole Life Insurance – Financial Security for Families | Surebound',
-                'meta_description' => 'Safeguard your family future with flexible term and permanent whole life insurance solutions. Customized benefit amounts and living benefits.',
-                'focus_keyword' => 'life insurance',
-                'secondary_keywords' => ['term life insurance', 'whole life policy', 'family life insurance'],
+                'seo_title' => 'Life Insurance in Tampa, FL | Surebound',
+                'meta_description' => 'Talk with Surebound in Tampa about life insurance options, coverage amounts and your next steps. Request a quote from our team.',
+                'focus_keyword' => 'life insurance tampa fl',
+                'secondary_keywords' => ['term life insurance florida', 'whole life policy tampa', 'family life insurance'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/health-insurance',
                 'route_name' => 'health-insurance',
-                'seo_title' => 'Individual & Family Health Insurance Coverage | Surebound',
-                'meta_description' => 'Quality medical, preventive, dental, and vision insurance coverage with access to top national healthcare networks and prescription benefits.',
-                'focus_keyword' => 'health insurance',
-                'secondary_keywords' => ['individual health insurance', 'family medical coverage', 'affordable health plans'],
+                'seo_title' => 'Health Insurance in Tampa, FL | Surebound',
+                'meta_description' => 'Individual and family health insurance coverage options in Tampa, Florida. Find medical and supplemental plans that fit your household needs.',
+                'focus_keyword' => 'health insurance tampa',
+                'secondary_keywords' => ['individual health insurance florida', 'family medical coverage tampa', 'health plans florida'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/umbrella-insurance',
                 'route_name' => 'umbrella-insurance',
-                'seo_title' => 'Personal & Commercial Umbrella Liability Insurance | Surebound',
-                'meta_description' => 'Extended excess liability protection that shields your accumulated assets and business equity against catastrophic legal claims.',
-                'focus_keyword' => 'umbrella insurance',
-                'secondary_keywords' => ['excess liability', 'personal umbrella policy', 'asset protection insurance'],
+                'seo_title' => 'Umbrella Insurance in Tampa, FL | Surebound',
+                'meta_description' => 'Add an extra layer of liability protection over your home and auto policies with personal umbrella insurance from Surebound in Tampa, FL.',
+                'focus_keyword' => 'umbrella insurance tampa',
+                'secondary_keywords' => ['excess liability florida', 'personal umbrella policy tampa', 'asset protection insurance'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/personal-coverage',
                 'route_name' => 'personal-coverage',
-                'seo_title' => 'Personal Insurance Packages – High-Value Asset & Family Protection | Surebound',
-                'meta_description' => 'Comprehensive personal line bundles combining home, auto, valuable articles, watercraft, and liability into one seamless policyholder experience.',
-                'focus_keyword' => 'personal insurance packages',
-                'secondary_keywords' => ['personal lines insurance', 'bundled coverage', 'high net worth insurance'],
+                'seo_title' => 'Personal Insurance Coverage | Surebound Insurance',
+                'meta_description' => 'Comprehensive personal line bundles combining home, auto, valuable articles, and umbrella liability with Surebound Insurance in Tampa, FL.',
+                'focus_keyword' => 'personal insurance packages tampa',
+                'secondary_keywords' => ['personal lines insurance florida', 'bundled home and auto tampa', 'florida family insurance'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/property-insurance',
                 'route_name' => 'property-insurance',
-                'seo_title' => 'Commercial Property Insurance – Buildings, Equipment & Inventory | Surebound',
-                'meta_description' => 'Protect commercial real estate, machinery, technology, and inventory against fire, windstorm, theft, and business interruption losses.',
-                'focus_keyword' => 'commercial property insurance',
-                'secondary_keywords' => ['business property coverage', 'commercial real estate insurance', 'business interruption'],
+                'seo_title' => 'Commercial Property Insurance in Tampa | Surebound',
+                'meta_description' => 'Protect commercial real estate, machinery, technology, and inventory in Tampa, FL against fire, windstorm, theft, and business interruption losses.',
+                'focus_keyword' => 'commercial property insurance tampa',
+                'secondary_keywords' => ['business property coverage florida', 'commercial building insurance tampa', 'business interruption'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/liability-insurance',
                 'route_name' => 'liability-insurance',
-                'seo_title' => 'General Liability Insurance – Commercial Risk & Slip-and-Fall Protection | Surebound',
-                'meta_description' => 'Essential commercial general liability coverage shielding small businesses and corporations from bodily injury, property damage, and legal defense costs.',
-                'focus_keyword' => 'general liability insurance',
-                'secondary_keywords' => ['commercial liability', 'business liability quote', 'slip and fall insurance'],
+                'seo_title' => 'General Liability Insurance in Tampa | Surebound',
+                'meta_description' => 'Essential commercial general liability coverage shielding small businesses and corporations in Tampa from bodily injury, property damage, and legal defense costs.',
+                'focus_keyword' => 'general liability insurance tampa',
+                'secondary_keywords' => ['commercial liability florida', 'tampa business liability quote', 'slip and fall insurance'],
                 'search_intent' => 'transactional',
+                'schema_type' => 'Service',
+            ],
+            [
+                'url_path' => '/workers-compensation',
+                'route_name' => 'workers-compensation',
+                'seo_title' => 'Workers Compensation Insurance in Florida | Surebound',
+                'meta_description' => 'Meet Florida statutory requirements and protect your workforce with workers compensation insurance from Surebound Insurance in Tampa.',
+                'focus_keyword' => 'workers compensation insurance florida',
+                'secondary_keywords' => ['florida workers comp requirements', 'workers comp quote tampa', 'florida chapter 440 compliance'],
+                'search_intent' => 'commercial',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/group-benefits',
                 'route_name' => 'group-benefits',
-                'seo_title' => 'Workers Compensation & Group Benefits for Employers | Surebound',
-                'meta_description' => 'Statutory workers compensation and employee group health benefits that safeguard your workforce while keeping your business fully compliant.',
-                'focus_keyword' => 'workers compensation insurance',
-                'secondary_keywords' => ['group benefits', 'employee insurance', 'workers comp quote'],
+                'seo_title' => 'Employee Benefits in Tampa, FL | Surebound',
+                'meta_description' => 'Group employee health, dental, vision, life, and disability benefits for Florida businesses. Build attractive packages with Surebound Insurance.',
+                'focus_keyword' => 'employee benefits tampa',
+                'secondary_keywords' => ['group health insurance florida', 'small business group benefits tampa', 'dental vision group plans'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/specialty-coverage',
                 'route_name' => 'specialty-coverage',
-                'seo_title' => 'Specialty & Surplus Lines Insurance – High-Risk Protection | Surebound',
-                'meta_description' => 'Bespoke insurance solutions for hard-to-place commercial risks, environmental liability, professional indemnity, and cyber security breaches.',
-                'focus_keyword' => 'specialty insurance',
-                'secondary_keywords' => ['excess surplus lines', 'cyber liability', 'professional indemnity'],
+                'seo_title' => 'Specialty Insurance Solutions | Surebound Insurance',
+                'meta_description' => 'Specialized insurance solutions for unique commercial and personal risks placed through admitted and surplus lines carrier partners.',
+                'focus_keyword' => 'specialty insurance tampa',
+                'secondary_keywords' => ['surplus lines florida', 'hard to place insurance', 'unique risk coverage'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/coverage',
                 'route_name' => 'coverage',
-                'seo_title' => 'Insurance Coverage Overview – Commercial & Personal Lines | Surebound',
-                'meta_description' => 'Explore the complete Surebound insurance coverage portfolio. Compare business and individual coverage options designed for resilient protection.',
-                'focus_keyword' => 'insurance coverage options',
-                'secondary_keywords' => ['business coverage', 'personal insurance', 'surebound policies'],
+                'seo_title' => 'Insurance Coverage Overview | Surebound Insurance',
+                'meta_description' => 'Explore Surebound\'s complete portfolio of personal and commercial insurance solutions in Tampa, Florida.',
+                'focus_keyword' => 'insurance coverage options tampa',
+                'secondary_keywords' => ['florida insurance portfolio', 'business and personal insurance tampa'],
                 'search_intent' => 'informational',
                 'schema_type' => 'WebSite',
             ],
             [
                 'url_path' => '/custom-quote',
                 'route_name' => 'custom-quote',
-                'seo_title' => 'Request a Custom Insurance Quote – Fast Underwriting Review | Surebound',
-                'meta_description' => 'Submit your coverage requirements for a complimentary, bespoke insurance quotation from licensed Surebound underwriters within 24 hours.',
-                'focus_keyword' => 'custom insurance quote',
-                'secondary_keywords' => ['instant insurance quote', 'underwriter quote', 'request a quote'],
+                'seo_title' => 'Request an Insurance Quote | Surebound',
+                'meta_description' => 'Request a personalized insurance quote from Surebound Insurance in Tampa, FL for home, auto, commercial liability, property, or life coverage.',
+                'focus_keyword' => 'request insurance quote tampa',
+                'secondary_keywords' => ['florida insurance quotes', 'independent agent quote tampa'],
                 'search_intent' => 'transactional',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/compare',
                 'route_name' => 'compare',
-                'seo_title' => 'Compare Insurance Policy Tiers & Coverage Limits | Surebound',
-                'meta_description' => 'Side-by-side policy comparison of deductibles, coverage limits, policy endorsements, and premium rates to choose the optimal plan.',
-                'focus_keyword' => 'compare insurance policies',
-                'secondary_keywords' => ['insurance policy comparison', 'coverage limits compare', 'policy tiers'],
+                'seo_title' => 'Compare Insurance Coverage & Limits | Surebound',
+                'meta_description' => 'Compare insurance deductibles, coverage limits, and policy endorsements with guidance from Surebound Insurance in Tampa, FL.',
+                'focus_keyword' => 'compare insurance policies florida',
+                'secondary_keywords' => ['insurance deductible comparison', 'coverage limits compare tampa'],
                 'search_intent' => 'commercial',
                 'schema_type' => 'WebSite',
             ],
             [
                 'url_path' => '/story',
                 'route_name' => 'story',
-                'seo_title' => 'Our Story – Dedicated Insurance Heritage & Underwriting Philosophy | Surebound',
-                'meta_description' => 'Learn how Surebound Insurance was founded on principles of transparent underwriting, client advocacy, and unyielding policyholder protection.',
-                'focus_keyword' => 'about surebound insurance',
-                'secondary_keywords' => ['insurance agency heritage', 'underwriting philosophy', 'surebound history'],
+                'seo_title' => 'About Surebound Insurance | Tampa, FL',
+                'meta_description' => 'Learn about Surebound Insurance, an independent agency based in Tampa, Florida dedicated to honest guidance and reliable coverage.',
+                'focus_keyword' => 'about surebound insurance tampa',
+                'secondary_keywords' => ['tampa insurance agency story', 'independent agency florida'],
                 'search_intent' => 'informational',
                 'schema_type' => 'Organization',
             ],
             [
                 'url_path' => '/team',
                 'route_name' => 'team',
-                'seo_title' => 'Our Leadership & Licensed Insurance Agents | Surebound',
-                'meta_description' => 'Meet our team of licensed insurance brokers, chartered property casualty underwriters (CPCU), and risk management specialists.',
-                'focus_keyword' => 'insurance agents and underwriters',
-                'secondary_keywords' => ['surebound team', 'licensed brokers', 'risk advisors'],
+                'seo_title' => 'Meet Our Team | Surebound',
+                'meta_description' => 'Meet the licensed insurance professionals and client advisors serving individuals and businesses at Surebound Insurance in Tampa, FL.',
+                'focus_keyword' => 'surebound insurance team tampa',
+                'secondary_keywords' => ['licensed agents tampa', 'insurance advisors florida'],
                 'search_intent' => 'informational',
                 'schema_type' => 'Organization',
             ],
             [
                 'url_path' => '/careers',
                 'route_name' => 'careers',
-                'seo_title' => 'Insurance Careers & Broker Opportunities | Surebound',
-                'meta_description' => 'Join the Surebound team. Explore career opportunities for commercial underwriters, account managers, and licensed insurance producers.',
-                'focus_keyword' => 'insurance careers',
-                'secondary_keywords' => ['insurance agent jobs', 'underwriter careers', 'commercial insurance jobs'],
+                'seo_title' => 'Careers at Surebound | Tampa, FL',
+                'meta_description' => 'Explore insurance career opportunities and broker positions at Surebound Insurance in downtown Tampa, Florida.',
+                'focus_keyword' => 'insurance careers tampa',
+                'secondary_keywords' => ['insurance agent jobs tampa', 'account manager positions florida'],
                 'search_intent' => 'navigational',
                 'schema_type' => 'Organization',
             ],
             [
                 'url_path' => '/community',
                 'route_name' => 'community',
-                'seo_title' => 'Community Outreach & Civic Involvement | Surebound',
-                'meta_description' => 'Discover our philanthropic partnerships, local community service initiatives, and disaster relief support programs across our service regions.',
-                'focus_keyword' => 'community outreach insurance',
-                'secondary_keywords' => ['surebound community', 'local giving', 'charity initiatives'],
+                'seo_title' => 'Community Impact | Surebound Insurance',
+                'meta_description' => 'Discover our local community involvement, neighborhood support, and storm preparedness initiatives in Tampa Bay.',
+                'focus_keyword' => 'surebound community tampa',
+                'secondary_keywords' => ['tampa bay community giving', 'hurricane prep outreach'],
                 'search_intent' => 'informational',
                 'schema_type' => 'Organization',
             ],
             [
                 'url_path' => '/articles',
                 'route_name' => 'articles',
-                'seo_title' => 'Insurance Knowledge Hub, Insights & Market Trends | Surebound',
-                'meta_description' => 'Expert articles on risk management, emerging commercial perils, rate trends, policy endorsements, and regulatory changes.',
-                'focus_keyword' => 'insurance articles and insights',
-                'secondary_keywords' => ['insurance blog', 'risk management tips', 'policy advice'],
+                'seo_title' => 'Insurance Articles & Guides | Surebound Insurance',
+                'meta_description' => 'Practical insurance articles on Florida home insurance, hurricane deductibles, commercial liability, and auto coverage from our Tampa team.',
+                'focus_keyword' => 'florida insurance articles',
+                'secondary_keywords' => ['hurricane deductible guide', 'florida insurance tips', 'commercial risk tampa'],
                 'search_intent' => 'informational',
                 'schema_type' => 'Article',
             ],
             [
                 'url_path' => '/faqs',
                 'route_name' => 'faqs',
-                'seo_title' => 'Insurance FAQs – Policy Questions, Claims & Billing Answers | Surebound',
-                'meta_description' => 'Clear answers to common questions about coverage deductibles, claims filing, policy renewals, certificates of insurance, and payment options.',
-                'focus_keyword' => 'insurance faqs',
-                'secondary_keywords' => ['insurance questions', 'policy help', 'claims faqs'],
+                'seo_title' => 'Insurance FAQs | Surebound Insurance',
+                'meta_description' => 'Clear answers to frequent questions about insurance policies, Florida hurricane deductibles, carrier claims, and billing options.',
+                'focus_keyword' => 'florida insurance faqs',
+                'secondary_keywords' => ['hurricane deductible questions', 'insurance payment grace period', 'policy help tampa'],
                 'search_intent' => 'informational',
                 'schema_type' => 'WebSite',
             ],
             [
                 'url_path' => '/guides',
                 'route_name' => 'guides',
-                'seo_title' => 'Insurance Buyer Guides & Risk Reduction Checklists | Surebound',
-                'meta_description' => 'Download comprehensive buyer guides and checklists for purchasing commercial property, general liability, and fleet auto insurance.',
-                'focus_keyword' => 'insurance buyer guides',
-                'secondary_keywords' => ['commercial insurance guide', 'risk management checklist', 'insurance buying tips'],
+                'seo_title' => 'Insurance Buyer Guides | Surebound Insurance',
+                'meta_description' => 'Comprehensive buyer guides and checklists for Florida home insurance, small business coverage, and commercial auto.',
+                'focus_keyword' => 'florida insurance buyer guides',
+                'secondary_keywords' => ['home insurance guide florida', 'small business insurance checklist tampa'],
                 'search_intent' => 'informational',
                 'schema_type' => 'Article',
             ],
             [
                 'url_path' => '/business-insurance',
                 'route_name' => 'business-insurance',
-                'seo_title' => 'Business Owners Policy (BOP) – Bundled Commercial Protection | Surebound',
-                'meta_description' => 'All-in-one Business Owner Policy combining general liability, commercial building, and business interruption coverage for maximum value.',
-                'focus_keyword' => 'business insurance',
-                'secondary_keywords' => ['bop insurance', 'small business insurance quote', 'commercial package policy'],
+                'seo_title' => 'Business Insurance in Tampa, FL | Surebound',
+                'meta_description' => 'Get help with business insurance in Tampa. Discuss liability, commercial property, vehicles and coverage options with Surebound Insurance.',
+                'focus_keyword' => 'business insurance tampa fl',
+                'secondary_keywords' => ['bop insurance florida', 'small business insurance tampa', 'commercial package policy'],
                 'search_intent' => 'transactional',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/claims',
                 'route_name' => 'claims',
-                'seo_title' => 'File a Claim & 24/7 First Notice of Loss (FNOL) | Surebound',
-                'meta_description' => 'Fast, compassionate claims filing support. Submit your incident report online or call our emergency claims hotline for immediate assistance.',
-                'focus_keyword' => 'file an insurance claim',
-                'secondary_keywords' => ['claims intake', 'fnol report', 'insurance claims support'],
+                'seo_title' => 'Claims Assistance & Carrier Reporting | Surebound Insurance',
+                'meta_description' => 'File and track your insurance claim. Access 24/7 carrier claims numbers and receive guidance from our Tampa agency claims support team.',
+                'focus_keyword' => 'file insurance claim tampa',
+                'secondary_keywords' => ['carrier claims reporting', 'surebound claims assistance', 'emergency claims hotline'],
                 'search_intent' => 'navigational',
                 'schema_type' => 'Service',
             ],
             [
                 'url_path' => '/payment',
                 'route_name' => 'payment',
-                'seo_title' => 'Pay Insurance Premium & Manage Invoices Online | Surebound',
-                'meta_description' => 'Secure online portal to pay insurance premiums, review billing schedules, download payment receipts, and set up automatic ACH debits.',
-                'focus_keyword' => 'pay insurance premium',
-                'secondary_keywords' => ['pay policy invoice', 'insurance bill payment', 'ach payment portal'],
+                'seo_title' => 'Policy Payments & Billing Options | Surebound Insurance',
+                'meta_description' => 'Review payment options, access carrier bill-pay portals, or manage your policy billing through Surebound Insurance in Tampa.',
+                'focus_keyword' => 'pay insurance premium tampa',
+                'secondary_keywords' => ['carrier bill pay', 'surebound invoice payments', 'insurance billing support'],
                 'search_intent' => 'transactional',
                 'schema_type' => 'WebSite',
             ],
             [
                 'url_path' => '/contact',
                 'route_name' => 'contact',
-                'seo_title' => 'Contact Surebound Insurance – Offices, Phone & Inquiries',
-                'meta_description' => 'Get in touch with Surebound insurance brokers and claims specialists. Call (800) 555-SURE or visit our underwriting offices.',
-                'focus_keyword' => 'contact insurance agency',
-                'secondary_keywords' => ['surebound phone number', 'insurance office address', 'agent contact'],
+                'seo_title' => 'Contact Surebound Insurance | Tampa, FL',
+                'meta_description' => 'Contact Surebound Insurance in Tampa, Florida. Call (813) 214-1731, visit our downtown Tampa office at 100 N Tampa St, Suite 2500, or send a message online.',
+                'focus_keyword' => 'contact surebound insurance tampa',
+                'secondary_keywords' => ['surebound phone number', 'tampa insurance office address', 'agent contact (813) 214-1731'],
                 'search_intent' => 'navigational',
                 'schema_type' => 'LocalBusiness',
             ],
             [
                 'url_path' => '/privacy',
                 'route_name' => 'privacy',
-                'seo_title' => 'Privacy Policy & Data Security Disclosures | Surebound',
+                'seo_title' => 'Privacy Policy | Surebound Insurance',
                 'meta_description' => 'Read our commitment to protecting your personal information, financial privacy, and policyholder confidentiality.',
-                'focus_keyword' => 'insurance privacy policy',
+                'focus_keyword' => 'surebound privacy policy',
                 'secondary_keywords' => ['data protection', 'privacy disclosures'],
                 'search_intent' => 'informational',
                 'schema_type' => 'WebSite',
@@ -300,10 +310,10 @@ class SeoService
             [
                 'url_path' => '/terms',
                 'route_name' => 'terms',
-                'seo_title' => 'Terms of Service & Policyholder Agreement | Surebound',
-                'meta_description' => 'Terms and legal conditions governing the use of the Surebound Insurance website, policy quoting tools, and payment services.',
-                'focus_keyword' => 'terms of service',
-                'secondary_keywords' => ['website terms', 'policyholder agreement'],
+                'seo_title' => 'Terms of Use | Surebound Insurance',
+                'meta_description' => 'Review the terms and conditions governing use of the Surebound Insurance website and client advisory services.',
+                'focus_keyword' => 'terms of use surebound',
+                'secondary_keywords' => ['website terms', 'service terms'],
                 'search_intent' => 'informational',
                 'schema_type' => 'WebSite',
             ],
@@ -346,19 +356,48 @@ class SeoService
      */
     public function getMetadataForRequest(?Request $request = null): ?SeoMetadata
     {
+        $request = $request ?: request();
+        $path = '/'.ltrim($request->path(), '/');
+        $routeName = Route::currentRouteName();
+
         try {
-            if (! Schema::hasTable('seo_metadata')) {
-                return null;
+            if (Schema::hasTable('seo_metadata')) {
+                $meta = SeoMetadata::where('url_path', $path)->first()
+                    ?: ($routeName ? SeoMetadata::where('route_name', $routeName)->first() : null);
+                if ($meta) {
+                    return $meta;
+                }
             }
-
-            $request = $request ?: request();
-            $path = '/'.ltrim($request->path(), '/');
-
-            return SeoMetadata::where('url_path', $path)->first()
-                ?: (Route::currentRouteName() ? SeoMetadata::where('route_name', Route::currentRouteName())->first() : null);
         } catch (\Throwable) {
-            return null;
+            // DB fallback
         }
+
+        // Virtual fallback from configured default pages
+        foreach (self::getDefaultPages() as $defaultPage) {
+            if ($defaultPage['url_path'] === $path || ($routeName && $defaultPage['route_name'] === $routeName)) {
+                $virtual = new SeoMetadata;
+                $virtual->url_path = $defaultPage['url_path'];
+                $virtual->route_name = $defaultPage['route_name'];
+                $virtual->seo_title = $defaultPage['seo_title'];
+                $virtual->meta_description = $defaultPage['meta_description'];
+                $virtual->canonical_url = url($defaultPage['url_path']);
+                $virtual->meta_robots = 'index, follow';
+                $virtual->og_title = $defaultPage['seo_title'];
+                $virtual->og_description = $defaultPage['meta_description'];
+                $virtual->og_image = 'images/logo.png';
+                $virtual->og_type = 'website';
+                $virtual->twitter_card = 'summary_large_image';
+                $virtual->focus_keyword = $defaultPage['focus_keyword'];
+                $virtual->secondary_keywords = $defaultPage['secondary_keywords'];
+                $virtual->search_intent = $defaultPage['search_intent'];
+                $virtual->schema_type = $defaultPage['schema_type'];
+                $virtual->is_published = true;
+
+                return $virtual;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -385,37 +424,64 @@ class SeoService
         $baseOrg = [
             '@context' => 'https://schema.org',
             '@type' => 'InsuranceAgency',
+            '@id' => 'https://sureboundinsurance.com/#agency',
             'name' => 'Surebound Insurance',
-            'url' => url('/'),
+            'url' => 'https://sureboundinsurance.com',
             'logo' => asset('images/logo.png'),
             'image' => asset('images/hero-family.jpg'),
             'description' => 'Dependable insurance protection built around you. Home, auto, commercial liability, workers compensation, and surety bonds.',
-            'telephone' => '+1-800-555-7873',
+            'telephone' => '+1-813-214-1731',
             'priceRange' => '$$',
             'address' => [
                 '@type' => 'PostalAddress',
-                'streetAddress' => '100 Wall Street, Suite 1400',
-                'addressLocality' => 'New York',
-                'addressRegion' => 'NY',
-                'postalCode' => '10005',
+                'streetAddress' => '100 N Tampa St, Suite 2500',
+                'addressLocality' => 'Tampa',
+                'addressRegion' => 'FL',
+                'postalCode' => '33602',
                 'addressCountry' => 'US',
             ],
             'geo' => [
                 '@type' => 'GeoCoordinates',
-                'latitude' => 40.7061,
-                'longitude' => -74.0092,
+                'latitude' => 27.9478,
+                'longitude' => -82.4584,
+            ],
+            'founder' => [
+                '@type' => 'Person',
+                'name' => 'Karry',
+                'jobTitle' => 'Founder & Licensed Risk Advisor',
+                'image' => asset('images/karry-founder.jpg'),
+                'description' => 'Founder of Surebound Insurance with extensive background in personal and commercial insurance solutions in Florida.',
+            ],
+            'areaServed' => [
+                [
+                    '@type' => 'State',
+                    'name' => 'Florida',
+                ],
+                [
+                    '@type' => 'Country',
+                    'name' => 'United States',
+                ],
+            ],
+            'knowsAbout' => [
+                'Florida Homeowners Insurance',
+                'Commercial General Liability',
+                'Workers Compensation Florida Statute 440',
+                'Commercial Property & Windstorm Insurance',
+                'Flood Insurance (NFIP & Private)',
+                'Commercial Auto & Fleet Coverage',
+                'Group Employee Benefits',
+                'Surety Bonds',
             ],
             'openingHoursSpecification' => [
                 [
                     '@type' => 'OpeningHoursSpecification',
                     'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-                    'opens' => '08:00',
-                    'closes' => '18:00',
+                    'opens' => '08:30',
+                    'closes' => '17:30',
                 ],
             ],
             'sameAs' => [
                 'https://www.linkedin.com/company/surebound',
-                'https://twitter.com/SureboundIns',
             ],
         ];
 
@@ -426,13 +492,9 @@ class SeoService
                     $baseOrg,
                     [
                         '@type' => 'WebSite',
+                        '@id' => 'https://sureboundinsurance.com/#website',
                         'name' => 'Surebound Insurance',
-                        'url' => url('/'),
-                        'potentialAction' => [
-                            '@type' => 'SearchAction',
-                            'target' => url('/articles').'?q={search_term_string}',
-                            'query-input' => 'required name=search_term_string',
-                        ],
+                        'url' => 'https://sureboundinsurance.com',
                     ],
                 ],
             ];
@@ -444,16 +506,15 @@ class SeoService
                 '@type' => 'Service',
                 'name' => $metadata?->seo_title ?: 'Insurance Coverage Service',
                 'serviceType' => 'Commercial and Personal Lines Insurance',
-                'description' => $metadata?->meta_description ?: 'Bespoke insurance policy tailored by licensed underwriters.',
+                'description' => $metadata?->meta_description ?: 'Bespoke insurance policy tailored by licensed advisors.',
                 'provider' => [
                     '@type' => 'InsuranceAgency',
                     'name' => 'Surebound Insurance',
-                    'url' => url('/'),
+                    'url' => 'https://sureboundinsurance.com',
                 ],
                 'areaServed' => [
+                    ['@type' => 'State', 'name' => 'Florida'],
                     ['@type' => 'Country', 'name' => 'United States'],
-                    ['@type' => 'Country', 'name' => 'United Kingdom'],
-                    ['@type' => 'Country', 'name' => 'Canada'],
                 ],
             ];
         }
@@ -495,7 +556,7 @@ class SeoService
             'isPartOf' => [
                 '@type' => 'WebSite',
                 'name' => 'Surebound Insurance',
-                'url' => url('/'),
+                'url' => 'https://sureboundinsurance.com',
             ],
         ];
     }
@@ -518,11 +579,9 @@ class SeoService
             // Fall back to default hreflang links
         }
 
-        // Standard default locale links for USA, UK, Canada, and x-default
+        // Agency targets Florida / US audiences
         return [
             'en-US' => url($path),
-            'en-GB' => url($path),
-            'en-CA' => url($path),
             'x-default' => url($path),
         ];
     }

@@ -1,0 +1,156 @@
+# Surebound Insurance – Complete LLM Knowledge Base & Entity Manifest
+
+> Comprehensive machine-readable document for AI search engines, Large Language Models (LLMs), and retrieval-augmented generation (RAG) systems. Contains verified entity facts, service catalogs, carrier networks, Florida statutory references, claims hotlines, leadership profiles, and sitemap coordinates.
+
+---
+
+## 1. Agency Entity & Knowledge Graph
+
+- **Brand Name:** Surebound Insurance
+- **Legal Entity:** Surebound Insurance Agency LLC
+- **Principal Leadership / Founder:** Karry (Founder & Licensed Risk Advisor)
+- **Agency Type:** Independent Insurance Agency & Specialty Underwriting Brokerage
+- **Headquarters Physical Address:** 100 N Tampa St, Suite 2500, Tampa, FL 33602, United States
+- **Geo-Coordinates:** Latitude 27.9478, Longitude -82.4584
+- **Primary Telephone:** +1 (813) 214-1731
+- **Agency Claims Support:** +1 (813) 214-1731
+- **Primary Email:** support@sureboundinsurance.com
+- **Direct Lead Intake Email:** karry@sureboundinsurance.com
+- **Billing / Escrow Email:** billing@sureboundinsurance.com
+- **Official Website:** https://sureboundinsurance.com
+- **Florida State Agency License:** #FL-L114920
+- **Office Hours:** Monday – Friday: 8:30 AM – 5:30 PM Eastern Standard Time (EST)
+- **Primary Markets Served:** Tampa, St. Petersburg, Clearwater, Tampa Bay Metropolitan Area (Hillsborough, Pinellas, Pasco Counties), all 67 counties throughout Florida, and nationwide placements across the United States.
+- **Languages Supported:** English (en-US)
+
+---
+
+## 2. Founder Biography & Agency Philosophy
+
+Karry is the founder of Surebound Insurance. His professional background in both personal and commercial insurance equips him to advise individuals, families, and commercial business owners with clarity and diligence. 
+
+Karry's consultative model focuses on:
+1. Conducting thorough risk assessments to uncover policy gaps (such as flood exclusions on standard homeowners policies, inadequate bodily injury limits, or unendorsed contractor liabilities).
+2. Explaining coverage terms in plain English rather than insurance jargon.
+3. Benchmarking rates across dozens of admitted and surplus lines carrier partners to fit policyholder budgets without sacrificing essential financial protection.
+
+---
+
+## 3. Product Catalog & Underwriting Specifications
+
+### A. Personal Insurance Lines
+
+#### 1. Homeowners Insurance (HO-3 & HO-5 Special Form)
+- **Core Coverages:** Dwelling (Coverage A), Other Structures (Coverage B), Personal Property Replacement Cost (Coverage C), Loss of Use / Additional Living Expenses (Coverage D), Personal Liability (Coverage E - $300k-$1M), Medical Payments to Others (Coverage F).
+- **Florida Specifics:** Hurricane windstorm endorsements, separate mandatory hurricane deductibles (typically 2%, 5%, or 10% of Coverage A), water backup endorsements, animal liability endorsements, and roof age / 4-point inspection qualification.
+- **Url:** https://sureboundinsurance.com/home-insurance
+
+#### 2. Florida Flood Insurance (NFIP & Private Flood)
+- **Scope:** Flood is explicitly excluded from standard homeowners policies. Surebound provides FEMA National Flood Insurance Program (NFIP) policies (up to $250k building / $100k contents) and Private Market Flood options (providing up to $1M+ dwelling limits, contents replacement cost, and temporary relocation benefits).
+- **Coverage Triggers:** Inundation of two or more acres of normally dry land or two or more properties from overflow of tidal waters, unusual accumulation of surface runoff, or storm surge.
+- **Url:** https://sureboundinsurance.com/property-insurance
+
+#### 3. Personal Automobile Insurance
+- **Florida Statutory Minimums:** Florida requires $10,000 Personal Injury Protection (PIP) and $10,000 Property Damage Liability (PDL). Surebound strongly advises clients to carry Bodily Injury Liability (BIL - $100k/$300k or $250k/$500k) and Uninsured/Underinsured Motorist (UM/UIM) coverage due to high regional uninsured driver statistics.
+- **Endorsements:** Comprehensive, Collision, Rental Reimbursement, Emergency Roadside Assistance (dispatching via Progressive 1-800-776-4737).
+- **Url:** https://sureboundinsurance.com/auto-insurance
+
+#### 4. Personal Umbrella Liability Insurance
+- **Coverage Limits:** $1,000,000 to $10,000,000 in excess liability.
+- **Purpose:** Protects personal equity, home value, brokerage portfolios, and future income from severe liability lawsuits arising from catastrophic vehicular accidents, property occurrences, or personal defamation.
+- **Url:** https://sureboundinsurance.com/umbrella-insurance
+
+#### 5. Individual Life & Family Health Insurance
+- **Life Insurance:** 10, 20, 30-year Level Term Life, Whole Life, and Universal Life for income replacement, debt settlement, and wealth transfer.
+- **Health Insurance:** Individual, family, and child ACA-compliant health plans, dental, and vision insurance.
+- **Url:** https://sureboundinsurance.com/life-insurance | https://sureboundinsurance.com/health-insurance
+
+---
+
+### B. Commercial Insurance Lines
+
+#### 1. Commercial General Liability (CGL)
+- **Standard Limits:** $1,000,000 per occurrence / $2,000,000 general aggregate.
+- **Protection Areas:** Third-party bodily injury on business premises, third-party property damage caused by operations, products and completed operations liability, personal and advertising injury, defense legal fees outside policy limits.
+- **Features:** Rapid Certificates of Insurance (COI) issuance, additional insured endorsements, waiver of subrogation, and primary/non-contributory language.
+- **Url:** https://sureboundinsurance.com/liability-insurance
+
+#### 2. Commercial Property Insurance & Business Interruption
+- **Insured Assets:** Commercial buildings, tenant improvements & betterments (TIB), Business Personal Property (BPP - desks, computers, equipment, inventory).
+- **Perils Covered:** Fire, windstorm, hurricane, vandalism, vehicle impact, sprinkler leakage. Includes business income coverage covering net profits and continuing payroll during covered disaster restorations.
+- **Url:** https://sureboundinsurance.com/property-insurance
+
+#### 3. Workers' Compensation Insurance
+- **Regulatory Framework:** Florida Statute Title XXXI, Chapter 440. Construction businesses with 1 or more employees and non-construction businesses with 4 or more employees must carry valid Workers' Compensation.
+- **Statutory Benefits:** 100% covered emergency medical care, temporary total disability (TTD) income replacement, impairment benefits, and death benefits.
+- **Advisory Focus:** Accurate NCCI class code classification, Experience Modification Rate (EMR/MOD) auditing, payroll reconciliations, and safety program implementation discounts.
+- **Url:** https://sureboundinsurance.com/workers-compensation
+
+#### 4. Commercial Auto & Business Fleet Insurance
+- **Vehicle Types:** Business sedans, pickup trucks, utility vans, box trucks, flatbeds, and tractor trailers.
+- **Coverages:** Commercial auto liability ($500k to $1M+ CSL), collision, comprehensive, hired and non-owned auto (HNOA), cargo liability, and federal/state DOT compliance filings.
+- **Url:** https://sureboundinsurance.com/commercial-auto-insurance
+
+#### 5. Group Employee Benefits
+- **Offerings:** Small group (2-50) and large group (50+) employer health insurance (HMO, PPO, HDHP/HSA), group dental, vision, life, short-term disability (STD), and long-term disability (LTD).
+- **Features:** Section 125 cafeteria pre-tax setups, digital paperless enrollment portals, and annual market renewal benchmarking.
+- **Url:** https://sureboundinsurance.com/group-benefits
+
+#### 6. Surety Bonds & Contract Bonding
+- **Categories:** Contract surety (bid bonds, performance bonds, payment bonds, maintenance bonds), commercial license & permit bonds, court bonds, and fiduciary bonds.
+- **Carrier Backing:** Treasury-listed (T-Listed) surety underwriters capable of small fast-track bonding up to multi-million dollar bonding lines.
+- **Url:** https://sureboundinsurance.com/surety-bond
+
+#### 7. Business Owner's Policy (BOP)
+- **Structure:** Cost-efficient single-policy package combining Commercial General Liability and Commercial Property for low-to-medium hazard businesses (offices, retail shops, contractors, service professionals) at bundled discounted rates.
+- **Url:** https://sureboundinsurance.com/business-insurance
+
+---
+
+## 4. Carrier Appointments & Verified Claims Hotlines
+
+Surebound Insurance represents leading AM Best "A" rated insurance carriers. Policyholders may initiate claims directly with the carrier or reach out to Surebound for guidance.
+
+- **Progressive Insurance:** 1-800-274-4499 | 24/7 Roadside Towing: 1-800-776-4737 | https://www.progressive.com
+- **Travelers Insurance:** 1-800-252-4633 | https://www.travelers.com
+- **Liberty Mutual:** 1-800-225-2467 | https://www.libertymutual.com
+- **The Hartford:** 1-800-243-5860 | https://www.thehartford.com
+- **Nationwide:** 1-800-421-3535 | https://www.nationwide.com
+- **Citizens Property Insurance:** 1-866-411-2742 | https://www.citizensfla.com
+- **Florida Peninsula Insurance:** 1-877-229-2244 | https://www.floridapeninsula.com
+- **Tower Hill Insurance:** 1-800-216-3711 | https://www.thig.com
+- **Universal Property & Casualty:** 1-800-470-0599 | https://www.universalproperty.com
+- **Surebound Client Advocacy Hotline:** (813) 214-1731 | support@sureboundinsurance.com
+
+---
+
+## 5. Billing, Grace Periods & Mortgage Escrow Instructions
+
+- **Online Bill Pay:** Clients can pay premiums directly via credit card, debit, or ACH through carrier links published at https://sureboundinsurance.com/payment.
+- **Florida Grace Periods:** Statutory and contractual grace periods typically provide 10 to 30 days past the due date before policy cancellation notices take effect.
+- **Mortgagee Clause & Escrow Updates:** Title companies, mortgage loan officers, and escrow servicers can send verification requests, binder requests, and mortgagee clause updates to `billing@sureboundinsurance.com` or `support@sureboundinsurance.com` with same-day turnarounds.
+
+---
+
+## 6. Official URL Directory
+
+- **Homepage:** https://sureboundinsurance.com
+- **Coverage Index:** https://sureboundinsurance.com/coverage
+- **Custom Quote:** https://sureboundinsurance.com/custom-quote
+- **Claims Center:** https://sureboundinsurance.com/claims
+- **Payment Portal:** https://sureboundinsurance.com/payment
+- **Agency Story:** https://sureboundinsurance.com/story
+- **Leadership & Advisors:** https://sureboundinsurance.com/team
+- **Policy Comparison Tool:** https://sureboundinsurance.com/compare
+- **Articles & Knowledge:** https://sureboundinsurance.com/articles
+- **Insurance Playbooks:** https://sureboundinsurance.com/guides
+- **Insurance FAQs:** https://sureboundinsurance.com/faqs
+- **Careers:** https://sureboundinsurance.com/careers
+- **Community:** https://sureboundinsurance.com/community
+- **Contact:** https://sureboundinsurance.com/contact
+- **Privacy Policy:** https://sureboundinsurance.com/privacy
+- **Terms of Service:** https://sureboundinsurance.com/terms
+- **XML Sitemap:** https://sureboundinsurance.com/sitemap.xml
+- **LLM Manifest:** https://sureboundinsurance.com/llms.txt
+- **LLM Full Manifest:** https://sureboundinsurance.com/llms-full.txt
+

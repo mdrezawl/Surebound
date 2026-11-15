@@ -1109,14 +1109,14 @@
                         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         24/7 Roadside &amp; Emergency:
                     </span>
-                    <a href="tel:18005550199" class="hotline-num">1-800-555-0199</a>
+                    <a href="tel:18007764737" class="hotline-num">1-800-776-4737</a>
                 </div>
                 <div class="hotline-item">
                     <span class="hotline-label">
                         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        Claims First Notice (FNOL):
+                        Agency Claims Support:
                     </span>
-                    <a href="tel:18005552524" class="hotline-num">1-800-555-CLAIM</a>
+                    <a href="tel:18132141731" class="hotline-num">(813) 214-1731</a>
                 </div>
             </div>
 
@@ -1220,15 +1220,15 @@
                 </div>
                 <div class="wallet-footer">
                     <div class="w-hotlines">
-                        24/7 Roadside Assistance: <strong>1-800-555-0199</strong><br>
-                        Claims Notice (FNOL): <strong>1-800-555-CLAIM</strong>
+                        24/7 Roadside Assistance: <strong>1-800-776-4737</strong><br>
+                        Agency Claims Support: <strong>(813) 214-1731</strong>
                     </div>
                     <div class="w-qr-box" title="Verification QR Code">
                         {!! $qrSvg !!}
                     </div>
                 </div>
                 <div class="wallet-copy-tag">
-                    Official Evidence of Financial Responsibility &bull; Texas Department of Insurance
+                    Official Evidence of Financial Responsibility &bull; Florida Financial Responsibility Law
                 </div>
             </div>
         </div>
@@ -1237,7 +1237,7 @@
         <div class="cutout-guide-footer">
             <span class="cutout-scissors">&#9986; Cut Line</span>
             <span class="cutout-guide-line"></span>
-            <span>Texas Transportation Code &sect; 601.051 Compliant</span>
+            <span>Florida Statutes &sect; 324.021 Compliant</span>
         </div>
 
         <!-- LOWER SECTION: ACCIDENT PROTOCOL & TEXAS STATUTORY NOTICE -->
@@ -1251,16 +1251,16 @@
                     <li><strong>Safety First:</strong> Check for injuries. If anyone is injured or road is blocked, immediately call 911.</li>
                     <li><strong>Exchange Information:</strong> Collect other driver's name, phone, address, vehicle plate number, insurer name, and policy number.</li>
                     <li><strong>Document the Scene:</strong> Take photos of vehicle damage, road position, signs, and exchange contact with any witnesses.</li>
-                    <li><strong>Notify Surebound FNOL Claims:</strong> Call <strong>1-800-555-CLAIM</strong> or report online at <strong>surebound.com/claims</strong>.</li>
+                    <li><strong>Notify Agency / Carrier:</strong> Call <strong>(813) 214-1731</strong> or report online at <strong>sureboundinsurance.com/claims</strong>.</li>
                 </ul>
             </div>
             <div>
                 <div class="print-box-title">
                     <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                    Texas Statutory Financial Responsibility Notice
+                    Florida Statutory Financial Responsibility Notice
                 </div>
                 <div class="statute-print-box">
-                    This identification card certifies continuous motor vehicle liability insurance coverage meeting or exceeding the minimum limits prescribed by Texas Transportation Code &sect; 601.072. Underwriting carrier is registered with the Texas Department of Insurance. Electronic policy status verified via digital QR code scanner.
+                    This identification card certifies continuous motor vehicle liability insurance coverage meeting or exceeding the minimum limits prescribed by Florida Statutes &sect; 324.021. Electronic policy status verified via digital QR code scanner.
                 </div>
             </div>
         </div>
@@ -1269,23 +1269,23 @@
         <div class="print-assistance-bar">
             <div class="assist-item">
                 <span class="assist-title">24/7 Roadside Assistance</span>
-                <span class="assist-val">1-800-555-0199</span>
+                <span class="assist-val">1-800-776-4737</span>
                 <span class="assist-desc">Towing &bull; Lockout &bull; Jumpstart</span>
             </div>
             <div class="assist-item">
-                <span class="assist-title">Claims Notice (FNOL)</span>
-                <span class="assist-val">1-800-555-CLAIM</span>
-                <span class="assist-desc">24/7 Dispatch &bull; surebound.com</span>
+                <span class="assist-title">Agency Claims Desk</span>
+                <span class="assist-val">(813) 214-1731</span>
+                <span class="assist-desc">Tampa Desk &bull; sureboundinsurance.com</span>
             </div>
             <div class="assist-item">
                 <span class="assist-title">Instant QR Verification</span>
                 <span class="assist-val">Digital Policy Record</span>
-                <span class="assist-desc">Official TDI Active Status</span>
+                <span class="assist-desc">Official FL Active Status</span>
             </div>
         </div>
 
         <div class="print-footer-notice">
-            Surebound Syndicate &bull; 100 Congress Avenue, Suite 2000, Austin, TX 78701 &bull; 24/7 Roadside Assistance: 1-800-555-0199 &bull; Verification URL: {{ $verificationUrl }}
+            Surebound Insurance Agency LLC &bull; 100 N Tampa St, Suite 2500, Tampa, FL 33602 &bull; 24/7 Roadside: 1-800-776-4737 &bull; Agency Desk: (813) 214-1731 &bull; Verification URL: {{ $verificationUrl }}
         </div>
     </div>
 

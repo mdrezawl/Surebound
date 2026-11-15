@@ -88,19 +88,20 @@
                 "legalName" => "Surebound Insurance Services, LLC",
                 "url" => url('/'),
                 "logo" => asset('images/logo.png'),
-                "description" => "Independent business agency and specialty underwriting firm providing commercial, personal, surety bond, and cyber risk coverage across the US, UK, and Canada.",
-                "areaServed" => ["US", "GB", "CA"],
+                "description" => "Independent insurance agency in Tampa, FL providing business, personal, auto, home, and commercial risk solutions.",
+                "areaServed" => ["FL", "US"],
                 "knowsAbout" => [
                     "Commercial Auto Insurance",
-                    "Surety Bonds",
+                    "Workers Compensation",
                     "General Liability",
                     "Commercial Property",
-                    "Specialty Cyber Coverage"
+                    "Home & Flood Insurance"
                 ],
                 "contactPoint" => [
                     "@type" => "ContactPoint",
                     "contactType" => "customer service",
-                    "email" => "underwriting@surebound.com",
+                    "telephone" => "+1-813-214-1731",
+                    "email" => "support@sureboundinsurance.com",
                     "availableLanguage" => ["en"]
                 ]
             ];

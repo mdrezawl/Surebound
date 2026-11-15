@@ -31,4 +31,32 @@ class SeoPublicController extends Controller
             'Content-Type' => 'text/plain; charset=UTF-8',
         ]);
     }
+
+    /**
+     * Render machine-readable LLM context manifest (llms.txt standard).
+     */
+    public function llms(): Response
+    {
+        $filePath = public_path('llms.txt');
+        $content = file_exists($filePath) ? (string) file_get_contents($filePath) : '';
+
+        return response($content, 200, [
+            'Content-Type' => 'text/markdown; charset=UTF-8',
+            'Cache-Control' => 'public, max-age=86400',
+        ]);
+    }
+
+    /**
+     * Render full machine-readable LLM knowledge base (llms-full.txt standard).
+     */
+    public function llmsFull(): Response
+    {
+        $filePath = public_path('llms-full.txt');
+        $content = file_exists($filePath) ? (string) file_get_contents($filePath) : '';
+
+        return response($content, 200, [
+            'Content-Type' => 'text/markdown; charset=UTF-8',
+            'Cache-Control' => 'public, max-age=86400',
+        ]);
+    }
 }

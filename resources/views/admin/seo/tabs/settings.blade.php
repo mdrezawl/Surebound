@@ -58,7 +58,7 @@
 
                 <div>
                     <label class="seo-form-label">Alert Notification Email</label>
-                    <input type="email" name="alert_email" class="seo-form-input" value="{{ $automationSettings->alert_email ?? 'underwriting@surebound.com' }}">
+                    <input type="email" name="alert_email" class="seo-form-input" value="{{ $automationSettings->alert_email ?? 'karry@sureboundinsurance.com' }}">
                 </div>
             </div>
 

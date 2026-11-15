@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us – Direct Client Advisory & Support | Surebound')
+@section('title', 'Contact Surebound Insurance | Tampa, FL')
 
 @section('content')
 
@@ -53,7 +53,7 @@
                     </div>
                     <div class="hero-card-text">
                         <span class="hero-card-sub">{{ $content['hero_card_sub'] ?? 'Direct Advisor Access' }}</span>
-                        <span class="hero-card-label">{{ $content['hero_card_label'] ?? 'Avg. response under 15 mins' }}</span>
+                        <span class="hero-card-label">{{ $content['hero_card_label'] ?? 'Prompt response during business hours' }}</span>
                     </div>
                     <div class="hero-card-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -111,8 +111,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                         </svg>
                     </div>
-                    <h3 class="value-item-title">{{ $content['value_4_title'] ?? 'support@surebound.com' }}</h3>
-                    <p class="value-item-desc">{{ $content['value_4_desc'] ?? 'Digital Intake • Certified electronic correspondence • Inquiries answered in under 15 minutes.' }}</p>
+                    <h3 class="value-item-title">{{ $content['value_4_title'] ?? 'support@sureboundinsurance.com' }}</h3>
+                    <p class="value-item-desc">{{ $content['value_4_desc'] ?? 'Digital Intake • Certified correspondence • Inquiries answered promptly during business hours.' }}</p>
                 </div>
             </div>
         </div>
@@ -193,7 +193,7 @@
                         </a>
 
                         <!-- Email Desk -->
-                        <a href="mailto:{{ $content['channel_4_value'] ?? 'support@surebound.com' }}" class="contact-channel-card">
+                        <a href="mailto:{{ $content['channel_4_value'] ?? 'support@sureboundinsurance.com' }}" class="contact-channel-card">
                             <div class="contact-channel-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
@@ -202,9 +202,9 @@
                             <div class="contact-channel-details">
                                 <div class="contact-channel-header">
                                     <span class="contact-channel-title">{{ $content['channel_4_title'] ?? 'Official Inquiries & Documentation' }}</span>
-                                    <span class="contact-channel-badge">{{ $content['channel_4_badge'] ?? 'Average Reply: < 15 mins' }}</span>
+                                    <span class="contact-channel-badge">{{ $content['channel_4_badge'] ?? 'Same-Day Response' }}</span>
                                 </div>
-                                <div class="contact-channel-value">{{ $content['channel_4_value'] ?? 'support@surebound.com' }}</div>
+                                <div class="contact-channel-value">{{ $content['channel_4_value'] ?? 'support@sureboundinsurance.com' }}</div>
                                 <div class="contact-channel-sub">{{ $content['channel_4_sub'] ?? 'Proof of insurance, escrow requests, loss payee forms & certificates.' }}</div>
                             </div>
                         </a>
@@ -398,8 +398,8 @@
                             <!-- Consent Checkbox -->
                             <div class="contact-form-group full-width">
                                 <label class="contact-consent-label">
-                                    <input type="checkbox" required checked>
-                                    <span>I agree to receive communications regarding my insurance inquiry from a licensed Surebound representative. Your details will never be sold or shared with external third parties.</span>
+                                    <input type="checkbox" id="contactConsentCheck" required>
+                                    <span>I agree to receive communications regarding my insurance inquiry from a licensed Surebound representative in accordance with the <a href="{{ route('privacy') }}" target="_blank" style="text-decoration: underline; color: inherit;">Privacy Policy</a>.</span>
                                 </label>
                             </div>
                         </div>
@@ -411,6 +411,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                             </svg>
                         </button>
+
+                        <div id="contactFormStatus" style="display: none; margin-top: 15px; padding: 12px 16px; border-radius: 8px; font-size: 14.5px; font-weight: 500;"></div>
 
                         <!-- Security / Compliance Disclaimer -->
                         <div class="contact-form-security">
@@ -484,7 +486,7 @@
                         <div class="faq-icon">+</div>
                     </button>
                     <div class="faq-answer">
-                        {!! $content['faq_1_answer'] ?? 'Inquiries submitted through our online secure form during standard business hours (Monday through Friday, 8:00 AM – 8:00 PM EST) are typically routed and responded to by a licensed insurance underwriter within 15 minutes. Messages received outside standard business hours are answered early the following business morning. For immediate assistance, call us directly at +1 813-214-1731.' !!}
+                        {!! $content['faq_1_answer'] ?? 'Inquiries submitted through our online secure form during standard business hours (Monday through Friday, 8:30 AM – 5:30 PM EST) are reviewed and responded to promptly by a licensed insurance advisor. Messages received outside business hours are answered early the following business morning. For immediate assistance, call us directly at (813) 214-1731.' !!}
                     </div>
                 </div>
 
@@ -506,7 +508,7 @@
                         <div class="faq-icon">+</div>
                     </button>
                     <div class="faq-answer">
-                        {!! $content['faq_3_answer'] ?? 'Title companies, mortgage lenders, and escrow officers can send verification requests, mortgagee clause updates, and loss payee change notices directly to <strong>support@surebound.com</strong>. Include the insured policyholder\'s full name, property address, and loan number for automated same-day certificate issuance.' !!}
+                        {!! $content['faq_3_answer'] ?? 'Title companies, mortgage lenders, and escrow officers can send verification requests, mortgagee clause updates, and loss payee change notices directly to <strong>support@sureboundinsurance.com</strong>. Include the insured policyholder\'s full name, property address, and loan number for automated same-day certificate issuance.' !!}
                     </div>
                 </div>
 
@@ -572,31 +574,100 @@
 
         function handleContactSubmit(event) {
             event.preventDefault();
+            const form = document.getElementById('sureboundContactForm');
             const btn = document.getElementById('contactSubmitButton');
+            const statusDiv = document.getElementById('contactFormStatus');
             const originalHtml = btn.innerHTML;
-            
-            // Show loading state
-            btn.disabled = true;
-            btn.innerHTML = '<span>Routing Inquiry to Advisor...</span>';
 
-            setTimeout(() => {
+            const firstName = document.getElementById('contactFirstName')?.value || '';
+            const lastName = document.getElementById('contactLastName')?.value || '';
+            const email = document.getElementById('contactEmail')?.value || '';
+            const phone = document.getElementById('contactPhone')?.value || '';
+            const department = document.getElementById('contactDepartment')?.value || '';
+            const policyNumber = document.getElementById('contactPolicyNumber')?.value || '';
+            const methodRadio = form.querySelector('input[name="contact_method"]:checked');
+            const contactMethod = methodRadio ? methodRadio.value : 'either';
+            const message = document.getElementById('contactMessage')?.value || '';
+
+            btn.disabled = true;
+            btn.innerHTML = '<span>Sending Message to Advisor...</span>';
+            if (statusDiv) {
+                statusDiv.style.display = 'none';
+            }
+
+            fetch('{{ route("contact.store") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    phone: phone,
+                    department: department,
+                    policy_number: policyNumber,
+                    contact_method: contactMethod,
+                    message: message
+                })
+            })
+            .then(async r => {
+                const data = await r.json().catch(() => ({}));
+                if (!r.ok || !data.success) {
+                    const errMsg = data.message || (data.errors ? Object.values(data.errors).flat().join(' ') : 'Unable to send message at this time.');
+                    throw new Error(errMsg);
+                }
+                return data;
+            })
+            .then(data => {
                 btn.disabled = false;
                 btn.innerHTML = originalHtml;
 
                 if (window.SureboundModal && typeof SureboundModal.alert === 'function') {
                     SureboundModal.alert({
-                        title: 'Inquiry Received Successfully',
-                        message: 'Thank you for reaching out to Surebound! A licensed insurance underwriter or advisor has been assigned to your file and will contact you within 15 minutes during standard business hours.',
+                        title: 'Inquiry Received',
+                        message: 'Thank you for reaching out! Your inquiry #' + (data.inquiry_id || 'Received') + ' has been logged. A licensed advisor from our Tampa office will follow up with you shortly.',
                         type: 'success',
                         icon: 'shield-check',
                         buttonText: 'Done'
                     });
+                } else if (statusDiv) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#e6f4ea';
+                    statusDiv.style.color = '#137333';
+                    statusDiv.style.border = '1px solid #ceead6';
+                    statusDiv.innerHTML = '✓ Inquiry #' + (data.inquiry_id || 'Received') + ' received. An advisor will contact you shortly.';
                 } else {
-                    alert('Thank you for reaching out to Surebound! A licensed insurance advisor has received your request and will contact you promptly.');
+                    alert('Thank you! Your inquiry #' + (data.inquiry_id || '') + ' has been received.');
                 }
 
-                document.getElementById('sureboundContactForm').reset();
-            }, 750);
+                // Fire analytics event
+                if (typeof gtag === 'function') {
+                    gtag('event', 'generate_lead', {
+                        event_category: 'Contact',
+                        event_label: department,
+                        value: data.inquiry_id
+                    });
+                }
+
+                form.reset();
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+
+                if (statusDiv) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#fce8e6';
+                    statusDiv.style.color = '#c5221f';
+                    statusDiv.style.border = '1px solid #fad2cf';
+                    statusDiv.innerHTML = '⚠️ ' + (err.message || 'Submission failed. Please try again or call us directly at <a href="tel:8132141731" style="color:inherit;font-weight:700;">(813) 214-1731</a>.');
+                } else {
+                    alert('Submission error: ' + err.message + '\nPlease call us directly at (813) 214-1731.');
+                }
+            });
         }
     </script>
 @endsection

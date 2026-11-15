@@ -407,6 +407,10 @@ class AdminController extends Controller
      */
     public function storePublicQuote(Request $request)
     {
+        if ($request->has('zip_code') && ! $request->has('zip')) {
+            $request->merge(['zip' => (string) $request->input('zip_code')]);
+        }
+
         $request->validate([
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
@@ -512,6 +516,94 @@ class AdminController extends Controller
     }
 
     /**
+     * Handle public contact form submission with validation, database persistence, and advisor notification.
+     */
+    public function storeContactInquiry(Request $request)
+    {
+        if ($request->has('full_name') && ! $request->has('first_name')) {
+            $parts = explode(' ', trim((string) $request->input('full_name')), 2);
+            $request->merge([
+                'first_name' => $parts[0] ?: 'Contact',
+                'last_name' => $parts[1] ?? 'Inquirer',
+            ]);
+        }
+        if ($request->has('insurance_type') && ! $request->has('department')) {
+            $request->merge([
+                'department' => (string) $request->input('insurance_type'),
+            ]);
+        }
+
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:50',
+            'department' => 'required|string|max:100',
+            'policy_number' => 'nullable|string|max:100',
+            'contact_method' => 'nullable|string|in:email,phone,either',
+            'message' => 'required|string|max:5000',
+        ]);
+
+        $dept = $validated['department'];
+        $typeMapping = [
+            'Home & Property Insurance' => 'home',
+            'Personal Auto Insurance' => 'auto',
+            'Commercial & Business Lines' => 'business',
+            'Commercial Fleet Auto' => 'commercial_auto',
+            'Surety Bonds & Licensing' => 'surety_bond',
+            'Life & Health Insurance' => 'life',
+            'Umbrella & Specialty Coverage' => 'umbrella',
+            'Existing Claim Support' => 'claims',
+            'Billing & Escrow Payments' => 'billing',
+            'General Question / Other' => 'general',
+        ];
+        $type = in_array($dept, ['home', 'auto', 'business', 'commercial_auto', 'surety_bond', 'life', 'umbrella', 'claims', 'billing', 'general', 'workers_comp', 'property'], true)
+            ? $dept
+            : ($typeMapping[$dept] ?? 'general');
+
+        $notes = [
+            'Source: /contact Inquiry',
+            'Department: '.$dept,
+            'Preferred Response Method: '.ucfirst($validated['contact_method'] ?? 'either'),
+        ];
+        if (! empty($validated['policy_number'])) {
+            $notes[] = 'Policy #: '.$validated['policy_number'];
+        }
+        $notes[] = 'Message: '.$validated['message'];
+
+        $quote = Quote::create([
+            'quote_ref' => 'INQ-'.rand(10000, 99999),
+            'name' => trim($validated['first_name'].' '.$validated['last_name']),
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'type' => $type,
+            'type_label' => 'Inquiry: '.$dept,
+            'coverage' => 'General Inquiry / Consultation',
+            'premium' => 'N/A',
+            'location' => 'Tampa, FL',
+            'zip_code' => '33602',
+            'status' => 'new',
+            'notes' => implode(' | ', $notes),
+        ]);
+
+        try {
+            $adminRecipient = config('mail.admin_quote_recipient', 'karry@sureboundinsurance.com');
+            if (! empty($adminRecipient)) {
+                Mail::to($adminRecipient)->send(new NewQuoteAlert($quote));
+            }
+        } catch (\Throwable $e) {
+            Log::error('Contact inquiry notification email failed: '.$e->getMessage());
+        }
+
+        return response()->json([
+            'success' => true,
+            'inquiry_id' => $quote->quote_ref,
+            'quote_ref' => $quote->quote_ref,
+            'message' => 'Thank you! Your inquiry ('.$quote->quote_ref.') has been received. A licensed Surebound advisor will contact you promptly.',
+        ]);
+    }
+
+    /**
      * Default content dictionary for Home Insurance page
      */
     public static function getDefaultHomeInsuranceContent(): array
@@ -578,16 +670,16 @@ class AdminController extends Controller
 
             // CTA
             'cta_title' => 'Ready to protect your home with confidence?',
-            'cta_subtitle' => 'Get a personalized home insurance quote tailored to your property in less than 2 minutes.',
+            'cta_subtitle' => 'Connect with our Tampa team to request a personalized home insurance quote tailored to your property.',
 
-            // Brand Perspectives & Pull Quotes
-            'quotes_enabled' => '1',
-            'quotes_count' => '1',
-            'quote_1_text' => 'We believe that the advantages are so great that a shift to working on slack, or something like it, is inevitable.',
-            'quote_1_author' => 'Marcel Gherkina',
-            'quote_1_role' => 'Spokesperson, Surebound',
-            'quote_1_badge' => 'Verified Perspective',
-            'quote_1_active' => '1',
+            // Brand Perspectives & Pull Quotes (Disabled until authentic client feedback is provided)
+            'quotes_enabled' => '0',
+            'quotes_count' => '0',
+            'quote_1_text' => '',
+            'quote_1_author' => '',
+            'quote_1_role' => '',
+            'quote_1_badge' => '',
+            'quote_1_active' => '0',
         ];
     }
 
@@ -1406,55 +1498,55 @@ class AdminController extends Controller
     public static function getDefaultPropertyInsuranceContent(): array
     {
         return [
-            'hero_image' => 'images/hero-house.jpg',
-            'hero_eyebrow' => 'PROPERTY INSURANCE',
-            'hero_title' => 'Protection Built Around<br>Your Property',
-            'hero_subtitle' => 'Comprehensive property insurance engineered to safeguard your structure and belongings.',
-            'hero_card_sub' => 'Multi-Policy Discount',
-            'hero_card_label' => 'Save up to 25% bundled',
-            'card_1_title' => 'Structure Protection',
-            'card_1_desc' => 'Covers rebuilding costs for walls, roof, foundation, and attached structures against fire, wind, and storm damage.',
-            'card_2_title' => 'Personal Property',
-            'card_2_desc' => 'Protects furniture, appliances, computers, clothing, and personal items whether inside your property or while traveling.',
-            'card_3_title' => 'Liability Defense',
-            'card_3_desc' => 'Defends against legal suits and pays medical expenses if guests are accidentally injured on your property.',
-            'card_4_title' => 'Additional Expenses',
-            'card_4_desc' => 'Covers temporary housing costs if covered damage makes your property unlivable.',
-            'card_5_title' => 'Detached Structures',
-            'card_5_desc' => 'Safeguards detached garages, storage sheds, gazebos, guest units, fences, and perimeter walls.',
-            'card_6_title' => 'Valuable Articles Rider',
-            'card_6_desc' => 'Optional endorsements for high-value equipment, fine art, collectibles, water backup, and equipment breakdown.',
-            'value_1_title' => '24/7 Property Claims',
-            'value_1_desc' => 'Emergency response dispatch for immediate property mitigation day or night.',
-            'value_2_title' => 'Guaranteed Replacement',
-            'value_2_desc' => 'Rebuild at current market labor and material prices with zero depreciation penalties.',
-            'value_3_title' => 'Bundle & Save 25%',
-            'value_3_desc' => 'Combine your property and auto policies into one simple premium discount.',
-            'value_4_title' => 'Inflation Protection',
-            'value_4_desc' => 'Automatic policy updates ensuring your dwelling limits keep up with local construction costs.',
-            'guidance_eyebrow' => 'OUR EXPERTISE',
-            'guidance_title' => 'Property Protection Made Simpler',
-            'guidance_text' => 'Whether you are purchasing your first property, upgrading to a custom sanctuary, or protecting an estate, Surebound eliminates insurance complexity. We calculate your unique replacement cost using regional building data so you get exact coverage without paying for unnecessary fluff.',
-            'why_1_title' => 'Digital Photo Claims',
-            'why_1_desc' => 'Submit damage pictures directly via your smartphone for rapid claim review and fast repair funds.',
-            'why_2_title' => 'Smart Property Discounts',
-            'why_2_desc' => 'Earn premium discount credits for installing smart leak detectors, fire alarms, and security systems.',
+            'hero_image' => 'images/hero-business.jpg',
+            'hero_eyebrow' => 'COMMERCIAL PROPERTY INSURANCE',
+            'hero_title' => 'Protect Your Commercial<br>Buildings &amp; Assets',
+            'hero_subtitle' => 'Comprehensive commercial property insurance engineered to safeguard your buildings, business personal property, inventory, and income in Tampa, FL.',
+            'hero_card_sub' => 'Commercial Asset Protection',
+            'hero_card_label' => 'Tailored property limits',
+            'card_1_title' => 'Commercial Building Coverage',
+            'card_1_desc' => 'Protects owned commercial real estate, offices, warehouses, and structural improvements against fire, windstorm, and covered damage.',
+            'card_2_title' => 'Business Personal Property (BPP)',
+            'card_2_desc' => 'Safeguards business equipment, machinery, computer networks, furniture, tools, and inventory stored on-premises.',
+            'card_3_title' => 'Business Income &amp; Interruption',
+            'card_3_desc' => 'Replaces lost operational net income and ongoing payroll, rent, and mortgage expenses when covered perils force a temporary shutdown.',
+            'card_4_title' => 'Equipment Breakdown Coverage',
+            'card_4_desc' => 'Covers mechanical breakdown, electrical arcing, boiler failures, and refrigeration loss not covered by standard perils.',
+            'card_5_title' => 'Tenant Improvements &amp; Betterments',
+            'card_5_desc' => 'Protects permanent fixtures, alterations, and custom build-outs added to leased commercial spaces.',
+            'card_6_title' => 'Commercial Windstorm Endorsements',
+            'card_6_desc' => 'Florida-specific windstorm coverage options tailored for commercial structures with clear, manageable deductibles.',
+            'value_1_title' => 'Local Underwriting Insight',
+            'value_1_desc' => 'Guidance from Tampa specialists familiar with Florida commercial building codes, wind zones, and valuation methods.',
+            'value_2_title' => 'Agreed Value &amp; RC Options',
+            'value_2_desc' => 'Options for Replacement Cost (RC) or Agreed Value endorsements to prevent coinsurance penalties.',
+            'value_3_title' => 'Bundle in a BOP',
+            'value_3_desc' => 'Eligible businesses can combine property and liability into a Business Owner Policy for simplified management and savings.',
+            'value_4_title' => 'Risk Engineering Support',
+            'value_4_desc' => 'Practical recommendations on fire suppression, hurricane shutters, and security controls to optimize carrier underwriting.',
+            'guidance_eyebrow' => 'COMMERCIAL EXPERTISE',
+            'guidance_title' => 'Commercial Property Protection Made Simpler',
+            'guidance_text' => 'From retail storefronts along Dale Mabry to industrial facilities and downtown office suites, Surebound helps Tampa Bay businesses protect their physical assets with reliable carrier placements.',
+            'why_1_title' => 'Fast Claims Routing',
+            'why_1_desc' => 'Direct carrier claims intake and agency advocacy to help assess damage and expedite reconstruction funds.',
+            'why_2_title' => 'Wind Mitigation Credits',
+            'why_2_desc' => 'Earn substantial premium discounts for verified impact glass, roof deck attachment, and secondary water resistance.',
             'why_3_title' => 'Flexible Deductibles',
-            'why_3_desc' => 'Customize deductible thresholds across wind, hail, and general peril coverage options to fit your budget.',
-            'why_4_title' => 'Local Claims Experts',
-            'why_4_desc' => 'Neighborhood insurance specialists who know local building codes, weather risks, and contractor networks.',
-            'faq_1_question' => 'What is standardly covered under a Property Policy?',
-            'faq_1_answer' => 'Standard property insurance covers physical damage to your dwelling and attached structures caused by fire, lightning, windstorms, hail, explosions, vandalism, and theft. It also covers your personal property, personal liability claims, and temporary living expenses if your property requires major repairs after a covered peril.',
-            'faq_2_question' => 'How is my property\'s replacement cost value calculated?',
-            'faq_2_answer' => 'Replacement cost is the total amount needed to rebuild your property from the ground up using current local labor and construction material prices. It differs from market value, which includes land value and real estate market trends.',
-            'faq_3_question' => 'Are flood damage and water backup covered automatically?',
-            'faq_3_answer' => 'Standard property insurance policies exclude rising groundwater floods and sewer water backup. However, Surebound offers affordable optional endorsements for water backup and sump pump overflow.',
-            'faq_4_question' => 'How can I lower my annual property insurance premium?',
-            'faq_4_answer' => 'You can reduce your premium by bundling policies (up to 25% off), upgrading your roof with impact-resistant materials, installing monitored security or smart water-leak sensors, maintaining a strong credit score, or opting for a higher deductible level.',
-            'faq_5_question' => 'What is personal liability coverage and why do I need it?',
-            'faq_5_answer' => 'Personal liability coverage protects you against legal financial claims if someone is accidentally injured on your property (for example, slipping on an icy walkway or tripping on stairs) or if you accidentally cause property damage to someone else.',
-            'cta_title' => 'Ready to protect your property with confidence?',
-            'cta_subtitle' => 'Get a personalized property insurance quote tailored to your needs in less than 2 minutes.',
+            'why_3_desc' => 'Customize deductible thresholds across named windstorm, hail, and standard perils to match your reserve capital.',
+            'why_4_title' => 'Florida Code Compliance',
+            'why_4_desc' => 'Ordinance or Law coverage options that pay for required code upgrades during rebuilding after a major storm.',
+            'faq_1_question' => 'What is covered under Commercial Property Insurance?',
+            'faq_1_answer' => 'Commercial property insurance covers your physical business assets—including owned structures, business personal property, machinery, inventory, and office equipment—against perils like fire, lightning, wind, explosion, and vandalism.',
+            'faq_2_question' => 'What is Business Personal Property (BPP)?',
+            'faq_2_answer' => 'BPP covers items owned by your business that are not permanently attached to the building, including computers, specialized machinery, raw materials, inventory, office furniture, and leased equipment.',
+            'faq_3_question' => 'Does commercial property insurance cover flood damage in Florida?',
+            'faq_3_answer' => 'No. Like homeowners policies, standard commercial property insurance excludes damage from rising surge or flood waters. Surebound can help you secure separate commercial flood coverage through the NFIP or private flood carriers.',
+            'faq_4_question' => 'How does Business Interruption coverage work?',
+            'faq_4_answer' => 'If a covered property loss shuts down your business operations, Business Income insurance reimburses your net profit and ongoing operating expenses (such as employee payroll, rent, and utility bills) during the restoration period.',
+            'faq_5_question' => 'How can a Tampa business reduce commercial property premiums?',
+            'faq_5_answer' => 'Premiums can be lowered by completing wind mitigation inspections, installing monitored commercial fire/burglar alarms, maintaining roofs, choosing higher hurricane deductibles, or bundling with general liability into a BOP.',
+            'cta_title' => 'Ready to protect your commercial property?',
+            'cta_subtitle' => 'Request a tailored commercial property quote from our Tampa insurance team today.',
         ];
     }
 
@@ -1549,54 +1641,54 @@ class AdminController extends Controller
     {
         return [
             'hero_image' => 'images/workers_comp_hero.jpg',
-            'hero_eyebrow' => 'WORKERS COMPENSATION & BENEFITS',
-            'hero_title' => 'Taking Care of<br>Your Team',
-            'hero_subtitle' => 'Comprehensive group benefits insurance engineered to safeguard your operations and finances against legal claims.',
-            'hero_card_sub' => 'Multi-Policy Discount',
-            'hero_card_label' => 'Save up to 25% bundled',
-            'card_1_title' => 'General Liability',
-            'card_1_desc' => 'Covers legal defense costs and settlement payouts for bodily injury and property damage claims caused by your business operations.',
-            'card_2_title' => 'Professional Liability (E&O)',
-            'card_2_desc' => 'Protects your consulting or service-based firm from claims of negligence, errors, or failure to perform professional duties.',
-            'card_3_title' => 'Cyber Liability',
-            'card_3_desc' => 'Defends against data breaches, ransomware attacks, and pays for credit monitoring, public relations, and lost income.',
-            'card_4_title' => 'Directors & Officers (D&O)',
-            'card_4_desc' => 'Safeguards corporate directors and officers against legal actions alleging mismanagement or breach of fiduciary duty.',
-            'card_5_title' => 'Product Liability',
-            'card_5_desc' => 'Protects manufacturers, distributors, and retailers from claims arising out of defective products causing harm.',
-            'card_6_title' => 'Employment Practices (EPLI)',
-            'card_6_desc' => 'Provides coverage for defense costs related to claims of discrimination, wrongful termination, or harassment.',
-            'value_1_title' => 'Dedicated Legal Teams',
-            'value_1_desc' => 'Access to top-tier defense counsel specializing in commercial group benefits and industry-specific regulations.',
-            'value_2_title' => 'Custom Coverage Limits',
-            'value_2_desc' => 'Scalable limits and umbrella policies up to $50M to protect against catastrophic judgments.',
-            'value_3_title' => 'Bundle & Save 25%',
-            'value_3_desc' => 'Combine your group benefits and property policies into a BOP (Business Owner Policy) for significant discounts.',
-            'value_4_title' => 'Risk Management Resources',
-            'value_4_desc' => 'Complimentary safety training, contract review templates, and compliance guides to reduce claim frequency.',
-            'guidance_eyebrow' => 'OUR EXPERTISE',
-            'guidance_title' => 'Liability Protection Made Simpler',
-            'guidance_text' => 'Whether you operate a local retail shop, a tech startup, or a manufacturing plant, Surebound eliminates insurance complexity. We analyze your unique operational exposures using industry data so you get exact coverage without paying for unnecessary fluff.',
-            'why_1_title' => 'Rapid Claims Resolution',
-            'why_1_desc' => 'Our specialized group benefits adjusters work quickly to investigate claims and negotiate fair settlements to protect your reputation.',
-            'why_2_title' => 'Risk Mitigation Discounts',
-            'why_2_desc' => 'Earn premium credits for implementing robust employee training, safety protocols, and cybersecurity measures.',
-            'why_3_title' => 'Flexible Deductibles',
-            'why_3_desc' => 'Customize deductible or self-insured retention (SIR) levels across different group benefits lines to fit your cash flow.',
-            'why_4_title' => 'Industry Experts',
-            'why_4_desc' => 'Underwriters and advisors who understand the specific regulatory and legal risks associated with your industry sector.',
-            'faq_1_question' => 'What is standardly covered under a General Liability Policy?',
-            'faq_1_answer' => 'General Liability covers bodily injury (e.g., slip and falls), property damage to third parties, and personal/advertising injury (e.g., libel, slander, copyright infringement) arising from your business operations, products, or completed operations.',
-            'faq_2_question' => 'What is the difference between General and Professional Liability?',
-            'faq_2_answer' => 'General group benefits covers physical risks (bodily injury, property damage), whereas Professional Liability (Errors & Omissions) covers financial loss caused by your professional advice, services, negligence, or failure to deliver promised results.',
-            'faq_3_question' => 'Do I need Cyber Liability Insurance?',
-            'faq_3_answer' => 'Yes, if your business handles sensitive customer data, processes payments, or relies heavily on computer systems. A general group benefits policy typically excludes damages arising from a data breach or cyber attack.',
-            'faq_4_question' => 'How can I lower my annual group benefits insurance premium?',
-            'faq_4_answer' => 'Reduce premiums by bundling into a Business Owner Policy (BOP), raising deductibles, maintaining a loss-free record, implementing comprehensive safety and training programs, and ensuring all contractors provide certificates of insurance.',
-            'faq_5_question' => 'What does an Umbrella Liability policy do?',
-            'faq_5_answer' => 'An umbrella policy provides an extra layer of group benefits coverage above the limits of your underlying general, auto, or employer\'s group benefits policies, protecting your assets against massive, catastrophic claims.',
-            'cta_title' => 'Ready to protect your business with confidence?',
-            'cta_subtitle' => 'Get a personalized group benefits insurance quote tailored to your operational needs in less than 2 minutes.',
+            'hero_eyebrow' => 'GROUP EMPLOYEE BENEFITS',
+            'hero_title' => 'Competitive Benefits for<br>Your Growing Workforce',
+            'hero_subtitle' => 'Attract and retain top talent in Florida with tailored group health, dental, vision, life, and disability benefit plans.',
+            'hero_card_sub' => 'Employee Retention',
+            'hero_card_label' => 'Tailored employer plans',
+            'card_1_title' => 'Group Health &amp; Medical',
+            'card_1_desc' => 'Comprehensive HMO, PPO, and High-Deductible Health Plans (HDHP) paired with Health Savings Accounts (HSAs) from leading Florida carriers.',
+            'card_2_title' => 'Group Dental &amp; Vision',
+            'card_2_desc' => 'Essential preventative care, annual exams, and restorative benefits that employees appreciate and utilize regularly.',
+            'card_3_title' => 'Group Life &amp; AD&D',
+            'card_3_desc' => 'Term life and accidental death &amp; dismemberment coverage providing foundational financial protection for employee families.',
+            'card_4_title' => 'Short &amp; Long-Term Disability',
+            'card_4_desc' => 'Income protection for employees unable to work due to off-the-job illness, injury, or extended medical recovery.',
+            'card_5_title' => 'Voluntary &amp; Supplemental Benefits',
+            'card_5_desc' => 'Employee-paid supplemental coverage including critical illness, hospital indemnity, and accident plans at discounted group rates.',
+            'card_6_title' => 'Benefits Administration &amp; Compliance',
+            'card_6_desc' => 'Guidance on ACA compliance, Section 125 cafeteria plans, COBRA coordination, and simple digital employee enrollment.',
+            'value_1_title' => 'Top Carrier Access',
+            'value_1_desc' => 'Direct relationships with premier health insurance networks across Florida for competitive group pricing.',
+            'value_2_title' => 'Flexible Plan Designs',
+            'value_2_desc' => 'Tiered coverage levels enabling employers to control contribution costs while offering employees real choice.',
+            'value_3_title' => 'Digital Onboarding',
+            'value_3_desc' => 'Paperless open enrollment tools making plan selection and benefit management easy for HR and staff.',
+            'value_4_title' => 'Regulatory Guidance',
+            'value_4_desc' => 'Ongoing support with state and federal healthcare mandates, reporting requirements, and compliance checklists.',
+            'guidance_eyebrow' => 'EMPLOYER ADVOCACY',
+            'guidance_title' => 'Group Benefits Tailored for Florida Teams',
+            'guidance_text' => 'Surebound helps small and mid-sized employers in the Tampa area build attractive, cost-effective employee benefit packages that protect their teams and strengthen workforce loyalty.',
+            'why_1_title' => 'Annual Renewal Reviews',
+            'why_1_desc' => 'We benchmark your rates each year against alternative market options to protect you from unexpected double-digit increases.',
+            'why_2_title' => 'Dedicated Account Support',
+            'why_2_desc' => 'A dedicated account manager to assist your HR team with employee additions, terminations, and claims questions.',
+            'why_3_title' => 'Wellness Plan Credits',
+            'why_3_desc' => 'Implement employee wellness initiatives that lower claims experience and qualify for carrier premium discounts.',
+            'why_4_title' => 'Clear Communication',
+            'why_4_desc' => 'Educational materials and open enrollment presentations that clearly explain benefit values to your workforce.',
+            'faq_1_question' => 'How many employees do I need for a small group health plan in Florida?',
+            'faq_1_answer' => 'Under Florida regulations, small group health insurance plans generally require at least 1 full-time equivalent (non-owner/spouse) employee, and apply to businesses with up to 50 eligible employees.',
+            'faq_2_question' => 'Can my business offer voluntary benefits at zero cost to the company?',
+            'faq_2_answer' => 'Yes. Voluntary benefits—such as dental, vision, supplemental life, or critical illness—can be offered on an employee-paid basis through convenient payroll deduction at discounted group rates.',
+            'faq_3_question' => 'How are employee benefits different from Workers\' Compensation?',
+            'faq_3_answer' => 'Workers\' compensation is a state-mandated policy that covers medical care and lost wages for injuries occurring strictly on the job. Group benefits cover off-the-job healthcare, illnesses, routine checkups, and general wellness.',
+            'faq_4_question' => 'Can we contribute a fixed dollar amount toward employee premiums?',
+            'faq_4_answer' => 'Yes. Defined contribution strategies allow employers to specify a predictable monthly healthcare budget while letting employees select the specific plan tier that best fits their medical needs.',
+            'faq_5_question' => 'How do we request a group benefits proposal for our company?',
+            'faq_5_answer' => 'Simply contact our Tampa team with a basic employee census (age, ZIP, coverage tier). We will gather proposals across top regional carriers and present a side-by-side comparison.',
+            'cta_title' => 'Ready to build an attractive employee benefits package?',
+            'cta_subtitle' => 'Contact our Tampa employee benefits team to request tailored proposals for your company.',
         ];
     }
 
@@ -1612,6 +1704,68 @@ class AdminController extends Controller
         $content = PageContent::getForPage('group-benefits', self::getDefaultGroupBenefitsContent());
 
         return view('group-benefits', compact('content'));
+    }
+
+    public function showWorkersCompensation()
+    {
+        $content = PageContent::getForPage('workers-compensation', self::getDefaultWorkersCompensationContent());
+
+        return view('workers-compensation', compact('content'));
+    }
+
+    public static function getDefaultWorkersCompensationContent(): array
+    {
+        return [
+            'hero_image' => 'images/workers_comp_hero.jpg',
+            'hero_eyebrow' => 'FLORIDA WORKERS COMPENSATION',
+            'hero_title' => 'Protect Your Employees &amp;<br>Comply with Florida Law',
+            'hero_subtitle' => 'Mandatory statutory workers compensation coverage for Florida employers. Meet state requirements under Florida Statute 440, shield against liability, and protect injured workers.',
+            'hero_card_sub' => 'Florida Statutory Compliance',
+            'hero_card_label' => 'Florida Statute 440',
+            'card_1_title' => 'Medical Care &amp; Hospitalization',
+            'card_1_desc' => 'Covers emergency room treatment, doctor visits, hospital stays, physical therapy, and required prescription medications for injured employees.',
+            'card_2_title' => 'Temporary &amp; Permanent Wage Replacement',
+            'card_2_desc' => 'Provides wage-loss replacement (TTD, TPD, or PPD) while workers recover and cannot perform their customary occupational duties.',
+            'card_3_title' => 'Employer\'s Liability (Part B)',
+            'card_3_desc' => 'Protects business owners against third-party lawsuits and common-law employer negligence claims outside standard statutory benefits.',
+            'card_4_title' => 'Florida Construction &amp; Non-Construction Rules',
+            'card_4_desc' => 'Mandatory coverage for construction businesses with 1+ employee, and non-construction businesses with 4+ employees (including LLC members).',
+            'card_5_title' => 'Return-to-Work &amp; Safety Programs',
+            'card_5_desc' => 'Structured light-duty guidelines and safety protocols that lower claim frequency, speed employee recovery, and maintain a low MOD score.',
+            'card_6_title' => 'NCCI Payroll Classification &amp; Audit Defense',
+            'card_6_desc' => 'Accurate employee classification under Florida NCCI codes and proactive annual payroll audit support to eliminate unexpected premium bills.',
+            'value_1_title' => 'Florida State DFS Compliance',
+            'value_1_desc' => 'Ensures full compliance with the Florida Division of Workers\' Compensation rules, eliminating risk of costly stop-work orders and state penalty fines.',
+            'value_2_title' => 'Top Carrier Placements',
+            'value_2_desc' => 'Access to A-rated Florida workers compensation carriers and pay-as-you-go payroll reporting integrations.',
+            'value_3_title' => 'Experience MOD Optimization',
+            'value_3_desc' => 'Targeted loss-control strategies to keep your Experience Modification Factor below 1.0 for ongoing premium credits.',
+            'value_4_title' => 'Pay-As-You-Go Options',
+            'value_4_desc' => 'Direct integration with popular payroll providers so premiums match real-time monthly payroll, avoiding large year-end adjustments.',
+            'guidance_eyebrow' => 'STATUTORY GUIDANCE',
+            'guidance_title' => 'Workers\' Comp Made Transparent for Employers',
+            'guidance_text' => 'Navigating Florida Workers\' Compensation laws does not have to be stressful. Whether you are a general contractor in Tampa Bay, a restaurant operator, or a growing tech firm, Surebound matches your operations with the correct carrier and ensures full compliance with Florida Chapter 440.',
+            'why_1_title' => 'Direct Claims Assistance',
+            'why_1_desc' => 'Immediate reporting guidance when an injury occurs to ensure prompt medical authorization and statutory compliance.',
+            'why_2_title' => 'Drug-Free Workplace Discounts',
+            'why_2_desc' => 'Earn a 5% statutory premium discount on your Florida workers compensation policy by establishing a certified drug-free program.',
+            'why_3_title' => 'Safety Program Credits',
+            'why_3_desc' => 'Earn an additional 2% premium discount for maintaining an approved workplace safety committee and formal safety program.',
+            'why_4_title' => 'Exemption Filing Assistance',
+            'why_4_desc' => 'Guidance on corporate officer and LLC member exemption eligibility (Form DWC-250) under Florida Division of Workers\' Compensation rules.',
+            'faq_1_question' => 'Who is required to carry Workers\' Compensation in Florida?',
+            'faq_1_answer' => 'Under Florida Statute Chapter 440: Non-construction businesses with 4 or more employees (full- or part-time, including corporate officers); Construction businesses with 1 or more employees (including corporate officers or sole proprietors); Agricultural employers with 6 regular employees or 12 seasonal workers.',
+            'faq_2_question' => 'What happens if a Florida employer does not carry Workers\' Comp?',
+            'faq_2_answer' => 'The Florida Division of Workers\' Compensation issues Stop-Work Orders halting all business operations and imposes statutory penalty fines equal to two times the amount the employer would have paid in premium over the preceding two years.',
+            'faq_3_question' => 'Can corporate officers or LLC members exempt themselves from Workers\' Comp in Florida?',
+            'faq_3_answer' => 'Yes. Eligible corporate officers and LLC members holding a minimum ownership percentage can file for an official Certificate of Election to be Exempt (Form DWC-250) through the Florida Department of Financial Services.',
+            'faq_4_question' => 'What is Pay-As-You-Go Workers\' Compensation?',
+            'faq_4_answer' => 'Pay-as-you-go links your policy directly with your payroll processor. Premium is calculated and debited on actual payroll each pay period, eliminating large upfront deposits and minimizing end-of-year audit surprises.',
+            'faq_5_question' => 'What information is needed to get a Workers\' Compensation quote in Tampa?',
+            'faq_5_answer' => 'You will need: estimated annual payroll by employee role, description of business operations, Federal Employer ID (FEIN), current policy expiration date (if insured), and your 3-to-5 year loss runs if currently carrying coverage.',
+            'cta_title' => 'Ready to protect your workers and stay Florida-compliant?',
+            'cta_subtitle' => 'Request a fast, competitive Florida workers compensation quote from our Tampa insurance team.',
+        ];
     }
 
     public function updateLiabilityInsurance(Request $request)
@@ -1661,6 +1815,31 @@ class AdminController extends Controller
         }
 
         return redirect()->to(route('admin.dashboard').'#group-benefits-cms')
+            ->with('success', 'Group Benefits page updated successfully!');
+    }
+
+    public function updateWorkersCompensation(Request $request)
+    {
+        $data = $request->except(['_token', '_method', 'hero_image_file']);
+
+        if ($request->hasFile('hero_image_file')) {
+            $file = $request->file('hero_image_file');
+            $filename = 'hero_workers_comp_'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $data['hero_image'] = 'images/'.$filename;
+        }
+
+        PageContent::setForPage('workers-compensation', $data);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Workers Compensation page updated and published live successfully!',
+                'content' => PageContent::getForPage('workers-compensation', self::getDefaultWorkersCompensationContent()),
+            ]);
+        }
+
+        return redirect()->to(route('admin.dashboard').'#workers-comp-cms')
             ->with('success', 'Workers Compensation page updated successfully!');
     }
 
@@ -1740,66 +1919,66 @@ class AdminController extends Controller
         return [
             // Hero
             'hero_image' => 'images/specialty_hero_new.jpg',
-            'hero_eyebrow' => 'SPECIALTY & BESPOKE RISK COVERAGE',
-            'hero_title' => 'Bespoke Protection for<br>Your Unique & Rare Assets',
-            'hero_subtitle' => 'From vintage collector cars and private aircraft to fine art collections and high-stakes events, Surebound delivers customized underwriting solutions for extraordinary risks.',
-            'hero_card_sub' => 'Agreed Value Insurance',
-            'hero_card_label' => '100% full valuation payout guaranteed',
+            'hero_eyebrow' => 'INSURANCE COVERAGE DIRECTORY',
+            'hero_title' => 'Comprehensive Coverage for<br>Personal &amp; Commercial Needs',
+            'hero_subtitle' => 'Explore Surebound\'s complete portfolio of personal and commercial insurance solutions designed for Florida individuals, families, and businesses.',
+            'hero_card_sub' => 'Complete Directory',
+            'hero_card_label' => 'Personal & Commercial Lines',
 
             // Coverage Cards
-            'card_1_title' => 'Collector Cars & Exotic Autos',
-            'card_1_desc' => 'Agreed value policy coverage for antique, vintage, muscle, exotic, and hyper-cars with flexible spare parts riders.',
-            'card_2_title' => 'Private Aviation & Aircraft',
-            'card_2_desc' => 'Comprehensive hull and passenger liability policies for turboprops, private jets, helicopters, and aviation hangars.',
-            'card_3_title' => 'Fine Art & Rare Collectibles',
-            'card_3_desc' => 'Worldwide floater coverage for private art galleries, rare sculptures, antique coins, jewelry, and wine cellars.',
-            'card_4_title' => 'Luxury Yachts & Marine',
-            'card_4_desc' => 'Global maritime coverage for mega-yachts, charter craft, crew liability, navigation limits, and ocean towing.',
-            'card_5_title' => 'Special Events & Cancellation',
-            'card_5_desc' => 'Financial protection against event cancellations, severe weather disruptions, non-appearance, and venue damage.',
-            'card_6_title' => 'Executive Cyber & Ransom Response',
-            'card_6_desc' => 'Discreet crisis management, ransomware negotiation, extortion loss reimbursement, and digital asset security.',
+            'card_1_title' => 'Homeowners Insurance',
+            'card_1_desc' => 'Dwelling protection, personal property, hurricane deductibles, and liability coverage localized for Florida homes.',
+            'card_2_title' => 'Personal Auto Insurance',
+            'card_2_desc' => 'Bodily injury liability, comprehensive, collision, PIP, and uninsured motorist protection across Florida.',
+            'card_3_title' => 'Commercial Property Insurance',
+            'card_3_desc' => 'Coverage for commercial buildings, business personal property, inventory, and business interruption income.',
+            'card_4_title' => 'General Liability Insurance',
+            'card_4_desc' => 'Protection against third-party bodily injury, property damage, and legal defense costs for business operations.',
+            'card_5_title' => 'Workers\' Compensation',
+            'card_5_desc' => 'Statutory coverage under Florida Chapter 440 protecting injured employees with medical care and wage replacement.',
+            'card_6_title' => 'Commercial Auto &amp; Fleet',
+            'card_6_desc' => 'Specialized liability, collision, and cargo protection for delivery vans, contractor trucks, and enterprise fleets.',
 
             // Value Pillars
-            'value_1_title' => 'Agreed Value Guarantee',
-            'value_1_desc' => 'Lock in written valuation appraisals with zero depreciation subtraction at claim time.',
-            'value_2_title' => 'Worldwide Transit Protection',
-            'value_2_desc' => 'Seamless coverage for assets during international shipping, exhibition, or flight transit.',
-            'value_3_title' => 'Specialized Claims Team',
-            'value_3_desc' => 'Direct access to certified art restorers, master mechanics, and marine surveyors.',
-            'value_4_title' => 'Confidential Crisis Response',
-            'value_4_desc' => 'Private risk consultation with strict non-disclosure security and immediate payout response.',
+            'value_1_title' => 'Independent Agency Choice',
+            'value_1_desc' => 'We compare rates and coverage terms across top-rated national and Florida-admitted carriers.',
+            'value_2_title' => 'Local Tampa Team',
+            'value_2_desc' => 'Licensed insurance advisors located at 100 N Tampa St ready to assist with policy reviews and claims advocacy.',
+            'value_3_title' => 'Tailored Policy Bundles',
+            'value_3_desc' => 'Save on total premium by bundling home and auto or combining commercial property and general liability into a BOP.',
+            'value_4_title' => 'Clear Policy Terms',
+            'value_4_desc' => 'Plain-language explanations of coverage limits, exclusions, deductibles, and optional riders.',
 
             // Guidance
-            'guidance_eyebrow' => 'BESPOKE RISK UNDERWRITING',
-            'guidance_title' => 'Customized Insurance Architecture for High-Value Assets',
-            'guidance_text' => 'Standard off-the-shelf insurance contracts fail to address the nuances of rare collectibles, private aircraft, or high-end maritime vessels. Surebound\'s Specialty Risk team collaborates directly with expert appraisers and underwriters to construct tailored policy terms with zero gaps and total financial protection.',
+            'guidance_eyebrow' => 'OBJECTIVE GUIDANCE',
+            'guidance_title' => 'Insurance Solutions Built Around Your Life and Business',
+            'guidance_text' => 'Surebound eliminates guesswork by reviewing your specific risk exposures in Florida. Whether you are protecting a coastal property or outfitting a commercial vehicle fleet, we help you secure the right coverage at competitive market rates.',
 
             // Why Choose
-            'why_1_title' => 'Certified Appraisals',
-            'why_1_desc' => 'We accept valuation reports from recognized international appraisal authorities.',
-            'why_2_title' => 'Inflation & Market Appreciation',
-            'why_2_desc' => 'Automatic 150% valuation guard to absorb rapid market price surges for rare items.',
-            'why_3_title' => 'Zero Deductible Options',
-            'why_3_desc' => 'Selected scheduled coverage riders provide 100% full loss recovery without deductibles.',
-            'why_4_title' => 'Discreet Private Underwriting',
-            'why_4_desc' => 'Strict confidentiality protocols protecting high-profile owners and sensitive asset lists.',
+            'why_1_title' => 'Verified Carrier Access',
+            'why_1_desc' => 'Partnering with financially stable, reputable insurance carriers licensed in the State of Florida.',
+            'why_2_title' => 'Florida Code Knowledge',
+            'why_2_desc' => 'Specialized understanding of wind mitigation credits, flood zones, and Florida statutory insurance requirements.',
+            'why_3_title' => 'Claims Support Advocacy',
+            'why_3_desc' => 'Guidance and assistance throughout the claims process to ensure fair, prompt resolution from your carrier.',
+            'why_4_title' => 'Dedicated Customer Care',
+            'why_4_desc' => 'Direct phone and email contact with local insurance advisors during standard business hours.',
 
             // FAQs
-            'faq_1_question' => 'What qualifies as a Specialty Coverage asset at Surebound?',
-            'faq_1_answer' => 'Specialty Coverage encompasses unique, high-value, or non-standard risks that standard personal or commercial policies exclude or cap. Examples include collector vehicles, private aircraft, mega-yachts, fine art, rare wine cellars, antique jewelry, special event cancellations, and executive cyber threats.',
-            'faq_2_question' => 'How does Agreed Value insurance work for collector cars or rare art?',
-            'faq_2_answer' => 'Unlike standard policies that pay actual cash value (which factors in heavy depreciation), an Agreed Value policy guarantees that you and Surebound agree on the item\'s exact financial value prior to policy issuance. In the event of a total loss, you receive 100% of that agreed sum with no depreciation deducted.',
-            'faq_3_question' => 'Are private aircraft and yachts covered during international travel?',
-            'faq_3_answer' => 'Yes. Our Aviation and Marine coverage floaters include tailored navigation and territorial limits designed around your flight paths and maritime routes, offering seamless worldwide hull and liability coverage.',
-            'faq_4_question' => 'Do I need a recent formal appraisal to insure fine art or jewelry?',
-            'faq_4_answer' => 'For high-value items (typically items over $50,000 individually), a recent appraisal from a certified appraiser or a detailed sales bill of sale is required to establish the agreed value baseline. Our risk officers assist with arranging qualified appraisals.',
-            'faq_5_question' => 'How quickly can a Specialty Coverage quote be issued?',
-            'faq_5_answer' => 'Preliminary coverage risk proposals are generated within 24 to 48 hours following an initial evaluation with our senior underwriting desk.',
+            'faq_1_question' => 'What insurance products does Surebound offer?',
+            'faq_1_answer' => 'We provide personal insurance (homeowners, auto, life, health, umbrella) and commercial insurance (business owner policies, general liability, commercial property, workers\' compensation, commercial auto, surety bonds, and group employee benefits).',
+            'faq_2_question' => 'How does an independent insurance agency help me?',
+            'faq_2_answer' => 'Unlike captive agencies that only sell products from a single company, an independent agency like Surebound works with multiple insurance carriers to compare options and find the best coverage and price for your situation.',
+            'faq_3_question' => 'Can I bundle multiple insurance policies for discounts?',
+            'faq_3_answer' => 'Yes. Bundling home and auto insurance or packaging business property and liability into a Business Owner Policy (BOP) often yields substantial multi-policy premium discounts.',
+            'faq_4_question' => 'How do I request a quote for my coverage needs?',
+            'faq_4_answer' => 'You can request a quote online through our website, call our Tampa office at (813) 214-1731, or send an inquiry through our contact form. A licensed advisor will assist you with next steps.',
+            'faq_5_question' => 'What geographic area does Surebound serve?',
+            'faq_5_answer' => 'Surebound Insurance is based in downtown Tampa and serves individual and commercial policyholders across the Tampa Bay area and the State of Florida.',
 
             // CTA
-            'cta_title' => 'Protect your extraordinary assets with bespoke coverage.',
-            'cta_subtitle' => 'Speak with a senior coverage risk underwriter or request a confidential proposal in under 2 minutes.',
+            'cta_title' => 'Ready to find the right coverage for your needs?',
+            'cta_subtitle' => 'Request a personalized quote from our Tampa insurance team today.',
         ];
     }
 
@@ -1892,40 +2071,40 @@ class AdminController extends Controller
         return [
             // Hero
             'hero_image' => 'images/story_hero.jpg',
-            'hero_eyebrow' => 'OUR STORY',
-            'hero_title' => 'A Legacy of<br>Trust & Integrity',
-            'hero_subtitle' => 'For over three decades, we have been dedicated to providing unparalleled insurance protection for the things you value most.',
-            'hero_card_sub' => 'Our Heritage',
-            'hero_card_label' => 'Founded in 1982',
-            'hero_card_main' => 'Family Owned',
+            'hero_eyebrow' => 'ABOUT SUREBOUND',
+            'hero_title' => 'Independent Insurance Help<br>from People in Tampa',
+            'hero_subtitle' => 'Surebound Insurance was established to provide clear, reliable insurance guidance for individuals, families, and businesses across Florida.',
+            'hero_card_sub' => 'Our Focus',
+            'hero_card_label' => 'Tampa, FL Agency',
+            'hero_card_main' => 'Client Advocacy',
 
             // Value Props
-            'value_1_title' => 'Client First',
-            'value_1_desc' => 'Every decision we make is centered around the well-being and security of our clients.',
-            'value_2_title' => 'Community Focus',
-            'value_2_desc' => 'We believe in giving back and supporting the local communities where we live and work.',
-            'value_3_title' => 'Enduring Relationships',
-            'value_3_desc' => 'We do not just sell policies; we build lifelong partnerships with our policyholders.',
+            'value_1_title' => 'Client-First Guidance',
+            'value_1_desc' => 'Every recommendation is based on your actual risk exposures and budget, never carrier sales quotas.',
+            'value_2_title' => 'Local Community Presence',
+            'value_2_desc' => 'Located at 100 N Tampa St in downtown Tampa, we understand Florida insurance realities firsthand.',
+            'value_3_title' => 'Long-Term Relationships',
+            'value_3_desc' => 'We review your policies annually and stand by your side when questions or claims arise.',
 
             // Feature Block 1
-            'feature_1_eyebrow' => 'OUR HISTORY',
-            'feature_1_title' => 'Humble Beginnings',
-            'feature_1_desc' => 'Starting as a small local agency, our commitment to excellence has allowed us to grow into a trusted national provider without losing our personal touch.',
-            'feature_1_point_1' => 'Decades of experience',
-            'feature_1_point_2' => 'Unwavering core values',
-            'feature_1_point_3' => 'Award-winning service',
+            'feature_1_eyebrow' => 'OUR MISSION',
+            'feature_1_title' => 'Built for Florida Policyholders',
+            'feature_1_desc' => 'Florida\'s insurance market presents unique challenges, from named storm deductibles to commercial compliance. We cut through the confusion to match you with stable, verified carriers.',
+            'feature_1_point_1' => 'Licensed Florida advisors',
+            'feature_1_point_2' => 'Multiple top-rated carrier partners',
+            'feature_1_point_3' => 'Unbiased policy comparison',
 
             // Feature Block 2
-            'feature_2_eyebrow' => 'LOOKING FORWARD',
-            'feature_2_title' => 'Innovating for Tomorrow',
-            'feature_2_desc' => 'While we honor our past, we are constantly embracing new technologies to serve you better, faster, and more securely in the modern world.',
-            'feature_2_point_1' => 'Digital-first solutions',
-            'feature_2_point_2' => 'Streamlined claims processing',
-            'feature_2_point_3' => 'Proactive risk management',
+            'feature_2_eyebrow' => 'HOW WE HELP',
+            'feature_2_title' => 'Advocacy from Quote to Claim',
+            'feature_2_desc' => 'Our job doesn\'t end when your policy is issued. We provide continuous support, assist with policy changes, and help you navigate claims with your insurance carrier.',
+            'feature_2_point_1' => 'Prompt communication',
+            'feature_2_point_2' => 'Annual coverage checkups',
+            'feature_2_point_3' => 'Local claims guidance',
 
             // CTA
-            'cta_title' => 'Become part of our story.',
-            'cta_subtitle' => 'Discover the difference of working with a team that truly cares.',
+            'cta_title' => 'Talk with an advisor today.',
+            'cta_subtitle' => 'Contact our Tampa office or request an insurance quote online.',
         ];
     }
 
@@ -1934,40 +2113,40 @@ class AdminController extends Controller
         return [
             // Hero
             'hero_image' => 'images/team_hero.jpg',
-            'hero_eyebrow' => 'LEADERSHIP TEAM',
-            'hero_title' => 'Meet Our<br>Expert Advisors',
-            'hero_subtitle' => 'Our leadership brings decades of industry experience, ensuring your portfolio is managed with the utmost expertise and care.',
-            'hero_card_sub' => 'Executive Board',
-            'hero_card_label' => 'Top Tier Talent',
-            'hero_card_main' => 'Industry Leaders',
+            'hero_eyebrow' => 'SUREBOUND ADVISORS & LEADERSHIP',
+            'hero_title' => 'Meet Our<br>Tampa Team',
+            'hero_subtitle' => 'Our licensed insurance advisors and client advocates provide thoughtful, personal guidance for your home, vehicle, and commercial coverage needs.',
+            'hero_card_sub' => 'Our People',
+            'hero_card_label' => 'Licensed Advisors',
+            'hero_card_main' => 'Client Advocates',
 
             // Value Props
-            'value_1_title' => 'Unmatched Expertise',
-            'value_1_desc' => 'Our team comprises former underwriters, risk analysts, and financial planners working in synergy.',
-            'value_2_title' => 'Strategic Vision',
-            'value_2_desc' => 'We stay ahead of market trends to protect your assets against future vulnerabilities.',
-            'value_3_title' => 'Dedicated Support',
-            'value_3_desc' => 'You have direct access to decision-makers who understand your unique profile.',
+            'value_1_title' => 'Licensed Professional Guidance',
+            'value_1_desc' => 'Our advisors hold active Florida insurance licenses and participate in ongoing industry education.',
+            'value_2_title' => 'Objective Carrier Comparison',
+            'value_2_desc' => 'Because we are independent, our loyalty is to our clients, not to any single carrier brand.',
+            'value_3_title' => 'Direct Access to Advisors',
+            'value_3_desc' => 'Reach our team directly by phone or email during standard business hours without navigating frustrating call trees.',
 
             // Feature Block 1
-            'feature_1_eyebrow' => 'OUR PEOPLE',
-            'feature_1_title' => 'Committed to Excellence',
-            'feature_1_desc' => 'Every member of our leadership team has a proven track record of delivering bespoke insurance solutions to high-net-worth individuals and enterprises.',
-            'feature_1_point_1' => 'Certified risk managers',
-            'feature_1_point_2' => 'Specialized market knowledge',
-            'feature_1_point_3' => 'Personalized attention',
+            'feature_1_eyebrow' => 'OUR COMMITMENT',
+            'feature_1_title' => 'Local Advisors Who Listen',
+            'feature_1_desc' => 'We take the time to understand your unique situation before recommending coverage limits, deductibles, or specific carrier policies.',
+            'feature_1_point_1' => 'Licensed Florida agents',
+            'feature_1_point_2' => 'Personalized policy reviews',
+            'feature_1_point_3' => 'Clear, jargon-free explanations',
 
             // Feature Block 2
-            'feature_2_eyebrow' => 'CORE PHILOSOPHY',
-            'feature_2_title' => 'Guidance You Can Trust',
-            'feature_2_desc' => 'We believe transparency, integrity, and proactive communication are the cornerstones of effective risk management.',
-            'feature_2_point_1' => 'Client-centric advising',
-            'feature_2_point_2' => 'Ethical underwriting',
-            'feature_2_point_3' => 'Continuous education',
+            'feature_2_eyebrow' => 'HOW WE OPERATE',
+            'feature_2_title' => 'Advocacy When It Counts',
+            'feature_2_desc' => 'From initial policy setup through renewals and claim circumstances, our team acts as your knowledgeable insurance advocate.',
+            'feature_2_point_1' => 'Prompt communication',
+            'feature_2_point_2' => 'Assistance with documentation',
+            'feature_2_point_3' => 'Annual policy reviews',
 
             // CTA
-            'cta_title' => 'Connect with our experts.',
-            'cta_subtitle' => 'Schedule a consultation with our executive team today.',
+            'cta_title' => 'Connect with an advisor today.',
+            'cta_subtitle' => 'Call our Tampa office at (813) 214-1731 or request a consultation online.',
         ];
     }
 
@@ -1977,39 +2156,39 @@ class AdminController extends Controller
             // Hero
             'hero_image' => 'images/careers_hero.jpg',
             'hero_eyebrow' => 'CAREERS AT SUREBOUND',
-            'hero_title' => 'Join Our<br>Growing Team',
-            'hero_subtitle' => 'We are always looking for passionate, driven individuals to help us redefine the insurance experience. Build a rewarding career with us.',
-            'hero_card_sub' => 'Open Positions',
-            'hero_card_label' => 'Hiring Now',
-            'hero_card_main' => 'Multiple Roles',
+            'hero_title' => 'Join Our Team in<br>Downtown Tampa',
+            'hero_subtitle' => 'We are seeking licensed insurance professionals, account managers, and customer service specialists who value client advocacy and teamwork.',
+            'hero_card_sub' => 'Careers in Tampa',
+            'hero_card_label' => 'Licensed Insurance Roles',
+            'hero_card_main' => 'Independent Agency',
 
             // Value Props
-            'value_1_title' => 'Growth Opportunities',
-            'value_1_desc' => 'We invest in our employees with continuous training, mentorship, and clear paths for advancement.',
-            'value_2_title' => 'Inclusive Culture',
-            'value_2_desc' => 'We foster a collaborative environment where diverse perspectives are celebrated and valued.',
-            'value_3_title' => 'Competitive Benefits',
-            'value_3_desc' => 'Enjoy comprehensive health coverage, retirement plans, and generous paid time off.',
+            'value_1_title' => 'Professional Growth',
+            'value_1_desc' => 'Ongoing support for licensing, industry certifications (CIC, CISR, CPCU), and carrier training programs.',
+            'value_2_title' => 'Collaborative Culture',
+            'value_2_desc' => 'A supportive, team-first workplace located at 100 N Tampa St in the heart of downtown Tampa.',
+            'value_3_title' => 'Competitive Compensation',
+            'value_3_desc' => 'Salary packages, health coverage, paid time off, and retirement benefits.',
 
             // Feature Block 1
-            'feature_1_eyebrow' => 'WHY CHOOSE US',
-            'feature_1_title' => 'More Than Just a Job',
-            'feature_1_desc' => 'At Surebound, you are not just a number. You are an integral part of a team dedicated to protecting what matters most to our clients.',
-            'feature_1_point_1' => 'Work-life balance',
-            'feature_1_point_2' => 'Meaningful work',
+            'feature_1_eyebrow' => 'AGENCY CULTURE',
+            'feature_1_title' => 'Client-Centered Focus',
+            'feature_1_desc' => 'At Surebound, our reputation depends on honest counsel and genuine care for our policyholders. We reward high-integrity client service.',
+            'feature_1_point_1' => 'Community-focused agency',
+            'feature_1_point_2' => 'Direct client relationships',
             'feature_1_point_3' => 'Supportive leadership',
 
             // Feature Block 2
-            'feature_2_eyebrow' => 'CURRENT OPENINGS',
-            'feature_2_title' => 'Find Your Fit',
-            'feature_2_desc' => 'Explore our current open positions across various departments, from underwriting and claims to sales and customer support.',
-            'feature_2_point_1' => 'Underwriting specialists',
-            'feature_2_point_2' => 'Client success managers',
-            'feature_2_point_3' => 'Tech & data analysts',
+            'feature_2_eyebrow' => 'APPLICATION PROCESS',
+            'feature_2_title' => 'How to Connect With Us',
+            'feature_2_desc' => 'We welcome inquiries from licensed 2-20, 20-44, or 4-40 insurance agents and experienced account managers interested in growing with an independent agency.',
+            'feature_2_point_1' => 'Licensed personal lines agents',
+            'feature_2_point_2' => 'Commercial lines account managers',
+            'feature_2_point_3' => 'Customer service representatives',
 
             // CTA
-            'cta_title' => 'Ready to take the next step?',
-            'cta_subtitle' => 'Browse our open roles and apply today to join the Surebound family.',
+            'cta_title' => 'Interested in joining Surebound?',
+            'cta_subtitle' => 'Send your resume and cover letter to careers@sureboundinsurance.com or call (813) 214-1731.',
         ];
     }
 
@@ -2018,43 +2197,43 @@ class AdminController extends Controller
         return [
             // Hero
             'hero_image' => 'images/community_hero.jpg',
-            'hero_eyebrow' => 'COMMUNITY IMPACT',
-            'hero_title' => 'Building Stronger,<br>Safer Communities',
-            'hero_subtitle' => 'Surebound is committed to reinvesting in the communities we serve through grants, volunteerism, and risk education.',
-            'hero_card_sub' => 'Our Promise',
-            'hero_card_label' => 'Impact Report',
-            'hero_card_main' => 'Local Growth',
+            'hero_eyebrow' => 'COMMUNITY ENGAGEMENT',
+            'hero_title' => 'Supporting Our Neighbors<br>Across Tampa Bay',
+            'hero_subtitle' => 'Surebound is proud to be part of the Tampa Bay community, supporting local families, small businesses, and community preparedness initiatives.',
+            'hero_card_sub' => 'Local Involvement',
+            'hero_card_label' => 'Tampa Bay Community',
+            'hero_card_main' => 'Neighborhood Focus',
 
             // Guidance
-            'guidance_eyebrow' => 'SOCIAL RESPONSIBILITY',
-            'guidance_title' => 'Our Commitment to Positive Change',
-            'guidance_text' => 'We believe insurance is about more than financial protection—it’s about resilience. That means helping local organizations build strong foundations for the future.',
+            'guidance_eyebrow' => 'LOCAL RESPONSIBILITY',
+            'guidance_title' => 'Investing in Florida Resilience',
+            'guidance_text' => 'As insurance professionals living and working in Tampa, we believe true peace of mind starts with strong, prepared communities. We actively support local neighborhood drives, storm preparedness workshops, and small business networking.',
 
             // Why Us
-            'why_1_title' => 'Local Grants',
-            'why_1_desc' => 'Providing direct financial support to non-profits focused on safety and disaster preparedness.',
-            'why_2_title' => 'Volunteer Days',
-            'why_2_desc' => 'Our employees receive 5 paid days annually to volunteer at local charities and events.',
-            'why_3_title' => 'Risk Education',
-            'why_3_desc' => 'Free community workshops on financial literacy, cyber safety, and emergency planning.',
-            'why_4_title' => 'Sustainability',
-            'why_4_desc' => 'Committed to net-zero operations by 2030 and eco-friendly office practices.',
+            'why_1_title' => 'Storm Preparedness Outreach',
+            'why_1_desc' => 'Sharing practical resources on property protection, flood safety, and hurricane checklists ahead of storm season.',
+            'why_2_title' => 'Local Business Advocacy',
+            'why_2_desc' => 'Partnering with local chambers and trade organizations to support entrepreneurs across Hillsborough and Pinellas counties.',
+            'why_3_title' => 'Community Volunteer Drives',
+            'why_3_desc' => 'Participating in local food drives, back-to-school supply campaigns, and community cleanup efforts in the Tampa area.',
+            'why_4_title' => 'Insurance Education',
+            'why_4_desc' => 'Offering clear, educational guidance on Florida property and liability insurance without sales pressure.',
 
             // FAQs
-            'faq_1_question' => 'How can my non-profit apply for a grant?',
-            'faq_1_answer' => 'You can apply through our community portal. We review applications on a rolling quarterly basis.',
-            'faq_2_question' => 'What causes do you support?',
-            'faq_2_answer' => 'We focus on disaster relief, financial literacy, and community safety initiatives.',
-            'faq_3_question' => 'Does Surebound match employee donations?',
-            'faq_3_answer' => 'Yes, we match employee charitable contributions up to ,000 annually.',
-            'faq_4_question' => 'Can we partner with Surebound for an event?',
-            'faq_4_answer' => 'We frequently sponsor local safety and community events. Contact our PR team to discuss.',
-            'faq_5_question' => 'Where can I read your impact report?',
-            'faq_5_answer' => 'Our annual impact report is available for download on this page.',
+            'faq_1_question' => 'How does Surebound support the Tampa community?',
+            'faq_1_answer' => 'We participate in local civic events, support community charity drives, and provide free educational resources to help Florida residents prepare for severe weather events.',
+            'faq_2_question' => 'Does Surebound offer hurricane preparation resources?',
+            'faq_2_answer' => 'Yes. Every year before hurricane season, we publish guidance on preparing homes, documenting property, understanding deductibles, and securing emergency supplies.',
+            'faq_3_question' => 'Can local organizations partner with Surebound for community events?',
+            'faq_3_answer' => 'We welcome opportunities to collaborate with local Tampa Bay community groups and non-profits. Please reach out to our team at (813) 214-1731.',
+            'faq_4_question' => 'Where is Surebound located in Tampa?',
+            'faq_4_answer' => 'Our office is located at 100 N Tampa St, Suite 2500, Tampa, FL 33602.',
+            'faq_5_question' => 'How can I get involved or request community support?',
+            'faq_5_answer' => 'Contact us through our website contact form or email info@sureboundinsurance.com with details about your community initiative.',
 
             // CTA
-            'cta_title' => 'Join our efforts today.',
-            'cta_subtitle' => 'Learn how you can partner with Surebound to make a difference.',
+            'cta_title' => 'Connect with our Tampa team.',
+            'cta_subtitle' => 'Reach out today to learn more about our community involvement or coverage options.',
         ];
     }
 
@@ -2063,43 +2242,43 @@ class AdminController extends Controller
         return [
             // Hero
             'hero_image' => 'images/articles_hero.jpg',
-            'hero_eyebrow' => 'ARTICLES & INSIGHTS',
-            'hero_title' => 'Expert Perspectives<br>on Risk & Protection',
-            'hero_subtitle' => 'Stay informed with the latest trends, regulatory updates, and risk management strategies from our industry experts.',
+            'hero_eyebrow' => 'INSURANCE ARTICLES & GUIDES',
+            'hero_title' => 'Practical Insights for<br>Florida Policyholders',
+            'hero_subtitle' => 'Guidance on property protection, hurricane deductibles, commercial liability, and auto insurance in Florida from licensed advisors.',
             'hero_card_sub' => 'Knowledge Base',
-            'hero_card_label' => 'New Insights',
-            'hero_card_main' => 'Weekly Updates',
+            'hero_card_label' => 'Tampa Advisory',
+            'hero_card_main' => 'Verified Insights',
 
             // Guidance
-            'guidance_eyebrow' => 'THOUGHT LEADERSHIP',
-            'guidance_title' => 'Empowering You With Knowledge',
-            'guidance_text' => 'An informed client makes better decisions. We share our expertise freely to help you build resilient, future-proof strategies.',
+            'guidance_eyebrow' => 'CLEAR EXPLANATIONS',
+            'guidance_title' => 'Empowering You With Actionable Guidance',
+            'guidance_text' => 'Florida\'s insurance landscape can be confusing. We provide clear, plain-language resources to help you protect your home, vehicle, and commercial investments.',
 
             // Why Us
-            'why_1_title' => 'Industry News',
-            'why_1_desc' => 'Keep up with the fast-paced changes in the insurance landscape and how they affect your business.',
-            'why_2_title' => 'Expert Analysis',
-            'why_2_desc' => 'Deep dives into complex risk scenarios, written by our senior underwriting and claims specialists.',
-            'why_3_title' => 'Risk Mitigation',
-            'why_3_desc' => 'Practical guides and checklists to help you proactively protect your assets and employees.',
-            'why_4_title' => 'Market Trends',
-            'why_4_desc' => 'Regular updates on how market shifts might impact your premiums.',
+            'why_1_title' => 'Florida-Specific Insights',
+            'why_1_desc' => 'Articles focused on the unique regulatory, wind, and flood insurance realities of the Sunshine State.',
+            'why_2_title' => 'Licensed Advisor Review',
+            'why_2_desc' => 'Content reviewed by active insurance professionals to ensure legal accuracy and practical utility.',
+            'why_3_title' => 'Risk Mitigation Tips',
+            'why_3_desc' => 'Actionable checklists to help you qualify for wind mitigation credits and lower your annual premiums.',
+            'why_4_title' => 'Market Understanding',
+            'why_4_desc' => 'Context on carrier appetite, reinsurance trends, and state legislative updates that affect rates.',
 
             // FAQs
-            'faq_1_question' => 'How often are articles posted?',
-            'faq_1_answer' => 'We post new insights and articles weekly.',
-            'faq_2_question' => 'Can I subscribe to updates?',
-            'faq_2_answer' => 'Yes, join our newsletter to get weekly digests delivered to your inbox.',
-            'faq_3_question' => 'Who writes the articles?',
-            'faq_3_answer' => 'Our content is authored by our in-house team of underwriters, risk assessors, and claims experts.',
-            'faq_4_question' => 'Do you cover niche industries?',
-            'faq_4_answer' => 'Yes, we frequently feature articles focused on specific sectors like aviation, marine, and cyber.',
-            'faq_5_question' => 'Can I share these articles?',
-            'faq_5_answer' => 'Absolutely, we encourage you to share our insights with your network.',
+            'faq_1_question' => 'How often are new articles published?',
+            'faq_1_answer' => 'We publish new articles and guides when there are important market changes, new statutory requirements, or seasonal preparation tips to share.',
+            'faq_2_question' => 'Can I request an article on a specific topic?',
+            'faq_2_answer' => 'Yes. If there is an insurance question or coverage scenario you would like our team to explain, please send an inquiry through our contact form.',
+            'faq_3_question' => 'Who writes and reviews the articles?',
+            'faq_3_answer' => 'Articles are prepared and reviewed by the licensed advisors and client services team at Surebound Insurance in Tampa.',
+            'faq_4_question' => 'What topics are covered in the articles?',
+            'faq_4_answer' => 'We cover Florida homeowners insurance, hurricane deductibles, flood insurance, commercial liability, workers compensation compliance, and commercial auto.',
+            'faq_5_question' => 'Can I share these articles with colleagues or clients?',
+            'faq_5_answer' => 'Yes, our educational resources are freely available to share with your business partners, team members, or family.',
 
             // CTA
-            'cta_title' => 'Subscribe to our newsletter.',
-            'cta_subtitle' => 'Get the latest insights delivered directly to your inbox.',
+            'cta_title' => 'Have questions about your coverage?',
+            'cta_subtitle' => 'Connect with a licensed advisor at our Tampa office for personalized guidance.',
         ];
     }
 
@@ -2109,42 +2288,42 @@ class AdminController extends Controller
             // Hero
             'hero_image' => 'images/faqs_hero.jpg',
             'hero_eyebrow' => 'FREQUENTLY ASKED QUESTIONS',
-            'hero_title' => 'Answers to Your<br>Insurance Questions',
-            'hero_subtitle' => 'Find quick answers to common questions about coverage, claims, payments, and managing your policies with Surebound.',
-            'hero_card_sub' => 'Support Center',
-            'hero_card_label' => 'Help Desk',
-            'hero_card_main' => '24/7 Access',
+            'hero_title' => 'Answers to Common<br>Insurance Questions',
+            'hero_subtitle' => 'Clear, straightforward answers about personal and commercial insurance policies, claims, Florida windstorm rules, and billing.',
+            'hero_card_sub' => 'Help Center',
+            'hero_card_label' => 'Tampa Office',
+            'hero_card_main' => 'Local Answers',
 
             // Guidance
-            'guidance_eyebrow' => 'UNDERSTANDING COVERAGE',
-            'guidance_title' => 'Clarity Above All',
-            'guidance_text' => 'We believe insurance should be transparent. Our FAQs break down complex industry jargon so you know exactly what you are paying for.',
+            'guidance_eyebrow' => 'TRANSPARENT ADVICE',
+            'guidance_title' => 'Understanding Your Insurance Coverage',
+            'guidance_text' => 'Insurance contracts contain complex terminology. Our advisors explain key definitions, coverage triggers, and exclusions so you know exactly how your policy works.',
 
             // Why Us
             'why_1_title' => 'Policy Management',
-            'why_1_desc' => 'Learn how to easily update your coverage limits, add new assets, or modify your premium payment schedule.',
-            'why_2_title' => 'Claims Process',
-            'why_2_desc' => 'Understand the steps to file a claim, required documentation, and how we ensure a fast, fair resolution.',
-            'why_3_title' => 'Billing Support',
-            'why_3_desc' => 'Information on auto-pay, invoicing, and how to access your tax documents securely through our portal.',
-            'why_4_title' => 'Direct Agent Access',
-            'why_4_desc' => 'Get in touch with real human agents quickly and easily.',
+            'why_1_desc' => 'Learn how to easily update your coverage limits, add new drivers or vehicles, or request certificates of insurance.',
+            'why_2_title' => 'Claims Assistance',
+            'why_2_desc' => 'Understand the steps to report a claim to your carrier, document property damage, and receive agency support.',
+            'why_3_title' => 'Billing & Payment Details',
+            'why_3_desc' => 'Information on carrier payment options, escrow billing, mortgagee updates, and payment schedules.',
+            'why_4_title' => 'Direct Advisor Access',
+            'why_4_desc' => 'Speak directly with our Tampa team at (813) 214-1731 during standard business hours.',
 
             // FAQs
-            'faq_1_question' => 'How do I file a claim?',
-            'faq_1_answer' => 'You can file a claim 24/7 through your client portal or by calling our emergency hotline.',
-            'faq_2_question' => 'Can I change my coverage mid-year?',
-            'faq_2_answer' => 'Yes, you can adjust your coverage limits at any time via the dashboard or by contacting your agent.',
-            'faq_3_question' => 'How are premiums calculated?',
-            'faq_3_answer' => 'Premiums are based on risk factors, claims history, asset value, and chosen deductibles.',
-            'faq_4_question' => 'What payment methods do you accept?',
-            'faq_4_answer' => 'We accept all major credit cards, ACH transfers, and check payments.',
-            'faq_5_question' => 'Is there a grace period for payments?',
-            'faq_5_answer' => 'Yes, we offer a standard 10-day grace period for all premium payments.',
+            'faq_1_question' => 'How do I file an insurance claim?',
+            'faq_1_answer' => 'To file a claim, you can contact your carrier\'s 24/7 claims hotline directly for fastest processing (phone numbers listed on our Claims page) or call our agency office at (813) 214-1731 during business hours for assistance.',
+            'faq_2_question' => 'How does a Florida hurricane deductible work?',
+            'faq_2_answer' => 'In Florida, hurricane deductibles are typically applied on a calendar-year basis and are stated as a percentage (e.g., 2%, 5%) of your dwelling coverage limit (Coverage A) rather than a flat dollar amount.',
+            'faq_3_question' => 'How do I request a Certificate of Insurance (COI) for my business?',
+            'faq_3_answer' => 'You can request a Certificate of Insurance by emailing support@sureboundinsurance.com or through your client portal. Standard certificates are usually issued within one business day.',
+            'faq_4_question' => 'What payment methods are accepted for insurance premiums?',
+            'faq_4_answer' => 'Carriers typically accept electronic funds transfer (EFT/ACH), major credit/debit cards, and payment through escrow accounts for mortgaged homes. Premium financing is also available for larger commercial policies.',
+            'faq_5_question' => 'Is there a universal grace period for insurance payments?',
+            'faq_5_answer' => 'No. Grace periods and cancellation rules vary by carrier, policy line, and state law (ranging from 10 to 30 days). Check your specific policy invoice or contact our office immediately if you anticipate a delayed payment to avoid coverage lapse.',
 
             // CTA
-            'cta_title' => 'Still have questions?',
-            'cta_subtitle' => 'Reach out to our support team for personalized assistance.',
+            'cta_title' => 'Have a question not listed here?',
+            'cta_subtitle' => 'Contact our Tampa advisory team at (813) 214-1731 or send us an inquiry online.',
         ];
     }
 
@@ -2800,9 +2979,9 @@ class AdminController extends Controller
             'value_3_title' => '+1 813-214-1731',
             'value_3_desc' => 'Commercial Desk • Mon–Fri, 8:30am–6pm EST • Business policies & surety bonding lines.',
             'value_3_phone' => '+1 813-214-1731',
-            'value_4_title' => 'support@surebound.com',
-            'value_4_desc' => 'Digital Intake • Certified electronic correspondence • Inquiries answered in under 15 minutes.',
-            'value_4_email' => 'support@surebound.com',
+            'value_4_title' => 'support@sureboundinsurance.com',
+            'value_4_desc' => 'Digital Intake • Certified electronic correspondence • Inquiries answered promptly during business hours.',
+            'value_4_email' => 'support@sureboundinsurance.com',
 
             // 3. Direct Communication Panel
             'live_status_text' => 'Client Support Center: Online & Open Now',
@@ -2812,31 +2991,31 @@ class AdminController extends Controller
 
             // Channel 1
             'channel_1_title' => 'Policy & Account Service',
-            'channel_1_badge' => 'Mon–Fri, 8am–8pm EST',
+            'channel_1_badge' => 'Mon–Fri: 8:30 AM – 5:30 PM EST',
             'channel_1_value' => '+1 813-214-1731',
             'channel_1_sub' => 'Policy renewals, endorsements, deductible adjustments & billing.',
 
             // Channel 2
-            'channel_2_title' => 'Emergency Claims Hotline',
-            'channel_2_badge' => '24/7/365 Rapid Response',
+            'channel_2_title' => 'Emergency Claims Guidance',
+            'channel_2_badge' => 'Agency Claims Support',
             'channel_2_value' => '+1 813-214-1731',
-            'channel_2_sub' => 'Immediate first-notice-of-loss intake and emergency adjuster dispatch.',
+            'channel_2_sub' => 'Claims assistance, carrier dispatch contacts & claims advocacy.',
 
             // Channel 3
             'channel_3_title' => 'Commercial & Surety Desk',
-            'channel_3_badge' => 'Mon–Fri, 8:30am–6pm EST',
+            'channel_3_badge' => 'Mon–Fri: 8:30 AM – 5:30 PM EST',
             'channel_3_value' => '+1 813-214-1731',
-            'channel_3_sub' => 'Commercial Auto, General Liability, BOP & Treasury-listed bonds.',
+            'channel_3_sub' => 'Commercial Auto, General Liability, BOP & Workers\' Comp.',
 
             // Channel 4
             'channel_4_title' => 'Official Inquiries & Documentation',
-            'channel_4_badge' => 'Average Reply: < 15 mins',
-            'channel_4_value' => 'support@surebound.com',
+            'channel_4_badge' => 'Business Hours Response',
+            'channel_4_value' => 'support@sureboundinsurance.com',
             'channel_4_sub' => 'Proof of insurance, escrow requests, loss payee forms & certificates.',
 
             // Tampa Office Feature Box
             'hq_title' => 'Tampa Office',
-            'hq_address' => 'Tampa, Florida',
+            'hq_address' => '100 N Tampa St, Suite 2500, Tampa, FL 33602',
             'hq_hours' => 'Mon–Fri 8:30 AM – 5:30 PM EST',
 
             // 4. Form Section
@@ -2856,13 +3035,13 @@ class AdminController extends Controller
             'faq_subtitle' => 'Everything you need to know about reaching your dedicated Surebound team.',
 
             'faq_1_question' => 'How quickly will a licensed advisor respond to my message?',
-            'faq_1_answer' => 'Inquiries submitted through our online secure form during standard business hours (Monday through Friday, 8:00 AM – 8:00 PM EST) are typically routed and responded to by a licensed insurance underwriter within 15 minutes. Messages received outside standard business hours are answered early the following business morning. For immediate assistance, call us directly at +1 813-214-1731.',
+            'faq_1_answer' => 'Inquiries submitted through our online secure form during standard business hours (Monday through Friday, 8:30 AM – 5:30 PM EST) are typically responded to by a licensed insurance advisor the same business day. Messages received outside standard business hours are answered early the following business morning. For immediate assistance, call us directly at +1 813-214-1731.',
 
             'faq_2_question' => 'How do I report an urgent loss or file a claim after hours?',
-            'faq_2_answer' => 'Our emergency claims hotline (+1 813-214-1731) is staffed 24 hours a day, 7 days a week, 365 days a year. Whether you experience a vehicular collision, home pipe burst, severe storm roof damage, or commercial property incident, an emergency claims adjuster is always standing by to dispatch emergency mitigation crews and issue immediate living expense or repair authorizations.',
+            'faq_2_answer' => 'For immediate after-hours emergency response, file directly with your underwriting insurance carrier\'s 24/7 hotline (see our Claims Center for direct numbers). Then notify Surebound at (813) 214-1731 with your claim number so we can advocate on your behalf.',
 
             'faq_3_question' => 'Where should mortgage lenders or escrow agents send proof-of-insurance requests?',
-            'faq_3_answer' => 'Title companies, mortgage lenders, and escrow officers can send verification requests, mortgagee clause updates, and loss payee change notices directly to support@surebound.com. Include the insured policyholder\'s full name, property address, and loan number for automated same-day certificate issuance.',
+            'faq_3_answer' => 'Title companies, mortgage lenders, and escrow officers can send verification requests, mortgagee clause updates, and loss payee change notices directly to support@sureboundinsurance.com. Include the insured policyholder\'s full name, property address, and loan number for timely certificate issuance.',
 
             'faq_4_question' => 'Can I update my coverage limits, vehicle details, or payment methods online?',
             'faq_4_answer' => 'Yes. Existing Surebound policyholders can log into our secure User Client Portal to view policies, download auto ID cards, request policy endorsements, add vehicles or drivers, and submit one-time or recurring premium payments.',
@@ -2924,25 +3103,25 @@ class AdminController extends Controller
         return [
             // 1. Primary Website & Header/Footer Contact
             'primary_phone' => '+1 813-214-1731',
-            'primary_phone_label' => 'Toll-Free Client Advisory',
-            'primary_hours' => 'Mon–Fri: 8:00 AM – 8:00 PM EST',
-            'support_email' => 'support@surebound.com',
-            'billing_email' => 'billing@surebound.com',
-            'claims_email' => 'claims@surebound.com',
+            'primary_phone_label' => 'Client Advisory',
+            'primary_hours' => 'Mon–Fri: 8:30 AM – 5:30 PM EST',
+            'support_email' => 'support@sureboundinsurance.com',
+            'billing_email' => 'billing@sureboundinsurance.com',
+            'claims_email' => 'support@sureboundinsurance.com',
             'whatsapp_phone' => '+1 813-214-1731',
-            'live_chat_status' => 'Available Mon–Fri 8:00 AM – 8:00 PM EST',
+            'live_chat_status' => 'Available Mon–Fri 8:30 AM – 5:30 PM EST',
 
             // 2. Departmental Lines & Hotlines
             'claims_phone' => '+1 813-214-1731',
-            'claims_phone_badge' => '24/7/365 Emergency Loss Hotline',
-            'claims_subtitle' => 'Immediate First-Notice-of-Loss Intake & Emergency Dispatch',
+            'claims_phone_badge' => 'Agency Claims Support',
+            'claims_subtitle' => 'Claims Guidance & Carrier Assistance',
             'commercial_phone' => '+1 813-214-1731',
-            'commercial_hours' => 'Mon–Fri, 8:30am–6:00pm EST',
-            'commercial_email' => 'commercial@surebound.com',
+            'commercial_hours' => 'Mon–Fri, 8:30 AM – 5:30 PM EST',
+            'commercial_email' => 'support@sureboundinsurance.com',
             'client_care_phone' => '+1 813-214-1731',
-            'client_care_hours' => 'Mon–Fri, 8:00am–8:00pm EST',
-            'roadside_phone' => '1-800-555-TOWS',
-            'cyber_phone' => '1-888-SURE-CYBER',
+            'client_care_hours' => 'Mon–Fri, 8:30 AM – 5:30 PM EST',
+            'roadside_phone' => '1-800-776-4737',
+            'cyber_phone' => '+1 813-214-1731',
 
             // 3. Physical Office Locations & Headquarters
             'hq_title' => 'Tampa Headquarters',
@@ -2953,22 +3132,22 @@ class AdminController extends Controller
             'hq_phone' => '+1 813-214-1731',
             'hq_hours' => 'Mon–Fri: 8:30 AM – 5:30 PM EST',
 
-            'branch_title' => 'Dhaka Regional Desk',
-            'branch_address' => 'Level 14, Crystal Palace, Gulshan-2, Dhaka 1212',
-            'branch_city' => 'Dhaka',
-            'branch_state' => 'Dhaka',
-            'branch_zip' => '1212',
-            'branch_phone' => '+880 9612 345678',
-            'branch_email' => 'dhaka.desk@surebound.com',
-            'branch_hours' => 'Sun–Thu: 9:00 AM – 6:00 PM BST',
+            'branch_title' => 'St. Petersburg Client Desk',
+            'branch_address' => '100 2nd Ave S, St. Petersburg, FL 33701',
+            'branch_city' => 'St. Petersburg',
+            'branch_state' => 'FL',
+            'branch_zip' => '33701',
+            'branch_phone' => '+1 813-214-1731',
+            'branch_email' => 'support@sureboundinsurance.com',
+            'branch_hours' => 'Mon–Fri: 8:30 AM – 5:30 PM EST',
             'map_link' => 'https://maps.google.com/?q=100+N+Tampa+St+Suite+2500+Tampa+FL+33602',
 
             // 4. Policyholder Portal Concierge Underwriter
-            'underwriter_name' => 'Marcus Vance, CPCU',
-            'underwriter_title' => 'Senior Underwriter & Risk Advisor',
-            'underwriter_phone' => '(512) 555-0182',
-            'underwriter_email' => 'm.vance@surebound.com',
-            'underwriter_hours' => 'Mon – Fri • 8:00 AM – 6:00 PM CST',
+            'underwriter_name' => 'Licensed Risk Advisor',
+            'underwriter_title' => 'Licensed Florida Risk Advisor',
+            'underwriter_phone' => '+1 813-214-1731',
+            'underwriter_email' => 'support@sureboundinsurance.com',
+            'underwriter_hours' => 'Mon – Fri • 8:30 AM – 5:30 PM EST',
         ];
     }
 
@@ -3752,7 +3931,7 @@ class AdminController extends Controller
                 'default_image' => 'images/logo.png',
                 'og_type' => 'website',
                 'twitter_card_type' => 'summary_large_image',
-                'canonical_url' => 'https://surebound.com',
+                'canonical_url' => 'https://sureboundinsurance.com',
             ],
             'custom_scripts' => [
                 'enabled' => true,
@@ -3811,7 +3990,7 @@ class AdminController extends Controller
                 'default_image' => $request->input('social_default_image', $defaults['social_meta']['default_image']),
                 'og_type' => $request->input('social_og_type', 'website'),
                 'twitter_card_type' => $request->input('social_twitter_card_type', 'summary_large_image'),
-                'canonical_url' => $request->input('social_canonical_url', 'https://surebound.com'),
+                'canonical_url' => $request->input('social_canonical_url', 'https://sureboundinsurance.com'),
             ],
             'custom_scripts' => [
                 'enabled' => $request->has('custom_scripts_enabled'),
@@ -4637,19 +4816,19 @@ class AdminController extends Controller
     {
         return [
             'support_title' => 'Underwriting Concierge & Priority Support',
-            'support_subtitle' => 'Dedicated licensed risk advisors, 24/7 disaster mitigation dispatch, policy endorsement requests, and live inquiry tracking.',
-            'support_phone' => '+880 9612 345678',
-            'support_email' => 'support@surebound.com',
-            'emergency_phone' => '1-800-555-5677',
-            'emergency_subtitle' => 'Zero Wait Priority Emergency Dispatch',
-            'roadside_phone' => '1-800-555-TOWS',
-            'cyber_phone' => '1-888-SURE-CYBER',
-            'underwriter_name' => 'Marcus Vance, CPCU',
-            'underwriter_title' => 'Senior Underwriter & Risk Advisor',
-            'underwriter_phone' => '(512) 555-0182',
-            'underwriter_email' => 'm.vance@surebound.com',
-            'underwriter_hours' => 'Mon – Fri • 8:00 AM – 6:00 PM CST',
-            'office_address' => '742 Evergreen Terrace, Suite 400, Austin, TX 78701',
+            'support_subtitle' => 'Dedicated licensed risk advisors, claim guidance, policy endorsement requests, and live inquiry tracking in Tampa, FL.',
+            'support_phone' => '+1 813-214-1731',
+            'support_email' => 'support@sureboundinsurance.com',
+            'emergency_phone' => '+1 813-214-1731',
+            'emergency_subtitle' => 'Carrier Claim Hotlines & Agency Support',
+            'roadside_phone' => '1-800-776-4737',
+            'cyber_phone' => '+1 813-214-1731',
+            'underwriter_name' => 'Licensed Agency Advisor',
+            'underwriter_title' => 'Licensed Risk Advisor',
+            'underwriter_phone' => '+1 813-214-1731',
+            'underwriter_email' => 'support@sureboundinsurance.com',
+            'underwriter_hours' => 'Mon – Fri • 8:30 AM – 5:30 PM EST',
+            'office_address' => '100 N Tampa St, Suite 2500, Tampa, FL 33602',
         ];
     }
 

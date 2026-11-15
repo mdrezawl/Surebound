@@ -389,7 +389,7 @@
                         &larr; Return to Surebound Home
                     </a>
                     <span style="font-size: 0.8125rem; color: #64748b;">
-                        Assistance: 1-800-555-0199
+                        Assistance: (813) 214-1731
                     </span>
                 </div>
             @endif

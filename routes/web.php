@@ -27,9 +27,13 @@ if (file_exists(base_path('routes/setup.php')) && file_exists(app_path('Http/Con
 |--------------------------------------------------------------------------
 */
 
-// Technical SEO Files
+// Technical SEO & AI Machine-Readable Manifests
 Route::get('/sitemap.xml', [SeoPublicController::class, 'sitemap'])->name('seo.sitemap');
 Route::get('/robots.txt', [SeoPublicController::class, 'robots'])->name('seo.robots');
+Route::get('/llms.txt', [SeoPublicController::class, 'llms'])->name('seo.llms');
+Route::get('/.well-known/llms.txt', [SeoPublicController::class, 'llms']);
+Route::get('/llms-full.txt', [SeoPublicController::class, 'llmsFull'])->name('seo.llms-full');
+Route::get('/.well-known/llms-full.txt', [SeoPublicController::class, 'llmsFull']);
 
 // Public Website
 Route::get('/', function () {
@@ -50,6 +54,7 @@ Route::get('/personal-coverage', [AdminController::class, 'showPersonalCoverage'
 Route::get('/property-insurance', [AdminController::class, 'showPropertyInsurance'])->name('property-insurance');
 Route::get('/liability-insurance', [AdminController::class, 'showLiabilityInsurance'])->name('liability-insurance');
 Route::get('/group-benefits', [AdminController::class, 'showGroupBenefits'])->name('group-benefits');
+Route::get('/workers-compensation', [AdminController::class, 'showWorkersCompensation'])->name('workers-compensation');
 Route::get('/specialty-coverage', [AdminController::class, 'showSpecialtyCoverage'])->name('specialty-coverage');
 Route::get('/coverage', [AdminController::class, 'showCoverage'])->name('coverage');
 Route::get('/custom-quote', [AdminController::class, 'showCustomQuote'])->name('custom-quote');
@@ -65,6 +70,7 @@ Route::get('/business-insurance', [AdminController::class, 'showBusinessInsuranc
 Route::get('/claims', [AdminController::class, 'showClaims'])->name('claims');
 Route::get('/payment', [AdminController::class, 'showPayment'])->name('payment');
 Route::get('/contact', [AdminController::class, 'showContact'])->name('contact');
+Route::post('/contact', [AdminController::class, 'storeContactInquiry'])->name('contact.store');
 Route::get('/privacy', [AdminController::class, 'showPrivacy'])->name('privacy');
 Route::get('/terms', [AdminController::class, 'showTerms'])->name('terms');
 
@@ -123,6 +129,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/property-insurance', [AdminController::class, 'updatePropertyInsurance'])->name('admin.property-insurance.update');
     Route::post('/admin/liability-insurance', [AdminController::class, 'updateLiabilityInsurance'])->name('admin.liability-insurance.update');
     Route::post('/admin/group-benefits', [AdminController::class, 'updateGroupBenefits'])->name('admin.group-benefits.update');
+    Route::post('/admin/workers-compensation', [AdminController::class, 'updateWorkersCompensation'])->name('admin.workers-compensation.update');
     Route::post('/admin/specialty-coverage', [AdminController::class, 'updateSpecialtyCoverage'])->name('admin.specialty-coverage.update');
     Route::post('/admin/coverage', [AdminController::class, 'updateCoverage'])->name('admin.coverage.update');
     Route::post('/admin/custom-quote', [AdminController::class, 'updateCustomQuote'])->name('admin.custom-quote.update');

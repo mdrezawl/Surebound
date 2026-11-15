@@ -36,7 +36,7 @@ if (fs.existsSync(path.join(publicDir, 'build'))) {
     copyDirSync(path.join(publicDir, 'build'), path.join(distDir, 'build'));
 }
 
-['favicon.ico', 'robots.txt'].forEach(f => {
+['favicon.ico', 'robots.txt', 'llms.txt', 'llms-full.txt'].forEach(f => {
     const src = path.join(publicDir, f);
     if (fs.existsSync(src)) {
         fs.copyFileSync(src, path.join(distDir, f));

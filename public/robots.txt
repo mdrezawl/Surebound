@@ -1,2 +1,70 @@
+# Surebound Insurance Robots Directives
+# https://sureboundinsurance.com
+
 User-agent: *
-Disallow:
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login
+Disallow: /register
+Disallow: /setup/
+Disallow: /api/
+Allow: /
+
+# Google Search, Googlebot & Google AI Overviews
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft Copilot & Bing Search
+User-agent: Bingbot
+Allow: /
+
+# Apple Intelligence & Siri Search
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# OpenAI ChatGPT, SearchGPT & Model Grounding
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic Claude & Claude Search
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Perplexity AI Grounded Search
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI & External Search
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Amazon Bedrock & Alexa Search
+User-agent: Amazonbot
+Allow: /
+
+# Cohere AI Search & Grounding
+User-agent: cohere-ai
+Allow: /
+
+# Sitemaps & Machine-Readable AI Manifests
+Sitemap: https://sureboundinsurance.com/sitemap.xml
+# LLMs.txt AI Manifest: https://sureboundinsurance.com/llms.txt
+# Full Knowledge Manifest: https://sureboundinsurance.com/llms-full.txt

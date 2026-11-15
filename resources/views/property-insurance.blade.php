@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Property Insurance – Comprehensive Protection for Your Sanctuary | Surebound')
+@section('title', 'Commercial Property Insurance | Tampa, FL | Surebound')
+@section('meta_description', 'Safeguard your commercial buildings, business personal property, equipment, and operating income with tailored commercial property insurance in Tampa, FL.')
 
 @section('content')
 
     <!-- ==========================================
-         HERO SECTION (DYNAMIC CMS REPLICA)
+         HERO SECTION (DYNAMIC CMS)
          ========================================== -->
     <section class="hero-section">
-        <!-- Right side full bleed photo with seamless alpha mask & right royal blue gradient -->
         <div class="hero-photo-bleed">
             <img 
-                src="{{ asset($content['hero_image'] ?? 'images/hero-house.jpg') }}" 
-                alt="Comprehensive Property Insurance" 
+                src="{{ asset($content['hero_image'] ?? 'images/hero-business.jpg') }}" 
+                alt="Commercial Property Insurance in Tampa" 
                 class="hero-photo-img"
             >
             <div class="hero-photo-fade-right"></div>
@@ -22,14 +22,14 @@
         <div class="container hero-container">
             <!-- Left: Headline & Actions -->
             <div class="hero-content">
-                <p class="hero-eyebrow">{!! $content['hero_eyebrow'] ?? 'PROPERTY INSURANCE' !!}</p>
-                <h1 class="hero-title">{!! $content['hero_title'] ?? 'Protection Built Around<br>Your Safe Haven' !!}</h1>
+                <p class="hero-eyebrow">{!! $content['hero_eyebrow'] ?? 'COMMERCIAL PROPERTY INSURANCE' !!}</p>
+                <h1 class="hero-title">{!! $content['hero_title'] ?? 'Protect Your Commercial<br>Buildings &amp; Assets' !!}</h1>
                 <p class="hero-subtitle">
-                    {{ $content['hero_subtitle'] ?? 'Comprehensive homeowners insurance engineered to safeguard your structure, personal belongings, and loved ones — with dependable support whenever you need us.' }}
+                    {{ $content['hero_subtitle'] ?? 'Comprehensive commercial property insurance engineered to safeguard your buildings, business personal property, inventory, and operating income in Tampa, FL.' }}
                 </p>
                 <div class="hero-buttons">
-                    <a href="javascript:void(0)" onclick="openQuoteModal('Property Insurance')" class="btn-primary-hero">
-                        <span>Get a Property Quote</span>
+                    <a href="javascript:void(0)" onclick="openQuoteModal('Commercial Property')" class="btn-primary-hero">
+                        <span>Request a Property Quote</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="17" height="17">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                         </svg>
@@ -48,12 +48,12 @@
                 <div class="hero-floating-card">
                     <div class="hero-card-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.75c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
                         </svg>
                     </div>
                     <div class="hero-card-text">
-                        <span class="hero-card-sub">{{ $content['hero_card_sub'] ?? 'Multi-Policy Discount' }}</span>
-                        <span class="hero-card-label">{{ $content['hero_card_label'] ?? 'Save up to 25% bundled' }}</span>
+                        <span class="hero-card-sub">{{ $content['hero_card_sub'] ?? 'Commercial Asset Protection' }}</span>
+                        <span class="hero-card-label">{{ $content['hero_card_label'] ?? 'Tailored property limits' }}</span>
                     </div>
                     <div class="hero-card-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,95 +66,95 @@
     </section>
 
     <!-- ==========================================
-         HOME COVERAGE OPTIONS SECTION (6 CARDS)
+         COMMERCIAL PROPERTY COVERAGE (6 CARDS)
          ========================================== -->
     <section class="coverage-section" id="coverage-options">
         <div class="container">
-            <p class="section-eyebrow">HOME PROTECTION SOLUTIONS</p>
-            <h2 class="section-title">Complete Coverage for Every Room &amp; Roof</h2>
-            <p class="section-subtitle">Tailored protection layers so your property and peace of mind stay secure.</p>
+            <p class="section-eyebrow">COMMERCIAL PROPERTY SOLUTIONS</p>
+            <h2 class="section-title">Complete Protection for Real Estate &amp; Business Assets</h2>
+            <p class="section-subtitle">From physical structures and machinery to lost business income, protect every layer of your business.</p>
 
             <div class="coverage-cards-grid">
-                <!-- 1. Dwelling & Roof Structure -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <!-- 1. Commercial Building -->
+                <div class="coverage-card" onclick="openQuoteModal('Commercial Property')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.75c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">{{ $content['card_1_title'] ?? 'Dwelling Protection' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_1_desc'] ?? 'Covers rebuilding costs for walls, roof, foundation, and attached structures against fire, wind, and storm damage.' }}</p>
+                        <h3 class="coverage-card-title">{{ $content['card_1_title'] ?? 'Commercial Building Coverage' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_1_desc'] ?? 'Protects owned commercial real estate, offices, warehouses, and structural improvements against fire, windstorm, and covered perils.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
 
-                <!-- 2. Personal Belongings -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <!-- 2. BPP -->
+                <div class="coverage-card" onclick="openQuoteModal('Commercial Property')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">{{ $content['card_2_title'] ?? 'Personal Property' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_2_desc'] ?? 'Protects furniture, appliances, computers, clothing, and personal items whether inside your home or while traveling.' }}</p>
+                        <h3 class="coverage-card-title">{{ $content['card_2_title'] ?? 'Business Personal Property (BPP)' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_2_desc'] ?? 'Safeguards business equipment, machinery, computer networks, furniture, tools, and inventory stored on-premises.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
 
-                <!-- 3. Personal Liability -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <!-- 3. Business Income -->
+                <div class="coverage-card" onclick="openQuoteModal('Commercial Property')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">{{ $content['card_3_title'] ?? 'Liability Defense' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_3_desc'] ?? 'Defends against legal suits and pays medical expenses if guests are accidentally injured on your property.' }}</p>
+                        <h3 class="coverage-card-title">{{ $content['card_3_title'] ?? 'Business Income & Interruption' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_3_desc'] ?? 'Replaces lost operational net income and ongoing payroll, rent, and mortgage expenses when covered perils force a temporary shutdown.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
 
-                <!-- 4. Loss of Use / Living Expenses -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <!-- 4. Equipment Breakdown -->
+                <div class="coverage-card" onclick="openQuoteModal('Commercial Property')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.32l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.32 4.486c.091.75-.027 1.503-.38 2.148" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">{{ $content['card_4_title'] ?? 'Additional Living Expenses' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_4_desc'] ?? 'Covers hotel stays, restaurant dining, and temporary housing costs if covered damage makes your home unlivable.' }}</p>
+                        <h3 class="coverage-card-title">{{ $content['card_4_title'] ?? 'Equipment Breakdown Coverage' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_4_desc'] ?? 'Covers mechanical breakdown, electrical arcing, HVAC failure, boiler rupture, and refrigeration loss.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
 
-                <!-- 5. Other Structures -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <!-- 5. Tenant Improvements -->
+                <div class="coverage-card" onclick="openQuoteModal('Commercial Property')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">{{ $content['card_5_title'] ?? 'Detached Structures' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_5_desc'] ?? 'Safeguards detached garages, storage sheds, gazebos, guest units, fences, and perimeter walls.' }}</p>
+                        <h3 class="coverage-card-title">{{ $content['card_5_title'] ?? 'Tenant Improvements & Betterments' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_5_desc'] ?? 'Protects permanent fixtures, alterations, lighting, flooring, and custom build-outs added to leased commercial spaces.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
 
-                <!-- 6. Valuable Articles & Water Backup -->
-                <div class="coverage-card" onclick="openQuoteModal('Property Insurance')">
+                <!-- 6. Windstorm Endorsement -->
+                <div class="coverage-card" onclick="openQuoteModal('Commercial Property')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">{{ $content['card_6_title'] ?? 'Valuable Articles Rider' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_6_desc'] ?? 'Optional endorsements for high-value jewelry, fine art, collectibles, water backup, and equipment breakdown.' }}</p>
+                        <h3 class="coverage-card-title">{{ $content['card_6_title'] ?? 'Windstorm & Hurricane Endorsements' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_6_desc'] ?? 'Critical Florida commercial coverage addressing named-storm hurricane deductibles, wind-driven rain, and hail damage.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
@@ -163,82 +163,80 @@
     </section>
 
     <!-- ==========================================
-         DARK NAVY VALUE PROPOSITION BAR (4 HOME PILLARS)
+         DARK NAVY VALUE PROPOSITION BAR
          ========================================== -->
     <section class="value-bar-section">
         <div class="container">
             <div class="value-bar-grid">
-                <!-- 1. 24/7 Home Claims Support -->
-                <div class="value-item">
-                    <div class="value-icon-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
-                        </svg>
-                    </div>
-                    <h3 class="value-item-title">{{ $content['value_1_title'] ?? '24/7 Home Claims' }}</h3>
-                    <p class="value-item-desc">{{ $content['value_1_desc'] ?? 'Emergency response dispatch for immediate property mitigation day or night.' }}</p>
-                </div>
-
-                <!-- 2. Full Replacement Cost -->
+                <!-- 1 -->
                 <div class="value-item">
                     <div class="value-icon-circle">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
                         </svg>
                     </div>
-                    <h3 class="value-item-title">{{ $content['value_2_title'] ?? 'Guaranteed Replacement' }}</h3>
-                    <p class="value-item-desc">{{ $content['value_2_desc'] ?? 'Rebuild at current market labor and material prices with zero depreciation penalties.' }}</p>
+                    <h3 class="value-item-title">{{ $content['value_1_title'] ?? 'Commercial Replacement Cost' }}</h3>
+                    <p class="value-item-desc">{{ $content['value_1_desc'] ?? 'Rebuilding valuations backed by current commercial construction data with zero hidden depreciation.' }}</p>
                 </div>
 
-                <!-- 3. Home & Auto Bundle -->
+                <!-- 2 -->
                 <div class="value-item">
                     <div class="value-icon-circle">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                     </div>
-                    <h3 class="value-item-title">{{ $content['value_3_title'] ?? 'Bundle & Save 25%' }}</h3>
-                    <p class="value-item-desc">{{ $content['value_3_desc'] ?? 'Combine your home and auto policies into one simple premium discount.' }}</p>
+                    <h3 class="value-item-title">{{ $content['value_2_title'] ?? 'Business Interruption Shield' }}</h3>
+                    <p class="value-item-desc">{{ $content['value_2_desc'] ?? 'Protection for operational cash flow, payroll, and fixed overhead while repairs take place.' }}</p>
                 </div>
 
-                <!-- 4. Inflation Guard -->
+                <!-- 3 -->
                 <div class="value-item">
                     <div class="value-icon-circle">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 0 5.814-5.518l2.74-1.22m0 0-5.94-2.28m5.94 2.28-2.28 5.94" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
                         </svg>
                     </div>
-                    <h3 class="value-item-title">{{ $content['value_4_title'] ?? 'Inflation Protection' }}</h3>
-                    <p class="value-item-desc">{{ $content['value_4_desc'] ?? 'Automatic policy updates ensuring your dwelling limits keep up with local construction costs.' }}</p>
+                    <h3 class="value-item-title">{{ $content['value_3_title'] ?? 'Florida Hurricane Protection' }}</h3>
+                    <p class="value-item-desc">{{ $content['value_3_desc'] ?? 'Tailored named-storm options and deductible structures built for coastal and inland Florida facilities.' }}</p>
+                </div>
+
+                <!-- 4 -->
+                <div class="value-item">
+                    <div class="value-icon-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+                    </div>
+                    <h3 class="value-item-title">{{ $content['value_4_title'] ?? 'Commercial Ordinance & Law' }}</h3>
+                    <p class="value-item-desc">{{ $content['value_4_desc'] ?? 'Coverage for mandatory building code upgrades, demolition, and increased construction costs.' }}</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ==========================================
-         HOME PROTECTION MADE SIMPLER SECTION
+         GUIDANCE / MADE SIMPLER SECTION
          ========================================== -->
     <section class="simpler-section">
         <div class="container">
             <div class="simpler-grid">
-                <!-- Left: House photo -->
                 <div class="simpler-image-frame">
                     <img 
-                        src="{{ asset('images/property-architecture-villa.jpg') }}" 
-                        alt="Luxury architectural residential estate covered by Surebound Property Insurance" 
+                        src="{{ asset('images/article-office-hires.jpg') }}" 
+                        alt="Commercial office building protected by Surebound Insurance in Tampa" 
                         class="simpler-image"
                     >
                 </div>
 
-                <!-- Right: Content -->
                 <div class="simpler-content">
                     <p class="simpler-eyebrow">{!! $content['guidance_eyebrow'] ?? 'OUR EXPERTISE' !!}</p>
-                    <h2 class="simpler-title">{!! $content['guidance_title'] ?? 'Property Protection Made Simpler' !!}</h2>
+                    <h2 class="simpler-title">{!! $content['guidance_title'] ?? 'Commercial Property Protection Made Simpler' !!}</h2>
                     <p class="simpler-paragraph">
-                        {{ $content['guidance_text'] ?? 'Whether you are purchasing your first home, upgrading to a custom sanctuary, or protecting a family estate, Surebound eliminates insurance complexity. We calculate your home\'s unique replacement cost using regional building data so you get exact coverage without paying for unnecessary fluff.' }}
+                        {{ $content['guidance_text'] ?? 'Whether you own retail plazas, multi-family units, medical offices, or light industrial buildings in Tampa Bay, Surebound eliminates guesswork. We accurately assess replacement costs and coordinate hurricane endorsements so your investments remain safe and fully solvent after any loss.' }}
                     </p>
-                    <a href="javascript:void(0)" onclick="openQuoteModal('Property Insurance')" class="btn-learn-more">
-                        <span>Calculate Home Rate</span>
+                    <a href="javascript:void(0)" onclick="openQuoteModal('Commercial Property')" class="btn-learn-more">
+                        <span>Request a Quote</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                         </svg>
@@ -249,34 +247,34 @@
     </section>
 
     <!-- ==========================================
-         WHY CHOOSE SUREBOUND FOR HOME INSURANCE
+         WHY CHOOSE SUREBOUND
          ========================================== -->
     <section class="why-section">
         <div class="container">
             <p class="section-eyebrow">THE SUREBOUND ADVANTAGE</p>
-            <h2 class="section-title">Why Homeowners Trust Surebound</h2>
+            <h2 class="section-title">Why Property Owners Choose Surebound</h2>
 
             <div class="why-grid">
                 <!-- 1 -->
                 <div class="why-card">
                     <div class="why-icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316A2.192 2.192 0 0 0 14.453 3.75h-4.906c-.733 0-1.412.36-1.821.93l-.9.001ZM12 15.75a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                     </div>
-                    <h3 class="why-card-title">{{ $content['why_1_title'] ?? 'Digital Photo Claims' }}</h3>
-                    <p class="why-card-desc">{{ $content['why_1_desc'] ?? 'Submit damage pictures directly via your smartphone for rapid claim review and fast repair funds.' }}</p>
+                    <h3 class="why-card-title">{{ $content['why_1_title'] ?? 'Accurate Risk Engineering' }}</h3>
+                    <p class="why-card-desc">{{ $content['why_1_desc'] ?? 'On-site risk assessments and replacement cost modeling to prevent dangerous underinsurance penalties (coinsurance).' }}</p>
                 </div>
 
                 <!-- 2 -->
                 <div class="why-card">
                     <div class="why-icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.122a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.808 3.808 9.981 0 13.788M12 12h.008v.008H12V12Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                         </svg>
                     </div>
-                    <h3 class="why-card-title">{{ $content['why_2_title'] ?? 'Smart Home Discounts' }}</h3>
-                    <p class="why-card-desc">{{ $content['why_2_desc'] ?? 'Earn premium discount credits for installing smart leak detectors, fire alarms, and security systems.' }}</p>
+                    <h3 class="why-card-title">{{ $content['why_2_title'] ?? 'Rapid Property Adjusters' }}</h3>
+                    <p class="why-card-desc">{{ $content['why_2_desc'] ?? 'Direct connections to dedicated commercial loss adjusters who prioritize immediate mitigation and emergency repairs.' }}</p>
                 </div>
 
                 <!-- 3 -->
@@ -286,87 +284,86 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 18H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 12h11.25" />
                         </svg>
                     </div>
-                    <h3 class="why-card-title">{{ $content['why_3_title'] ?? 'Flexible Deductibles' }}</h3>
-                    <p class="why-card-desc">{{ $content['why_3_desc'] ?? 'Customize deductible thresholds across wind, hail, and general peril coverage options to fit your budget.' }}</p>
+                    <h3 class="why-card-title">{{ $content['why_3_title'] ?? 'Flexible Wind Deductibles' }}</h3>
+                    <p class="why-card-desc">{{ $content['why_3_desc'] ?? 'Options for percentage-based or flat dollar hurricane deductibles to maintain predictable disaster budgets.' }}</p>
                 </div>
 
                 <!-- 4 -->
                 <div class="why-card">
                     <div class="why-icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
                         </svg>
                     </div>
-                    <h3 class="why-card-title">{{ $content['why_4_title'] ?? 'Local Claims Experts' }}</h3>
-                    <p class="why-card-desc">{{ $content['why_4_desc'] ?? 'Neighborhood insurance specialists who know local building codes, weather risks, and contractor networks.' }}</p>
+                    <h3 class="why-card-title">{{ $content['why_4_title'] ?? 'Florida Code Compliance' }}</h3>
+                    <p class="why-card-desc">{{ $content['why_4_desc'] ?? 'Ordinance or Law coverage options that pay for required Florida Building Code upgrades during post-storm reconstruction.' }}</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ==========================================
-         FREQUENTLY ASKED QUESTIONS (FAQ ACCORDION)
+         FAQ ACCORDION
          ========================================== -->
     <section class="faq-section" id="faqs">
         <div class="container faq-container">
             <p class="section-eyebrow" style="text-align: center;">GOT QUESTIONS?</p>
-            <h2 class="section-title" style="text-align: center;">Property Insurance FAQ</h2>
-            <p class="section-subtitle" style="text-align: center;">Clear, honest answers about dwelling limits, claims, and policy details.</p>
+            <h2 class="section-title" style="text-align: center;">Commercial Property Insurance FAQ</h2>
+            <p class="section-subtitle" style="text-align: center;">Clear answers about building replacement costs, hurricane deductibles, and business income.</p>
 
             <div class="faq-accordion">
                 <!-- Q1 -->
                 <div class="faq-item active">
                     <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>{{ $content['faq_1_question'] ?? 'What is standardly covered under a Homeowners Policy?' }}</span>
+                        <span>{{ $content['faq_1_question'] ?? 'What is covered under Commercial Property Insurance?' }}</span>
                         <div class="faq-icon">+</div>
                     </button>
                     <div class="faq-answer">
-                        {{ $content['faq_1_answer'] ?? 'Standard homeowners insurance (HO-3) covers physical damage to your home’s dwelling and attached structures caused by fire, lightning, windstorms, hail, explosions, vandalism, and theft. It also covers your personal property, personal liability claims, and temporary living expenses if your home requires major repairs after a covered peril.' }}
+                        {{ $content['faq_1_answer'] ?? 'Commercial property insurance covers your physical building, tenant improvements, inventory, machinery, furniture, and equipment against risks like fire, lightning, windstorm, explosion, vandalism, and theft.' }}
                     </div>
                 </div>
 
                 <!-- Q2 -->
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>{{ $content['faq_2_question'] ?? 'How is my home\'s replacement cost value calculated?' }}</span>
+                        <span>{{ $content['faq_2_question'] ?? 'What is the difference between Replacement Cost and Actual Cash Value (ACV)?' }}</span>
                         <div class="faq-icon">+</div>
                     </button>
                     <div class="faq-answer">
-                        {{ $content['faq_2_answer'] ?? 'Replacement cost is the total amount needed to rebuild your home from the ground up using current local labor and construction material prices. It differs from market value, which includes land value and real estate market trends. Surebound uses automated local construction databases to ensure your dwelling limit reflects exact local rebuilding costs.' }}
+                        {{ $content['faq_2_answer'] ?? 'Replacement Cost pays to repair or replace damaged property with new materials of like kind and quality without deduction for depreciation. Actual Cash Value (ACV) deducts depreciation based on the age and condition of the item at the time of loss.' }}
                     </div>
                 </div>
 
                 <!-- Q3 -->
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>{{ $content['faq_3_question'] ?? 'Are flood damage and water backup covered automatically?' }}</span>
+                        <span>{{ $content['faq_3_question'] ?? 'How does a Florida hurricane deductible work for commercial buildings?' }}</span>
                         <div class="faq-icon">+</div>
                     </button>
                     <div class="faq-answer">
-                        {{ $content['faq_3_answer'] ?? 'Standard home insurance policies exclude rising groundwater floods and sewer water backup. However, Surebound offers affordable optional endorsements for water backup and sump pump overflow, as well as dedicated Flood Insurance coverage through FEMA\'s National Flood Insurance Program (NFIP) or private flood carriers.' }}
+                        {{ $content['faq_3_answer'] ?? 'In Florida, commercial hurricane deductibles are typically expressed as a percentage (e.g., 2%, 3%, or 5%) of the total insured building value rather than a flat dollar amount. For example, a 3% deductible on a $2M building equals $60,000 for covered named-storm damage.' }}
                     </div>
                 </div>
 
                 <!-- Q4 -->
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>{{ $content['faq_4_question'] ?? 'How can I lower my annual home insurance premium?' }}</span>
+                        <span>{{ $content['faq_4_question'] ?? 'Does commercial property insurance include flood damage?' }}</span>
                         <div class="faq-icon">+</div>
                     </button>
                     <div class="faq-answer">
-                        {{ $content['faq_4_answer'] ?? 'You can reduce your premium by bundling home and auto insurance (up to 25% off), upgrading your roof with impact-resistant materials, installing monitored security or smart water-leak sensors, maintaining a strong credit score, or opting for a higher deductible level.' }}
+                        {{ $content['faq_4_answer'] ?? 'Standard commercial property policies exclude damage caused by rising exterior floodwaters or storm surge. Commercial flood coverage must be secured separately through FEMA\'s National Flood Insurance Program (NFIP) or private commercial flood markets.' }}
                     </div>
                 </div>
 
                 <!-- Q5 -->
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>{{ $content['faq_5_question'] ?? 'What is personal liability coverage and why do I need it?' }}</span>
+                        <span>{{ $content['faq_5_question'] ?? 'How is Business Interruption coverage calculated?' }}</span>
                         <div class="faq-icon">+</div>
                     </button>
                     <div class="faq-answer">
-                        {{ $content['faq_5_answer'] ?? 'Personal liability coverage protects you against legal financial claims if someone is accidentally injured on your property (for example, slipping on an icy walkway or tripping on stairs) or if you accidentally cause property damage to someone else. It covers medical payments, attorney legal fees, and court judgments up to your selected policy limit.' }}
+                        {{ $content['faq_5_answer'] ?? 'Business interruption (Business Income) replaces your net profit and covers normal continuing operating expenses (including payroll, rent, taxes, and debt service) based on your historical financial records during the period of restoration.' }}
                     </div>
                 </div>
             </div>
@@ -374,23 +371,23 @@
     </section>
 
     <!-- ==========================================
-         BOTTOM CTA BANNER WITH MOUNTAIN SILHOUETTE
+         BOTTOM CTA BANNER
          ========================================== -->
     <section class="cta-banner-section">
         <div class="container">
             <div class="cta-text-wrap">
-                <h2>{!! $content['cta_title'] ?? 'Ready to protect your home with confidence?' !!}</h2>
-                <p>{{ $content['cta_subtitle'] ?? 'Get a personalized home insurance quote tailored to your property in less than 2 minutes.' }}</p>
+                <h2>{!! $content['cta_title'] ?? 'Ready to protect your commercial properties with confidence?' !!}</h2>
+                <p>{{ $content['cta_subtitle'] ?? 'Get a tailored commercial property insurance proposal from our Tampa commercial lines team.' }}</p>
             </div>
             <div class="cta-button-group">
-                <a href="javascript:void(0)" onclick="openQuoteModal('Property Insurance')" class="btn-cta-white">
-                    <span>Get a Property Quote</span>
+                <a href="javascript:void(0)" onclick="openQuoteModal('Commercial Property')" class="btn-cta-white">
+                    <span>Request a Property Quote</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>
                 </a>
                 <a href="tel:+18132141731" class="btn-cta-transparent">
-                    <span>Talk to a Specialist</span>
+                    <span>Call (813) 214-1731</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>
@@ -407,12 +404,10 @@
             const item = btn.parentElement;
             const wasActive = item.classList.contains('active');
             
-            // Close all open items
             document.querySelectorAll('.faq-item').forEach(el => {
                 el.classList.remove('active');
             });
 
-            // Toggle current if it wasn't active
             if (!wasActive) {
                 item.classList.add('active');
             }

@@ -16,9 +16,9 @@
                 <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 <span>Submit Service Inquiry</span>
             </button>
-            <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['emergency_phone'] ?? '18005555677') }}" style="display: inline-flex; align-items: center; gap: 8px; background: #dc2626; color: #ffffff; border: none; padding: 10px 18px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.875rem; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25); text-decoration: none; transition: all 0.2s;">
+            <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['emergency_phone'] ?? '18132141731') }}" style="display: inline-flex; align-items: center; gap: 8px; background: #dc2626; color: #ffffff; border: none; padding: 10px 18px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.875rem; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25); text-decoration: none; transition: all 0.2s;">
                 <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                <span>24/7 Emergency: {{ $supportContent['emergency_phone'] ?? '1-800-555-5677' }}</span>
+                <span>24/7 Support: {{ $supportContent['emergency_phone'] ?? '(813) 214-1731' }}</span>
             </a>
         </div>
     </div>
@@ -109,7 +109,7 @@
                 <div style="background: #f8fafc; border-radius: var(--radius-sm); padding: 14px; font-size: 0.8125rem; margin-bottom: 18px;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                         <span style="color: var(--text-muted);">Direct Desk:</span>
-                        <a href="tel:{{ $supportContent['underwriter_phone'] ?? ($agent->phone ?: '(512) 555-0182') }}" style="font-weight: 700; color: var(--brand-blue); text-decoration: none;">{{ $supportContent['underwriter_phone'] ?? ($agent->phone ?: '(512) 555-0182') }}</a>
+                        <a href="tel:{{ $supportContent['underwriter_phone'] ?? ($agent->phone ?: '(813) 214-1731') }}" style="font-weight: 700; color: var(--brand-blue); text-decoration: none;">{{ $supportContent['underwriter_phone'] ?? ($agent->phone ?: '(813) 214-1731') }}</a>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                         <span style="color: var(--text-muted);">Confidential Email:</span>
@@ -117,13 +117,13 @@
                     </div>
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: var(--text-muted);">Availability:</span>
-                        <span style="font-weight: 600; color: #059669;">{{ $supportContent['underwriter_hours'] ?? 'Mon – Fri • 8:00 AM – 6:00 PM CST' }}</span>
+                        <span style="font-weight: 600; color: #059669;">{{ $supportContent['underwriter_hours'] ?? 'Mon – Fri • 8:30 AM – 5:30 PM EST' }}</span>
                     </div>
                 </div>
             </div>
 
             <div style="display: flex; gap: 10px;">
-                <a href="tel:{{ $supportContent['underwriter_phone'] ?? ($agent->phone ?: '(512) 555-0182') }}" style="flex: 1; text-align: center; background: var(--brand-blue); color: #ffffff; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.8125rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                <a href="tel:{{ $supportContent['underwriter_phone'] ?? ($agent->phone ?: '(813) 214-1731') }}" style="flex: 1; text-align: center; background: var(--brand-blue); color: #ffffff; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.8125rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     <span>Direct Call</span>
                 </a>
@@ -146,28 +146,28 @@
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 10px;">
-                <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['emergency_phone'] ?? '18005555677') }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
+                <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['emergency_phone'] ?? '18132141731') }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
                     <div>
-                        <div style="font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy);">National Emergency Claims &amp; Loss Intake</div>
-                        <div style="font-size: 0.6875rem; color: var(--text-muted);">Immediate disaster loss recording</div>
+                        <div style="font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy);">Agency Claims Support &amp; Guidance</div>
+                        <div style="font-size: 0.6875rem; color: var(--text-muted);">Direct Tampa claim recording &amp; advice</div>
                     </div>
-                    <span style="font-weight: 800; font-family: monospace; color: #dc2626; font-size: 0.875rem;">{{ $supportContent['emergency_phone'] ?? '1-800-555-5677' }}</span>
+                    <span style="font-weight: 800; font-family: monospace; color: #dc2626; font-size: 0.875rem;">{{ $supportContent['emergency_phone'] ?? '(813) 214-1731' }}</span>
                 </a>
 
-                <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['roadside_phone'] ?? '18005558697') }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
+                <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['roadside_phone'] ?? '18007764737') }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
                     <div>
                         <div style="font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy);">Roadside Towing &amp; Auto Assistance</div>
-                        <div style="font-size: 0.6875rem; color: var(--text-muted);">Flat tire, lockout, battery &amp; winching</div>
+                        <div style="font-size: 0.6875rem; color: var(--text-muted);">Progressive 24/7 dispatch hotline</div>
                     </div>
-                    <span style="font-weight: 800; font-family: monospace; color: var(--brand-blue); font-size: 0.875rem;">{{ $supportContent['roadside_phone'] ?? '1-800-555-TOWS' }}</span>
+                    <span style="font-weight: 800; font-family: monospace; color: var(--brand-blue); font-size: 0.875rem;">{{ $supportContent['roadside_phone'] ?? '1-800-776-4737' }}</span>
                 </a>
 
-                <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['cyber_phone'] ?? '18887873292') }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
+                <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['cyber_phone'] ?? '18132141731') }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
                     <div>
-                        <div style="font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy);">Cyber Incident &amp; Ransomware Hotline</div>
-                        <div style="font-size: 0.6875rem; color: var(--text-muted);">Forensic response &amp; extortion triage</div>
+                        <div style="font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy);">Commercial Advisory &amp; Incident Hotline</div>
+                        <div style="font-size: 0.6875rem; color: var(--text-muted);">Tampa risk advisory line</div>
                     </div>
-                    <span style="font-weight: 800; font-family: monospace; color: #7c3aed; font-size: 0.875rem;">{{ $supportContent['cyber_phone'] ?? '1-888-SURE-CYBER' }}</span>
+                    <span style="font-weight: 800; font-family: monospace; color: #7c3aed; font-size: 0.875rem;">{{ $supportContent['cyber_phone'] ?? '(813) 214-1731' }}</span>
                 </a>
             </div>
         </div>
@@ -181,25 +181,25 @@
                     </div>
                     <div>
                         <h3 style="font-size: 1.0625rem; font-weight: 800; color: var(--brand-navy); margin: 0;">Client Concierge &amp; HQ</h3>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">Direct corporate office &amp; account relations</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Direct Tampa office &amp; account relations</div>
                     </div>
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
-                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['support_phone'] ?? '+8809612345678') }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
+                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['support_phone'] ?? '18132141731') }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
                         <div>
                             <div style="font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy);">Main Desk Phone</div>
-                            <div style="font-size: 0.6875rem; color: var(--text-muted);">Toll-free customer helpline</div>
+                            <div style="font-size: 0.6875rem; color: var(--text-muted);">Local client advisory helpline</div>
                         </div>
-                        <span style="font-weight: 800; font-family: monospace; color: var(--brand-blue); font-size: 0.875rem;">{{ $supportContent['support_phone'] ?? '+880 9612 345678' }}</span>
+                        <span style="font-weight: 800; font-family: monospace; color: var(--brand-blue); font-size: 0.875rem;">{{ $supportContent['support_phone'] ?? '(813) 214-1731' }}</span>
                     </a>
 
-                    <a href="mailto:{{ $supportContent['support_email'] ?? 'support@surebound.com' }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
+                    <a href="mailto:{{ $supportContent['support_email'] ?? 'support@sureboundinsurance.com' }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 10px 14px; text-decoration: none; color: inherit; transition: all 0.2s;">
                         <div>
                             <div style="font-size: 0.8125rem; font-weight: 700; color: var(--brand-navy);">Concierge Email</div>
                             <div style="font-size: 0.6875rem; color: var(--text-muted);">Documentation &amp; inquiries</div>
                         </div>
-                        <span style="font-weight: 700; color: var(--brand-navy); font-size: 0.8125rem;">{{ $supportContent['support_email'] ?? 'support@surebound.com' }}</span>
+                        <span style="font-weight: 700; color: var(--brand-navy); font-size: 0.8125rem;">{{ $supportContent['support_email'] ?? 'support@sureboundinsurance.com' }}</span>
                     </a>
                 </div>
 
@@ -212,11 +212,11 @@
             </div>
 
             <div style="display: flex; gap: 10px; margin-top: 14px;">
-                <a href="mailto:{{ $supportContent['support_email'] ?? 'support@surebound.com' }}" style="flex: 1; text-align: center; background: #ffffff; color: var(--brand-navy); border: 1px solid var(--border-light); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.8125rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                <a href="mailto:{{ $supportContent['support_email'] ?? 'support@sureboundinsurance.com' }}" style="flex: 1; text-align: center; background: #ffffff; color: var(--brand-navy); border: 1px solid var(--border-light); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.8125rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
                     <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     <span>Email Support</span>
                 </a>
-                <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['support_phone'] ?? '+8809612345678') }}" style="flex: 1; text-align: center; background: var(--brand-blue); color: #ffffff; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.8125rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                <a href="tel:{{ preg_replace('/[^0-9]/', '', $supportContent['support_phone'] ?? '18132141731') }}" style="flex: 1; text-align: center; background: var(--brand-blue); color: #ffffff; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.8125rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
                     <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     <span>Call Concierge</span>
                 </a>

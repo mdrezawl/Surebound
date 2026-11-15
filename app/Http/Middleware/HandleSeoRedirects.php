@@ -17,6 +17,15 @@ class HandleSeoRedirects
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Host normalization: permanently redirect www to non-www
+        $host = $request->getHost();
+        if (str_starts_with(strtolower($host), 'www.')) {
+            $nonWwwHost = substr($host, 4);
+            $targetUrl = $request->getScheme().'://'.$nonWwwHost.$request->getRequestUri();
+
+            return redirect()->to($targetUrl, 301);
+        }
+
         if (! $request->isMethodSafe()) {
             return $next($request);
         }

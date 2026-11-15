@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Surebound – Protection Built Around You')
+@section('title', 'Tampa, FL Insurance Agency | Surebound Insurance')
+@section('meta_description', 'Surebound Insurance is an independent insurance agency in Tampa, FL offering personal and commercial insurance solutions tailored to protect your home, vehicle, business, and family.')
 
 @section('content')
 
@@ -22,22 +23,22 @@
         <div class="container hero-container">
             <!-- Left: Headline & Actions -->
             <div class="hero-content">
-                <p class="hero-eyebrow">Reliable Insurance. Lasting Peace of Mind.</p>
-                <h1 class="hero-title">Protection Built<br>Around You</h1>
+                <p class="hero-eyebrow">Independent Insurance Agency in Tampa, FL</p>
+                <h1 class="hero-title">Insurance help from<br>people here in Tampa.</h1>
                 <p class="hero-subtitle">
-                    Tailored insurance solutions <br>  for your home, family, business <br>  and future — with dependable support <br>  whenever you need us.
+                    Talk to our team about home, auto, business and life insurance. We will help you understand the available options and request coverage that fits your needs.
                 </p>
                 <div class="hero-buttons">
                     <a href="javascript:void(0)" onclick="openQuoteModal()" class="btn-primary-hero">
-                        <span>Get a Quote</span>
+                        <span>Request a Quote</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="17" height="17">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                         </svg>
                     </a>
-                    <a href="#coverage" class="btn-outline-hero">
-                        <span>Explore Coverage</span>
+                    <a href="tel:8132141731" class="btn-outline-hero">
+                        <span>Call (813) 214-1731</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="17" height="17">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                         </svg>
                     </a>
                 </div>
@@ -282,18 +283,24 @@
     </section>
 
     <!-- ==========================================
-         INSURANCE MADE SIMPLER SECTION
+         INSURANCE MADE SIMPLER / MEET THE FOUNDER
          ========================================== -->
-    <section class="simpler-section">
+    <section class="simpler-section" id="founder-guidance">
         <div class="container">
             <div class="simpler-grid">
-                <!-- Left: Meeting photo -->
-                <div class="simpler-image-frame">
-                    <img 
-                        src="{{ asset('images/advisor-meeting.png') }}" 
-                        alt="Insurance Advisor meeting with clients" 
-                        class="simpler-image"
-                    >
+                <!-- Left: Founder portrait photo -->
+                <div class="simpler-image-frame simpler-image-frame-founder">
+                    <picture>
+                        <source srcset="{{ asset('images/karry-founder.webp') }}" type="image/webp">
+                        <img 
+                            src="{{ asset('images/karry-founder.jpg') }}" 
+                            alt="Karry, Founder of Surebound Insurance" 
+                            class="simpler-image"
+                            width="472"
+                            height="541"
+                            loading="lazy"
+                        >
+                    </picture>
                 </div>
 
                 <!-- Right: Content -->
@@ -301,7 +308,7 @@
                     <p class="simpler-eyebrow">OUR GUIDANCE</p>
                     <h2 class="simpler-title">Insurance Made Simpler</h2>
                     <p class="simpler-paragraph">
-                        We believe insurance should be easy to understand and even easier to manage. That's why we've built a simple, modern experience — from exploring your options to filing a claim. Our team is here to guide you every step of the way.
+                        I’m Karry, founder of Surebound Insurance. My background in both personal and commercial insurance helps me work with families and business owners. I’ll walk you through what your policy covers, where you may have gaps, and which options fit your budget.
                     </p>
                     <a href="javascript:void(0)" onclick="openQuoteModal()" class="btn-learn-more">
                         <span>Learn More</span>
@@ -319,31 +326,21 @@
          ========================================== -->
     @php
         $homeInsuranceContent = $homeInsuranceContent ?? \App\Models\PageContent::getForPage('home-insurance', \App\Http\Controllers\AdminController::getDefaultHomeInsuranceContent());
-        $quotesEnabled = ($homeInsuranceContent['quotes_enabled'] ?? '1') === '1';
-        $quotesCount = (int) ($homeInsuranceContent['quotes_count'] ?? 1);
+        $quotesEnabled = ($homeInsuranceContent['quotes_enabled'] ?? '0') === '1';
+        $quotesCount = (int) ($homeInsuranceContent['quotes_count'] ?? 0);
         $quotesList = [];
 
-        for ($qi = 1; $qi <= max(1, $quotesCount); $qi++) {
+        for ($qi = 1; $qi <= max(0, $quotesCount); $qi++) {
             $quoteText = $homeInsuranceContent["quote_{$qi}_text"] ?? '';
-            $quoteActive = $homeInsuranceContent["quote_{$qi}_active"] ?? '1';
+            $quoteActive = $homeInsuranceContent["quote_{$qi}_active"] ?? '0';
             if ($quoteActive === '1' && trim($quoteText) !== '') {
                 $quotesList[] = [
                     'text' => $quoteText,
                     'author' => $homeInsuranceContent["quote_{$qi}_author"] ?? '',
                     'role' => $homeInsuranceContent["quote_{$qi}_role"] ?? '',
-                    'badge' => $homeInsuranceContent["quote_{$qi}_badge"] ?? 'Verified Perspective',
+                    'badge' => $homeInsuranceContent["quote_{$qi}_badge"] ?? 'Verified Client',
                 ];
             }
-        }
-
-        // Fallback to default quote if no active quote in DB
-        if (empty($quotesList) && $quotesEnabled) {
-            $quotesList[] = [
-                'text' => 'We believe that the advantages are so great that a shift to working on slack, or something like it, is inevitable.',
-                'author' => 'Marcel Gherkina',
-                'role' => 'Spokesperson, Surebound',
-                'badge' => 'Verified Perspective',
-            ];
         }
     @endphp
 
@@ -538,7 +535,7 @@
                 <!-- Right Articles Area -->
                 <div class="resources-content-col">
                     <div class="resources-top-link">
-                        <a href="#all-articles" class="btn-view-all-articles">
+                        <a href="{{ route('articles') }}" class="btn-view-all-articles">
                             <span>View All Articles</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="15" height="15">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />

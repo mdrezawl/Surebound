@@ -22,6 +22,8 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/surebound.css') }}?v={{ file_exists(public_path('css/surebound.css')) ? filemtime(public_path('css/surebound.css')) : '2.0' }}">
     <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}?v={{ file_exists(public_path('css/surebound-modal.css')) ? filemtime(public_path('css/surebound-modal.css')) : '2.0' }}">
+    <!-- AI Search & LLM Discovery Manifest (https://llmstxt.org) -->
+    <link rel="llms-txt" type="text/markdown" href="{{ url('/llms.txt') }}" title="LLM Machine-Readable Manifest">
     @yield('head')
 
     <!-- Marketing Pixels & Social Meta Tags (Google, Meta/FB, LinkedIn, Twitter, TikTok) -->
@@ -72,8 +74,8 @@
                 </div>
 
                 <!-- Commercial -->
-                <div class="nav-dropdown {{ request()->routeIs('business-insurance', 'property-insurance', 'liability-insurance', 'group-benefits', 'commercial-auto-insurance', 'surety-bond') ? 'active' : '' }}">
-                    <a href="javascript:void(0)" class="nav-link {{ request()->routeIs('business-insurance', 'property-insurance', 'liability-insurance', 'group-benefits', 'commercial-auto-insurance', 'surety-bond') ? 'active' : '' }}">
+                <div class="nav-dropdown {{ request()->routeIs('business-insurance', 'property-insurance', 'liability-insurance', 'group-benefits', 'workers-compensation', 'commercial-auto-insurance', 'surety-bond') ? 'active' : '' }}">
+                    <a href="javascript:void(0)" class="nav-link {{ request()->routeIs('business-insurance', 'property-insurance', 'liability-insurance', 'group-benefits', 'workers-compensation', 'commercial-auto-insurance', 'surety-bond') ? 'active' : '' }}">
                         <span>Commercial</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -83,20 +85,23 @@
                         <a href="{{ route('business-insurance') }}" class="{{ request()->routeIs('business-insurance') ? 'active' : '' }}">
                             @if(request()->routeIs('business-insurance'))<span class="active-dot">•</span>@endif Business Owner Policy (BOP)
                         </a>
-                        <a href="{{ route('group-benefits') }}" class="{{ request()->routeIs('group-benefits') ? 'active' : '' }}">
-                            @if(request()->routeIs('group-benefits'))<span class="active-dot">•</span>@endif Workers' Compensation
-                        </a>
                         <a href="{{ route('liability-insurance') }}" class="{{ request()->routeIs('liability-insurance') ? 'active' : '' }}">
                             @if(request()->routeIs('liability-insurance'))<span class="active-dot">•</span>@endif General Liability
                         </a>
                         <a href="{{ route('property-insurance') }}" class="{{ request()->routeIs('property-insurance') ? 'active' : '' }}">
-                            @if(request()->routeIs('property-insurance'))<span class="active-dot">•</span>@endif Property Coverage
+                            @if(request()->routeIs('property-insurance'))<span class="active-dot">•</span>@endif Commercial Property
+                        </a>
+                        <a href="{{ route('workers-compensation') }}" class="{{ request()->routeIs('workers-compensation') ? 'active' : '' }}">
+                            @if(request()->routeIs('workers-compensation'))<span class="active-dot">•</span>@endif Workers' Compensation
                         </a>
                         <a href="{{ route('commercial-auto-insurance') }}" class="{{ request()->routeIs('commercial-auto-insurance') ? 'active' : '' }}">
                             @if(request()->routeIs('commercial-auto-insurance'))<span class="active-dot">•</span>@endif Commercial Auto
                         </a>
                         <a href="{{ route('surety-bond') }}" class="{{ request()->routeIs('surety-bond') ? 'active' : '' }}">
                             @if(request()->routeIs('surety-bond'))<span class="active-dot">•</span>@endif Surety Bond
+                        </a>
+                        <a href="{{ route('group-benefits') }}" class="{{ request()->routeIs('group-benefits') ? 'active' : '' }}">
+                            @if(request()->routeIs('group-benefits'))<span class="active-dot">•</span>@endif Group Employee Benefits
                         </a>
                     </div>
                 </div>
@@ -250,9 +255,9 @@
                             <svg style="width: 14px; height: 14px; color: #38bdf8; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                             <span>{{ $siteContact['primary_phone'] ?? '+1 813-214-1731' }}</span>
                         </a>
-                        <a href="mailto:{{ $siteContact['support_email'] ?? 'support@surebound.com' }}" style="display: inline-flex; align-items: center; gap: 8px; color: #94a3b8; text-decoration: none; transition: color 0.2s;">
+                        <a href="mailto:{{ $siteContact['support_email'] ?? 'support@sureboundinsurance.com' }}" style="display: inline-flex; align-items: center; gap: 8px; color: #94a3b8; text-decoration: none; transition: color 0.2s;">
                             <svg style="width: 14px; height: 14px; color: #38bdf8; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
-                            <span>{{ $siteContact['support_email'] ?? 'support@surebound.com' }}</span>
+                            <span>{{ $siteContact['support_email'] ?? 'support@sureboundinsurance.com' }}</span>
                         </a>
                         <div style="display: inline-flex; align-items: flex-start; gap: 8px; color: #94a3b8;">
                             <svg style="width: 14px; height: 14px; color: #38bdf8; flex-shrink: 0; margin-top: 2px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
@@ -327,34 +332,34 @@
     <!-- ==========================================
          INTERACTIVE GET A QUOTE MODAL
          ========================================== -->
-    <div class="modal-overlay" id="quoteModal">
+    <div class="modal-overlay" id="quoteModal" role="dialog" aria-modal="true" aria-labelledby="quoteModalTitle" aria-hidden="true">
         <div class="modal-box" style="max-height: 92vh; overflow-y: auto;">
             <button class="modal-close-btn" onclick="closeQuoteModal()" aria-label="Close modal">&times;</button>
             <div class="modal-header">
-                <h3>Get Your Free Quote</h3>
-                <p>Tailored coverage with great rates in less than 2 minutes.</p>
+                <h3 id="quoteModalTitle">Request an Insurance Quote</h3>
+                <p>Connect with our Tampa team to explore personalized coverage options.</p>
             </div>
-            <form onsubmit="handleQuoteSubmit(event)">
+            <form onsubmit="handleQuoteSubmit(event)" id="quoteModalForm">
                 <div class="modal-form-group">
                     <label for="coverage-type">Select Insurance Type</label>
                     <select id="coverage-type" required onchange="handleCoverageTypeChange()">
                         <optgroup label="Commercial Lines">
-                            <option value="Business Owner Policy">Business Owner Policy (BOP)</option>
-                            <option value="Commercial Property Coverage">Commercial Property Coverage</option>
-                            <option value="General Liability">General Liability</option>
-                            <option value="Workers' Compensation">Workers' Compensation</option>
-                            <option value="Commercial Auto">Commercial Auto Insurance</option>
-                            <option value="Surety Bond">Surety Bond</option>
-                            <option value="Group Employee Benefits">Group Employee Benefits</option>
-                            <option value="Specialty & Surplus Coverage">Specialty & Surplus Coverage</option>
+                            <option value="bop">Business Owner Policy (BOP)</option>
+                            <option value="general_liability">General Liability</option>
+                            <option value="commercial_property">Commercial Property Coverage</option>
+                            <option value="workers_comp">Workers' Compensation</option>
+                            <option value="commercial_auto">Commercial Auto Insurance</option>
+                            <option value="surety_bond">Surety Bond</option>
+                            <option value="group_benefits">Group Employee Benefits</option>
+                            <option value="specialty">Specialty &amp; Surplus Coverage</option>
                         </optgroup>
                         <optgroup label="Personal Lines">
-                            <option value="Home Insurance">Homeowners Insurance</option>
-                            <option value="Auto Insurance">Personal Auto Insurance</option>
-                            <option value="Life Insurance">Life Insurance</option>
-                            <option value="Health Insurance">Health Insurance</option>
-                            <option value="Umbrella Insurance">Umbrella Liability</option>
-                            <option value="Personal Coverage">Personal Comprehensive Coverage</option>
+                            <option value="home">Homeowners Insurance</option>
+                            <option value="auto">Personal Auto Insurance</option>
+                            <option value="life">Life Insurance</option>
+                            <option value="health">Health Insurance</option>
+                            <option value="umbrella">Personal Umbrella Liability</option>
+                            <option value="personal">Personal Comprehensive Coverage</option>
                         </optgroup>
                     </select>
                 </div>
@@ -385,13 +390,13 @@
                 </div>
                 <div class="modal-form-group">
                     <label for="quote-zip">ZIP / Postal Code</label>
-                    <input type="text" id="quote-zip" placeholder="e.g. 90210" required>
+                    <input type="text" id="quote-zip" placeholder="e.g. 33602" required>
                 </div>
                 <button type="submit" class="btn-submit-modal" id="submitQuoteBtn">
-                    View Instant Quote Estimate &rarr;
+                    Send Quote Request &rarr;
                 </button>
             </form>
-            <div id="quoteSuccessMessage" style="display:none; margin-top:16px; padding:12px; background:#e8f4fc; border-radius:8px; color:#1255db; text-align:center; font-weight:600; font-size: 16px;">
+            <div id="quoteSuccessMessage" style="display:none; margin-top:16px; padding:12px; background:#e8f4fc; border-radius:8px; color:#1255db; text-align:center; font-weight:600; font-size: 15px;">
                 ✓ Request received! An agent is matching the best plan for you right now.
             </div>
         </div>
@@ -505,17 +510,74 @@
             ]
         };
 
+        const PRODUCT_MAP = {
+            'home': 'home',
+            'home insurance': 'home',
+            'homeowners': 'home',
+            'homeowners insurance': 'home',
+            'auto': 'auto',
+            'auto insurance': 'auto',
+            'personal auto': 'auto',
+            'personal auto insurance': 'auto',
+            'life': 'life',
+            'life insurance': 'life',
+            'health': 'health',
+            'health insurance': 'health',
+            'umbrella': 'umbrella',
+            'umbrella insurance': 'umbrella',
+            'umbrella liability': 'umbrella',
+            'personal umbrella': 'umbrella',
+            'personal umbrella liability': 'umbrella',
+            'personal': 'personal',
+            'personal coverage': 'personal',
+            'bop': 'bop',
+            'business': 'bop',
+            'business insurance': 'bop',
+            'business owner policy': 'bop',
+            'business owner policy (bop)': 'bop',
+            'commercial': 'bop',
+            'commercial_property': 'commercial_property',
+            'commercial property': 'commercial_property',
+            'commercial property coverage': 'commercial_property',
+            'property': 'commercial_property',
+            'property insurance': 'commercial_property',
+            'property coverage': 'commercial_property',
+            'general_liability': 'general_liability',
+            'general liability': 'general_liability',
+            'liability': 'general_liability',
+            'liability insurance': 'general_liability',
+            'workers_comp': 'workers_comp',
+            'workers comp': 'workers_comp',
+            "workers' compensation": 'workers_comp',
+            'workers compensation': 'workers_comp',
+            'commercial_auto': 'commercial_auto',
+            'commercial auto': 'commercial_auto',
+            'commercial auto insurance': 'commercial_auto',
+            'fleet': 'commercial_auto',
+            'surety_bond': 'surety_bond',
+            'surety bond': 'surety_bond',
+            'surety': 'surety_bond',
+            'bond': 'surety_bond',
+            'group_benefits': 'group_benefits',
+            'group benefits': 'group_benefits',
+            'group employee benefits': 'group_benefits',
+            'employee benefits': 'group_benefits',
+            'specialty': 'specialty',
+            'specialty coverage': 'specialty',
+            'specialty & surplus coverage': 'specialty'
+        };
+
         function getCoverageCategory(raw) {
             const s = (raw || '').toLowerCase().trim();
+            if (s.includes('umbrella')) return 'umbrella';
             if (s.includes('workers')) return 'workers';
-            if (s.includes('commercial auto') || s.includes('business auto') || s.includes('fleet')) return 'commercial_auto';
+            if (s.includes('commercial auto') || s.includes('fleet')) return 'commercial_auto';
             if (s.includes('general liability') || s.includes('liability')) return 'liability';
             if (s.includes('commercial property') || s.includes('property')) return 'property';
             if (s.includes('surety') || s.includes('bond')) return 'surety';
             if (s.includes('group') || s.includes('benefit')) return 'group_benefits';
             if (s.includes('business') || s.includes('commercial') || s.includes('bop') || s.includes('enterprise')) return 'business';
             if (s.includes('specialty') || s.includes('surplus')) return 'specialty';
-            if (s.includes('umbrella')) return 'umbrella';
             if (s.includes('health') || s.includes('medical')) return 'health';
             if (s.includes('life')) return 'life';
             if (s.includes('auto') || s.includes('car') || s.includes('vehicle')) return 'auto';
@@ -526,62 +588,46 @@
 
         function detectPageInsuranceType() {
             const path = window.location.pathname.toLowerCase();
-            if (path.includes('business-insurance')) return 'Business Owner Policy';
-            if (path.includes('property-insurance')) return 'Commercial Property Coverage';
-            if (path.includes('liability-insurance')) return 'General Liability';
-            if (path.includes('commercial-auto')) return 'Commercial Auto';
-            if (path.includes('surety-bond')) return 'Surety Bond';
-            if (path.includes('group-benefits')) return 'Group Employee Benefits';
-            if (path.includes('specialty-coverage')) return 'Specialty & Surplus Coverage';
-            if (path.includes('auto-insurance')) return 'Auto Insurance';
-            if (path.includes('life-insurance')) return 'Life Insurance';
-            if (path.includes('health-insurance')) return 'Health Insurance';
-            if (path.includes('umbrella-insurance')) return 'Umbrella Insurance';
-            if (path.includes('personal-coverage')) return 'Personal Coverage';
-            if (path.includes('home-insurance')) return 'Home Insurance';
+            if (path.includes('umbrella-insurance')) return 'umbrella';
+            if (path.includes('workers-compensation')) return 'workers_comp';
+            if (path.includes('group-benefits')) return 'group_benefits';
+            if (path.includes('business-insurance')) return 'bop';
+            if (path.includes('property-insurance')) return 'commercial_property';
+            if (path.includes('liability-insurance')) return 'general_liability';
+            if (path.includes('commercial-auto')) return 'commercial_auto';
+            if (path.includes('surety-bond')) return 'surety_bond';
+            if (path.includes('specialty-coverage')) return 'specialty';
+            if (path.includes('auto-insurance')) return 'auto';
+            if (path.includes('life-insurance')) return 'life';
+            if (path.includes('health-insurance')) return 'health';
+            if (path.includes('personal-coverage')) return 'personal';
+            if (path.includes('home-insurance')) return 'home';
             return null;
         }
 
         function findCoverageOptionIndex(select, search) {
             if (!select || !search) return -1;
             const s = search.toLowerCase().trim();
+            const mappedKey = PRODUCT_MAP[s] || s;
 
-            let target = '';
-            if (s.includes('business') || s.includes('commercial quote') || s.includes('commercial insurance') || s.includes('bop') || s.includes('commercial')) {
-                target = 'business owner policy';
-            } else if (s.includes('commercial auto')) {
-                target = 'commercial auto';
-            } else if (s.includes('property')) {
-                target = 'property';
-            } else if (s.includes('liability')) {
-                target = 'general liability';
-            } else if (s.includes('workers')) {
-                target = 'workers';
-            } else if (s.includes('surety') || s.includes('bond')) {
-                target = 'surety bond';
-            } else if (s.includes('group') || s.includes('benefit')) {
-                target = 'group';
-            } else if (s.includes('specialty') || s.includes('surplus')) {
-                target = 'specialty';
-            } else if (s.includes('auto') || s.includes('car')) {
-                target = 'auto insurance';
-            } else if (s.includes('home')) {
-                target = 'home insurance';
-            } else if (s.includes('life')) {
-                target = 'life insurance';
-            } else if (s.includes('health')) {
-                target = 'health insurance';
-            } else if (s.includes('umbrella')) {
-                target = 'umbrella insurance';
-            } else if (s.includes('personal')) {
-                target = 'personal coverage';
+            // 1. Exact value match (e.g. value="umbrella")
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value.toLowerCase() === mappedKey) {
+                    return i;
+                }
             }
 
-            if (target) {
+            // 2. Exact text match
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].text.toLowerCase() === s) {
+                    return i;
+                }
+            }
+
+            // 3. Substring checks with strict priority: check umbrella before general liability!
+            if (s.includes('umbrella')) {
                 for (let i = 0; i < select.options.length; i++) {
-                    const optVal = select.options[i].value.toLowerCase();
-                    const optText = select.options[i].text.toLowerCase();
-                    if (optVal.includes(target) || optText.includes(target)) {
+                    if (select.options[i].value.toLowerCase().includes('umbrella') || select.options[i].text.toLowerCase().includes('umbrella')) {
                         return i;
                     }
                 }
@@ -650,7 +696,10 @@
             }
         }
 
+        let lastFocusedQuoteTrigger = null;
+
         function openQuoteModal(type, amount) {
+            lastFocusedQuoteTrigger = document.activeElement;
             const select = document.getElementById('coverage-type');
             const detectedType = type || detectPageInsuranceType();
             if (select && detectedType) {
@@ -662,13 +711,34 @@
             handleCoverageTypeChange(amount);
 
             const modal = document.getElementById('quoteModal');
-            if (modal) modal.classList.add('active');
+            if (modal) {
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+                const firstInput = document.getElementById('coverage-type');
+                if (firstInput) firstInput.focus();
+            }
         }
 
         function closeQuoteModal() {
             const modal = document.getElementById('quoteModal');
-            if (modal) modal.classList.remove('active');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+            if (lastFocusedQuoteTrigger && typeof lastFocusedQuoteTrigger.focus === 'function') {
+                lastFocusedQuoteTrigger.focus();
+            }
         }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                const modal = document.getElementById('quoteModal');
+                if (modal && modal.classList.contains('active')) {
+                    closeQuoteModal();
+                }
+            }
+        });
 
         // Close modal when clicking outside
         window.addEventListener('click', function(e) {
@@ -697,21 +767,38 @@
 
             let type = 'home';
             if (typeSelect) {
-                const val = typeSelect.value.toLowerCase();
-                if (val.includes('workers')) type = 'workers_comp';
-                else if (val.includes('general liability') || val.includes('liability')) type = 'general_liability';
-                else if (val.includes('surety')) type = 'surety_bond';
-                else if (val.includes('commercial auto')) type = 'commercial_auto';
-                else if (val.includes('commercial property') || val.includes('property coverage') || val.includes('property')) type = 'commercial_property';
-                else if (val.includes('business owner') || val.includes('bop') || val.includes('business')) type = 'bop';
-                else if (val.includes('group') || val.includes('benefit')) type = 'group_benefits';
-                else if (val.includes('specialty') || val.includes('surplus')) type = 'specialty';
-                else if (val.includes('health')) type = 'health';
-                else if (val.includes('life')) type = 'life';
-                else if (val.includes('umbrella')) type = 'umbrella';
-                else if (val.includes('auto')) type = 'auto';
-                else if (val.includes('personal')) type = 'personal';
-                else type = 'home';
+                const rawVal = typeSelect.value.toLowerCase().trim();
+                if (PRODUCT_MAP[rawVal]) {
+                    type = PRODUCT_MAP[rawVal];
+                } else if (rawVal.includes('umbrella')) {
+                    type = 'umbrella';
+                } else if (rawVal.includes('workers')) {
+                    type = 'workers_comp';
+                } else if (rawVal.includes('general liability') || rawVal.includes('liability')) {
+                    type = 'general_liability';
+                } else if (rawVal.includes('surety') || rawVal.includes('bond')) {
+                    type = 'surety_bond';
+                } else if (rawVal.includes('commercial auto') || rawVal.includes('fleet')) {
+                    type = 'commercial_auto';
+                } else if (rawVal.includes('property')) {
+                    type = 'commercial_property';
+                } else if (rawVal.includes('group') || rawVal.includes('benefit')) {
+                    type = 'group_benefits';
+                } else if (rawVal.includes('bop') || rawVal.includes('business')) {
+                    type = 'bop';
+                } else if (rawVal.includes('health')) {
+                    type = 'health';
+                } else if (rawVal.includes('life')) {
+                    type = 'life';
+                } else if (rawVal.includes('auto')) {
+                    type = 'auto';
+                } else if (rawVal.includes('specialty')) {
+                    type = 'specialty';
+                } else if (rawVal.includes('personal')) {
+                    type = 'personal';
+                } else {
+                    type = 'home';
+                }
             }
 
             let coverageAmount = '';
@@ -726,8 +813,9 @@
 
             const sourcePage = window.location.pathname + window.location.search + window.location.hash;
 
-            btn.innerHTML = 'Connecting Underwriting Database...';
+            btn.innerHTML = '<span>Submitting Quote Request...</span>';
             btn.disabled = true;
+            if (msg) msg.style.display = 'none';
 
             fetch('/quotes', {
                 method: 'POST',
@@ -748,23 +836,48 @@
                     source_page: sourcePage
                 })
             })
-            .then(r => r.json())
+            .then(async r => {
+                const data = await r.json().catch(() => ({}));
+                if (!r.ok || !data.success) {
+                    const errMsg = data.message || (data.errors ? Object.values(data.errors).flat().join(' ') : 'Unable to submit quote request.');
+                    throw new Error(errMsg);
+                }
+                return data;
+            })
             .then(data => {
                 btn.style.display = 'none';
-                msg.textContent = '✓ Quote Request #' + (data.quote_ref || 'Received') + ' saved! An underwriter is matching your rates.';
                 msg.style.display = 'block';
+                msg.style.background = '#e6f4ea';
+                msg.style.color = '#137333';
+                msg.innerHTML = '✓ Quote Request #' + (data.quote_ref || 'Received') + ' saved! An advisor will contact you shortly.';
+
+                // Trigger analytics conversion event
+                if (typeof gtag === 'function') {
+                    gtag('event', 'generate_lead', {
+                        event_category: 'Quote',
+                        event_label: type,
+                        value: data.quote_ref
+                    });
+                }
+
                 setTimeout(() => {
                     closeQuoteModal();
                     btn.style.display = 'block';
                     btn.disabled = false;
-                    btn.innerHTML = 'View Instant Quote Estimate &rarr;';
+                    btn.innerHTML = 'Send Quote Request &rarr;';
                     msg.style.display = 'none';
-                }, 2600);
+                    document.getElementById('quoteModalForm')?.reset();
+                }, 2400);
             })
-            .catch(() => {
-                btn.style.display = 'none';
-                msg.textContent = '✓ Request received! An agent is matching the best plan for you right now.';
+            .catch(err => {
+                btn.disabled = false;
+                btn.innerHTML = 'Retry Quote Request &rarr;';
                 msg.style.display = 'block';
+                msg.style.background = '#fce8e6';
+                msg.style.color = '#c5221f';
+                msg.innerHTML = '⚠️ ' + (err.message || 'Submission error.') + '<br><small style="font-weight: normal;">Please retry or call us directly at <a href="tel:8132141731" style="color:inherit;font-weight:700;text-decoration:underline;">(813) 214-1731</a>.</small>';
+            });
+        }
                 setTimeout(() => {
                     closeQuoteModal();
                     btn.style.display = 'block';
