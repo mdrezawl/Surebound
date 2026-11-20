@@ -1462,15 +1462,6 @@
                 msg.innerHTML = '⚠️ ' + (err.message || 'Submission error.') + '<br><small style="font-weight: normal;">Please retry or call us directly at <a href="tel:8132141731" style="color:inherit;font-weight:700;text-decoration:underline;">(813) 214-1731</a>.</small>';
             });
         }
-                setTimeout(() => {
-                    closeQuoteModal();
-                    btn.style.display = 'block';
-                    btn.disabled = false;
-                    btn.innerHTML = 'View Instant Quote Estimate &rarr;';
-                    msg.style.display = 'none';
-                }, 2200);
-            });
-        }
 
         // Mobile menu toggle with accordion support
         const toggleBtn = document.getElementById('mobile-toggle');
