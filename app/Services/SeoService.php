@@ -426,6 +426,7 @@ class SeoService
             '@type' => 'InsuranceAgency',
             '@id' => 'https://sureboundinsurance.com/#agency',
             'name' => 'Surebound Insurance',
+            'alternateName' => ['Surebound', 'sureboundinsurance', 'Surebound Insurance Agency'],
             'url' => 'https://sureboundinsurance.com',
             'logo' => asset('images/logo.png'),
             'image' => asset('images/hero-family.jpg'),
@@ -482,6 +483,7 @@ class SeoService
             ],
             'sameAs' => [
                 'https://www.linkedin.com/company/surebound',
+                'https://www.facebook.com/share/1FMYaUktDN/',
             ],
         ];
 

@@ -278,4 +278,11 @@ class SeoSystemTest extends TestCase
         $this->artisan('seo:validate-sitemaps')->assertSuccessful();
         $this->artisan('seo:process-alerts')->assertSuccessful();
     }
+
+    public function test_google_site_verification_html_route_responds_correctly(): void
+    {
+        $response = $this->get('/google98420b98a0f81d83a.html');
+        $response->assertStatus(200);
+        $response->assertSee('google-site-verification: google98420b98a0f81d83a.html', false);
+    }
 }

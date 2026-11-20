@@ -34,6 +34,9 @@ Route::get('/llms.txt', [SeoPublicController::class, 'llms'])->name('seo.llms');
 Route::get('/.well-known/llms.txt', [SeoPublicController::class, 'llms']);
 Route::get('/llms-full.txt', [SeoPublicController::class, 'llmsFull'])->name('seo.llms-full');
 Route::get('/.well-known/llms-full.txt', [SeoPublicController::class, 'llmsFull']);
+Route::get('/google{code}.html', function (string $code) {
+    return response("google-site-verification: google{$code}.html", 200, ['Content-Type' => 'text/html']);
+})->where('code', '[a-zA-Z0-9_-]+');
 
 // Public Website
 Route::get('/', function () {
