@@ -4180,6 +4180,8 @@ class AdminController extends Controller
             'title' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'is_super_admin' => 'nullable|boolean',
+            'allowed_pages' => 'nullable|array',
+            'allowed_pages.*' => 'string',
         ]);
 
         $isSuperAdmin = false;
@@ -4193,12 +4195,18 @@ class AdminController extends Controller
             default => 'Policyholder',
         };
 
+        $allowedPages = null;
+        if ($validated['role'] === 'admin' && ! $isSuperAdmin) {
+            $allowedPages = $request->input('allowed_pages');
+        }
+
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => $validated['role'],
             'is_super_admin' => $isSuperAdmin,
+            'allowed_pages' => $allowedPages,
             'title' => $validated['title'] ?: $defaultTitle,
             'phone' => $validated['phone'] ?? null,
         ]);
@@ -4242,6 +4250,8 @@ class AdminController extends Controller
             'title' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'is_super_admin' => 'nullable|boolean',
+            'allowed_pages' => 'nullable|array',
+            'allowed_pages.*' => 'string',
         ]);
 
         // Security Check 2: Standard admin cannot promote anyone to Admin
@@ -4266,6 +4276,15 @@ class AdminController extends Controller
             } else {
                 $targetUser->is_super_admin = false;
             }
+        }
+
+        // Allowed Pages Permission Matrix
+        if ($targetUser->role === 'admin' && ! $targetUser->isSuperAdmin()) {
+            if ($request->has('allowed_pages')) {
+                $targetUser->allowed_pages = $request->input('allowed_pages');
+            }
+        } elseif ($targetUser->isSuperAdmin()) {
+            $targetUser->allowed_pages = null;
         }
 
         // Primary Super Admin safeguard

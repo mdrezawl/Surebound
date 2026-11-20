@@ -20,6 +20,9 @@
 
     <!-- Early Tab Restoration Script (Instant Active Tab Render on Page Reload) -->
     <script>
+        window.__SUREBOUND_IS_SUPER__ = {{ auth()->check() && auth()->user()->isSuperAdmin() ? 'true' : 'false' }};
+        window.__SUREBOUND_ALLOWED_PAGES__ = @json(auth()->check() ? auth()->user()->allowed_pages : null);
+
         (function() {
             try {
                 var rawHash = (window.location.hash || '').replace(/^#/, '').trim();
@@ -35,6 +38,16 @@
                     targetTab = localStorage.getItem('sb_admin_active_tab');
                 }
                 if (targetTab === 'billing' || targetTab === 'invoice') targetTab = 'invoices';
+
+                if (targetTab && !window.__SUREBOUND_IS_SUPER__ && Array.isArray(window.__SUREBOUND_ALLOWED_PAGES__)) {
+                    var isAllowed = window.__SUREBOUND_ALLOWED_PAGES__.indexOf(targetTab) !== -1 ||
+                        (targetTab.indexOf('-cms') !== -1 && window.__SUREBOUND_ALLOWED_PAGES__.indexOf('cms') !== -1) ||
+                        (targetTab.indexOf('marketing') === 0 && window.__SUREBOUND_ALLOWED_PAGES__.indexOf('marketing') !== -1);
+                    if (!isAllowed) {
+                        targetTab = 'overview';
+                    }
+                }
+
                 if (targetTab && targetTab !== 'overview') {
                     var style = document.createElement('style');
                     style.id = 'earlyTabStyle';
@@ -69,14 +82,17 @@
             <nav class="sidebar-nav">
                 <div class="nav-section-title">Core Management</div>
                 
+                @if(auth()->check() && auth()->user()->hasPageAccess('overview'))
                 <a class="sidebar-link active" data-tab="overview">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"/>
                     </svg>
                     <span>Overview</span>
                 </a>
+                @endif
 
                 <!-- Highlighted SEO & AI Search Link (Core Section) -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('seo'))
                 <a href="{{ route('admin.seo.index') }}" class="sidebar-ext-nav-item" style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin: 4px 6px 8px; border-radius: 8px; background: linear-gradient(135deg, rgba(37, 99, 235, 0.22), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(59, 130, 246, 0.45); text-decoration: none; color: #93c5fd; font-weight: 600; font-size: 0.875rem; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);">
                     <svg fill="none" stroke="#60a5fa" viewBox="0 0 24 24" style="width: 20px; height: 20px; flex-shrink: 0;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -87,7 +103,9 @@
                     </div>
                     <span class="nav-badge" style="background: #2563eb; color: #ffffff; font-weight: 700; font-size: 0.6875rem; padding: 2px 7px; border-radius: 4px;">26 Tabs</span>
                 </a>
+                @endif
 
+                @if(auth()->check() && auth()->user()->hasPageAccess('quotes'))
                 <a class="sidebar-link" data-tab="quotes">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"/>
@@ -95,7 +113,9 @@
                     <span>Quote Requests</span>
                     <span class="nav-badge" id="quotesCountBadge">{{ $quotes->count() }}</span>
                 </a>
+                @endif
 
+                @if(auth()->check() && auth()->user()->hasPageAccess('policies'))
                 <a class="sidebar-link" data-tab="policies">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
@@ -103,7 +123,9 @@
                     <span>Active Policies</span>
                     <span class="nav-badge" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">{{ $policies->count() }}</span>
                 </a>
+                @endif
 
+                @if(auth()->check() && auth()->user()->hasPageAccess('claims'))
                 <a class="sidebar-link" data-tab="claims">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
@@ -111,7 +133,9 @@
                     <span>Claims Center</span>
                     <span class="nav-badge urgent">{{ $claims->count() }}</span>
                 </a>
+                @endif
 
+                @if(auth()->check() && auth()->user()->hasPageAccess('support-tickets'))
                 <a class="sidebar-link" data-tab="support-tickets">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.375 12.739l-7.648 7.648a4.5 4.5 0 01-6.364-6.364l7.648-7.648a3 3 0 014.243 4.243L8.607 18.265a1.5 1.5 0 01-2.122-2.122l7.648-7.648"/>
@@ -119,9 +143,12 @@
                     <span>Support &amp; Concierge</span>
                     <span class="nav-badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8;">{{ $supportTickets->count() }}</span>
                 </a>
+                @endif
 
+                @if(auth()->check() && (auth()->user()->hasPageAccess('users') || auth()->user()->hasPageAccess('agents') || auth()->user()->hasPageAccess('settings') || auth()->user()->hasPageAccess('brand-settings') || auth()->user()->hasPageAccess('contact-info')))
                 <div class="nav-section-title">Administration</div>
 
+                @if(auth()->user()->hasPageAccess('users'))
                 <a class="sidebar-link" data-tab="users">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/>
@@ -129,14 +156,18 @@
                     <span>All Users &amp; Admins</span>
                     <span class="nav-badge" style="background: rgba(37, 99, 235, 0.2); color: #93c5fd;">{{ $allUsers->count() }}</span>
                 </a>
+                @endif
 
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->hasPageAccess('users'))
                 <a class="sidebar-link" href="javascript:void(0)" onclick="openModal('modalCreateAdmin')" style="color: #c084fc; font-weight: 600;" title="Create new Administrator or Agent account">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #c084fc;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.765Z"/>
                     </svg>
                     <span>+ Add New Admin</span>
                 </a>
+                @endif
 
+                @if(auth()->user()->hasPageAccess('agents'))
                 <a class="sidebar-link" data-tab="agents">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/>
@@ -144,7 +175,9 @@
                     <span>Agents & Brokers</span>
                     <span class="nav-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc;">{{ $agents->count() }}</span>
                 </a>
+                @endif
 
+                @if(auth()->user()->hasPageAccess('settings'))
                 <a class="sidebar-link" data-tab="settings">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/>
@@ -152,14 +185,18 @@
                     </svg>
                     <span>Agency Settings</span>
                 </a>
+                @endif
 
+                @if(auth()->user()->hasPageAccess('brand-settings'))
                 <a class="sidebar-link" data-tab="brand-settings">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a2.25 2.25 0 013.198 0l.43.43a2.25 2.25 0 010 3.198l-7.5 7.5a2.25 2.25 0 01-3.198 0l-.43-.43a2.25 2.25 0 010-3.198l7.5-7.5z" />
                     </svg>
                     <span>Brand Guidelines</span>
                 </a>
+                @endif
 
+                @if(auth()->user()->hasPageAccess('contact-info'))
                 <a class="sidebar-link" data-tab="contact-info">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
@@ -167,9 +204,13 @@
                     <span>Website Contact Info</span>
                     <span class="nav-badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8;">HOTLINES</span>
                 </a>
+                @endif
+                @endif
 
+                @if(auth()->check() && (auth()->user()->hasPageAccess('invoices') || auth()->user()->hasPageAccess('claims-api') || auth()->user()->hasPageAccess('payments-api')))
                 <div class="nav-section-title">Billing &amp; API Integrations</div>
 
+                @if(auth()->user()->hasPageAccess('invoices'))
                 <a class="sidebar-link" data-tab="invoices">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
@@ -177,7 +218,9 @@
                     <span>Invoices &amp; Billing</span>
                     <span class="nav-badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">{{ $invoices->count() }}</span>
                 </a>
+                @endif
 
+                @if(auth()->user()->hasPageAccess('claims-api'))
                 <a class="sidebar-link" data-tab="claims-api">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
@@ -185,7 +228,9 @@
                     <span>Claims API Gateway</span>
                     <span class="nav-badge" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">API</span>
                 </a>
+                @endif
 
+                @if(auth()->user()->hasPageAccess('payments-api'))
                 <a class="sidebar-link" data-tab="payments-api">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"/>
@@ -193,9 +238,13 @@
                     <span>USA Payment Methods</span>
                     <span class="nav-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">USD $</span>
                 </a>
+                @endif
+                @endif
 
+                @if(auth()->check() && (auth()->user()->hasPageAccess('seo') || auth()->user()->hasPageAccess('marketing')))
                 <div class="nav-section-title">Marketing &amp; Growth</div>
 
+                @if(auth()->user()->hasPageAccess('seo'))
                 <a href="{{ route('admin.seo.index') }}" class="sidebar-ext-nav-item" style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin: 4px 6px 8px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.12); text-decoration: none; color: #60a5fa; font-weight: 600; font-size: 0.85rem;">
                     <svg fill="none" stroke="#60a5fa" viewBox="0 0 24 24" style="width: 18px; height: 18px; flex-shrink: 0;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -203,7 +252,9 @@
                     <span style="flex: 1; font-weight: 700;">SEO &amp; AI Search Hub</span>
                     <span class="nav-badge" style="background: #2563eb; color: #fff; font-weight: 700; font-size: 0.6875rem;">26 Modules</span>
                 </a>
+                @endif
 
+                @if(auth()->user()->hasPageAccess('marketing'))
                 <div class="sidebar-group" id="sidebarGroupMarketing">
                     <a class="sidebar-link" data-tab="marketing" data-subtab="overview" id="sidebarLinkMarketing">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -247,7 +298,10 @@
                         </a>
                     </div>
                 </div>
+                @endif
+                @endif
 
+                @if(auth()->check() && auth()->user()->hasPageAccess('cms'))
                 <div class="nav-section-title">CMS &amp; Web Content</div>
 
                 <a class="sidebar-link" data-tab="home-cms">
@@ -453,6 +507,7 @@
                     <span>Insurance Partners</span>
                     <span class="nav-badge" style="background: rgba(99, 102, 241, 0.2); color: #818cf8;">HOME</span>
                 </a>
+                @endif
             </nav>
 
             <div class="sidebar-footer">
@@ -852,6 +907,7 @@
                 <!-- ========================================================
                      TAB 2: QUOTES & LEADS MANAGEMENT
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('quotes'))
                 <div class="tab-pane" id="tab-quotes">
                     <div class="view-header">
                         <div class="view-title-group">
@@ -914,10 +970,12 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <!-- ========================================================
                      TAB 3: ACTIVE POLICIES & UNDERWRITING CONTROL
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('policies'))
                 <div class="tab-pane" id="tab-policies">
                     <div class="view-header">
                         <div class="view-title-group">
@@ -1134,10 +1192,12 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <!-- ========================================================
                      TAB 4: CLAIMS CENTER & FNOL INTAKE
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('claims'))
                 <div class="tab-pane" id="tab-claims">
                     <div class="view-header">
                         <div class="view-title-group">
@@ -1365,10 +1425,12 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <!-- ========================================================
                      TAB 5: AGENTS & BROKERS
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('agents'))
                 <div class="tab-pane" id="tab-agents">
                     <div class="view-header">
                         <div class="view-title-group">
@@ -1416,10 +1478,12 @@
                         @endforelse
                     </div>
                 </div>
+                @endif
 
                 <!-- ========================================================
                      TAB: ALL USERS & ADMINS (DATABASE DIRECTORY)
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('users'))
                 <div class="tab-pane" id="tab-users">
                     <div class="view-header">
                         <div class="view-title-group">
@@ -1572,6 +1636,7 @@
                                             'title' => $u->title ?? '',
                                             'role' => $u->role,
                                             'is_super_admin' => (bool)$isTargetSuper,
+                                            'allowed_pages' => $u->allowed_pages,
                                         ]);
                                     @endphp
                                     <tr class="user-row" data-role="{{ $isTargetSuper ? 'super_admin' : $u->role }}" data-name="{{ strtolower($u->name) }}" data-email="{{ strtolower($u->email) }}" data-phone="{{ $u->phone ?? '' }}">
@@ -1637,19 +1702,35 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <div style="display: flex; align-items: center; gap: 6px; white-space: nowrap;">
+                                            <div style="display: flex; flex-direction: column; gap: 3px; white-space: nowrap;">
                                                 @if($isTargetSuper)
-                                                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #7c3aed; flex-shrink: 0;"></span>
-                                                    <span style="font-weight: 700; color: #6d28d9; font-size: 0.875rem;">Super Admin Portal</span>
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <span style="width: 7px; height: 7px; border-radius: 50%; background: #7c3aed; flex-shrink: 0;"></span>
+                                                        <span style="font-weight: 700; color: #6d28d9; font-size: 0.875rem;">Super Admin Portal</span>
+                                                    </div>
+                                                    <span style="font-size: 0.72rem; color: #7c3aed; font-weight: 600;">All Modules Unrestricted</span>
                                                 @elseif($u->role === 'admin')
-                                                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #2563eb; flex-shrink: 0;"></span>
-                                                    <span style="font-weight: 600; color: #1d4ed8; font-size: 0.875rem;">Executive Admin</span>
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <span style="width: 7px; height: 7px; border-radius: 50%; background: #2563eb; flex-shrink: 0;"></span>
+                                                        <span style="font-weight: 600; color: #1d4ed8; font-size: 0.875rem;">Executive Admin</span>
+                                                    </div>
+                                                    @if(empty($u->allowed_pages))
+                                                        <span style="font-size: 0.72rem; color: #059669; font-weight: 600;">Full Access (All Modules)</span>
+                                                    @else
+                                                        <span style="font-size: 0.72rem; color: #64748b; font-weight: 500;" title="{{ implode(', ', (array)$u->allowed_pages) }}">
+                                                            {{ count((array)$u->allowed_pages) }} Permitted Modules
+                                                        </span>
+                                                    @endif
                                                 @elseif($u->role === 'agent')
-                                                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #0284c7; flex-shrink: 0;"></span>
-                                                    <span style="font-weight: 600; color: #0369a1; font-size: 0.875rem;">Admin &amp; Claims</span>
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <span style="width: 7px; height: 7px; border-radius: 50%; background: #0284c7; flex-shrink: 0;"></span>
+                                                        <span style="font-weight: 600; color: #0369a1; font-size: 0.875rem;">Admin &amp; Claims</span>
+                                                    </div>
                                                 @else
-                                                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; flex-shrink: 0;"></span>
-                                                    <span style="font-weight: 600; color: #047857; font-size: 0.875rem;">Customer Portal</span>
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; flex-shrink: 0;"></span>
+                                                        <span style="font-weight: 600; color: #047857; font-size: 0.875rem;">Customer Portal</span>
+                                                    </div>
                                                 @endif
                                             </div>
                                         </td>
@@ -1780,10 +1861,12 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <!-- ========================================================
                      TAB 6: SETTINGS
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('settings'))
                 <div class="tab-pane" id="tab-settings">
                     <div class="view-header">
                         <div class="view-title-group">
@@ -1883,10 +1966,12 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <!-- ========================================================
                      TAB: BRAND GUIDELINES / TYPOGRAPHY
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('brand-settings'))
                 <div class="tab-pane" id="tab-brand-settings">
                     <div class="view-header">
                         <div class="view-title-group">
@@ -1985,10 +2070,12 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <!-- ========================================================
                      TAB: WEBSITE CONTACT INFO & HOTLINES MANAGER
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('contact-info'))
                 <div class="tab-pane" id="tab-contact-info">
                     <form id="contactInfoForm" onsubmit="saveContactInfo(event)">
                         @csrf
@@ -2342,10 +2429,12 @@
                         </div>
                     </form>
                 </div>
+                @endif
 
                 <!-- ========================================================
                      TAB 7: HOME INSURANCE PAGE CMS
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('cms'))
                 <div class="tab-pane" id="tab-home-cms">
                     <form id="homeCmsForm" enctype="multipart/form-data" onsubmit="saveHomeCms(event)">
                         @csrf
@@ -7509,8 +7598,10 @@
                         </div>
                     </form>
                 </div>
+                @endif
 
                 <!-- TAB 11: INVOICES & PREMIUM BILLING CENTER -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('invoices'))
                 <div class="tab-pane" id="tab-invoices">
                     <div class="view-header">
                         <div class="view-title-group">
@@ -7699,8 +7790,10 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <!-- TAB 11.5: CUSTOMER SUPPORT & CONCIERGE MANAGEMENT -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('support-tickets'))
                 <div class="tab-pane" id="tab-support-tickets">
                     <div class="view-header">
                         <div class="view-title-group">
@@ -7981,8 +8074,10 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <!-- TAB 12: CARRIER CLAIMS API GATEWAY -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('claims-api'))
                 <div class="tab-pane" id="tab-claims-api">
                     <form id="claimsApiForm" onsubmit="saveClaimsApi(event)">
                         @csrf
@@ -8095,8 +8190,10 @@
                         </div>
                     </form>
                 </div>
+                @endif
 
                 <!-- TAB 13: USA PAYMENT METHODS & GATEWAYS -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('payments-api'))
                 <div class="tab-pane" id="tab-payments-api">
                     <form id="paymentApiForm" onsubmit="savePaymentApi(event)">
                         @csrf
@@ -8320,10 +8417,12 @@
                         </div>
                     </form>
                 </div>
+                @endif
 
                 <!-- ========================================================
                      TAB 14: MARKETING, TRACKING & PIXELS COMMAND CENTER
                      ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('marketing'))
                 <div class="tab-pane" id="tab-marketing">
                     <form id="marketingSettingsForm" onsubmit="saveMarketingSettings(event)">
                         @csrf
@@ -9194,6 +9293,7 @@
                         </div>
                     </form>
                 </div>
+                @endif
 
 
             </div>
@@ -9271,6 +9371,47 @@
                                 </div>
                             </div>
                         </label>
+                    </div>
+
+                    <!-- Page Access Permission Selector -->
+                    <div id="newAdminPagesSection" style="margin-top: 20px; border-top: 1px solid var(--border-subtle); padding-top: 18px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                            <div>
+                                <label style="font-weight: 700; color: var(--text-primary); font-size: 0.9375rem; margin: 0; display: flex; align-items: center; gap: 6px;">
+                                    <svg width="18" height="18" fill="none" stroke="#7c3aed" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                                    Page &amp; Module Access Permissions
+                                </label>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">
+                                    Select which tabs and features this administrator is authorized to access.
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn-secondary" onclick="toggleAllAdminPageChecks('create', true)" style="padding: 4px 8px; font-size: 0.75rem; font-weight: 600;">Select All</button>
+                                <button type="button" class="btn-secondary" onclick="toggleAllAdminPageChecks('create', false)" style="padding: 4px 8px; font-size: 0.75rem; font-weight: 600;">Deselect All</button>
+                            </div>
+                        </div>
+
+                        <!-- Presets -->
+                        <div style="display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap;">
+                            <span style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); align-self: center;">Quick Presets:</span>
+                            <button type="button" class="filter-tab-btn" onclick="applyAdminPagePreset('create', 'operations')" style="padding: 3px 8px; font-size: 0.72rem; border-radius: 4px;">Quotes &amp; Policies</button>
+                            <button type="button" class="filter-tab-btn" onclick="applyAdminPagePreset('create', 'billing')" style="padding: 3px 8px; font-size: 0.72rem; border-radius: 4px;">Billing &amp; Payments</button>
+                            <button type="button" class="filter-tab-btn" onclick="applyAdminPagePreset('create', 'marketing')" style="padding: 3px 8px; font-size: 0.72rem; border-radius: 4px;">SEO &amp; CMS</button>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-height: 280px; overflow-y: auto; padding: 6px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--bg-surface-secondary);">
+                            @foreach(\App\Models\User::getManageablePages() as $category => $pages)
+                            <div style="grid-column: 1 / -1; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; padding-top: 6px; padding-left: 4px;">
+                                {{ $category }}
+                            </div>
+                            @foreach($pages as $pageKey => $pageLabel)
+                            <label style="display: flex; align-items: center; gap: 8px; background: #ffffff; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-light); font-size: 0.8125rem; cursor: pointer; margin: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+                                <input type="checkbox" name="allowed_pages[]" value="{{ $pageKey }}" class="create-page-check" checked style="width: 16px; height: 16px; accent-color: #7c3aed; margin: 0;">
+                                <span style="font-weight: 500; color: var(--text-primary);">{{ $pageLabel }}</span>
+                            </label>
+                            @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer" style="padding: 16px 24px; display: flex; justify-content: flex-end; gap: 10px;">
@@ -9361,6 +9502,47 @@
                                 </div>
                             </div>
                         </label>
+                    </div>
+
+                    <!-- Page Access Permission Selector (Edit Modal) -->
+                    <div id="editAdminPagesSection" style="margin-top: 20px; border-top: 1px solid var(--border-subtle); padding-top: 18px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                            <div>
+                                <label style="font-weight: 700; color: var(--text-primary); font-size: 0.9375rem; margin: 0; display: flex; align-items: center; gap: 6px;">
+                                    <svg width="18" height="18" fill="none" stroke="#7c3aed" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                                    Page &amp; Module Access Permissions
+                                </label>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">
+                                    Select which tabs and features this administrator is authorized to access.
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn-secondary" onclick="toggleAllAdminPageChecks('edit', true)" style="padding: 4px 8px; font-size: 0.75rem; font-weight: 600;">Select All</button>
+                                <button type="button" class="btn-secondary" onclick="toggleAllAdminPageChecks('edit', false)" style="padding: 4px 8px; font-size: 0.75rem; font-weight: 600;">Deselect All</button>
+                            </div>
+                        </div>
+
+                        <!-- Presets -->
+                        <div style="display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap;">
+                            <span style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); align-self: center;">Quick Presets:</span>
+                            <button type="button" class="filter-tab-btn" onclick="applyAdminPagePreset('edit', 'operations')" style="padding: 3px 8px; font-size: 0.72rem; border-radius: 4px;">Quotes &amp; Policies</button>
+                            <button type="button" class="filter-tab-btn" onclick="applyAdminPagePreset('edit', 'billing')" style="padding: 3px 8px; font-size: 0.72rem; border-radius: 4px;">Billing &amp; Payments</button>
+                            <button type="button" class="filter-tab-btn" onclick="applyAdminPagePreset('edit', 'marketing')" style="padding: 3px 8px; font-size: 0.72rem; border-radius: 4px;">SEO &amp; CMS</button>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-height: 280px; overflow-y: auto; padding: 6px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--bg-surface-secondary);">
+                            @foreach(\App\Models\User::getManageablePages() as $category => $pages)
+                            <div style="grid-column: 1 / -1; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; padding-top: 6px; padding-left: 4px;">
+                                {{ $category }}
+                            </div>
+                            @foreach($pages as $pageKey => $pageLabel)
+                            <label style="display: flex; align-items: center; gap: 8px; background: #ffffff; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-light); font-size: 0.8125rem; cursor: pointer; margin: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+                                <input type="checkbox" name="allowed_pages[]" value="{{ $pageKey }}" class="edit-page-check" id="edit_page_{{ $pageKey }}" style="width: 16px; height: 16px; accent-color: #7c3aed; margin: 0;">
+                                <span style="font-weight: 500; color: var(--text-primary);">{{ $pageLabel }}</span>
+                            </label>
+                            @endforeach
+                            @endforeach
+                        </div>
                     </div>
                     @endif
                 </div>
@@ -11028,19 +11210,41 @@
 
         function toggleSuperAdminCheckbox(role) {
             const wrap = document.getElementById('superAdminToggleWrap');
+            const pagesWrap = document.getElementById('newAdminPagesSection');
             const titleInput = document.getElementById('newAdminTitleInput');
             if (role === 'admin') {
                 if (wrap) wrap.style.display = 'block';
+                if (pagesWrap) pagesWrap.style.display = 'block';
                 if (titleInput && (!titleInput.value || titleInput.value === 'Licensed Agent' || titleInput.value === 'Policyholder')) {
                     titleInput.value = 'Administrator';
                 }
             } else {
                 if (wrap) wrap.style.display = 'none';
+                if (pagesWrap) pagesWrap.style.display = 'none';
                 if (titleInput) {
                     titleInput.value = role === 'agent' ? 'Licensed Agent' : 'Policyholder';
                 }
             }
         }
+
+        window.toggleAllAdminPageChecks = function(scope, check) {
+            const cls = scope === 'edit' ? '.edit-page-check' : '.create-page-check';
+            document.querySelectorAll(cls).forEach(cb => cb.checked = Boolean(check));
+        };
+
+        window.applyAdminPagePreset = function(scope, preset) {
+            const cls = scope === 'edit' ? '.edit-page-check' : '.create-page-check';
+            const cbs = document.querySelectorAll(cls);
+            const presets = {
+                operations: ['overview', 'quotes', 'policies', 'claims', 'support-tickets'],
+                billing: ['overview', 'invoices', 'payments-api', 'claims-api'],
+                marketing: ['overview', 'seo', 'marketing', 'cms', 'contact-info', 'brand-settings']
+            };
+            const targetKeys = presets[preset] || [];
+            cbs.forEach(cb => {
+                cb.checked = targetKeys.includes(cb.value);
+            });
+        };
 
         function openEditUserModal(user) {
             const form = document.getElementById('formEditUser');
@@ -11073,13 +11277,29 @@
                 superCheck.checked = Boolean(user.is_super_admin);
             }
 
+            const pageChecks = document.querySelectorAll('.edit-page-check');
+            const isSuper = Boolean(user.is_super_admin);
+            const allowed = Array.isArray(user.allowed_pages) ? user.allowed_pages : null;
+
+            pageChecks.forEach(cb => {
+                if (isSuper || allowed === null || allowed.includes('*')) {
+                    cb.checked = true;
+                } else {
+                    cb.checked = allowed.includes(cb.value);
+                }
+            });
+
             openModal('modalEditUser');
         }
 
         function toggleEditSuperAdminCheckbox(role) {
             const wrap = document.getElementById('editSuperAdminToggleWrap');
+            const pagesWrap = document.getElementById('editAdminPagesSection');
             if (wrap) {
                 wrap.style.display = (role === 'admin') ? 'block' : 'none';
+            }
+            if (pagesWrap) {
+                pagesWrap.style.display = (role === 'admin') ? 'block' : 'none';
             }
         }
 

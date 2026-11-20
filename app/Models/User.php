@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'role', 'is_super_admin', 'title', 'phone', 'address', 'city', 'state', 'zip_code', 'paperless_billing', 'notification_preferences'])]
+#[Fillable(['name', 'email', 'password', 'role', 'is_super_admin', 'allowed_pages', 'title', 'phone', 'address', 'city', 'state', 'zip_code', 'paperless_billing', 'notification_preferences'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -28,6 +28,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_super_admin' => 'boolean',
+            'allowed_pages' => 'array',
             'paperless_billing' => 'boolean',
             'notification_preferences' => 'array',
         ];
@@ -53,11 +54,100 @@ class User extends Authenticatable
     }
 
     /**
+     * Determine if the user has permission to access a specific admin page or module.
+     */
+    public function hasPageAccess(string $page): bool
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        if (! $this->isAdmin()) {
+            return false;
+        }
+
+        // If allowed_pages is null, grant full access by default
+        if ($this->allowed_pages === null) {
+            return true;
+        }
+
+        $allowed = (array) $this->allowed_pages;
+
+        // Wildcard access
+        if (in_array('*', $allowed, true)) {
+            return true;
+        }
+
+        // Direct tab or route match
+        if (in_array($page, $allowed, true)) {
+            return true;
+        }
+
+        // Group matching: CMS group covers all insurance and content editor tabs
+        if ((str_ends_with($page, '-cms') || in_array($page, ['brand-settings', 'contact-info'])) && in_array('cms', $allowed, true)) {
+            return true;
+        }
+
+        // Group matching: Marketing covers marketing subtabs and pixels
+        if (str_starts_with($page, 'marketing') && in_array('marketing', $allowed, true)) {
+            return true;
+        }
+
+        // Overview is always accessible if user has access to at least one module
+        if ($page === 'overview' && ! empty($allowed)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Master registry of all configurable administration pages and modules.
+     */
+    public static function getManageablePages(): array
+    {
+        return [
+            'Core Operations' => [
+                'overview' => 'Executive Overview Dashboard',
+                'quotes' => 'Quote Requests & Proposals',
+                'policies' => 'Active Policies Management',
+                'claims' => 'Claims Center',
+                'support-tickets' => 'Policyholder Support & Concierge',
+            ],
+            'Billing & Gateways' => [
+                'invoices' => 'Invoices & Billing',
+                'payments-api' => 'USA Payment Gateways',
+                'claims-api' => 'Claims API Gateway',
+            ],
+            'Administration & Staff' => [
+                'users' => 'Users & Staff Directory',
+                'agents' => 'Licensed Agents & Brokers',
+                'settings' => 'Agency Settings & Maintenance',
+                'contact-info' => 'Website Hotlines & Contact Info',
+                'brand-settings' => 'Brand Guidelines & Typography',
+            ],
+            'Marketing, SEO & CMS' => [
+                'seo' => 'SEO & AI Search Hub',
+                'marketing' => 'Marketing Pixels & Campaigns',
+                'cms' => 'Website Content (All 20+ Insurance CMS Editors)',
+            ],
+        ];
+    }
+
+    /**
      * Check if user has specific SEO capability.
      */
     public function hasSeoPermission(string $permission): bool
     {
-        if ($this->isSuperAdmin() || $this->role === 'admin') {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        if (! $this->hasPageAccess('seo')) {
+            return false;
+        }
+
+        if ($this->role === 'admin') {
             return true;
         }
 

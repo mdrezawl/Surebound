@@ -51,6 +51,11 @@ class SeoAdminController extends Controller
      */
     public function index(Request $request): View
     {
+        $currentUser = auth()->user();
+        if ($currentUser && ! $currentUser->hasPageAccess('seo')) {
+            abort(403, 'Access Denied: Your administrator account is not authorized to access the SEO & AI Search Suite.');
+        }
+
         // Ensure default metadata rows are initialized
         $this->seoService->ensureDefaultMetadata();
 

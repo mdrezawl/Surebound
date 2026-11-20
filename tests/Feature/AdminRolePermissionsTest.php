@@ -334,4 +334,115 @@ class AdminRolePermissionsTest extends TestCase
         $response->assertRedirect(route('admin.dashboard'));
         $response->assertSessionHas('success');
     }
+
+    public function test_super_admin_can_create_admin_with_specific_allowed_pages(): void
+    {
+        $superAdmin = $this->createSuperAdmin();
+
+        $response = $this->actingAs($superAdmin)->post('/admin/users', [
+            'name' => 'Restricted Admin',
+            'email' => 'restricted.admin@surebound.com',
+            'password' => 'secretPassword123',
+            'role' => 'admin',
+            'title' => 'Underwriting Associate',
+            'is_super_admin' => 0,
+            'allowed_pages' => ['quotes', 'policies'],
+        ]);
+
+        $response->assertSessionHas('success');
+
+        $created = User::where('email', 'restricted.admin@surebound.com')->first();
+        $this->assertNotNull($created);
+        $this->assertEquals(['quotes', 'policies'], $created->allowed_pages);
+        $this->assertTrue($created->hasPageAccess('quotes'));
+        $this->assertTrue($created->hasPageAccess('policies'));
+        $this->assertTrue($created->hasPageAccess('overview'));
+        $this->assertFalse($created->hasPageAccess('users'));
+        $this->assertFalse($created->hasPageAccess('invoices'));
+        $this->assertFalse($created->hasPageAccess('seo'));
+        $this->assertFalse($created->hasPageAccess('cms'));
+    }
+
+    public function test_has_page_access_handles_cms_and_marketing_groups(): void
+    {
+        $cmsAdmin = User::factory()->create([
+            'role' => 'admin',
+            'is_super_admin' => false,
+            'allowed_pages' => ['cms'],
+        ]);
+
+        $this->assertTrue($cmsAdmin->hasPageAccess('home-cms'));
+        $this->assertTrue($cmsAdmin->hasPageAccess('auto-cms'));
+        $this->assertTrue($cmsAdmin->hasPageAccess('brand-settings'));
+        $this->assertTrue($cmsAdmin->hasPageAccess('contact-info'));
+        $this->assertFalse($cmsAdmin->hasPageAccess('invoices'));
+        $this->assertFalse($cmsAdmin->hasPageAccess('users'));
+
+        $mktAdmin = User::factory()->create([
+            'role' => 'admin',
+            'is_super_admin' => false,
+            'allowed_pages' => ['marketing'],
+        ]);
+
+        $this->assertTrue($mktAdmin->hasPageAccess('marketing'));
+        $this->assertTrue($mktAdmin->hasPageAccess('marketing-google'));
+        $this->assertFalse($mktAdmin->hasPageAccess('quotes'));
+    }
+
+    public function test_admin_without_seo_permission_is_forbidden_from_seo_hub(): void
+    {
+        $adminWithoutSeo = User::factory()->create([
+            'role' => 'admin',
+            'is_super_admin' => false,
+            'allowed_pages' => ['quotes', 'policies'],
+        ]);
+
+        $response = $this->actingAs($adminWithoutSeo)->get('/admin/seo');
+        $response->assertStatus(403);
+    }
+
+    public function test_admin_with_seo_permission_can_access_seo_hub(): void
+    {
+        $adminWithSeo = User::factory()->create([
+            'role' => 'admin',
+            'is_super_admin' => false,
+            'allowed_pages' => ['seo', 'quotes'],
+        ]);
+
+        $response = $this->actingAs($adminWithSeo)->get('/admin/seo');
+        $response->assertStatus(200);
+    }
+
+    public function test_super_admin_always_has_all_page_access(): void
+    {
+        $superAdmin = $this->createSuperAdmin([
+            'allowed_pages' => [], // Even if empty array set accidentally
+        ]);
+
+        $this->assertTrue($superAdmin->hasPageAccess('quotes'));
+        $this->assertTrue($superAdmin->hasPageAccess('users'));
+        $this->assertTrue($superAdmin->hasPageAccess('seo'));
+        $this->assertTrue($superAdmin->hasPageAccess('invoices'));
+        $this->assertTrue($superAdmin->hasPageAccess('home-cms'));
+        $this->assertTrue($superAdmin->hasPageAccess('any-arbitrary-page'));
+    }
+
+    public function test_super_admin_can_update_admin_allowed_pages(): void
+    {
+        $superAdmin = $this->createSuperAdmin();
+        $targetAdmin = $this->createStandardAdmin([
+            'allowed_pages' => ['quotes'],
+        ]);
+
+        $response = $this->actingAs($superAdmin)->put('/admin/users/'.$targetAdmin->id, [
+            'name' => $targetAdmin->name,
+            'email' => $targetAdmin->email,
+            'role' => 'admin',
+            'title' => $targetAdmin->title,
+            'allowed_pages' => ['quotes', 'invoices', 'claims'],
+        ]);
+
+        $response->assertSessionHas('success');
+        $this->assertEquals(['quotes', 'invoices', 'claims'], $targetAdmin->fresh()->allowed_pages);
+    }
 }
