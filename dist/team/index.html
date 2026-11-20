@@ -107,7 +107,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="/css/surebound.css?v=1794724502">
+    <link rel="stylesheet" href="/css/surebound.css?v=1795181022">
     <link rel="stylesheet" href="/css/surebound-modal.css?v=1792908857">
     <!-- AI Search & LLM Discovery Manifest (https://llmstxt.org) -->
     <link rel="llms-txt" type="text/markdown" href="/llms.txt" title="LLM Machine-Readable Manifest">
@@ -849,6 +849,10 @@
                     <label for="quote-zip">ZIP / Postal Code</label>
                     <input type="text" id="quote-zip" placeholder="e.g. 33602" required>
                 </div>
+                <div class="modal-form-group">
+                    <label for="quote-message">Message / Additional Details (Optional)</label>
+                    <textarea id="quote-message" rows="3" placeholder="Tell us about what you want covered, specific questions, or best time to reach you..."></textarea>
+                </div>
                 <button type="submit" class="btn-submit-modal" id="submitQuoteBtn">
                     Send Quote Request &rarr;
                 </button>
@@ -1218,6 +1222,7 @@
             const email = document.getElementById('quote-email')?.value || '';
             const phone = document.getElementById('quote-phone')?.value || '';
             const zip = document.getElementById('quote-zip')?.value || '';
+            const message = document.getElementById('quote-message')?.value?.trim() || '';
             const typeSelect = document.getElementById('coverage-type');
             const amountSelect = document.getElementById('quote-amount');
             const customAmountInput = document.getElementById('quote-custom-amount');
@@ -1290,6 +1295,8 @@
                     coverage_amount: coverageAmount,
                     amount: coverageAmount,
                     coverage_tier: coverageAmount,
+                    message,
+                    notes: message,
                     source_page: sourcePage
                 })
             })

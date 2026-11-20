@@ -392,6 +392,10 @@
                     <label for="quote-zip">ZIP / Postal Code</label>
                     <input type="text" id="quote-zip" placeholder="e.g. 33602" required>
                 </div>
+                <div class="modal-form-group">
+                    <label for="quote-message">Message / Additional Details (Optional)</label>
+                    <textarea id="quote-message" rows="3" placeholder="Tell us about what you want covered, specific questions, or best time to reach you..."></textarea>
+                </div>
                 <button type="submit" class="btn-submit-modal" id="submitQuoteBtn">
                     Send Quote Request &rarr;
                 </button>
@@ -761,6 +765,7 @@
             const email = document.getElementById('quote-email')?.value || '';
             const phone = document.getElementById('quote-phone')?.value || '';
             const zip = document.getElementById('quote-zip')?.value || '';
+            const message = document.getElementById('quote-message')?.value?.trim() || '';
             const typeSelect = document.getElementById('coverage-type');
             const amountSelect = document.getElementById('quote-amount');
             const customAmountInput = document.getElementById('quote-custom-amount');
@@ -833,6 +838,8 @@
                     coverage_amount: coverageAmount,
                     amount: coverageAmount,
                     coverage_tier: coverageAmount,
+                    message,
+                    notes: message,
                     source_page: sourcePage
                 })
             })

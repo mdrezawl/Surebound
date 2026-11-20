@@ -373,6 +373,10 @@ class LaunchChecklistVerificationTest extends TestCase
             'status' => 'new',
         ]);
 
+        $savedQuote = Quote::where('email', 'mscott@dundermifflin.com')->first();
+        $this->assertNotNull($savedQuote);
+        $this->assertStringContainsString('Looking for general liability and commercial property coverage.', $savedQuote->notes);
+
         // 2. Email is dispatched simultaneously to both karry@ and info@sureboundinsurance.com
         Mail::assertSent(NewQuoteAlert::class, function ($mail) {
             return $mail->hasTo('karry@sureboundinsurance.com')

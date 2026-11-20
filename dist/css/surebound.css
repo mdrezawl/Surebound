@@ -1706,7 +1706,8 @@ button {
 }
 
 .modal-form-group input,
-.modal-form-group select {
+.modal-form-group select,
+.modal-form-group textarea {
   width: 100%;
   padding: 11px 14px;
   border: 1.5px solid var(--color-card-border);
@@ -1715,10 +1716,17 @@ button {
   font-family: inherit;
   color: var(--color-text-dark);
   transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.modal-form-group textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
 .modal-form-group input:focus,
-.modal-form-group select:focus {
+.modal-form-group select:focus,
+.modal-form-group textarea:focus {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(18, 85, 219, 0.12);
@@ -2573,7 +2581,8 @@ button {
   }
 
   .modal-form-group input,
-  .modal-form-group select {
+  .modal-form-group select,
+  .modal-form-group textarea {
     padding: 10px 14px;
     font-size: 15px;
   }

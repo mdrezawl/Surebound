@@ -473,6 +473,11 @@ class AdminController extends Controller
         if ($request->filled('bond_amount')) {
             $notesList[] = 'Bond Limit: '.$request->input('bond_amount');
         }
+        if ($request->filled('message')) {
+            $notesList[] = 'Message / Details: '.$request->input('message');
+        } elseif ($request->filled('notes')) {
+            $notesList[] = 'Message / Details: '.$request->input('notes');
+        }
         $notesStr = ! empty($notesList)
             ? implode(' | ', $notesList)
             : 'Generated via website quote widget.';
