@@ -156,7 +156,7 @@
                     <tr>
                         <td style="background-color: #f8fafc; padding: 22px 30px; text-align: center; border-top: 1px solid #e2e8f0;">
                             <p style="margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.5;">
-                                This automated notification was generated for <strong>karry@sureboundinsurance.com</strong> because a new quote inquiry was submitted on Surebound Insurance.
+                                This automated lead notification was dispatched to <strong>karry@sureboundinsurance.com</strong> &amp; <strong>info@sureboundinsurance.com</strong> because a new quote inquiry was submitted on Surebound Insurance.
                             </p>
                             <p style="margin: 6px 0 0 0; font-size: 11px; color: #cbd5e1;">
                                 &copy; {{ date('Y') }} Surebound Insurance Services. All rights reserved.

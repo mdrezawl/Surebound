@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\AdminController;
 use App\Mail\NewQuoteAlert;
 use App\Models\Quote;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -54,7 +55,8 @@ class LaunchChecklistVerificationTest extends TestCase
         ]);
 
         Mail::assertSent(NewQuoteAlert::class, function ($mail) {
-            return $mail->hasTo('karry@sureboundinsurance.com');
+            return $mail->hasTo('karry@sureboundinsurance.com')
+                && $mail->hasTo('info@sureboundinsurance.com');
         });
     }
 
@@ -100,6 +102,11 @@ class LaunchChecklistVerificationTest extends TestCase
             'email' => 'jane.smith@example.com',
             'type' => 'umbrella',
         ]);
+
+        Mail::assertSent(NewQuoteAlert::class, function ($mail) {
+            return $mail->hasTo('karry@sureboundinsurance.com')
+                && $mail->hasTo('info@sureboundinsurance.com');
+        });
     }
 
     /**
@@ -330,5 +337,51 @@ class LaunchChecklistVerificationTest extends TestCase
         $this->assertStringNotContainsString('Private Aviation', $distCareersHtml);
         $this->assertStringContainsString('View Open Roles', $distCareersHtml);
         $this->assertStringContainsString('careers@sureboundinsurance.com', $distCareersHtml);
+    }
+
+    /**
+     * Test all forms persist data in database and notify both karry@ and info@sureboundinsurance.com simultaneously.
+     */
+    public function test_form_submission_keeps_data_in_database_and_dispatches_email_to_both_recipients(): void
+    {
+        Mail::fake();
+
+        $payload = [
+            'type' => 'business',
+            'name' => 'Michael Scott',
+            'email' => 'mscott@dundermifflin.com',
+            'phone' => '(813) 555-4321',
+            'zip' => '33602',
+            'preferred_contact' => 'phone',
+            'notes' => 'Looking for general liability and commercial property coverage.',
+            'consent' => '1',
+        ];
+
+        $response = $this->postJson(route('quotes.store'), $payload);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+            ]);
+
+        // 1. Data is preserved in database
+        $this->assertDatabaseHas('quotes', [
+            'name' => 'Michael Scott',
+            'email' => 'mscott@dundermifflin.com',
+            'phone' => '(813) 555-4321',
+            'type' => 'business',
+            'status' => 'new',
+        ]);
+
+        // 2. Email is dispatched simultaneously to both karry@ and info@sureboundinsurance.com
+        Mail::assertSent(NewQuoteAlert::class, function ($mail) {
+            return $mail->hasTo('karry@sureboundinsurance.com')
+                && $mail->hasTo('info@sureboundinsurance.com');
+        });
+
+        // 3. Verify getLeadNotificationRecipients helper includes both recipients
+        $recipients = AdminController::getLeadNotificationRecipients();
+        $this->assertContains('karry@sureboundinsurance.com', $recipients);
+        $this->assertContains('info@sureboundinsurance.com', $recipients);
     }
 }

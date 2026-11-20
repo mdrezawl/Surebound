@@ -274,9 +274,9 @@ class UserController extends Controller
         ]);
 
         try {
-            $adminRecipient = config('mail.admin_quote_recipient', 'karry@sureboundinsurance.com');
-            if (! empty($adminRecipient)) {
-                Mail::to($adminRecipient)->send(new NewQuoteAlert($quote));
+            $recipients = AdminController::getLeadNotificationRecipients();
+            if (! empty($recipients)) {
+                Mail::to($recipients)->send(new NewQuoteAlert($quote));
             }
         } catch (\Throwable $e) {
             Log::error('Quote notification email dispatch failed: '.$e->getMessage());

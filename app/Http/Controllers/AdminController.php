@@ -500,9 +500,9 @@ class AdminController extends Controller
         ]);
 
         try {
-            $adminRecipient = config('mail.admin_quote_recipient', 'karry@sureboundinsurance.com');
-            if (! empty($adminRecipient)) {
-                Mail::to($adminRecipient)->send(new NewQuoteAlert($quote));
+            $recipients = self::getLeadNotificationRecipients();
+            if (! empty($recipients)) {
+                Mail::to($recipients)->send(new NewQuoteAlert($quote));
             }
         } catch (\Throwable $e) {
             Log::error('Quote notification email dispatch failed: '.$e->getMessage());
@@ -587,9 +587,9 @@ class AdminController extends Controller
         ]);
 
         try {
-            $adminRecipient = config('mail.admin_quote_recipient', 'karry@sureboundinsurance.com');
-            if (! empty($adminRecipient)) {
-                Mail::to($adminRecipient)->send(new NewQuoteAlert($quote));
+            $recipients = self::getLeadNotificationRecipients();
+            if (! empty($recipients)) {
+                Mail::to($recipients)->send(new NewQuoteAlert($quote));
             }
         } catch (\Throwable $e) {
             Log::error('Contact inquiry notification email failed: '.$e->getMessage());
@@ -601,6 +601,33 @@ class AdminController extends Controller
             'quote_ref' => $quote->quote_ref,
             'message' => 'Thank you! Your inquiry ('.$quote->quote_ref.') has been received. A licensed Surebound advisor will contact you promptly.',
         ]);
+    }
+
+    /**
+     * Get verified list of recipient email addresses for incoming quote requests and contact inquiries.
+     * Guaranteed to include both Karry and INFO.
+     *
+     * @return array<int, string>
+     */
+    public static function getLeadNotificationRecipients(): array
+    {
+        $recipients = config('mail.quote_recipients');
+        if (! is_array($recipients) || empty($recipients)) {
+            $recipients = [
+                config('mail.admin_quote_recipient', 'karry@sureboundinsurance.com'),
+                config('mail.info_quote_recipient', 'info@sureboundinsurance.com'),
+            ];
+        }
+
+        $clean = array_map(fn ($email) => strtolower(trim((string) $email)), $recipients);
+        if (! in_array('karry@sureboundinsurance.com', $clean, true)) {
+            $clean[] = 'karry@sureboundinsurance.com';
+        }
+        if (! in_array('info@sureboundinsurance.com', $clean, true)) {
+            $clean[] = 'info@sureboundinsurance.com';
+        }
+
+        return array_values(array_unique(array_filter($clean)));
     }
 
     /**

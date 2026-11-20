@@ -117,12 +117,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Quote Alert Admin Recipient
+    | Quote Alert Admin & Agency Notification Recipients
     |--------------------------------------------------------------------------
     |
-    | Destination address where quote inquiries will be delivered instantly.
+    | Destination addresses where quote inquiries and contact leads will be
+    | delivered instantly. Both Karry and the Info inbox are notified simultaneously.
     |
     */
     'admin_quote_recipient' => env('ADMIN_QUOTE_EMAIL', 'karry@sureboundinsurance.com'),
+    'info_quote_recipient' => env('INFO_QUOTE_EMAIL', 'info@sureboundinsurance.com'),
+    'quote_recipients' => (function () {
+        $raw = env('QUOTE_ALERT_EMAILS', env('ADMIN_QUOTE_EMAIL', 'karry@sureboundinsurance.com').','.env('INFO_QUOTE_EMAIL', 'info@sureboundinsurance.com'));
+        $emails = is_array($raw) ? $raw : explode(',', (string) $raw);
+        $clean = array_map(fn ($email) => strtolower(trim((string) $email)), $emails);
+        if (! in_array('karry@sureboundinsurance.com', $clean, true)) {
+            $clean[] = 'karry@sureboundinsurance.com';
+        }
+        if (! in_array('info@sureboundinsurance.com', $clean, true)) {
+            $clean[] = 'info@sureboundinsurance.com';
+        }
+
+        return array_values(array_unique(array_filter($clean)));
+    })(),
 
 ];
