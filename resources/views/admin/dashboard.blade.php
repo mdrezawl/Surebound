@@ -2191,6 +2191,12 @@
                                             <input type="text" name="live_chat_status" class="form-input" value="{{ $siteContact['live_chat_status'] ?? 'Client Support Center: Online & Open Now' }}" placeholder="e.g. Client Support Center: Online & Open Now">
                                             <small style="color: var(--text-muted); display: block; margin-top: 4px;">Live indicator text shown atop the Contact page channels.</small>
                                         </div>
+
+                                        <div class="form-group full">
+                                            <label class="form-label" style="font-weight: 700; color: #1877f2;">Official Facebook Page / Profile URL</label>
+                                            <input type="url" name="facebook_url" class="form-input" value="{{ $siteContact['facebook_url'] ?? 'https://www.facebook.com/share/1FMYaUktDN/' }}" placeholder="https://www.facebook.com/share/1FMYaUktDN/">
+                                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Displayed as the Facebook icon link in the website footer.</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

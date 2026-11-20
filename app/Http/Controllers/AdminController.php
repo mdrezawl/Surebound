@@ -3142,6 +3142,7 @@ class AdminController extends Controller
             'claims_email' => 'support@sureboundinsurance.com',
             'whatsapp_phone' => '+1 813-214-1731',
             'live_chat_status' => 'Available Mon–Fri 8:30 AM – 5:30 PM EST',
+            'facebook_url' => 'https://www.facebook.com/share/1FMYaUktDN/',
 
             // 2. Departmental Lines & Hotlines
             'claims_phone' => '+1 813-214-1731',
@@ -3276,6 +3277,7 @@ class AdminController extends Controller
             'claims_email' => 'nullable|email|max:100',
             'whatsapp_phone' => 'nullable|string|max:50',
             'live_chat_status' => 'nullable|string|max:150',
+            'facebook_url' => 'nullable|url|max:255',
 
             // Departmental Hotlines
             'claims_phone' => 'required|string|max:50',

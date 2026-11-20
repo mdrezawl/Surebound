@@ -178,4 +178,13 @@ class ContactInfoManagementTest extends TestCase
         // Regular user should be forbidden (403 or redirect)
         $this->assertTrue(in_array($response->status(), [403, 302]));
     }
+
+    public function test_footer_renders_facebook_link(): void
+    {
+        $response = $this->get(route('home'));
+
+        $response->assertStatus(200);
+        $response->assertSee('https://www.facebook.com/share/1FMYaUktDN/', false);
+        $response->assertSee('footer-social-btn', false);
+    }
 }
