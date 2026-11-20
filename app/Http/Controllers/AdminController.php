@@ -4154,24 +4154,22 @@ class AdminController extends Controller
     }
 
     /**
-     * Create a new User or Administrator (Super Admin privilege required for Admin role)
+     * Create a new User or Administrator (Administrator privilege required)
      */
     public function storeUser(Request $request)
     {
         $currentUser = auth()->user();
 
-        // Enforce Super Admin requirement for creating Administrator accounts
-        if ($request->role === 'admin' || $request->boolean('is_super_admin')) {
-            if (! $currentUser || ! $currentUser->isSuperAdmin()) {
-                if ($request->wantsJson()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Access Denied: Only Super Administrators can create new Administrator accounts.',
-                    ], 403);
-                }
-
-                return redirect()->to(route('admin.dashboard').'#users')->with('error', 'Access Denied: Only Super Administrators can create new Administrator accounts.');
+        // Enforce Admin requirement for creating accounts
+        if (! $currentUser || ! $currentUser->isAdmin()) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Access Denied: Only Administrators can create new accounts.',
+                ], 403);
             }
+
+            return redirect()->to(route('admin.dashboard').'#users')->with('error', 'Access Denied: Only Administrators can create new accounts.');
         }
 
         $validated = $request->validate([
@@ -4923,5 +4921,31 @@ class AdminController extends Controller
                 'message' => 'Migration failed: '.$e->getMessage(),
             ], 500);
         }
+    }
+
+    /**
+     * Clear and purge demo records (invoices, payments, demo policies, demo quotes, demo users)
+     */
+    public function clearDemoData(Request $request)
+    {
+        $currentUser = auth()->user();
+        if (! $currentUser || ! $currentUser->isAdmin()) {
+            if ($request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Unauthorized.'], 403);
+            }
+
+            return redirect()->to(route('admin.dashboard'))->with('error', 'Unauthorized.');
+        }
+
+        Artisan::call('app:clear-demo-data', ['--force' => true]);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Demo data (invoices, payments, demo policies, demo quotes, dummy users) successfully removed.',
+            ]);
+        }
+
+        return redirect()->to(route('admin.dashboard'))->with('success', 'Demo data (invoices, payments, demo policies, demo quotes, dummy users) successfully removed. Admin panel is in clean production state.');
     }
 }

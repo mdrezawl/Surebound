@@ -92,8 +92,5 @@ class DatabaseSeeder extends Seeder
         foreach ($defaultApiSettings as $key => $val) {
             ApiSetting::updateOrCreate(['key' => $key], ['value' => $val]);
         }
-
-        // 3. Seed Realistic Insurance Policies
-        $this->call(PolicySeeder::class);
     }
 }

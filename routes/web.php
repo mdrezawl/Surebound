@@ -194,6 +194,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Live Database Auto-Migration & System Cache Refresh (Admin Control)
     Route::get('/admin/system/migrate', [AdminController::class, 'runLiveMigrations'])->name('admin.system.migrate');
+    Route::post('/admin/system/clear-demo-data', [AdminController::class, 'clearDemoData'])->name('admin.system.clear-demo-data');
+    Route::get('/admin/system/clear-demo-data', [AdminController::class, 'clearDemoData'])->name('admin.system.clear-demo-data.get');
 
     // ==========================================
     // ADVANCED SEO & AI SEARCH ADMIN SUITE

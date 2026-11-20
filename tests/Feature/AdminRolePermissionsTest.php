@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
@@ -57,21 +58,24 @@ class AdminRolePermissionsTest extends TestCase
         ]);
     }
 
-    public function test_standard_admin_cannot_create_admin_account(): void
+    public function test_standard_admin_can_create_admin_account_without_super_privilege(): void
     {
         $admin = $this->createStandardAdmin();
 
         $response = $this->actingAs($admin)->post('/admin/users', [
-            'name' => 'Hacker Admin',
-            'email' => 'hacker@surebound.com',
+            'name' => 'Colleague Admin',
+            'email' => 'colleague@surebound.com',
             'password' => 'secretPassword123',
             'role' => 'admin',
-            'title' => 'Admin Attempt',
+            'title' => 'Underwriter Admin',
+            'is_super_admin' => 1, // Standard admin attempts to grant super admin
         ]);
 
-        $response->assertSessionHas('error');
-        $this->assertDatabaseMissing('users', [
-            'email' => 'hacker@surebound.com',
+        $response->assertSessionHas('success');
+        $this->assertDatabaseHas('users', [
+            'email' => 'colleague@surebound.com',
+            'role' => 'admin',
+            'is_super_admin' => false, // System ensures only super admins can grant super admin
         ]);
     }
 
@@ -152,18 +156,20 @@ class AdminRolePermissionsTest extends TestCase
         ]);
     }
 
-    public function test_super_admin_sees_create_admin_button_while_standard_admin_does_not(): void
+    public function test_all_admins_see_create_admin_button(): void
     {
         $superAdmin = $this->createSuperAdmin();
         $standardAdmin = $this->createStandardAdmin();
 
         $responseSuper = $this->actingAs($superAdmin)->get('/admin');
         $responseSuper->assertStatus(200);
+        $responseSuper->assertSee('+ Add Admin');
         $responseSuper->assertSee('Create New Admin');
 
         $responseStandard = $this->actingAs($standardAdmin)->get('/admin');
         $responseStandard->assertStatus(200);
-        $responseStandard->assertDontSee('Create New Admin');
+        $responseStandard->assertSee('+ Add Admin');
+        $responseStandard->assertSee('Create New Admin');
     }
 
     public function test_user_can_be_edited_with_new_password_email_and_phone(): void
@@ -288,5 +294,44 @@ class AdminRolePermissionsTest extends TestCase
         $response->assertSee('earlyTabStyle');
         $response->assertSee('sb_admin_active_tab');
         $response->assertSee('js/admin.js');
+    }
+
+    public function test_clear_demo_data_command_purges_test_records_and_retains_super_admin(): void
+    {
+        $superAdmin = $this->createSuperAdmin();
+
+        Invoice::create([
+            'invoice_number' => 'INV-DEMO-999',
+            'customer_name' => 'Demo User',
+            'customer_email' => 'demo@example.com',
+            'total_amount' => 5000,
+            'status' => 'paid',
+            'issue_date' => now()->toDateString(),
+            'due_date' => now()->addDays(30)->toDateString(),
+        ]);
+
+        User::create([
+            'name' => 'Sarah Jenkins',
+            'email' => 'admin@surebound.com',
+            'password' => Hash::make('password123'),
+            'role' => 'admin',
+        ]);
+
+        $this->artisan('app:clear-demo-data', ['--force' => true])
+            ->assertSuccessful();
+
+        $this->assertEquals(0, Invoice::count());
+        $this->assertDatabaseMissing('users', ['email' => 'admin@surebound.com']);
+        $this->assertDatabaseHas('users', ['email' => 'help.rezawl71@gmail.com']);
+    }
+
+    public function test_admin_can_trigger_clear_demo_data_endpoint(): void
+    {
+        $admin = $this->createStandardAdmin();
+
+        $response = $this->actingAs($admin)->post('/admin/system/clear-demo-data');
+
+        $response->assertRedirect(route('admin.dashboard'));
+        $response->assertSessionHas('success');
     }
 }
