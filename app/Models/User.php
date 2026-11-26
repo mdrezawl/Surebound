@@ -84,7 +84,7 @@ class User extends Authenticatable
         }
 
         // Group matching: CMS group covers all insurance and content editor tabs
-        if ((str_ends_with($page, '-cms') || in_array($page, ['brand-settings', 'contact-info'])) && in_array('cms', $allowed, true)) {
+        if ((str_ends_with($page, '-cms') || in_array($page, ['brand-settings', 'contact-info', 'files-photos'])) && in_array('cms', $allowed, true)) {
             return true;
         }
 
@@ -122,6 +122,7 @@ class User extends Authenticatable
             'Administration & Staff' => [
                 'users' => 'Users & Staff Directory',
                 'agents' => 'Licensed Agents & Brokers',
+                'files-photos' => 'Files & Photos Manager',
                 'settings' => 'Agency Settings & Maintenance',
                 'contact-info' => 'Website Hotlines & Contact Info',
                 'brand-settings' => 'Brand Guidelines & Typography',

@@ -205,6 +205,16 @@
                     <span class="nav-badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8;">HOTLINES</span>
                 </a>
                 @endif
+
+                @if(auth()->user()->hasPageAccess('files-photos'))
+                <a class="sidebar-link" data-tab="files-photos">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+                    </svg>
+                    <span>Files &amp; Photos</span>
+                    <span class="nav-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc;">{{ $mediaData['total_count'] ?? 0 }}</span>
+                </a>
+                @endif
                 @endif
 
                 @if(auth()->check() && (auth()->user()->hasPageAccess('invoices') || auth()->user()->hasPageAccess('claims-api') || auth()->user()->hasPageAccess('payments-api')))
@@ -2434,6 +2444,256 @@
 
                         </div>
                     </form>
+                </div>
+                @endif
+
+                <!-- ========================================================
+                     TAB: FILES & PHOTOS (MEDIA LIBRARY)
+                     ======================================================== -->
+                @if(auth()->check() && auth()->user()->hasPageAccess('files-photos'))
+                <div class="tab-pane" id="tab-files-photos">
+                    <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                        <div class="view-title-group">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                                <h1 style="margin: 0; font-size: 1.625rem; font-weight: 800; color: var(--text-primary);">Files &amp; Photos Manager</h1>
+                                <span class="nav-badge" style="background: rgba(168, 85, 247, 0.18); color: #9333ea; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; border-radius: 9999px;">
+                                    <span id="mediaTotalCountBadge">{{ $mediaData['total_count'] ?? 0 }}</span> TOTAL ASSETS
+                                </span>
+                            </div>
+                            <p style="margin: 0; color: var(--text-muted); font-size: 0.9375rem;">
+                                Manage, browse, upload and delete all website photos, logos, banner images, and documents. Use direct URLs in email signatures, web pages, or client policies.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <button type="button" class="btn-primary-action" onclick="triggerMediaUploadPicker()" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-weight: 700; background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                                <span>Upload Photos &amp; Files</span>
+                            </button>
+                            <button type="button" class="btn-secondary" onclick="refreshMediaLibrary()" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; font-weight: 600;">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+                                <span>Refresh</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Cards Summary -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                        <div class="card" style="padding: 16px 20px; border-left: 4px solid #7c3aed; display: flex; align-items: center; gap: 14px;">
+                            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(124, 58, 237, 0.12); color: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                                📁
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Total Files</div>
+                                <div id="mediaStatTotalCount" style="font-size: 1.375rem; font-weight: 800; color: var(--text-primary);">{{ $mediaData['total_count'] ?? 0 }}</div>
+                            </div>
+                        </div>
+                        <div class="card" style="padding: 16px 20px; border-left: 4px solid #3b82f6; display: flex; align-items: center; gap: 14px;">
+                            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(59, 130, 246, 0.12); color: #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                                🖼️
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Photos &amp; Images</div>
+                                <div id="mediaStatImageCount" style="font-size: 1.375rem; font-weight: 800; color: var(--text-primary);">{{ $mediaData['image_count'] ?? 0 }}</div>
+                            </div>
+                        </div>
+                        <div class="card" style="padding: 16px 20px; border-left: 4px solid #10b981; display: flex; align-items: center; gap: 14px;">
+                            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(16, 185, 129, 0.12); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                                📄
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Documents &amp; Files</div>
+                                <div id="mediaStatDocCount" style="font-size: 1.375rem; font-weight: 800; color: var(--text-primary);">{{ $mediaData['doc_count'] ?? 0 }}</div>
+                            </div>
+                        </div>
+                        <div class="card" style="padding: 16px 20px; border-left: 4px solid #f59e0b; display: flex; align-items: center; gap: 14px;">
+                            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(245, 158, 11, 0.12); color: #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                                💾
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8125rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Storage Used</div>
+                                <div id="mediaStatTotalSize" style="font-size: 1.375rem; font-weight: 800; color: var(--text-primary);">{{ $mediaData['total_size'] ?? '0 B' }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Drag & Drop Upload Zone -->
+                    <div class="card" id="mediaDropzoneCard" style="margin-bottom: 24px; border: 2px dashed #cbd5e1; background: #fafafa; transition: all 0.2s ease; position: relative;">
+                        <input type="file" id="mediaLibraryFileInput" multiple accept="image/*,.pdf,.doc,.docx,.txt,.zip,.csv" style="display: none;" onchange="handleMediaFilesSelected(this.files)">
+                        <div id="mediaDropzoneInner" style="padding: 32px 20px; text-align: center; cursor: pointer;" onclick="triggerMediaUploadPicker()">
+                            <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(124, 58, 237, 0.1); color: #7c3aed; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                                <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">
+                                Drag and drop your photos, images or documents here, or <span style="color: #7c3aed; text-decoration: underline;">click to browse</span>
+                            </div>
+                            <div style="font-size: 0.8125rem; color: var(--text-muted); max-width: 520px; margin: 0 auto;">
+                                Supports JPG, PNG, WebP, SVG, GIF, PDF, DOCX, ZIP • Up to 25MB per file • Uploaded files are immediately accessible live.
+                            </div>
+                        </div>
+                        <div id="mediaUploadProgress" style="display: none; padding: 24px; text-align: center;">
+                            <div style="font-weight: 700; color: #7c3aed; font-size: 1rem; margin-bottom: 8px;">Uploading files to server...</div>
+                            <div style="width: 100%; max-width: 380px; height: 8px; background: #e2e8f0; border-radius: 4px; margin: 0 auto; overflow: hidden;">
+                                <div id="mediaUploadProgressBar" style="width: 50%; height: 100%; background: linear-gradient(90deg, #7c3aed, #6366f1); border-radius: 4px; transition: width 0.3s;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search, Filters, and View Toggles Bar -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; background: #ffffff; padding: 14px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                        <!-- Left: Search Box -->
+                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; max-width: 380px; min-width: 240px;">
+                            <div style="position: relative; width: 100%;">
+                                <input type="text" id="mediaSearchInput" class="form-input" placeholder="Search by photo name or format (e.g. rebecca, logo, pdf)..." oninput="filterMediaLibrary()" style="padding-left: 36px; font-size: 0.875rem;">
+                                <svg style="width: 16px; height: 16px; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Center: Type Filters -->
+                        <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                            <button type="button" class="filter-tab-btn active" id="btnFilterAll" onclick="setMediaTypeFilter('all')" style="padding: 6px 14px; font-size: 0.8125rem; font-weight: 600; border-radius: 6px;">
+                                All (<span id="countFilterAll">{{ $mediaData['total_count'] ?? 0 }}</span>)
+                            </button>
+                            <button type="button" class="filter-tab-btn" id="btnFilterImages" onclick="setMediaTypeFilter('image')" style="padding: 6px 14px; font-size: 0.8125rem; font-weight: 600; border-radius: 6px;">
+                                Photos &amp; Images (<span id="countFilterImages">{{ $mediaData['image_count'] ?? 0 }}</span>)
+                            </button>
+                            <button type="button" class="filter-tab-btn" id="btnFilterDocs" onclick="setMediaTypeFilter('document')" style="padding: 6px 14px; font-size: 0.8125rem; font-weight: 600; border-radius: 6px;">
+                                Documents (<span id="countFilterDocs">{{ $mediaData['doc_count'] ?? 0 }}</span>)
+                            </button>
+                        </div>
+
+                        <!-- Right: View Mode Toggle -->
+                        <div style="display: flex; gap: 4px; background: #f1f5f9; padding: 4px; border-radius: 6px;">
+                            <button type="button" id="btnMediaViewGrid" onclick="setMediaViewMode('grid')" class="filter-tab-btn active" style="padding: 4px 8px; border-radius: 4px; border: none;" title="Grid View">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z"/></svg>
+                            </button>
+                            <button type="button" id="btnMediaViewTable" onclick="setMediaViewMode('table')" class="filter-tab-btn" style="padding: 4px 8px; border-radius: 4px; border: none;" title="Table View">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Media Grid View -->
+                    <div id="mediaGridView" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px;">
+                        @forelse($mediaData['files'] ?? [] as $file)
+                        <div class="card media-item-card" data-filename="{{ strtolower($file['filename']) }}" data-type="{{ $file['is_image'] ? 'image' : 'document' }}" data-path="{{ $file['path'] }}" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; position: relative; border: 1px solid var(--border-light); background: #ffffff;">
+                            <!-- Thumbnail Area -->
+                            <div style="position: relative; width: 100%; height: 160px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="openMediaPreview('{{ $file['url'] }}', '{{ addslashes($file['filename']) }}', '{{ $file['dimensions'] ?? '-' }}', '{{ $file['formatted_size'] }}', '{{ $file['is_image'] ? 1 : 0 }}')">
+                                @if($file['is_image'])
+                                    <img src="{{ $file['url'] }}" alt="{{ $file['filename'] }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                                @else
+                                    <div style="text-align: center; color: #64748b;">
+                                        <svg width="44" height="44" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                                        <div style="font-weight: 700; font-size: 0.75rem; text-transform: uppercase; margin-top: 4px; color: #475569;">{{ $file['extension'] }}</div>
+                                    </div>
+                                @endif
+                                <span style="position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.75); color: #ffffff; font-size: 0.6875rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em;">
+                                    {{ $file['extension'] }}
+                                </span>
+                            </div>
+
+                            <!-- Meta & Information -->
+                            <div style="padding: 12px 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                                <div>
+                                    <div style="font-weight: 700; font-size: 0.875rem; color: var(--text-primary); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $file['filename'] }}">
+                                        {{ $file['filename'] }}
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px;">
+                                        <span>{{ $file['formatted_size'] }}</span>
+                                        @if($file['dimensions'])
+                                            <span>{{ $file['dimensions'] }}</span>
+                                        @endif
+                                    </div>
+                                    <div style="font-size: 0.6875rem; color: #94a3b8;">
+                                        {{ $file['formatted_date'] }}
+                                    </div>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div style="display: flex; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-light);">
+                                    <button type="button" class="btn-secondary" onclick="copyMediaUrl('{{ $file['url'] }}', this)" style="flex: 1; padding: 6px 8px; font-size: 0.75rem; font-weight: 600; justify-content: center; display: inline-flex; align-items: center; gap: 4px;" title="Copy direct public link">
+                                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/></svg>
+                                        <span>Copy Link</span>
+                                    </button>
+                                    <a href="{{ $file['url'] }}" target="_blank" class="btn-secondary" style="padding: 6px 8px; font-size: 0.75rem; display: inline-flex; align-items: center; justify-content: center;" title="Open in new tab">
+                                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                                    </a>
+                                    <button type="button" class="btn-secondary" onclick="confirmDeleteMediaFile('{{ $file['path'] }}', '{{ addslashes($file['filename']) }}')" style="padding: 6px 8px; color: #ef4444; border-color: #fecaca; background: #fff5f5; display: inline-flex; align-items: center; justify-content: center;" title="Delete file">
+                                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @empty
+                        <div style="grid-column: 1 / -1; padding: 48px 20px; text-align: center; color: var(--text-muted);">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">📂</div>
+                            <div style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary); margin-bottom: 4px;">No files found</div>
+                            <p style="margin: 0; font-size: 0.875rem;">Upload photos or files using the upload box above.</p>
+                        </div>
+                        @endforelse
+                    </div>
+
+                    <!-- Media Table View (Hidden by default) -->
+                    <div id="mediaTableView" style="display: none; background: #ffffff; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem;">
+                            <thead>
+                                <tr style="background: #f8fafc; border-bottom: 1px solid var(--border-subtle); font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">
+                                    <th style="padding: 12px 16px; width: 60px;">Preview</th>
+                                    <th style="padding: 12px 16px;">File Name</th>
+                                    <th style="padding: 12px 16px;">Type</th>
+                                    <th style="padding: 12px 16px;">Dimensions</th>
+                                    <th style="padding: 12px 16px;">Size</th>
+                                    <th style="padding: 12px 16px;">Last Modified</th>
+                                    <th style="padding: 12px 16px; text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mediaTableBody">
+                                @foreach($mediaData['files'] ?? [] as $file)
+                                <tr class="media-table-row" data-filename="{{ strtolower($file['filename']) }}" data-type="{{ $file['is_image'] ? 'image' : 'document' }}" data-path="{{ $file['path'] }}" style="border-bottom: 1px solid var(--border-light);">
+                                    <td style="padding: 10px 16px;">
+                                        @if($file['is_image'])
+                                            <img src="{{ $file['url'] }}" alt="{{ $file['filename'] }}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #e2e8f0; cursor: pointer;" onclick="openMediaPreview('{{ $file['url'] }}', '{{ addslashes($file['filename']) }}', '{{ $file['dimensions'] ?? '-' }}', '{{ $file['formatted_size'] }}', 1)">
+                                        @else
+                                            <div style="width: 40px; height: 40px; border-radius: 6px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.6875rem; color: #475569;">
+                                                {{ strtoupper($file['extension']) }}
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td style="padding: 10px 16px;">
+                                        <div style="font-weight: 600; color: var(--text-primary);">{{ $file['filename'] }}</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted);">{{ $file['path'] }}</div>
+                                    </td>
+                                    <td style="padding: 10px 16px;">
+                                        <span class="nav-badge" style="background: #f1f5f9; color: #475569;">{{ strtoupper($file['extension']) }}</span>
+                                    </td>
+                                    <td style="padding: 10px 16px; color: var(--text-muted);">
+                                        {{ $file['dimensions'] ?? '-' }}
+                                    </td>
+                                    <td style="padding: 10px 16px; font-weight: 500; color: var(--text-primary);">
+                                        {{ $file['formatted_size'] }}
+                                    </td>
+                                    <td style="padding: 10px 16px; font-size: 0.8125rem; color: var(--text-muted);">
+                                        {{ $file['formatted_date'] }}
+                                    </td>
+                                    <td style="padding: 10px 16px; text-align: right;">
+                                        <div style="display: inline-flex; gap: 6px;">
+                                            <button type="button" class="btn-secondary" onclick="copyMediaUrl('{{ $file['url'] }}', this)" style="padding: 5px 10px; font-size: 0.75rem;" title="Copy direct public link">
+                                                Copy Link
+                                            </button>
+                                            <a href="{{ $file['url'] }}" target="_blank" class="btn-secondary" style="padding: 5px 8px; font-size: 0.75rem;" title="Open in new tab">
+                                                Open
+                                            </a>
+                                            <button type="button" class="btn-secondary" onclick="confirmDeleteMediaFile('{{ $file['path'] }}', '{{ addslashes($file['filename']) }}')" style="padding: 5px 8px; color: #ef4444; border-color: #fecaca; background: #fff5f5;" title="Delete file">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 @endif
 
@@ -11197,7 +11457,281 @@
         </div>
     </div>
 
+    <!-- ====================================================================
+         MODAL: MEDIA FILE & PHOTO PREVIEW (LIGHTBOX)
+         ==================================================================== -->
+    <div class="modal-overlay" id="modalMediaPreview">
+        <div class="modal-content" style="max-width: 720px; padding: 0; overflow: hidden;">
+            <div class="modal-header" style="padding: 16px 20px; border-bottom: 1px solid var(--border-light); background: #ffffff;">
+                <div class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(124, 58, 237, 0.12); color: #7c3aed; display: flex; align-items: center; justify-content: center;">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+                    </div>
+                    <span id="mediaPreviewTitle" style="font-size: 1rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 500px;">Photo Preview</span>
+                </div>
+                <button class="modal-close" onclick="closeModal('modalMediaPreview')">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 20px; background: #0f172a; text-align: center;">
+                <div id="mediaPreviewImgWrap" style="max-height: 65vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                    <img id="mediaPreviewImg" src="" alt="Preview" style="max-height: 65vh; max-width: 100%; object-fit: contain; border-radius: 6px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+                </div>
+                <div id="mediaPreviewDocWrap" style="display: none; padding: 40px 20px; text-align: center; color: #ffffff;">
+                    <svg width="64" height="64" fill="none" stroke="#94a3b8" viewBox="0 0 24 24" style="margin: 0 auto 12px; display: block;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                    <div id="mediaPreviewDocName" style="font-size: 1.125rem; font-weight: 700;">Document File</div>
+                </div>
+            </div>
+            <div style="padding: 16px 20px; background: #ffffff; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div style="font-size: 0.8125rem; color: var(--text-muted);">
+                    <span id="mediaPreviewDimensions" style="font-weight: 600; color: var(--text-primary);">-</span>
+                    <span style="margin: 0 6px;">•</span>
+                    <span id="mediaPreviewSize">-</span>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn-primary-action" id="btnMediaPreviewCopy" onclick="copyMediaUrl(document.getElementById('mediaPreviewDirectLink').value, this)" style="padding: 8px 16px; font-size: 0.8125rem; background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);">
+                        Copy Direct Link
+                    </button>
+                    <a id="mediaPreviewOpenBtn" href="#" target="_blank" class="btn-secondary" style="padding: 8px 14px; font-size: 0.8125rem;">
+                        Open Full URL
+                    </a>
+                </div>
+                <input type="hidden" id="mediaPreviewDirectLink" value="">
+            </div>
+        </div>
+    </div>
+
     <script>
+        // ==========================================
+        // FILES & PHOTOS (MEDIA LIBRARY) LOGIC
+        // ==========================================
+        let currentMediaTypeFilter = 'all';
+        let currentMediaViewMode = 'grid';
+
+        function triggerMediaUploadPicker() {
+            const input = document.getElementById('mediaLibraryFileInput');
+            if (input) input.click();
+        }
+
+        // Drag and drop event listeners on dropzone
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropzone = document.getElementById('mediaDropzoneCard');
+            if (dropzone) {
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dropzone.style.borderColor = '#7c3aed';
+                        dropzone.style.background = 'rgba(124, 58, 237, 0.05)';
+                    }, false);
+                });
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dropzone.style.borderColor = '#cbd5e1';
+                        dropzone.style.background = '#fafafa';
+                    }, false);
+                });
+                dropzone.addEventListener('drop', function(e) {
+                    const dt = e.dataTransfer;
+                    if (dt && dt.files && dt.files.length) {
+                        handleMediaFilesSelected(dt.files);
+                    }
+                }, false);
+            }
+        });
+
+        function handleMediaFilesSelected(files) {
+            if (!files || !files.length) return;
+
+            const progress = document.getElementById('mediaUploadProgress');
+            const inner = document.getElementById('mediaDropzoneInner');
+            const bar = document.getElementById('mediaUploadProgressBar');
+
+            if (progress) progress.style.display = 'block';
+            if (inner) inner.style.display = 'none';
+            if (bar) bar.style.width = '30%';
+
+            const formData = new FormData();
+            formData.append('_token', window.__CSRF_TOKEN__);
+            formData.append('folder', 'images');
+            for (let i = 0; i < files.length; i++) {
+                formData.append('files[]', files[i]);
+            }
+
+            if (bar) bar.style.width = '65%';
+
+            fetch('{{ route("admin.media.upload") }}', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (bar) bar.style.width = '100%';
+                if (data.success) {
+                    alert('✓ ' + (data.message || 'Files uploaded successfully!'));
+                    refreshMediaLibrary();
+                } else {
+                    alert('⚠️ Upload error: ' + (data.message || 'Unable to upload file.'));
+                }
+            })
+            .catch(err => {
+                alert('⚠️ Upload failed: ' + err.message);
+            })
+            .finally(() => {
+                if (progress) progress.style.display = 'none';
+                if (inner) inner.style.display = 'block';
+                const input = document.getElementById('mediaLibraryFileInput');
+                if (input) input.value = '';
+            });
+        }
+
+        function confirmDeleteMediaFile(path, filename) {
+            if (!confirm('Are you sure you want to permanently delete "' + filename + '"?\n\nThis will remove the file from the website server and cannot be undone.')) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('_token', window.__CSRF_TOKEN__);
+            formData.append('_method', 'DELETE');
+            formData.append('path', path);
+
+            fetch('{{ route("admin.media.delete") }}', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const cards = document.querySelectorAll('.media-item-card[data-path="' + path + '"], .media-table-row[data-path="' + path + '"]');
+                    cards.forEach(el => el.remove());
+                    refreshMediaLibrary();
+                } else {
+                    alert('⚠️ ' + (data.message || 'Failed to delete file.'));
+                }
+            })
+            .catch(err => {
+                alert('⚠️ Error deleting file: ' + err.message);
+            });
+        }
+
+        function copyMediaUrl(url, btn) {
+            if (!url) return;
+            navigator.clipboard.writeText(url).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✓ Copied!';
+                btn.style.color = '#10b981';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.color = '';
+                }, 2000);
+            }).catch(() => {
+                prompt('Copy this link:', url);
+            });
+        }
+
+        function openMediaPreview(url, name, dimensions, size, isImage) {
+            const modal = document.getElementById('modalMediaPreview');
+            const title = document.getElementById('mediaPreviewTitle');
+            const imgWrap = document.getElementById('mediaPreviewImgWrap');
+            const img = document.getElementById('mediaPreviewImg');
+            const docWrap = document.getElementById('mediaPreviewDocWrap');
+            const docName = document.getElementById('mediaPreviewDocName');
+            const dim = document.getElementById('mediaPreviewDimensions');
+            const sz = document.getElementById('mediaPreviewSize');
+            const openBtn = document.getElementById('mediaPreviewOpenBtn');
+            const directLink = document.getElementById('mediaPreviewDirectLink');
+
+            if (title) title.textContent = name;
+            if (dim) dim.textContent = dimensions || '-';
+            if (sz) sz.textContent = size || '-';
+            if (openBtn) openBtn.href = url;
+            if (directLink) directLink.value = url;
+
+            if (parseInt(isImage) === 1) {
+                if (imgWrap) imgWrap.style.display = 'flex';
+                if (img) img.src = url;
+                if (docWrap) docWrap.style.display = 'none';
+            } else {
+                if (imgWrap) imgWrap.style.display = 'none';
+                if (docWrap) docWrap.style.display = 'block';
+                if (docName) docName.textContent = name;
+            }
+
+            openModal('modalMediaPreview');
+        }
+
+        function filterMediaLibrary() {
+            const query = (document.getElementById('mediaSearchInput')?.value || '').toLowerCase().trim();
+            const cards = document.querySelectorAll('.media-item-card');
+            const rows = document.querySelectorAll('.media-table-row');
+
+            const matches = function(el) {
+                const fn = el.getAttribute('data-filename') || '';
+                const type = el.getAttribute('data-type') || '';
+                const typeMatch = (currentMediaTypeFilter === 'all') || (type === currentMediaTypeFilter);
+                const queryMatch = !query || fn.includes(query);
+                return typeMatch && queryMatch;
+            };
+
+            cards.forEach(card => {
+                card.style.display = matches(card) ? 'flex' : 'none';
+            });
+
+            rows.forEach(row => {
+                row.style.display = matches(row) ? '' : 'none';
+            });
+        }
+
+        function setMediaTypeFilter(type) {
+            currentMediaTypeFilter = type;
+            document.querySelectorAll('#btnFilterAll, #btnFilterImages, #btnFilterDocs').forEach(b => b.classList.remove('active'));
+            if (type === 'all') document.getElementById('btnFilterAll')?.classList.add('active');
+            if (type === 'image') document.getElementById('btnFilterImages')?.classList.add('active');
+            if (type === 'document') document.getElementById('btnFilterDocs')?.classList.add('active');
+            filterMediaLibrary();
+        }
+
+        function setMediaViewMode(mode) {
+            currentMediaViewMode = mode;
+            const grid = document.getElementById('mediaGridView');
+            const table = document.getElementById('mediaTableView');
+            const btnGrid = document.getElementById('btnMediaViewGrid');
+            const btnTable = document.getElementById('btnMediaViewTable');
+
+            if (mode === 'grid') {
+                if (grid) grid.style.display = 'grid';
+                if (table) table.style.display = 'none';
+                if (btnGrid) btnGrid.classList.add('active');
+                if (btnTable) btnTable.classList.remove('active');
+            } else {
+                if (grid) grid.style.display = 'none';
+                if (table) table.style.display = 'block';
+                if (btnGrid) btnGrid.classList.remove('active');
+                if (btnTable) btnTable.classList.add('active');
+            }
+            filterMediaLibrary();
+        }
+
+        function refreshMediaLibrary() {
+            fetch('{{ route("admin.media.list") }}')
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    location.reload();
+                }
+            })
+            .catch(() => {
+                location.reload();
+            });
+        }
         window.__SUREBOUND_DB_QUOTES__ = @json($quotes ?? []);
         window.__SUREBOUND_DB_POLICIES__ = @json($policies ?? []);
         window.__SUREBOUND_DB_CLAIMS__ = @json($claims ?? []);
@@ -11244,7 +11778,7 @@
             const presets = {
                 operations: ['overview', 'quotes', 'policies', 'claims', 'support-tickets'],
                 billing: ['overview', 'invoices', 'payments-api', 'claims-api'],
-                marketing: ['overview', 'seo', 'marketing', 'cms', 'contact-info', 'brand-settings']
+                marketing: ['overview', 'seo', 'marketing', 'cms', 'contact-info', 'brand-settings', 'files-photos']
             };
             const targetKeys = presets[preset] || [];
             cbs.forEach(cb => {

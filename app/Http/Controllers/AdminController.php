@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -242,7 +243,10 @@ class AdminController extends Controller
             'signature_image' => '',
         ];
 
+        $mediaData = self::getFilesPhotosData();
+
         return view('admin.dashboard', compact(
+            'mediaData',
             'quotes',
             'policies',
             'claims',
@@ -4968,5 +4972,258 @@ class AdminController extends Controller
         }
 
         return redirect()->to(route('admin.dashboard'))->with('success', 'Demo data (invoices, payments, demo policies, demo quotes, dummy users) successfully removed. Admin panel is in clean production state.');
+    }
+
+    /**
+     * Format byte sizes into human readable strings (KB, MB, GB)
+     */
+    public static function formatBytes(int $bytes, int $precision = 1): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min((int) $pow, count($units) - 1);
+        $bytes /= (1 << (10 * $pow));
+
+        return round($bytes, $precision).' '.$units[$pow];
+    }
+
+    /**
+     * Scan and retrieve all website images, documents, and media assets
+     */
+    public static function getFilesPhotosData(): array
+    {
+        $directories = [
+            'images' => public_path('images'),
+            'uploads' => public_path('uploads'),
+        ];
+
+        $filesList = [];
+        $totalBytes = 0;
+        $imageCount = 0;
+        $docCount = 0;
+        $imageExtensions = ['jpg', 'jpeg', 'png', 'webp', 'svg', 'gif', 'bmp', 'ico', 'avif'];
+
+        foreach ($directories as $folderKey => $dirPath) {
+            if (! is_dir($dirPath)) {
+                continue;
+            }
+
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($dirPath, \RecursiveDirectoryIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::SELF_FIRST
+            );
+
+            foreach ($iterator as $item) {
+                if (! $item->isFile()) {
+                    continue;
+                }
+
+                $filename = $item->getFilename();
+                // Skip hidden files or OS cache files
+                if (str_starts_with($filename, '.') || $filename === 'Thumbs.db') {
+                    continue;
+                }
+
+                $pathname = $item->getPathname();
+                $relPath = ltrim(str_replace(public_path(), '', $pathname), '/\\');
+                $relPath = str_replace('\\', '/', $relPath);
+
+                $size = (int) $item->getSize();
+                $totalBytes += $size;
+                $ext = strtolower($item->getExtension());
+                $mtime = (int) $item->getMTime();
+
+                $isImage = in_array($ext, $imageExtensions, true);
+                if ($isImage) {
+                    $imageCount++;
+                } else {
+                    $docCount++;
+                }
+
+                $dimensions = null;
+                if ($isImage && in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp'], true)) {
+                    $imgInfo = @getimagesize($pathname);
+                    if ($imgInfo && isset($imgInfo[0], $imgInfo[1])) {
+                        $dimensions = $imgInfo[0].' × '.$imgInfo[1];
+                    }
+                }
+
+                $filesList[] = [
+                    'filename' => $filename,
+                    'name' => pathinfo($filename, PATHINFO_FILENAME),
+                    'extension' => $ext,
+                    'folder' => $folderKey,
+                    'path' => $relPath,
+                    'url' => asset($relPath),
+                    'size' => $size,
+                    'formatted_size' => self::formatBytes($size),
+                    'is_image' => $isImage,
+                    'dimensions' => $dimensions,
+                    'modified_at' => $mtime,
+                    'formatted_date' => date('M j, Y • h:i A', $mtime),
+                ];
+            }
+        }
+
+        // Sort descending by modified date (newest first)
+        usort($filesList, fn ($a, $b) => $b['modified_at'] <=> $a['modified_at']);
+
+        return [
+            'files' => $filesList,
+            'total_count' => count($filesList),
+            'image_count' => $imageCount,
+            'doc_count' => $docCount,
+            'total_size' => self::formatBytes($totalBytes),
+        ];
+    }
+
+    /**
+     * AJAX endpoint to fetch updated media list
+     */
+    public function getMediaList(Request $request)
+    {
+        $data = self::getFilesPhotosData();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+        ]);
+    }
+
+    /**
+     * Upload new photos, files, and documents to website media library
+     */
+    public function uploadMedia(Request $request)
+    {
+        $request->validate([
+            'files' => 'required',
+            'folder' => 'nullable|string|in:images,uploads',
+        ]);
+
+        $folder = $request->input('folder', 'images');
+        $targetDir = public_path($folder);
+        $distDir = base_path('dist/'.$folder);
+
+        if (! is_dir($targetDir)) {
+            @mkdir($targetDir, 0755, true);
+        }
+        if (! is_dir($distDir)) {
+            @mkdir($distDir, 0755, true);
+        }
+
+        $files = $request->file('files');
+        if (! is_array($files)) {
+            $files = [$files];
+        }
+
+        $uploaded = [];
+        foreach ($files as $file) {
+            if (! $file || ! $file->isValid()) {
+                continue;
+            }
+
+            $origName = $file->getClientOriginalName();
+            $ext = strtolower($file->getClientOriginalExtension() ?: 'bin');
+            $nameWithoutExt = pathinfo($origName, PATHINFO_FILENAME);
+            $cleanName = Str::slug($nameWithoutExt);
+            $finalFilename = $cleanName.'.'.$ext;
+
+            // Prevent collision: if exists, append timestamp
+            if (file_exists($targetDir.'/'.$finalFilename)) {
+                $finalFilename = $cleanName.'_'.time().'_'.Str::random(4).'.'.$ext;
+            }
+
+            $file->move($targetDir, $finalFilename);
+
+            // Mirror to dist directory if present
+            if (is_dir(base_path('dist'))) {
+                @copy($targetDir.'/'.$finalFilename, $distDir.'/'.$finalFilename);
+            }
+
+            $relPath = $folder.'/'.$finalFilename;
+            $uploaded[] = [
+                'filename' => $finalFilename,
+                'path' => $relPath,
+                'url' => asset($relPath),
+            ];
+        }
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => count($uploaded).' file(s) uploaded successfully.',
+                'files' => $uploaded,
+            ]);
+        }
+
+        return redirect()->back()->with('success', count($uploaded).' file(s) uploaded successfully.');
+    }
+
+    /**
+     * Permanently delete a photo or file from the media library
+     */
+    public function deleteMedia(Request $request)
+    {
+        $validated = $request->validate([
+            'path' => 'required|string',
+        ]);
+
+        $path = $validated['path'];
+
+        // Security check: Block path traversal
+        if (str_contains($path, '..') || str_starts_with($path, '/') || str_starts_with($path, '\\')) {
+            return response()->json(['success' => false, 'message' => 'Invalid file path.'], 400);
+        }
+
+        // Allowed root directories only
+        $allowedPrefixes = ['images/', 'uploads/'];
+        $hasAllowedPrefix = false;
+        foreach ($allowedPrefixes as $prefix) {
+            if (str_starts_with($path, $prefix)) {
+                $hasAllowedPrefix = true;
+                break;
+            }
+        }
+
+        if (! $hasAllowedPrefix) {
+            return response()->json(['success' => false, 'message' => 'Forbidden directory access.'], 403);
+        }
+
+        // Core protected system assets
+        $protectedFiles = [
+            'images/logo.png',
+            'images/logo-white.png',
+            'images/logo-navy.png',
+            'images/logo-all-white.png',
+            'images/icon.png',
+            'images/favicon.ico',
+        ];
+
+        if (in_array($path, $protectedFiles, true)) {
+            return response()->json(['success' => false, 'message' => 'This critical brand asset is protected from deletion.'], 403);
+        }
+
+        $fullPath = public_path($path);
+        if (! file_exists($fullPath) || ! is_file($fullPath)) {
+            return response()->json(['success' => false, 'message' => 'File not found on server.'], 404);
+        }
+
+        @unlink($fullPath);
+
+        // Also delete from dist if mirrored
+        $distPath = base_path('dist/'.$path);
+        if (file_exists($distPath) && is_file($distPath)) {
+            @unlink($distPath);
+        }
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'File "'.basename($path).'" deleted successfully.',
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'File deleted successfully.');
     }
 }

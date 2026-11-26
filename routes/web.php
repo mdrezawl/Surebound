@@ -151,6 +151,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/contact-info', [AdminController::class, 'updateContactInfo'])->name('admin.contact-info.update');
     Route::post('/admin/partners', [AdminController::class, 'updatePartners'])->name('admin.partners.update');
 
+    // Files & Photos Media Library
+    Route::get('/admin/media', [AdminController::class, 'getMediaList'])->name('admin.media.list');
+    Route::post('/admin/media/upload', [AdminController::class, 'uploadMedia'])->name('admin.media.upload');
+    Route::delete('/admin/media/delete', [AdminController::class, 'deleteMedia'])->name('admin.media.delete');
+
     // API Integrations (Claims API & US Payments)
     Route::post('/admin/api/claims', [AdminController::class, 'saveClaimsApiConfig'])->name('admin.api.claims.update');
     Route::post('/admin/api/claims/test', [AdminController::class, 'testClaimsApiConnection'])->name('admin.api.claims.test');
