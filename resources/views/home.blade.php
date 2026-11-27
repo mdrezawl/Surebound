@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Tampa, FL Insurance Agency | Surebound Insurance')
-@section('meta_description', 'Surebound Insurance is an independent insurance agency in Tampa, FL offering personal and commercial insurance solutions tailored to protect your home, vehicle, business, and family.')
+@section('meta_description', 'Surebound Insurance is an independent insurance agency in Tampa, FL offering commercial liability, property, workers\' comp, commercial auto, and life insurance solutions.')
 
 @section('content')
 
@@ -26,7 +26,7 @@
                 <p class="hero-eyebrow">Independent Insurance Agency in Tampa, FL</p>
                 <h1 class="hero-title">Insurance help from<br>people here in Tampa.</h1>
                 <p class="hero-subtitle">
-                    Talk to our team about home, auto, business and life insurance. We will help you understand the available options and request coverage that fits your needs.
+                    Talk to our team about commercial property, general liability, workers' comp, commercial auto, and life insurance. We will help you understand the available options and request coverage that fits your needs.
                 </p>
                 <div class="hero-buttons">
                     <a href="javascript:void(0)" onclick="openQuoteModal()" class="btn-primary-hero">
@@ -76,92 +76,86 @@
             <p class="section-subtitle">From everyday life to the unexpected, we've got you covered.</p>
 
             <div class="coverage-cards-grid">
-                <!-- 1. Home Insurance -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('home-insurance') }}'" style="cursor: pointer;">
+                <!-- 1. Business Owner Policy (BOP) -->
+                <div class="coverage-card" onclick="window.location.href='{{ route('business-insurance') }}'" style="cursor: pointer;">
                     <div>
                         <div class="coverage-icon-box">
-                            <!-- House outline -->
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.75c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12l1.5 3H1.5L3 3Z" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">Home Insurance</h3>
-                        <p class="coverage-card-desc">Protect your home and everything in it.</p>
+                        <h3 class="coverage-card-title">Business Owner Policy (BOP)</h3>
+                        <p class="coverage-card-desc">Property and liability combined in one seamless package.</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
 
-                <!-- 2. Auto Insurance -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('auto-insurance') }}'" style="cursor: pointer;">
+                <!-- 2. General Liability -->
+                <div class="coverage-card" onclick="window.location.href='{{ route('liability-insurance') }}'" style="cursor: pointer;">
                     <div>
                         <div class="coverage-icon-box">
-                            <!-- Car front outline -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                            </svg>
+                        </div>
+                        <h3 class="coverage-card-title">General Liability</h3>
+                        <p class="coverage-card-desc">Bodily injury, property damage, and defense coverage.</p>
+                    </div>
+                    <span class="coverage-card-arrow">&rarr;</span>
+                </div>
+
+                <!-- 3. Commercial Property -->
+                <div class="coverage-card" onclick="window.location.href='{{ route('property-insurance') }}'" style="cursor: pointer;">
+                    <div>
+                        <div class="coverage-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6h1.5m-1.5 3h1.5m-1.5 3h1.5M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                            </svg>
+                        </div>
+                        <h3 class="coverage-card-title">Commercial Property</h3>
+                        <p class="coverage-card-desc">Safeguard buildings, inventory, and essential equipment.</p>
+                    </div>
+                    <span class="coverage-card-arrow">&rarr;</span>
+                </div>
+
+                <!-- 4. Workers' Compensation -->
+                <div class="coverage-card" onclick="window.location.href='{{ route('workers-compensation') }}'" style="cursor: pointer;">
+                    <div>
+                        <div class="coverage-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                            </svg>
+                        </div>
+                        <h3 class="coverage-card-title">Workers' Compensation</h3>
+                        <p class="coverage-card-desc">Statutory medical care and wage loss protection for staff.</p>
+                    </div>
+                    <span class="coverage-card-arrow">&rarr;</span>
+                </div>
+
+                <!-- 5. Commercial Auto -->
+                <div class="coverage-card" onclick="window.location.href='{{ route('commercial-auto-insurance') }}'" style="cursor: pointer;">
+                    <div>
+                        <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">Auto Insurance</h3>
-                        <p class="coverage-card-desc">Stay on the road with confidence.</p>
+                        <h3 class="coverage-card-title">Commercial Auto</h3>
+                        <p class="coverage-card-desc">Reliable protection for company trucks, vans, and fleets.</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
 
-                <!-- 3. Life Insurance -->
+                <!-- 6. Life Insurance -->
                 <div class="coverage-card" onclick="window.location.href='{{ route('life-insurance') }}'" style="cursor: pointer;">
                     <div>
                         <div class="coverage-icon-box">
-                            <!-- Heart outline -->
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                             </svg>
                         </div>
                         <h3 class="coverage-card-title">Life Insurance</h3>
-                        <p class="coverage-card-desc">Protect your family's future certainty.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
-                <!-- 4. Health Insurance -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('health-insurance') }}'" style="cursor: pointer;">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <!-- Medical plus outline -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Health Insurance</h3>
-                        <p class="coverage-card-desc">Premier care and doctor network access.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
-                <!-- 5. Umbrella Insurance -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('umbrella-insurance') }}'" style="cursor: pointer;">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <!-- Shield outline -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Umbrella Insurance</h3>
-                        <p class="coverage-card-desc">Multi-million excess liability shield.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
-                <!-- 6. Business Insurance -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('business-insurance') }}'" style="cursor: pointer;">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <!-- Briefcase outline -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Business Insurance</h3>
-                        <p class="coverage-card-desc">Keep your enterprise moving forward.</p>
+                        <p class="coverage-card-desc">Protect your family and business partners with certainty.</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>

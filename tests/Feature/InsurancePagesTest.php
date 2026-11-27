@@ -12,32 +12,31 @@ class InsurancePagesTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_personal_insurance_pages_render_successfully(): void
+    public function test_unwritten_insurance_pages_redirect_to_homepage_and_life_insurance_renders_200(): void
     {
-        $pages = [
-            '/home-insurance' => 'Home Insurance',
-            '/auto-insurance' => 'Auto Insurance',
-            '/life-insurance' => 'Life Insurance',
-            '/health-insurance' => 'Health Insurance',
-            '/umbrella-insurance' => 'Umbrella Insurance',
+        $redirectPages = [
+            '/home-insurance',
+            '/auto-insurance',
+            '/health-insurance',
+            '/umbrella-insurance',
         ];
 
-        foreach ($pages as $url => $expectedText) {
+        foreach ($redirectPages as $url) {
             $response = $this->get($url);
-            $response->assertStatus(200);
-            $response->assertSeeText($expectedText);
+            $response->assertStatus(301);
+            $response->assertRedirect('/');
         }
+
+        $lifeResponse = $this->get('/life-insurance');
+        $lifeResponse->assertStatus(200);
+        $lifeResponse->assertSeeText('Life Insurance');
     }
 
-    public function test_navigation_dropdown_contains_all_five_personal_insurance_links(): void
+    public function test_navigation_dropdown_contains_life_insurance(): void
     {
         $response = $this->get('/');
         $response->assertStatus(200);
-        $response->assertSee(route('home-insurance'));
-        $response->assertSee(route('auto-insurance'));
         $response->assertSee(route('life-insurance'));
-        $response->assertSee(route('health-insurance'));
-        $response->assertSee(route('umbrella-insurance'));
     }
 
     public function test_admin_can_update_life_insurance_cms_content(): void
@@ -77,9 +76,8 @@ class InsurancePagesTest extends TestCase
         $response->assertJson(['success' => true]);
 
         $publicResponse = $this->get(route('health-insurance'));
-        $publicResponse->assertStatus(200);
-        $publicResponse->assertSee('CUSTOM HEALTHCARE SHIELD');
-        $publicResponse->assertSee('Affordable Medical and Wellness Plans');
+        $publicResponse->assertStatus(301);
+        $publicResponse->assertRedirect('/');
     }
 
     public function test_admin_can_update_umbrella_insurance_cms_content(): void
@@ -98,9 +96,8 @@ class InsurancePagesTest extends TestCase
         $response->assertJson(['success' => true]);
 
         $publicResponse = $this->get(route('umbrella-insurance'));
-        $publicResponse->assertStatus(200);
-        $publicResponse->assertSee('CUSTOM UMBRELLA SHIELD');
-        $publicResponse->assertSee('Multi-Million Dollar Excess Protection');
+        $publicResponse->assertStatus(301);
+        $publicResponse->assertRedirect('/');
     }
 
     public function test_customer_can_quote_commercial_and_separate_health_and_life_policies(): void
@@ -393,14 +390,14 @@ class InsurancePagesTest extends TestCase
         $response->assertStatus(200);
 
         // Coverage links
-        $response->assertSee(route('home-insurance'));
-        $response->assertSee(route('auto-insurance'));
-        $response->assertSee(route('life-insurance'));
-        $response->assertSee(route('health-insurance'));
-        $response->assertSee(route('umbrella-insurance'));
         $response->assertSee(route('business-insurance'));
+        $response->assertSee(route('liability-insurance'));
+        $response->assertSee(route('property-insurance'));
+        $response->assertSee(route('workers-compensation'));
         $response->assertSee(route('commercial-auto-insurance'));
+        $response->assertSee(route('life-insurance'));
         $response->assertSee(route('surety-bond'));
+        $response->assertSee(route('group-benefits'));
 
         // Company links
         $response->assertSee(route('story'));

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Request a Custom Insurance Quote | Tampa, FL | Surebound')
-@section('meta_description', 'Request a tailored insurance quote from Surebound Insurance in Tampa, FL. Compare rates across top carriers for home, auto, commercial liability, and business coverage.')
+@section('meta_description', 'Request a tailored commercial and business insurance quote from Surebound Insurance in Tampa, FL. Compare rates for general liability, property, workers\' comp, commercial auto, and life.')
 
 @section('content')
 
@@ -27,10 +27,10 @@
                     {{ $content['hero_subtitle'] ?? 'Tell us about your coverage requirements. Our licensed Tampa advisors compare options across leading carriers to build a customized policy proposal.' }}
                 </p>
                 <div class="hero-buttons">
-                    <a href="#quote-form" class="btn-primary-hero">
-                        <span>Complete Quote Form &darr;</span>
+                    <a href="javascript:void(0)" onclick="openQuoteModal()" class="btn-primary-hero">
+                        <span>Start Interactive Quote &rarr;</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="17" height="17">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                         </svg>
                     </a>
                     <a href="tel:8132141731" class="btn-outline-hero">
@@ -44,7 +44,7 @@
 
             <!-- Floating Card -->
             <div class="hero-card-positioner">
-                <div class="hero-floating-card">
+                <div class="hero-floating-card" onclick="openQuoteModal()" style="cursor: pointer;">
                     <div class="hero-card-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
@@ -71,9 +71,16 @@
         <div class="container" style="max-width: 900px;">
             <p class="section-eyebrow" style="text-align: center;">ONLINE QUOTE REQUEST</p>
             <h2 class="section-title" style="text-align: center;">Tell Us What You Need Covered</h2>
-            <p class="section-subtitle" style="text-align: center; margin-bottom: 32px;">Fill out this quick form and a licensed Tampa advisor will contact you with carrier options.</p>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 32px;">Fill out this quick form or launch the interactive tool to compare rates across top carriers.</p>
 
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 36px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
+                <div style="text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0;">
+                    <a href="javascript:void(0)" onclick="openQuoteModal()" class="btn-primary-hero" style="display: inline-flex; width: auto; padding: 14px 28px;">
+                        <span>Launch Guided Quote Tool &rarr;</span>
+                    </a>
+                    <p style="margin-top: 10px; font-size: 13px; color: #64748b;">Or fill in the direct inquiry form below</p>
+                </div>
+
                 <!-- Status Message Banner -->
                 <div id="quoteFormStatus" style="display: none; padding: 16px 20px; border-radius: 8px; margin-bottom: 24px; font-size: 14.5px; line-height: 1.5;"></div>
 
@@ -107,8 +114,6 @@
                         <div>
                             <label style="display: block; font-weight: 600; font-size: 14px; color: #1e293b; margin-bottom: 6px;">Primary Coverage Needed *</label>
                             <select name="type" required style="width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; color: #0f172a; background: #fff;">
-                                <option value="home">Homeowners Insurance</option>
-                                <option value="auto">Auto Insurance</option>
                                 <option value="bop">Business Owner Policy (BOP)</option>
                                 <option value="general_liability">Commercial General Liability</option>
                                 <option value="commercial_property">Commercial Property Insurance</option>
@@ -117,20 +122,30 @@
                                 <option value="surety_bond">Surety Bond</option>
                                 <option value="group_benefits">Group Employee Benefits</option>
                                 <option value="life">Life Insurance</option>
-                                <option value="health">Health Insurance</option>
-                                <option value="umbrella">Personal Umbrella Liability</option>
                             </select>
                         </div>
                         <div>
                             <label style="display: block; font-weight: 600; font-size: 14px; color: #1e293b; margin-bottom: 6px;">Estimated Property / Limit</label>
-                            <input type="text" name="coverage_amount" placeholder="e.g. $500,000 dwelling or $1M liability" style="width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; color: #0f172a;">
+                            <input type="text" name="coverage_amount" placeholder="e.g. $1M liability or $500k property" style="width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; color: #0f172a;">
                         </div>
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; font-size: 14px; color: #1e293b; margin-bottom: 6px;">Additional Details or Current Carrier</label>
-                        <textarea name="notes" rows="3" placeholder="Tell us about your home, vehicle, business operations, or current renewal date..." style="width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; color: #0f172a; resize: vertical;"></textarea>
+                        <textarea name="notes" rows="3" placeholder="Tell us about your business operations, commercial vehicles, or current renewal date..." style="width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; color: #0f172a; resize: vertical;"></textarea>
                     </div>
+
+                    <div style="margin-bottom: 24px; font-size: 13px; color: #64748b; line-height: 1.5;">
+                        <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" name="consent" id="quoteConsentCheck" style="margin-top: 3px;">
+                            <span>I agree that Surebound Insurance may contact me via phone or email regarding this quote request in accordance with the <a href="{{ route('privacy') }}" target="_blank" style="color: #1e3a8a; text-decoration: underline;">Privacy Policy</a>.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" id="quoteSubmitBtn" style="width: 100%; padding: 14px 20px; background-color: #1e3a8a; color: #ffffff; border: none; border-radius: 6px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s;">
+                        Submit Quote Request &rarr;
+                    </button>
+                </form>
 
                     <div style="margin-bottom: 24px; font-size: 13px; color: #64748b; line-height: 1.5;">
                         <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">

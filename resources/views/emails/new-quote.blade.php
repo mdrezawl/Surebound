@@ -56,18 +56,46 @@
                     <tr>
                         <td style="padding: 28px 32px;">
                             
+                            @if(!empty($quote->tags) && is_array($quote->tags))
+                            <!-- Lead Tags (Top Placement) -->
+                            <div style="margin-bottom: 20px; padding: 12px 16px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+                                <div style="font-size: 11px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">
+                                    Lead Underwriting Tags
+                                </div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                    @foreach($quote->tags as $tag)
+                                        <span style="display: inline-block; background-color: #0b192c; color: #fbbf24; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px; font-family: monospace; letter-spacing: 0.03em;">{{ $tag }}</span>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
+
                             <!-- Coverage Highlight Banner -->
                             <div style="background-color: #f0f7ff; border: 1px solid #bfdbfe; border-left: 4px solid #2563eb; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px;">
                                 <div style="font-size: 11.5px; font-weight: 700; color: #1d4ed8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">
-                                    Policy Requested
+                                    Requested Coverages
                                 </div>
-                                <div style="font-size: 19px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">
-                                    {{ $quote->type_label ?? ucfirst(str_replace('_', ' ', $quote->type)) }}
+                                <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">
+                                    @if(!empty($quote->coverages) && is_array($quote->coverages))
+                                        {{ implode(' + ', array_map(function($c) {
+                                            return match($c) {
+                                                'bop' => 'Business Owner Policy',
+                                                'gl' => 'General Liability',
+                                                'wc' => "Workers' Comp",
+                                                'auto' => 'Commercial Auto',
+                                                'prop' => 'Commercial Property',
+                                                'life' => 'Life Insurance',
+                                                default => ucfirst(str_replace('_', ' ', (string) $c))
+                                            };
+                                        }, $quote->coverages)) }}
+                                    @else
+                                        {{ $quote->type_label ?? ucfirst(str_replace('_', ' ', $quote->type)) }}
+                                    @endif
                                 </div>
-                                <div style="font-size: 13.5px; color: #334155;">
-                                    Limit / Desired Tier: <strong>{{ $quote->coverage ?? 'Standard' }}</strong>
-                                    @if(!empty($quote->premium))
-                                        &nbsp;•&nbsp; Est. Premium: <strong>{{ $quote->premium }}</strong>
+                                <div style="font-size: 13px; color: #334155;">
+                                    Reference: <strong>#{{ $quote->quote_ref }}</strong>
+                                    @if(!empty($quote->zip_code))
+                                        &nbsp;•&nbsp; Location: <strong>ZIP {{ $quote->zip_code }}</strong>
                                     @endif
                                 </div>
                             </div>
@@ -86,6 +114,16 @@
                                         {{ $quote->name ?: 'Not Provided' }}
                                     </td>
                                 </tr>
+                                @if(!empty($quote->business_name))
+                                <tr>
+                                    <td style="padding: 11px 14px; font-size: 13px; color: #64748b; background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; font-weight: 600;">
+                                        Business Name
+                                    </td>
+                                    <td style="padding: 11px 14px; font-size: 14px; color: #0f172a; border-bottom: 1px solid #e2e8f0; font-weight: 700;">
+                                        {{ $quote->business_name }}
+                                    </td>
+                                </tr>
+                                @endif
                                 <tr>
                                     <td style="padding: 11px 14px; font-size: 13px; color: #64748b; background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; font-weight: 600;">
                                         Email Address
@@ -122,6 +160,18 @@
                                         {{ $quote->location ?: ($quote->zip_code ? 'ZIP: '.$quote->zip_code : 'Tampa, FL') }}
                                     </td>
                                 </tr>
+                                @if(!empty($quote->tags) && is_array($quote->tags))
+                                <tr>
+                                    <td style="padding: 11px 14px; font-size: 13px; color: #64748b; background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; font-weight: 600;">
+                                        Lead Tags
+                                    </td>
+                                    <td style="padding: 11px 14px; font-size: 13px; border-bottom: 1px solid #e2e8f0;">
+                                        @foreach($quote->tags as $tag)
+                                            <span style="display: inline-block; background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-right: 4px; margin-bottom: 3px; font-family: monospace;">{{ $tag }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                @endif
                                 <tr>
                                     <td style="padding: 11px 14px; font-size: 13px; color: #64748b; background-color: #f8fafc; font-weight: 600;">
                                         Submission Status

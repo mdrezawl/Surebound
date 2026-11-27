@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'gohighlevel' => [
+        'webhook_url' => env('GHL_WEBHOOK_URL'),
+        'api_key' => env('GHL_API_KEY'),
+        'location_id' => env('GHL_LOCATION_ID'),
+    ],
+
 ];

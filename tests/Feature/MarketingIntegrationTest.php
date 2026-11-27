@@ -201,7 +201,7 @@ class MarketingIntegrationTest extends TestCase
             ]]
         );
 
-        $response = $this->get('/home-insurance');
+        $response = $this->get('/life-insurance');
 
         $response->assertStatus(200);
         // Meta tags

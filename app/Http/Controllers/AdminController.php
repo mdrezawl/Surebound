@@ -11,6 +11,7 @@ use App\Models\Policy;
 use App\Models\Quote;
 use App\Models\SupportTicket;
 use App\Models\User;
+use App\Services\GoHighLevelService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
@@ -407,16 +408,78 @@ class AdminController extends Controller
     }
 
     /**
-     * Store Quote from Public Website Form
+     * Store Quote from Public Website Form (Supports Multi-Step Quote Flow)
      */
     public function storePublicQuote(Request $request)
     {
+        // 1. Normalize aliases for flow fields
         if ($request->has('zip_code') && ! $request->has('zip')) {
             $request->merge(['zip' => (string) $request->input('zip_code')]);
+        }
+        if ($request->has('fn') && ! $request->has('first_name')) {
+            $request->merge(['first_name' => (string) $request->input('fn')]);
+        }
+        if ($request->has('ln') && ! $request->has('last_name')) {
+            $request->merge(['last_name' => (string) $request->input('ln')]);
+        }
+        if ($request->has('em') && ! $request->has('email')) {
+            $request->merge(['email' => (string) $request->input('em')]);
+        }
+        if ($request->has('ph') && ! $request->has('phone')) {
+            $request->merge(['phone' => (string) $request->input('ph')]);
+        }
+        if ($request->has('biz') && ! $request->has('business_name')) {
+            $request->merge(['business_name' => (string) $request->input('biz')]);
+        }
+        if ($request->has('btype') && ! $request->has('business_type')) {
+            $request->merge(['business_type' => (string) $request->input('btype')]);
+        }
+        if ($request->has('btype_other') && ! $request->has('business_type_other')) {
+            $request->merge(['business_type_other' => (string) $request->input('btype_other')]);
+        }
+        if ($request->has('desc') && ! $request->has('business_description')) {
+            $request->merge(['business_description' => (string) $request->input('desc')]);
+        }
+        if ($request->has('emp') && ! $request->has('employees')) {
+            $request->merge(['employees' => (string) $request->input('emp')]);
+        }
+        if ($request->has('years') && ! $request->has('years_in_business')) {
+            $request->merge(['years_in_business' => (string) $request->input('years')]);
+        }
+        if ($request->has('rev') && ! $request->has('annual_revenue')) {
+            $request->merge(['annual_revenue' => (string) $request->input('rev')]);
+        }
+        if ($request->has('addr') && ! $request->has('business_address')) {
+            $request->merge(['business_address' => (string) $request->input('addr')]);
+        }
+        if ($request->has('own') && ! $request->has('location_ownership')) {
+            $request->merge(['location_ownership' => (string) $request->input('own')]);
+        }
+        if ($request->has('renew') && ! $request->has('renewal_timeline')) {
+            $request->merge(['renewal_timeline' => (string) $request->input('renew')]);
+        }
+        if ($request->has('carrier') && ! $request->has('current_carrier')) {
+            $request->merge(['current_carrier' => (string) $request->input('carrier')]);
+        }
+        if ($request->has('claims') && ! $request->has('claims_history')) {
+            $request->merge(['claims_history' => (string) $request->input('claims')]);
+        }
+        if ($request->has('bundle') && ! $request->has('bundle_preference')) {
+            $request->merge(['bundle_preference' => (string) $request->input('bundle')]);
+        }
+
+        // Auto assemble name from first_name / last_name if name wasn't explicitly supplied
+        if (! $request->filled('name')) {
+            $assembledName = trim(($request->input('first_name') ?? '').' '.($request->input('last_name') ?? ''));
+            if ($assembledName !== '') {
+                $request->merge(['name' => $assembledName]);
+            }
         }
 
         $request->validate([
             'name' => 'nullable|string|max:255',
+            'first_name' => 'nullable|string|max:100',
+            'last_name' => 'nullable|string|max:100',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:50',
             'zip' => 'required|string|max:20',
@@ -425,6 +488,7 @@ class AdminController extends Controller
             'amount' => 'nullable|string|max:255',
             'source_page' => 'nullable|string|max:255',
             'company_name' => 'nullable|string|max:255',
+            'business_name' => 'nullable|string|max:255',
             'fleet_size' => 'nullable|string|max:100',
             'vehicle_type' => 'nullable|string|max:100',
             'coverage_tier' => 'nullable|string|max:255',
@@ -432,19 +496,21 @@ class AdminController extends Controller
             'bond_amount' => 'nullable|string|max:100',
         ]);
 
-        $rawType = strtolower($request->input('type', 'home'));
         $typeLabels = [
             'home' => 'Homeowners Insurance',
-            'auto' => 'Auto Insurance',
+            'auto' => 'Commercial Auto Insurance',
             'life' => 'Life Insurance',
             'health' => 'Health Insurance',
             'umbrella' => 'Umbrella Liability',
             'bop' => 'Business Owner Policy (BOP)',
             'business' => 'Business Owner Policy (BOP)',
             'workers_comp' => "Workers' Compensation",
+            'wc' => "Workers' Compensation",
             'general_liability' => 'General Liability',
+            'gl' => 'General Liability',
             'general' => 'General Liability',
             'commercial_property' => 'Commercial Property Coverage',
+            'prop' => 'Commercial Property Coverage',
             'property' => 'Commercial Property Coverage',
             'commercial_auto' => 'Commercial Auto Insurance',
             'surety_bond' => 'Surety Bond',
@@ -455,14 +521,148 @@ class AdminController extends Controller
             'cyber' => 'Cyber Security',
         ];
 
+        // Parse coverages if present
+        $coveragesInput = $request->input('coverages');
+        if (is_string($coveragesInput)) {
+            $decoded = json_decode($coveragesInput, true);
+            if (is_array($decoded)) {
+                $coveragesInput = $decoded;
+            } else {
+                $coveragesInput = array_filter(array_map('trim', explode(',', $coveragesInput)));
+            }
+        }
+        $coveragesList = is_array($coveragesInput) ? array_values($coveragesInput) : [];
+
+        // Determine rawType and typeLabel
+        if (! empty($coveragesList)) {
+            $resolvedLabels = [];
+            foreach ($coveragesList as $cov) {
+                $covKey = strtolower(trim((string) $cov));
+                $resolvedLabels[] = $typeLabels[$covKey] ?? ucfirst(str_replace('_', ' ', $covKey));
+            }
+            $rawType = count($coveragesList) === 1 ? strtolower($coveragesList[0]) : 'multi';
+            $typeLabel = implode(', ', $resolvedLabels);
+        } else {
+            $rawType = strtolower($request->input('type', 'home'));
+            $typeLabel = $typeLabels[$rawType] ?? ucfirst(str_replace('_', ' ', $rawType));
+        }
+
+        // Modular data
+        $modularData = $request->input('modular_data', []);
+        if (is_string($modularData)) {
+            $modularData = json_decode($modularData, true) ?: [];
+        }
+        if (! is_array($modularData)) {
+            $modularData = [];
+        }
+        $modularKeys = [
+            'bop_eq', 'bop_bld', 'gl_sub', 'gl_lim', 'wc_pay', 'wc_sub',
+            'au_n', 'au_type', 'au_use', 'au_drv', 'au_rec', 'pr_use',
+            'pr_use_other', 'lf_age', 'lf_amt', 'lf_type', 'lf_tob',
+        ];
+        foreach ($modularKeys as $mKey) {
+            if ($request->has($mKey) && ! isset($modularData[$mKey])) {
+                $modularData[$mKey] = $request->input($mKey);
+            }
+        }
+
+        // Tags resolution
+        $tagsInput = $request->input('tags');
+        if (is_string($tagsInput)) {
+            $tagsInput = json_decode($tagsInput, true) ?: array_filter(array_map('trim', explode(',', $tagsInput)));
+        }
+        $tags = is_array($tagsInput) ? array_values($tagsInput) : [];
+        if (empty($tags) && ! empty($coveragesList)) {
+            foreach ($coveragesList as $cov) {
+                $tags[] = 'COV-'.strtoupper(str_replace('_', '-', (string) $cov));
+            }
+            if ($request->input('bundle_preference') === 'Yes, bundle them' || count($coveragesList) > 1) {
+                $tags[] = 'BUNDLE';
+            }
+            $renewMap = [
+                'Within 30 days' => 'RENEW-30D',
+                'In 1 to 3 months' => 'RENEW-1-3M',
+                'In 3 to 6 months' => 'RENEW-3-6M',
+                'More than 6 months away' => 'RENEW-6M-PLUS',
+                'I have no coverage right now' => 'UNINSURED',
+            ];
+            if ($request->filled('renewal_timeline') && isset($renewMap[$request->input('renewal_timeline')])) {
+                $tags[] = $renewMap[$request->input('renewal_timeline')];
+            }
+            if ($request->filled('claims_history') && $request->input('claims_history') !== 'None') {
+                $tags[] = 'CLAIMS-HISTORY';
+            }
+            if (str_starts_with((string) $request->input('location_ownership'), 'Own')) {
+                $tags[] = 'OWNS-BUILDING';
+            }
+            $tags[] = 'SOURCE-QUOTE-FLOW';
+        }
+
         $notesList = [];
+        if (! empty($coveragesList)) {
+            $notesList[] = 'Coverages: '.$typeLabel;
+        }
+        if ($request->filled('business_name')) {
+            $notesList[] = 'Business Name: '.$request->input('business_name');
+        }
+        if ($request->filled('business_type')) {
+            $btype = $request->input('business_type');
+            if ($btype === 'Something else' && $request->filled('business_type_other')) {
+                $btype .= ' ('.$request->input('business_type_other').')';
+            }
+            $notesList[] = 'Business Type: '.$btype;
+        }
+        if ($request->filled('business_description')) {
+            $notesList[] = 'Work Description: '.$request->input('business_description');
+        }
+        if ($request->filled('employees')) {
+            $notesList[] = 'Employees: '.$request->input('employees');
+        }
+        if ($request->filled('years_in_business')) {
+            $notesList[] = 'Years in Business: '.$request->input('years_in_business');
+        }
+        if ($request->filled('annual_revenue')) {
+            $notesList[] = 'Annual Revenue: '.$request->input('annual_revenue');
+        }
+        if ($request->filled('business_address')) {
+            $notesList[] = 'Business Address: '.$request->input('business_address');
+        }
+        if ($request->filled('location_ownership')) {
+            $notesList[] = 'Location Ownership: '.$request->input('location_ownership');
+        }
+        if (! empty($modularData)) {
+            $modItems = [];
+            foreach ($modularData as $mk => $mv) {
+                if ($mv !== null && $mv !== '') {
+                    $modItems[] = $mk.': '.$mv;
+                }
+            }
+            if (! empty($modItems)) {
+                $notesList[] = 'Modular Answers: ['.implode(', ', $modItems).']';
+            }
+        }
+        if ($request->filled('renewal_timeline')) {
+            $notesList[] = 'Renewal Timeline: '.$request->input('renewal_timeline');
+        }
+        if ($request->filled('current_carrier')) {
+            $notesList[] = 'Current Carrier: '.$request->input('current_carrier');
+        }
+        if ($request->filled('claims_history')) {
+            $notesList[] = 'Claims (3 yrs): '.$request->input('claims_history');
+        }
+        if ($request->filled('bundle_preference')) {
+            $notesList[] = 'Bundle Preference: '.$request->input('bundle_preference');
+        }
+        if (! empty($tags)) {
+            $notesList[] = 'Lead Tags: ['.implode(', ', $tags).']';
+        }
         if ($request->filled('source_page')) {
             $notesList[] = 'Source Page: '.$request->input('source_page');
         }
         if ($request->filled('coverage_amount')) {
             $notesList[] = 'Requested Amount/Limit: '.$request->input('coverage_amount');
         }
-        if ($request->filled('company_name')) {
+        if ($request->filled('company_name') && ! $request->filled('business_name')) {
             $notesList[] = 'Company: '.$request->input('company_name');
         }
         if ($request->filled('fleet_size')) {
@@ -482,6 +682,7 @@ class AdminController extends Controller
         } elseif ($request->filled('notes')) {
             $notesList[] = 'Message / Details: '.$request->input('notes');
         }
+
         $notesStr = ! empty($notesList)
             ? implode(' | ', $notesList)
             : 'Generated via website quote widget.';
@@ -491,22 +692,57 @@ class AdminController extends Controller
             ?: $request->input('coverage_tier')
             ?: ($request->filled('bond_amount') ? 'Bond Limit: '.$request->input('bond_amount') : null);
 
-        $coverage = $selectedAmount ?: '$500,000 Standard Tier';
+        if (! $selectedAmount) {
+            $selectedAmount = count($coveragesList) > 1
+                ? (count($coveragesList).' Lines Bundled')
+                : ($typeLabel ?: '$500,000 Standard Tier');
+        }
+
+        $rawAnswers = $request->input('raw_answers', $request->input('answers', []));
+        if (is_string($rawAnswers)) {
+            $rawAnswers = json_decode($rawAnswers, true) ?: [];
+        }
 
         $quote = Quote::create([
             'quote_ref' => 'Q-'.rand(10000, 99999),
             'name' => $request->input('name') ?: 'Online Inquirer',
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'business_name' => $request->input('business_name') ?: $request->input('company_name'),
             'email' => $request->input('email') ?: 'lead-'.rand(100, 999).'@surebound-inquiry.com',
             'phone' => $request->input('phone') ?: null,
             'type' => $rawType,
-            'type_label' => $typeLabels[$rawType] ?? ucfirst(str_replace('_', ' ', $rawType)),
-            'coverage' => $coverage,
+            'type_label' => $typeLabel,
+            'coverages' => $coveragesList,
+            'business_type' => $request->input('business_type'),
+            'business_type_other' => $request->input('business_type_other'),
+            'business_description' => $request->input('business_description'),
+            'employees' => $request->input('employees'),
+            'years_in_business' => $request->input('years_in_business'),
+            'annual_revenue' => $request->input('annual_revenue'),
+            'business_address' => $request->input('business_address'),
+            'location_ownership' => $request->input('location_ownership'),
+            'modular_data' => $modularData,
+            'renewal_timeline' => $request->input('renewal_timeline'),
+            'current_carrier' => $request->input('current_carrier'),
+            'claims_history' => $request->input('claims_history'),
+            'bundle_preference' => $request->input('bundle_preference'),
+            'tags' => $tags,
+            'raw_answers' => $rawAnswers,
+            'coverage' => $selectedAmount,
             'premium' => '$'.rand(900, 2400).' / yr',
             'location' => 'ZIP: '.$request->input('zip'),
             'zip_code' => $request->input('zip'),
             'status' => 'new',
             'notes' => $notesStr,
         ]);
+
+        // Dispatch to GoHighLevel as new contact with tags and custom fields
+        try {
+            GoHighLevelService::sendContact($quote);
+        } catch (\Throwable $e) {
+            Log::error('GoHighLevel dispatch error: '.$e->getMessage());
+        }
 
         try {
             $recipients = self::getLeadNotificationRecipients();
@@ -521,6 +757,8 @@ class AdminController extends Controller
             'success' => true,
             'message' => 'Thank you! Your quote request ('.$quote->quote_ref.') has been received. An underwriter will contact you shortly.',
             'quote_ref' => $quote->quote_ref,
+            'quote_id' => $quote->id,
+            'quote' => $quote,
         ]);
     }
 
@@ -620,23 +858,15 @@ class AdminController extends Controller
      */
     public static function getLeadNotificationRecipients(): array
     {
-        $recipients = config('mail.quote_recipients');
-        if (! is_array($recipients) || empty($recipients)) {
-            $recipients = [
-                config('mail.admin_quote_recipient', 'karry@sureboundinsurance.com'),
-                config('mail.info_quote_recipient', 'info@sureboundinsurance.com'),
-            ];
-        }
+        // Strictly only notify authorized agency inboxes: no sunshinewashes.com or unauthorized recipients
+        $allowed = [
+            'karry@sureboundinsurance.com',
+            'info@sureboundinsurance.com',
+        ];
 
-        $clean = array_map(fn ($email) => strtolower(trim((string) $email)), $recipients);
-        if (! in_array('karry@sureboundinsurance.com', $clean, true)) {
-            $clean[] = 'karry@sureboundinsurance.com';
-        }
-        if (! in_array('info@sureboundinsurance.com', $clean, true)) {
-            $clean[] = 'info@sureboundinsurance.com';
-        }
-
-        return array_values(array_unique(array_filter($clean)));
+        return array_values(array_filter($allowed, function ($email) {
+            return ! str_contains(strtolower($email), 'sunshinewashes.com');
+        }));
     }
 
     /**
@@ -2423,6 +2653,11 @@ class AdminController extends Controller
         $content = PageContent::getForPage('coverage', self::getDefaultCoverageContent());
 
         return view('coverage', compact('content'));
+    }
+
+    public function showQuotePage()
+    {
+        return view('quote');
     }
 
     public function showCustomQuote()

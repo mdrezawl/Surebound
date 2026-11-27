@@ -75,16 +75,16 @@
 
             <div class="coverage-cards-grid">
                 <!-- Article 1 -->
-                <div class="coverage-card" style="cursor: pointer;" onclick="openQuoteModal('Homeowners Insurance')">
+                <div class="coverage-card" style="cursor: pointer;" onclick="openQuoteModal('Commercial Property')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6h1.5m-1.5 3h1.5m-1.5 3h1.5M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
                             </svg>
                         </div>
-                        <p style="font-size: 11px; font-weight: 700; color: #1e3a8a; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">FLORIDA PROPERTY</p>
-                        <h3 class="coverage-card-title">{{ $content['card_1_title'] ?? 'Florida Hurricane Deductibles & Wind Mitigation Credits' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_1_desc'] ?? 'Learn how percentage-based named-storm deductibles function under Florida law and how certified wind mitigation inspections lower insurance premiums.' }}</p>
+                        <p style="font-size: 11px; font-weight: 700; color: #1e3a8a; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">COMMERCIAL PROPERTY</p>
+                        <h3 class="coverage-card-title">{{ $content['card_1_title'] ?? 'Florida Commercial Property Deductibles & Wind Mitigation Credits' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_1_desc'] ?? 'Learn how percentage-based named-storm deductibles function for commercial buildings under Florida law and how certified wind mitigation inspections lower premiums.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
@@ -114,7 +114,7 @@
                         </div>
                         <p style="font-size: 11px; font-weight: 700; color: #1e3a8a; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">LIABILITY</p>
                         <h3 class="coverage-card-title">{{ $content['card_3_title'] ?? 'Commercial General Liability: How Much Coverage Do You Need?' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_3_desc'] ?? 'A breakdown of $1M/$2M standard liability limits, landlord lease requirements, and when an umbrella policy is critical.' }}</p>
+                        <p class="coverage-card-desc">{{ $content['card_3_desc'] ?? 'A breakdown of $1M/$2M standard liability limits, landlord lease requirements, and when excess commercial liability is critical.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
@@ -135,16 +135,16 @@
                 </div>
 
                 <!-- Article 5 -->
-                <div class="coverage-card" style="cursor: pointer;" onclick="openQuoteModal('Homeowners Insurance')">
+                <div class="coverage-card" style="cursor: pointer;" onclick="openQuoteModal('Life Insurance')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                             </svg>
                         </div>
-                        <p style="font-size: 11px; font-weight: 700; color: #1e3a8a; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">COASTAL RISKS</p>
-                        <h3 class="coverage-card-title">{{ $content['card_5_title'] ?? 'Homeowners in Coastal Florida: Navigating Flood vs. Wind' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_5_desc'] ?? 'Why standard property policies exclude rising waters, how NFIP flood insurance works, and private flood insurance options.' }}</p>
+                        <p style="font-size: 11px; font-weight: 700; color: #1e3a8a; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">BUSINESS &amp; LIFE</p>
+                        <h3 class="coverage-card-title">{{ $content['card_5_title'] ?? 'Key-Person & Commercial Life Insurance in Florida' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_5_desc'] ?? 'Why commercial lenders and partners require key-person life insurance, how buy-sell agreements are funded, and term vs permanent life coverage.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>

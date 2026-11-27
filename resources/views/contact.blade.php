@@ -315,13 +315,14 @@
                                 </label>
                                 <select id="contactDepartment" name="department" class="contact-form-select" required>
                                     <option value="" disabled selected>Select a department...</option>
-                                    <option value="Home & Property Insurance">Home &amp; Property Insurance</option>
-                                    <option value="Personal Auto Insurance">Personal Auto Insurance</option>
-                                    <option value="Commercial & Business Lines">Commercial &amp; Business Lines</option>
-                                    <option value="Commercial Fleet Auto">Commercial Fleet Auto</option>
+                                    <option value="Commercial & Business Lines">Commercial &amp; Business Lines (BOP / GL)</option>
+                                    <option value="Commercial Property">Commercial Property Insurance</option>
+                                    <option value="Commercial Fleet Auto">Commercial Auto &amp; Fleet</option>
+                                    <option value="Workers Compensation">Workers' Compensation</option>
+                                    <option value="Life Insurance">Life Insurance</option>
                                     <option value="Surety Bonds & Licensing">Surety Bonds &amp; Licensing</option>
-                                    <option value="Life & Health Insurance">Life &amp; Health Insurance</option>
-                                    <option value="Umbrella & Specialty Coverage">Umbrella &amp; Specialty Coverage</option>
+                                    <option value="Group Employee Benefits">Group Employee Benefits</option>
+                                    <option value="Specialty & Surplus">Specialty &amp; Surplus Coverage</option>
                                     <option value="Existing Claim Support">Existing Claim Support</option>
                                     <option value="Billing & Escrow Payments">Billing &amp; Escrow Payments</option>
                                     <option value="General Question / Other">General Question / Other</option>

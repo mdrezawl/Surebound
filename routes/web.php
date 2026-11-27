@@ -46,13 +46,13 @@ Route::get('/', function () {
     return view('home', compact('partnersContent', 'homeInsuranceContent'));
 })->name('home');
 
-Route::get('/home-insurance', [AdminController::class, 'showHomeInsurance'])->name('home-insurance');
-Route::get('/auto-insurance', [AdminController::class, 'showAutoInsurance'])->name('auto-insurance');
+Route::redirect('/home-insurance', '/', 301)->name('home-insurance');
+Route::redirect('/auto-insurance', '/', 301)->name('auto-insurance');
 Route::get('/commercial-auto-insurance', [AdminController::class, 'showCommercialAutoInsurance'])->name('commercial-auto-insurance');
 Route::get('/surety-bond', [AdminController::class, 'showSuretyBond'])->name('surety-bond');
 Route::get('/life-insurance', [AdminController::class, 'showLifeInsurance'])->name('life-insurance');
-Route::get('/health-insurance', [AdminController::class, 'showHealthInsurance'])->name('health-insurance');
-Route::get('/umbrella-insurance', [AdminController::class, 'showUmbrellaInsurance'])->name('umbrella-insurance');
+Route::redirect('/health-insurance', '/', 301)->name('health-insurance');
+Route::redirect('/umbrella-insurance', '/', 301)->name('umbrella-insurance');
 Route::get('/personal-coverage', [AdminController::class, 'showPersonalCoverage'])->name('personal-coverage');
 Route::get('/property-insurance', [AdminController::class, 'showPropertyInsurance'])->name('property-insurance');
 Route::get('/liability-insurance', [AdminController::class, 'showLiabilityInsurance'])->name('liability-insurance');
@@ -60,6 +60,7 @@ Route::get('/group-benefits', [AdminController::class, 'showGroupBenefits'])->na
 Route::get('/workers-compensation', [AdminController::class, 'showWorkersCompensation'])->name('workers-compensation');
 Route::get('/specialty-coverage', [AdminController::class, 'showSpecialtyCoverage'])->name('specialty-coverage');
 Route::get('/coverage', [AdminController::class, 'showCoverage'])->name('coverage');
+Route::get('/quote', [AdminController::class, 'showQuotePage'])->name('quote');
 Route::get('/custom-quote', [AdminController::class, 'showCustomQuote'])->name('custom-quote');
 Route::get('/compare', [AdminController::class, 'showCompare'])->name('compare');
 Route::get('/story', [AdminController::class, 'showStory'])->name('story');

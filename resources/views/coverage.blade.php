@@ -66,43 +66,15 @@
     </section>
 
     <!-- ==========================================
-         PERSONAL INSURANCE LINES
+         LIFE & INDIVIDUAL PROTECTION
          ========================================== -->
     <section class="coverage-section" id="personal-lines">
         <div class="container">
-            <p class="section-eyebrow">PERSONAL LINES</p>
-            <h2 class="section-title">Personal Insurance Protection</h2>
-            <p class="section-subtitle">Individual and family coverage built to protect your home, vehicles, and financial security.</p>
+            <p class="section-eyebrow">LIFE &amp; ASSET PROTECTION</p>
+            <h2 class="section-title">Life Insurance Solutions</h2>
+            <p class="section-subtitle">Individual and family coverage built to provide lasting certainty and financial security for your loved ones.</p>
 
-            <div class="coverage-cards-grid">
-                <!-- Home Insurance -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('home-insurance') }}'" style="cursor: pointer;">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Homeowners Insurance</h3>
-                        <p class="coverage-card-desc">Dwelling protection, personal property, hurricane deductibles, and liability coverage localized for Florida homes.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
-                <!-- Auto Insurance -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('auto-insurance') }}'" style="cursor: pointer;">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Personal Auto Insurance</h3>
-                        <p class="coverage-card-desc">Bodily injury liability, comprehensive, collision, PIP, and uninsured motorist protection across Florida.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
+            <div class="coverage-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
                 <!-- Life Insurance -->
                 <div class="coverage-card" onclick="window.location.href='{{ route('life-insurance') }}'" style="cursor: pointer;">
                     <div>
@@ -112,49 +84,21 @@
                             </svg>
                         </div>
                         <h3 class="coverage-card-title">Life Insurance</h3>
-                        <p class="coverage-card-desc">Term life and permanent life policies designed to provide lasting financial security for your loved ones.</p>
+                        <p class="coverage-card-desc">Term life and permanent life policies designed to provide lasting financial security for your family and key business partners.</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
 
-                <!-- Health Insurance -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('health-insurance') }}'" style="cursor: pointer;">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Health Insurance</h3>
-                        <p class="coverage-card-desc">Individual and family medical coverage with access to premier doctor and hospital networks across Florida.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
-                <!-- Umbrella Insurance -->
-                <div class="coverage-card" onclick="window.location.href='{{ route('umbrella-insurance') }}'" style="cursor: pointer;">
-                    <div>
-                        <div class="coverage-icon-box">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-                            </svg>
-                        </div>
-                        <h3 class="coverage-card-title">Personal Umbrella</h3>
-                        <p class="coverage-card-desc">Extra multi-million dollar liability protection above standard auto and homeowners policy limits.</p>
-                    </div>
-                    <span class="coverage-card-arrow">&rarr;</span>
-                </div>
-
-                <!-- Custom Quote -->
-                <div class="coverage-card" onclick="openQuoteModal()" style="cursor: pointer;">
+                <!-- Custom Quote / Bundle -->
+                <div class="coverage-card" onclick="openQuoteModal('Life Insurance')" style="cursor: pointer;">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">Multi-Policy Bundle</h3>
-                        <p class="coverage-card-desc">Bundle home and auto to unlock maximum carrier discounts and simplified annual policy management.</p>
+                        <h3 class="coverage-card-title">Commercial &amp; Life Bundles</h3>
+                        <p class="coverage-card-desc">Coordinate key-person life insurance with commercial property and general liability for unified business risk management.</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
@@ -310,7 +254,7 @@
                         </svg>
                     </div>
                     <h3 class="value-item-title">{{ $content['value_3_title'] ?? 'Tailored Policy Bundles' }}</h3>
-                    <p class="value-item-desc">{{ $content['value_3_desc'] ?? 'Save on total premium by bundling home and auto or combining commercial property and general liability into a BOP.' }}</p>
+                    <p class="value-item-desc">{{ $content['value_3_desc'] ?? 'Save on total premium by combining commercial property and general liability into a BOP or packaging multiple commercial policies.' }}</p>
                 </div>
 
                 <!-- 4 -->
@@ -436,7 +380,7 @@
                         <div class="faq-icon">+</div>
                     </button>
                     <div class="faq-answer">
-                        {{ $content['faq_1_answer'] ?? 'We provide personal insurance (homeowners, auto, life, health, umbrella) and commercial insurance (business owner policies, general liability, commercial property, workers\' compensation, commercial auto, surety bonds, and group employee benefits).' }}
+                        {{ $content['faq_1_answer'] ?? 'We provide business and commercial insurance (business owner policies, general liability, commercial property, workers\' compensation, commercial auto, surety bonds, and group benefits) and life insurance.' }}
                     </div>
                 </div>
 
@@ -458,7 +402,7 @@
                         <div class="faq-icon">+</div>
                     </button>
                     <div class="faq-answer">
-                        {{ $content['faq_3_answer'] ?? 'Yes. Bundling home and auto insurance or packaging business property and liability into a Business Owner Policy (BOP) often yields substantial multi-policy premium discounts.' }}
+                        {{ $content['faq_3_answer'] ?? 'Yes. Packaging business property and liability into a Business Owner Policy (BOP) or combining multiple commercial coverages often yields substantial multi-policy premium discounts.' }}
                     </div>
                 </div>
 

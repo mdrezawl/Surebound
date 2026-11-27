@@ -96,8 +96,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">{{ $content['card_2_title'] ?? 'Personal Lines & Private Client' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_2_desc'] ?? 'Customized homeowners, windstorm, flood, auto, and personal umbrella coverage for individuals and families.' }}</p>
+                        <h3 class="coverage-card-title">{{ $content['card_2_title'] ?? 'Life & Asset Protection' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_2_desc'] ?? 'Customized life insurance, key-person coverage, business succession funding, and asset protection for business leaders and families.' }}</p>
                     </div>
                 </div>
 

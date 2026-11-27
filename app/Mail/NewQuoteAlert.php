@@ -31,9 +31,24 @@ class NewQuoteAlert extends Mailable
             $replyTo[] = new Address($this->quote->email, $this->quote->name ?: 'Customer');
         }
 
-        $customerName = trim($this->quote->name ?: 'New Customer');
-        $policyType = trim($this->quote->type_label ?: ucfirst(str_replace('_', ' ', $this->quote->type ?: 'Insurance')));
-        $subject = "New Lead: {$customerName} - {$policyType} (#{$this->quote->quote_ref})";
+        $coverages = is_array($this->quote->coverages) ? $this->quote->coverages : [];
+        if (! empty($coverages)) {
+            $coverageMap = [
+                'bop' => 'Business Owner Policy',
+                'gl' => 'General Liability',
+                'wc' => "Workers' Comp",
+                'auto' => 'Commercial Auto',
+                'prop' => 'Commercial Property',
+                'life' => 'Life Insurance',
+            ];
+            $coverageNames = array_map(function ($c) use ($coverageMap) {
+                return $coverageMap[$c] ?? ucfirst(str_replace('_', ' ', (string) $c));
+            }, $coverages);
+            $subject = 'New quote request: '.implode(' + ', $coverageNames);
+        } else {
+            $policyType = trim($this->quote->type_label ?: ucfirst(str_replace('_', ' ', $this->quote->type ?: 'Insurance')));
+            $subject = "New quote request: {$policyType}";
+        }
 
         return new Envelope(
             from: new Address(config('mail.from.address', 'karry@sureboundinsurance.com'), config('mail.from.name', 'Surebound Insurance')),

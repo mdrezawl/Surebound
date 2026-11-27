@@ -148,7 +148,7 @@
                             </svg>
                         </div>
                         <h3 class="coverage-card-title">Package (BOP/Bundle) Discounts</h3>
-                        <p class="coverage-card-desc">Packaging multiple policies with a single insurer (e.g. Home + Auto, or Property + Liability in a BOP) provides lower rates and eliminates carrier coverage disputes.</p>
+                        <p class="coverage-card-desc">Packaging multiple policies with a single insurer (e.g. Property + Liability in a BOP, or General Liability + Commercial Auto) provides lower rates and eliminates carrier coverage disputes.</p>
                     </div>
                 </div>
             </div>

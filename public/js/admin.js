@@ -28,16 +28,35 @@
                 id: q.quote_ref || ('Q-' + q.id),
                 dbId: q.id,
                 name: q.name,
+                firstName: q.first_name,
+                lastName: q.last_name,
+                businessName: q.business_name,
                 email: q.email,
-                phone: q.phone || '(206) 555-0100',
+                phone: q.phone || '(813) 555-0100',
                 type: q.type || 'home',
                 typeLabel: q.type_label || 'Homeowners',
                 coverage: q.coverage || '$500,000 Standard',
                 premium: q.premium || '$1,500 / yr',
-                location: q.location || (q.zip_code ? 'ZIP: ' + q.zip_code : 'Washington'),
+                location: q.location || (q.zip_code ? 'ZIP: ' + q.zip_code : 'Tampa, FL'),
+                zipCode: q.zip_code,
                 status: q.status || 'new',
                 date: q.created_at ? new Date(q.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recent',
-                notes: q.notes || ''
+                notes: q.notes || '',
+                coverages: q.coverages || [],
+                businessType: q.business_type,
+                businessTypeOther: q.business_type_other,
+                businessDescription: q.business_description,
+                employees: q.employees,
+                yearsInBusiness: q.years_in_business,
+                annualRevenue: q.annual_revenue,
+                businessAddress: q.business_address,
+                locationOwnership: q.location_ownership,
+                modularData: q.modular_data || {},
+                renewalTimeline: q.renewal_timeline,
+                currentCarrier: q.current_carrier,
+                claimsHistory: q.claims_history,
+                bundlePreference: q.bundle_preference,
+                tags: q.tags || []
             }));
         }
         return [];
@@ -356,17 +375,46 @@
     function openQuoteDetailModal(q) {
         const detailBody = document.getElementById('quoteDetailBody');
         if (!detailBody) return;
+
+        let tagsHtml = '';
+        if (q.tags && q.tags.length) {
+            tagsHtml = `
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;">
+                    ${q.tags.map(t => `<span style="font-size: 0.6875rem; font-weight: 700; background: #145CDB; color: #fff; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.3px;">${t}</span>`).join('')}
+                </div>
+            `;
+        }
+
+        let bizLine = '';
+        if (q.businessName) {
+            bizLine = `<div style="font-size: 0.875rem; font-weight: 700; color: #145CDB; margin-top: 2px;">${q.businessName}</div>`;
+        }
+
+        let coveragesHtml = '';
+        if (q.coverages && q.coverages.length) {
+            coveragesHtml = `
+                <div style="grid-column: span 2;">
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Selected Coverage Lines</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                        ${q.coverages.map(c => `<span style="font-size: 0.75rem; font-weight: 600; background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); padding: 3px 8px; border-radius: 6px; color: var(--text-primary);">${c.toUpperCase()}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
         detailBody.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);">
                 <div>
-                    <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary);">${q.name}</h3>
-                    <p style="font-size: 0.8125rem; color: var(--text-muted);">${q.email} • ${q.phone}</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0;">${q.name}</h3>
+                    ${bizLine}
+                    <p style="font-size: 0.8125rem; color: var(--text-muted); margin: 4px 0 0;">${q.email} • ${q.phone}</p>
+                    ${tagsHtml}
                 </div>
                 <span class="status-pill ${q.status}" style="font-size: 0.8125rem; padding: 4px 12px;">${q.status}</span>
             </div>
             <div class="form-grid" style="row-gap: 16px; margin-bottom: 20px;">
                 <div>
-                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Insurance Type</div>
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Insurance Type / Lines</div>
                     <div style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">${q.typeLabel}</div>
                 </div>
                 <div>
@@ -374,18 +422,17 @@
                     <div style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">${q.coverage}</div>
                 </div>
                 <div>
-                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Location</div>
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Location / ZIP</div>
                     <div style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">${q.location}</div>
                 </div>
                 <div>
                     <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Submitted Time</div>
                     <div style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">${q.date}</div>
                 </div>
+                ${coveragesHtml}
                 <div style="grid-column: span 2;">
-                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Underwriter Notes & Details</div>
-                    <div style="margin-top: 6px; padding: 12px; background: var(--bg-surface-secondary); border-radius: var(--radius-md); font-size: 0.875rem; line-height: 1.5;">
-                        ${q.notes || 'No extra notes provided by applicant.'}
-                    </div>
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Underwriter Notes & Lead Answers</div>
+                    <div style="margin-top: 6px; padding: 14px; background: var(--bg-surface-secondary); border-radius: var(--radius-md); font-size: 0.875rem; line-height: 1.6; white-space: pre-wrap; word-break: break-word;">${q.notes || 'No extra notes provided by applicant.'}</div>
                 </div>
             </div>
         `;

@@ -75,15 +75,15 @@
 
             <div class="coverage-cards-grid">
                 <!-- Guide 1 -->
-                <div class="coverage-card" style="cursor: pointer;" onclick="openQuoteModal('Homeowners Insurance')">
+                <div class="coverage-card" style="cursor: pointer;" onclick="openQuoteModal('Commercial Property')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6h1.5m-1.5 3h1.5m-1.5 3h1.5M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">{{ $content['card_1_title'] ?? 'The Florida Homeowner\'s Insurance Guide' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_1_desc'] ?? 'A comprehensive overview of roof age restrictions, 4-point inspections, wind mitigation credits, hurricane deductibles, and flood insurance requirements.' }}</p>
+                        <h3 class="coverage-card-title">{{ $content['card_1_title'] ?? 'The Florida Commercial Property Guide' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_1_desc'] ?? 'A comprehensive overview of building valuations, equipment coverage, wind mitigation, hurricane deductibles, and business contents in Florida.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
@@ -131,15 +131,15 @@
                 </div>
 
                 <!-- Guide 5 -->
-                <div class="coverage-card" style="cursor: pointer;" onclick="openQuoteModal('Personal Umbrella')">
+                <div class="coverage-card" style="cursor: pointer;" onclick="openQuoteModal('Life Insurance')">
                     <div>
                         <div class="coverage-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                             </svg>
                         </div>
-                        <h3 class="coverage-card-title">{{ $content['card_5_title'] ?? 'The Personal Umbrella & Asset Protection Guide' }}</h3>
-                        <p class="coverage-card-desc">{{ $content['card_5_desc'] ?? 'Evaluating net worth exposure, swimming pool and teen driver liabilities, and multi-million dollar umbrella excess layers in Florida.' }}</p>
+                        <h3 class="coverage-card-title">{{ $content['card_5_title'] ?? 'The Life & Key-Person Insurance Guide' }}</h3>
+                        <p class="coverage-card-desc">{{ $content['card_5_desc'] ?? 'Evaluating family financial protection, business succession funding, key-person coverage, and term vs permanent life insurance options.' }}</p>
                     </div>
                     <span class="coverage-card-arrow">&rarr;</span>
                 </div>
