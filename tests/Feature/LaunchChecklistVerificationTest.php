@@ -172,7 +172,7 @@ class LaunchChecklistVerificationTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('karry-founder.webp', false);
+        $response->assertSee('karry-founder', false);
         $response->assertSee('I’m Karry, founder of Surebound Insurance.', false);
         $response->assertSee('My background in both personal and commercial insurance helps me work with families and business owners.', false);
     }

@@ -218,9 +218,9 @@
             <div class="simpler-grid">
                 <div class="simpler-image-frame simpler-image-frame-founder">
                     <picture>
-                        <source srcset="{{ asset('images/karry-founder.webp') }}" type="image/webp">
+                        <source srcset="{{ asset('images/karry-founder-v2.webp') }}?v={{ file_exists(public_path('images/karry-founder-v2.webp')) ? filemtime(public_path('images/karry-founder-v2.webp')) : time() }}" type="image/webp">
                         <img 
-                            src="{{ asset('images/karry-founder.jpg') }}" 
+                            src="{{ asset('images/karry-founder-v2.jpg') }}?v={{ file_exists(public_path('images/karry-founder-v2.jpg')) ? filemtime(public_path('images/karry-founder-v2.jpg')) : time() }}" 
                             alt="Karry, Founder of Surebound Insurance" 
                             class="simpler-image"
                             width="472"

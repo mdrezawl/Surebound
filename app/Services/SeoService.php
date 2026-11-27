@@ -450,7 +450,7 @@ class SeoService
                 '@type' => 'Person',
                 'name' => 'Karry',
                 'jobTitle' => 'Founder & Licensed Risk Advisor',
-                'image' => asset('images/karry-founder.jpg'),
+                'image' => asset('images/karry-founder-v2.jpg'),
                 'description' => 'Founder of Surebound Insurance with extensive background in personal and commercial insurance solutions in Florida.',
             ],
             'areaServed' => [
