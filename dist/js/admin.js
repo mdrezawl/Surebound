@@ -376,65 +376,264 @@
         const detailBody = document.getElementById('quoteDetailBody');
         if (!detailBody) return;
 
+        // Parse pipe or newline-separated notes if structured fields aren't already populated
+        const parsedNotes = {};
+        if (q.notes && typeof q.notes === 'string') {
+            const parts = q.notes.split(/\n|\s\|\s/);
+            for (const part of parts) {
+                const idx = part.indexOf(': ');
+                if (idx !== -1) {
+                    const k = part.slice(0, idx).trim();
+                    const v = part.slice(idx + 2).trim();
+                    parsedNotes[k] = v;
+                }
+            }
+        }
+
+        // Extract and resolve business and underwriting details
+        const businessName = q.businessName || parsedNotes['Business Name'] || parsedNotes['Company'] || '';
+        const businessType = q.businessType || parsedNotes['Business Type'] || '';
+        const workDesc = q.businessDescription || parsedNotes['Work Description'] || '';
+        const employees = q.employees || parsedNotes['Employees'] || '';
+        const yearsInBiz = q.yearsInBusiness || parsedNotes['Years in Business'] || '';
+        const annualRev = q.annualRevenue || parsedNotes['Annual Revenue'] || '';
+        const bizAddress = q.businessAddress || parsedNotes['Business Address'] || '';
+        const locOwnership = q.locationOwnership || parsedNotes['Location Ownership'] || '';
+        const renewalTimeline = q.renewalTimeline || parsedNotes['Renewal Timeline'] || '';
+        const claimsHistory = q.claimsHistory || parsedNotes['Claims (3 yrs)'] || '';
+        const bundlePref = q.bundlePreference || parsedNotes['Bundle Preference'] || '';
+        const currentCarrier = q.currentCarrier || parsedNotes['Current Carrier'] || '';
+        const customMessage = parsedNotes['Message / Details'] || '';
+
+        // Extract Tags
+        let tags = Array.isArray(q.tags) && q.tags.length ? [...q.tags] : [];
+        if (!tags.length && parsedNotes['Lead Tags']) {
+            const raw = parsedNotes['Lead Tags'].replace(/^\[/, '').replace(/\]$/, '');
+            tags = raw.split(/,\s*/).map(t => t.trim()).filter(Boolean);
+        }
+
+        // Modular Answers mapping
+        let modularAnswers = {};
+        if (q.modularData && typeof q.modularData === 'object' && Object.keys(q.modularData).length) {
+            modularAnswers = { ...q.modularData };
+        } else if (parsedNotes['Modular Answers']) {
+            const raw = parsedNotes['Modular Answers'].replace(/^\[/, '').replace(/\]$/, '');
+            const items = raw.split(/,\s*(?=[a-z0-9_]+:)/i);
+            for (const it of items) {
+                const cIdx = it.indexOf(':');
+                if (cIdx !== -1) {
+                    modularAnswers[it.slice(0, cIdx).trim()] = it.slice(cIdx + 1).trim();
+                }
+            }
+        }
+
+        const qLabels = {
+            bop_eq: 'Contents / Equipment Value',
+            bop_bld: 'Building Rebuild Value',
+            gl_sub: 'Subcontractors Used',
+            gl_lim: 'Liability Limits Desired',
+            wc_pay: 'Total Annual Payroll',
+            wc_sub: 'Uninsured Subcontractors',
+            au_n: 'Vehicles Owned',
+            au_type: 'Vehicle Types',
+            au_use: 'Primary Vehicle Use',
+            au_drv: 'Number of Drivers',
+            au_rec: 'Driver Violations / Accidents (3 yrs)',
+            pr_use: 'Primary Building Use',
+            lf_age: 'Applicant Age Range',
+            lf_amt: 'Life Coverage Amount',
+            lf_type: 'Policy Type Desired',
+            lf_tob: 'Tobacco / Nicotine Use (12 mos)'
+        };
+
+        const covLabels = {
+            bop: 'Business Owner Policy (BOP)',
+            gl: 'General Liability',
+            wc: "Workers' Compensation",
+            auto: 'Commercial Auto',
+            prop: 'Commercial Property',
+            life: 'Life Insurance',
+            home: 'Homeowners',
+            health: 'Health Insurance',
+            umbrella: 'Umbrella Liability',
+            surety_bond: 'Surety Bond'
+        };
+
+        // Extract Coverages
+        let coverages = Array.isArray(q.coverages) && q.coverages.length ? [...q.coverages] : [];
+        if (!coverages.length && parsedNotes['Coverages']) {
+            coverages = parsedNotes['Coverages'].split(/,\s*/).map(c => c.trim()).filter(Boolean);
+        }
+
+        // Build Tags Badges
         let tagsHtml = '';
-        if (q.tags && q.tags.length) {
+        if (tags.length) {
             tagsHtml = `
                 <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;">
-                    ${q.tags.map(t => `<span style="font-size: 0.6875rem; font-weight: 700; background: #145CDB; color: #fff; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.3px;">${t}</span>`).join('')}
+                    ${tags.map(t => {
+                        let bg = '#145CDB';
+                        if (t.startsWith('COV-')) bg = '#1d4ed8';
+                        else if (t === 'BUNDLE') bg = '#059669';
+                        else if (t.startsWith('RENEW-')) bg = '#7c3aed';
+                        else if (t === 'OWNS-BUILDING') bg = '#0891b2';
+                        else if (t === 'CLAIMS-HISTORY') bg = '#ea580c';
+                        else if (t.startsWith('SOURCE-')) bg = '#475569';
+                        return `<span style="font-size: 0.6875rem; font-weight: 700; background: ${bg}; color: #fff; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.3px;">${t}</span>`;
+                    }).join('')}
                 </div>
             `;
         }
 
-        let bizLine = '';
-        if (q.businessName) {
-            bizLine = `<div style="font-size: 0.875rem; font-weight: 700; color: #145CDB; margin-top: 2px;">${q.businessName}</div>`;
+        // Format Coverage Badges
+        let coveragesBadgesHtml = '';
+        if (coverages.length) {
+            coveragesBadgesHtml = coverages.map(c => {
+                const label = covLabels[c.toLowerCase()] || c;
+                return `<span style="display: inline-block; font-size: 0.75rem; font-weight: 700; background: rgba(20, 92, 219, 0.08); color: #145CDB; border: 1px solid rgba(20, 92, 219, 0.2); padding: 4px 10px; border-radius: 6px; margin: 2px 4px 2px 0;">${label}</span>`;
+            }).join(' ');
+        } else {
+            coveragesBadgesHtml = `<span style="font-weight: 700; color: var(--text-primary);">${q.typeLabel || 'Standard Coverage'}</span>`;
         }
 
-        let coveragesHtml = '';
-        if (q.coverages && q.coverages.length) {
-            coveragesHtml = `
-                <div style="grid-column: span 2;">
-                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Selected Coverage Lines</div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-                        ${q.coverages.map(c => `<span style="font-size: 0.75rem; font-weight: 600; background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); padding: 3px 8px; border-radius: 6px; color: var(--text-primary);">${c.toUpperCase()}</span>`).join('')}
+        // Build Business Profile Card
+        const hasBizInfo = businessName || businessType || workDesc || employees || yearsInBiz || annualRev || bizAddress || locOwnership;
+        let bizCardHtml = '';
+        if (hasBizInfo) {
+            const bizFields = [
+                { label: 'Business Name', val: businessName },
+                { label: 'Industry / Business Type', val: businessType },
+                { label: 'Operations & Work Description', val: workDesc, full: true },
+                { label: 'Staff / Employees', val: employees },
+                { label: 'Years in Business', val: yearsInBiz },
+                { label: 'Estimated Annual Revenue', val: annualRev },
+                { label: 'Business Street Address', val: bizAddress },
+                { label: 'Building / Location Ownership', val: locOwnership }
+            ].filter(f => f.val);
+
+            bizCardHtml = `
+                <div style="background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
+                    <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #145CDB; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                        🏢 Business Profile & Operations
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 16px;">
+                        ${bizFields.map(f => `
+                            <div style="${f.full ? 'grid-column: span 2;' : ''}">
+                                <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">${f.label}</div>
+                                <div style="font-size: 0.875rem; font-weight: 600; color: var(--text-primary); margin-top: 2px; word-break: break-word;">${f.val}</div>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
             `;
         }
 
+        // Build Modular Underwriting Card
+        let modCardHtml = '';
+        const modEntries = Object.entries(modularAnswers).filter(([_, v]) => v);
+        if (modEntries.length) {
+            modCardHtml = `
+                <div style="background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
+                    <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #145CDB; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                        📋 Coverage-Specific Underwriting Responses
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 16px;">
+                        ${modEntries.map(([k, v]) => `
+                            <div>
+                                <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">${qLabels[k] || k}</div>
+                                <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin-top: 2px;">${v}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Build Policy Preferences Card
+        const hasPrefs = renewalTimeline || claimsHistory || bundlePref || currentCarrier;
+        let prefsCardHtml = '';
+        if (hasPrefs) {
+            const prefFields = [
+                { label: 'Target Renewal Timeline', val: renewalTimeline },
+                { label: 'Claims History (Past 3 Years)', val: claimsHistory },
+                { label: 'Bundle Preference', val: bundlePref },
+                { label: 'Current Carrier', val: currentCarrier }
+            ].filter(f => f.val);
+
+            prefsCardHtml = `
+                <div style="background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
+                    <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 10px;">
+                        ⚙️ Policy Preferences & Risk Profile
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 16px;">
+                        ${prefFields.map(f => `
+                            <div>
+                                <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">${f.label}</div>
+                                <div style="font-size: 0.875rem; font-weight: 600; color: var(--text-primary); margin-top: 2px;">${f.val}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Additional / Freeform Notes Card
+        let customNotesHtml = '';
+        if (customMessage) {
+            customNotesHtml = `
+                <div style="background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 14px 16px;">
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Applicant Message / Notes</div>
+                    <div style="margin-top: 4px; font-size: 0.875rem; line-height: 1.5; color: var(--text-primary); white-space: pre-wrap;">${customMessage}</div>
+                </div>
+            `;
+        } else if (!hasBizInfo && !modEntries.length && q.notes) {
+            customNotesHtml = `
+                <div style="background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 14px 16px;">
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Underwriter Notes</div>
+                    <div style="margin-top: 4px; font-size: 0.875rem; line-height: 1.5; color: var(--text-primary); white-space: pre-wrap; word-break: break-word;">${q.notes}</div>
+                </div>
+            `;
+        }
+
         detailBody.innerHTML = `
-            <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);">
                 <div>
-                    <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0;">${q.name}</h3>
-                    ${bizLine}
-                    <p style="font-size: 0.8125rem; color: var(--text-muted); margin: 4px 0 0;">${q.email} • ${q.phone}</p>
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin: 0;">${q.name}</h3>
+                        <span style="font-size: 0.75rem; font-weight: 700; background: rgba(20, 92, 219, 0.1); color: #145CDB; border: 1px solid rgba(20, 92, 219, 0.2); padding: 2px 8px; border-radius: 4px;">Ref: ${q.id}</span>
+                    </div>
+                    ${businessName ? `<div style="font-size: 0.9375rem; font-weight: 700; color: #145CDB; margin-top: 4px;">🏢 ${businessName}</div>` : ''}
+                    <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 6px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                        <a href="mailto:${q.email}" style="color: var(--text-primary); text-decoration: none; font-weight: 600;">✉️ ${q.email}</a>
+                        <span>•</span>
+                        <a href="tel:${q.phone}" style="color: var(--text-primary); text-decoration: none; font-weight: 600;">📞 ${q.phone}</a>
+                        <span>•</span>
+                        <span>📅 ${q.date}</span>
+                    </div>
                     ${tagsHtml}
                 </div>
-                <span class="status-pill ${q.status}" style="font-size: 0.8125rem; padding: 4px 12px;">${q.status}</span>
+                <span class="status-pill ${q.status}" style="font-size: 0.8125rem; padding: 4px 12px; text-transform: uppercase; font-weight: 700;">${q.status}</span>
             </div>
-            <div class="form-grid" style="row-gap: 16px; margin-bottom: 20px;">
-                <div>
-                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Insurance Type / Lines</div>
-                    <div style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">${q.typeLabel}</div>
+
+            <!-- Primary Summary Grid -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px;">
+                <div style="background: var(--bg-surface-secondary); padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border-subtle); grid-column: span 2;">
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.3px;">Selected Insurance Lines</div>
+                    <div style="margin-top: 6px;">${coveragesBadgesHtml}</div>
                 </div>
-                <div>
-                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Coverage Desired</div>
-                    <div style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">${q.coverage}</div>
+                <div style="background: var(--bg-surface-secondary); padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.3px;">Coverage Scope / Tier</div>
+                    <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin-top: 4px;">${q.coverage}</div>
                 </div>
-                <div>
-                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Location / ZIP</div>
-                    <div style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">${q.location}</div>
-                </div>
-                <div>
-                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Submitted Time</div>
-                    <div style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">${q.date}</div>
-                </div>
-                ${coveragesHtml}
-                <div style="grid-column: span 2;">
-                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Underwriter Notes & Lead Answers</div>
-                    <div style="margin-top: 6px; padding: 14px; background: var(--bg-surface-secondary); border-radius: var(--radius-md); font-size: 0.875rem; line-height: 1.6; white-space: pre-wrap; word-break: break-word;">${q.notes || 'No extra notes provided by applicant.'}</div>
+                <div style="background: var(--bg-surface-secondary); padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.3px;">Location / Territory</div>
+                    <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin-top: 4px;">${q.location || 'Tampa, FL'}</div>
                 </div>
             </div>
+
+            ${bizCardHtml}
+            ${modCardHtml}
+            ${prefsCardHtml}
+            ${customNotesHtml}
         `;
         if (quoteDetailModal) quoteDetailModal.classList.add('active');
     }

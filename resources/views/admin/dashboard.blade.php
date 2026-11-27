@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     
     <!-- Admin Portal Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ file_exists(public_path('css/admin.css')) ? filemtime(public_path('css/admin.css')) : time() }}">
     <link rel="stylesheet" href="{{ asset('css/surebound-modal.css') }}?v={{ file_exists(public_path('css/surebound-modal.css')) ? filemtime(public_path('css/surebound-modal.css')) : time() }}">
 
     <!-- Early Tab Restoration Script (Instant Active Tab Render on Page Reload) -->
@@ -11288,7 +11288,7 @@
          MODAL 2: QUOTE DETAILS MODAL
          ==================================================================== -->
     <div class="modal-overlay" id="quoteDetailModal">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 680px;">
             <div class="modal-header">
                 <div class="modal-title">Quote Request Dossier</div>
                 <button class="modal-close" onclick="closeModal('quoteDetailModal')">
@@ -14970,6 +14970,6 @@ function saveCoverageCms(e) {
 
     <!-- Surebound Modal System & Admin Portal Script -->
     <script src="{{ asset('js/surebound-modal.js') }}?v={{ file_exists(public_path('js/surebound-modal.js')) ? filemtime(public_path('js/surebound-modal.js')) : time() }}"></script>
-    <script src="{{ asset('js/admin.js') }}"></script>
+    <script src="{{ asset('js/admin.js') }}?v={{ file_exists(public_path('js/admin.js')) ? filemtime(public_path('js/admin.js')) : time() }}"></script>
 </body>
 </html>
